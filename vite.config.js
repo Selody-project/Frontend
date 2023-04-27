@@ -10,7 +10,7 @@ export default defineConfig({
       "/naver": {
         target: "https://openapi.naver.com/v1/nid/me",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
+        rewrite: (path) => path.replace(/^\/naver/, ""),
       },
       "/back": {
         target: "http://localhost:8000",

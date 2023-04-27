@@ -88,8 +88,8 @@ const userSlice = createSlice({
       .addCase(signup.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         console.log(payload);
-        state.user = payload.user;
-        toast.success(`환영합니다! ${user.nick}님`);
+        state.user = payload.nickname;
+        toast.success(`환영합니다! ${state.user}님`);
       })
       .addCase(signup.rejected, (state, { payload }) => {
         state.isLoading = false;
@@ -102,8 +102,8 @@ const userSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.user = payload.user;
-        toast.success(`안녕하세요! ${user.nick}님`);
+        state.user = payload.nickname;
+        toast.success(`안녕하세요! ${state.user}님`);
       })
       .addCase(login.rejected, (state, { payload }) => {
         state.isLoading = false;
@@ -115,8 +115,8 @@ const userSlice = createSlice({
       })
       .addCase(naverLogin.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.user = payload.user;
-        toast.success(`안녕하세요! ${user.nick}님`);
+        state.user = payload.nickname;
+        toast.success(`안녕하세요! ${state.user}님`);
       })
       .addCase(naverLogin.rejected, (state, { payload }) => {
         state.isLoading = false;

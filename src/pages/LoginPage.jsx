@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
@@ -17,11 +17,14 @@ import {
 } from "./LoginPage.styles";
 import Google from "../components/sign/Google";
 import Naver from "../components/sign/Naver";
-import { login } from "../store/user/user-slice";
+import { login, naverLogin } from "../store/user/user-slice";
+import useNaver from "../hooks/use-naver.jsx";
 
 function LoginPage() {
   const dispatchFn = useDispatch();
   const navigate = useNavigate();
+
+  const naver = useNaver();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -56,6 +59,11 @@ function LoginPage() {
 
     dispatchFn(login({ email, password }));
   };
+
+  useEffect(() => {
+    console.log(naver);
+    dispatchFn(naverLogin(naver));
+  }, [naver]);
 
   return (
     <Container>
