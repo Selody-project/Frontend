@@ -11,8 +11,7 @@ import {
   TodoBody,
   TodoTitle,
   TodoSubtitle,
-  TodoList,
-  TodoItem,
+  TodoButton,
 } from './PersonalTodoList.styles';
 
 const PersonalTodoList = () => {
@@ -52,10 +51,10 @@ const PersonalTodoList = () => {
             </AddEventButton>
           </TodoTitle>
           <TodoSubtitle>하루동안의 할 일을 관리합니다.</TodoSubtitle>
-          <TodoList>
-            <TodoItem>Item 1</TodoItem>
-            <TodoItem>Item 2</TodoItem>
-          </TodoList>
+          <TodoButton onClick={handleMenuOpen}>
+            아직 추가된 일정이 없습니다! <br />할 일을 추가하여 하루동안 할 일을
+            관리해보세요.
+          </TodoButton>
         </TodoBody>
       </TodoContainer>
       {menuOpen && <ModalWindow />}

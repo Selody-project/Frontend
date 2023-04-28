@@ -10,6 +10,7 @@ export const TodoContainer = styled.div`
   height: 450px;
   min-width: 450px;
   max-width: 450px;
+  font-family: 'Inter';
 `;
 
 export const TodoHeader = styled.div`
@@ -105,9 +106,24 @@ export const TodoSubtitle = styled.h3`
   margin: 0;
 `;
 
-export const TodoList = styled.ul``;
+export const TodoButton = styled.button`
+  width: 100%;
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #6c55fe;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 16px;
+  cursor: pointer;
+  color: #30374f;
+  margin-top: 20px;
+  transition: opacity 0.3s ease;
 
-export const TodoItem = styled.li`
-  font-size: 18px;
-  margin-bottom: 10px;
+  &:hover {
+    opacity: 0.7;
+  }
 `;
