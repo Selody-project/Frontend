@@ -1,39 +1,43 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { toast } from "react-toastify";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 
 const initialState = {
   user: {},
   isLoading: false,
+  menuOpen: false, // 메뉴 or 모달 같은 것들을 토글하기 위한 상태
 };
 
-export const signup = createAsyncThunk("user/signup", async (user, thunkAPI) => {
-  try {
-    const response = await fetch(`/back/api/auth/join`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    });
+export const signup = createAsyncThunk(
+  'user/signup',
+  async (user, thunkAPI) => {
+    try {
+      const response = await fetch(`/back/api/auth/join`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user),
+      });
 
-    if (!response.ok) {
-      throw await response.json();
+      if (!response.ok) {
+        throw await response.json();
+      }
+
+      const data = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
-
-    const data = await response.json();
-    console.log(data);
-    return data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
   }
-});
+);
 
-export const login = createAsyncThunk("user/login", async (user, thunkAPI) => {
+export const login = createAsyncThunk('user/login', async (user, thunkAPI) => {
   try {
     const response = await fetch(`/back/api/auth/login`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         authorization: `Bearer ${thunkAPI.getState().user.user.token}`,
       },
       body: JSON.stringify(user),
@@ -50,33 +54,40 @@ export const login = createAsyncThunk("user/login", async (user, thunkAPI) => {
   }
 });
 
-export const naverLogin = createAsyncThunk("user/naverLogin", async (naverInfo, thunkAPI) => {
-  try {
-    const response = await fetch("/back/api/auth/naver", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(naverInfo),
-    });
+export const naverLogin = createAsyncThunk(
+  'user/naverLogin',
+  async (naverInfo, thunkAPI) => {
+    try {
+      const response = await fetch('/back/api/auth/naver', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(naverInfo),
+      });
 
-    if (!response.ok) {
-      throw await response.json();
+      if (!response.ok) {
+        throw await response.json();
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
   }
-});
+);
 
 const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {
     logout: (state) => {
-      (state.user = null), toast.success("로그아웃에 성공하셨습니다");
+      (state.user = null), toast.success('로그아웃에 성공하셨습니다');
+    },
+
+    handleMenuToggle: (state) => {
+      state.menuOpen = !state.menuOpen;
     },
   },
   extraReducers: (builder) => {
@@ -125,6 +136,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { logout } = userSlice.actions;
+export const { logout, handleMenuToggle } = userSlice.actions;
 
 export default userSlice.reducer;
