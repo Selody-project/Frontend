@@ -1,10 +1,10 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Header = styled.div`
   display: flex;
   justify-content: center;
   align-items: end;
-  font-family: "Montserrat";
+  font-family: 'Montserrat';
   font-style: normal;
   font-weight: 700;
   font-size: 45px;
@@ -53,7 +53,7 @@ export const LogoForm = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  font-family: "Montserrat";
+  font-family: 'Montserrat';
   font-style: normal;
 
   @media (max-width: 798px) {
@@ -103,6 +103,10 @@ export const LogoContainer2 = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    & > h4 {
+      display: none;
+    }
   }
 `;
 
@@ -125,7 +129,7 @@ export const SignUpForm = styled.form`
   flex-direction: column;
   justify-content: center;
   width: 500px;
-  font-family: "Spoqa Han Sans Neo";
+  font-family: 'Spoqa Han Sans Neo';
   font-style: normal;
   font-weight: bold;
   font-size: 18px;

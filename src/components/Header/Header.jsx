@@ -24,7 +24,7 @@ const Header = () => {
     <HeaderContainer>
       <Logo>
         <LogoImage src="/logo.svg" alt="Logo" />
-        <Title>xERN</Title>
+        <Title>Selody</Title>
       </Logo>
       <HamburgerMenu onClick={handleMenuOpen}>
         <i className={`fas fa-${menuOpen ? 'times' : 'bars'}`}></i>
