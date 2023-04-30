@@ -10,8 +10,6 @@ import ModalHeader from './ModalHeader';
 import ModalBody from './ModalBody';
 import ModalFooter from './ModalFooter';
 
-Modal.setAppElement('#root');
-
 const ModalWindow = () => {
   const [formValues, setFormValues] = useState({
     title: '',
@@ -87,6 +85,8 @@ const ModalWindow = () => {
 
   return (
     <Modal
+      data-testid="modal"
+      ariaHideApp={false}
       isOpen={menuOpen}
       onRequestClose={handleMenuOpen}
       style={{

@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const MainContainer = styled.main`
   display: flex;
   justify-content: space-between;
-  margin: 0px 60px 0px 40px;
+  margin: 100px 60px 0px 40px;
   font-family: 'Inter', sans-serif;
 `;
 
@@ -25,7 +25,7 @@ const PersonalSchedulePage = () => {
       <Header />
       <MainContainer>
         <CalendarContainer />
-        <PersonalTodoList />
+        <PersonalTodoList data-testid="PersonalTodoList" />
       </MainContainer>
     </>
   );
