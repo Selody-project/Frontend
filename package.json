@@ -19,11 +19,13 @@
     }
   },
   "dependencies": {
+    "@daypilot/daypilot-lite-react": "^3.13.1",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@react-oauth/google": "^0.9.0",
     "@reduxjs/toolkit": "^1.9.3",
     "react": "^18.2.0",
+    "react-calendar": "^4.2.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
     "react-modal": "^3.16.1",
