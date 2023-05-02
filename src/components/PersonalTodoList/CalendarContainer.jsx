@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import Calendar from "react-calendar";
-import { DayPilot, DayPilotCalendar } from "@daypilot/daypilot-lite-react";
+import React, { useState } from 'react';
+import Calendar from 'react-calendar';
+import { DayPilot, DayPilotCalendar } from '@daypilot/daypilot-lite-react';
 
-import "react-calendar/dist/Calendar.css";
-import styled from "styled-components";
+import 'react-calendar/dist/Calendar.css';
+import styled from 'styled-components';
 
 const CalendarContainer = () => {
   const [calType, setCalType] = useState(true);
@@ -17,9 +17,9 @@ const CalendarContainer = () => {
   };
 
   const config = {
-    viewType: "Week",
+    viewType: 'Week',
     durationBarVisible: true,
-    timeRangeSelectedHandling: "Enabled",
+    timeRangeSelectedHandling: 'Enabled',
   };
 
   return (
