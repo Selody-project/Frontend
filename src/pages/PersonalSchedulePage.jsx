@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '../components/Header/Header';
 import PersonalTodoList from '../components/PersonalTodoList/PersonalTodoList';
 import styled from 'styled-components';
+import CalendarContainer from '../components/PersonalTodoList/CalendarContainer.jsx';
 
 const MainContainer = styled.main`
   display: flex;
@@ -10,22 +11,13 @@ const MainContainer = styled.main`
   font-family: 'Inter', sans-serif;
 `;
 
-// 임시 달력 컨테이너
-const CalendarContainer = styled.div`
-  width: 60%;
-  background-color: black;
-  height: 500px;
-  min-width: 850px;
-  max-width: 850px;
-`;
-
 const PersonalSchedulePage = () => {
   return (
     <>
       <Header />
       <MainContainer>
         <CalendarContainer />
-        <PersonalTodoList data-testid="PersonalTodoList" />
+        <PersonalTodoList />
       </MainContainer>
     </>
   );
