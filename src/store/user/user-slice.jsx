@@ -70,7 +70,7 @@ export const naverLogin = createAsyncThunk("user/naverLogin", async ({ access_To
 
 export const getCurrentUser = createAsyncThunk("user/getCurrentUser", async (_, thunkAPI) => {
   try {
-    const response = await customFetch("/api/auth/getCurrentUser");
+    const response = await customFetch("/api/auth/token/verify");
 
     if (response.statusText !== "OK") {
       throw response.data;
@@ -145,7 +145,7 @@ const userSlice = createSlice({
       })
       .addCase(getCurrentUser.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.user = payload?.user.nickname;
+        state.user = payload?.exUser.nickname;
       })
       .addCase(getCurrentUser.rejected, (state, { payload }) => {
         state.isLoading = false;

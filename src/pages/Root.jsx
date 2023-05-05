@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
 
 const Root = () => {
-  const { user } = useSelector((state) => state.user);
+  const { isLoading, user } = useSelector((state) => state.user);
   const navigate = useNavigate();
   useEffect(() => {
     if (!user) {
