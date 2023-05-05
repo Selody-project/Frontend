@@ -7,10 +7,10 @@ export default defineConfig({
   server: {
     port: 3000,
     proxy: {
-      "/naver": {
+      "/naver01": {
         target: "https://openapi.naver.com/v1/nid/me",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/naver/, ""),
+        rewrite: (path) => path.replace(/^\/naver01/, ""),
       },
       "/back": {
         target: "http://localhost:8000",
