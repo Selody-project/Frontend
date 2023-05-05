@@ -1,7 +1,16 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const Root = () => {
+  const { user } = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!user) {
+      navigate("/landing");
+    }
+  }, [user]);
+
   return (
     <div>
       <Outlet />
