@@ -1,7 +1,7 @@
 ---
 name: Task Template
 about: Template for describing developer tasks
-title: "[TASK] Create a feature"
+title: "[FRONT-TASK] Create a feature"
 labels: task
 assignees: ""
 ---
