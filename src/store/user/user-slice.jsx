@@ -10,6 +10,7 @@ const customFetch = axios.create({
 const initialState = {
   user: null,
   isLoading: false,
+  userLoading: true,
   menuOpen: false, // 메뉴 or 모달 같은 것들을 토글하기 위한 상태
   token: null,
 };
@@ -37,7 +38,7 @@ export const login = createAsyncThunk("user/login", async ({ email, password, na
       throw response.data;
     }
 
-    navigate("/");
+    // navigate("/");
 
     return response.data;
   } catch (error) {
@@ -52,7 +53,7 @@ export const naverLogin = createAsyncThunk("user/naverLogin", async ({ access_To
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ access_Token }),
+      body: JSON.stringify({ accessToken: access_Token }),
     });
 
     if (!response.ok) {
@@ -141,14 +142,14 @@ const userSlice = createSlice({
       })
       // 유저 쿠키 토큰 확인
       .addCase(getCurrentUser.pending, (state) => {
-        state.isLoading = true;
+        state.userLoading = true;
       })
       .addCase(getCurrentUser.fulfilled, (state, { payload }) => {
-        state.isLoading = false;
+        state.userLoading = false;
         state.user = payload?.exUser.nickname;
       })
       .addCase(getCurrentUser.rejected, (state, { payload }) => {
-        state.isLoading = false;
+        state.userLoading = false;
         console.log(payload);
       });
   },
