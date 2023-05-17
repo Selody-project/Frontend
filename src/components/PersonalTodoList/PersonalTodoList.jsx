@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { handleMenuToggle } from '../../store/user/user-slice';
 import ModalWindow from './Modal/Modal';
+import TodoItem from './TodoItem/TodoItem';
 import {
   TodoContainer,
   TodoHeader,
@@ -15,12 +16,18 @@ import {
 } from './PersonalTodoList.styles';
 
 const PersonalTodoList = () => {
+  const [todoData, setTodoData] = useState(null);
+
   const [selectedTab, setSelectedTab] = useState(false);
   const menuOpen = useSelector((state) => state.user.menuOpen);
   const dispatch = useDispatch();
 
   const handleMenuOpen = () => {
     dispatch(handleMenuToggle());
+  };
+
+  const handleSave = (formValues) => {
+    setTodoData(formValues);
   };
 
   return (
@@ -51,13 +58,17 @@ const PersonalTodoList = () => {
             </AddEventButton>
           </TodoTitle>
           <TodoSubtitle>하루동안의 할 일을 관리합니다.</TodoSubtitle>
-          <TodoButton onClick={handleMenuOpen}>
-            아직 추가된 일정이 없습니다! <br />할 일을 추가하여 하루동안 할 일을
-            관리해보세요.
-          </TodoButton>
+          {todoData ? (
+            <TodoItem key={todoData.id} todoData={todoData} />
+          ) : (
+            <TodoButton onClick={handleMenuOpen}>
+              아직 추가된 일정이 없습니다! <br />할 일을 추가하여 하루동안 할
+              일을 관리해보세요.
+            </TodoButton>
+          )}
         </TodoBody>
       </TodoContainer>
-      {menuOpen && <ModalWindow />}
+      {menuOpen && <ModalWindow onSave={handleSave} />}
     </>
   );
 };

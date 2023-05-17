@@ -10,7 +10,7 @@ import ModalHeader from './ModalHeader';
 import ModalBody from './ModalBody';
 import ModalFooter from './ModalFooter';
 
-const ModalWindow = () => {
+const ModalWindow = ({ onSave }) => {
   const [formValues, setFormValues] = useState({
     title: '',
     details: '',
@@ -69,6 +69,7 @@ const ModalWindow = () => {
     }
 
     // 일정 저장 로직
+    onSave(formValues);
 
     // 폼 초기화
     setFormValues({
@@ -81,6 +82,9 @@ const ModalWindow = () => {
       repeat: 'none',
       notification: 'none',
     });
+
+    // 모달 닫기
+    handleMenuOpen();
   };
 
   return (

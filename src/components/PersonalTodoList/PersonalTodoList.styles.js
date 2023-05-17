@@ -103,7 +103,7 @@ export const TodoSubtitle = styled.h3`
   margin-bottom: 20px;
   color: #777;
   padding: 0;
-  margin: 0;
+  margin: 0px 0px 20px 0px;
 `;
 
 export const TodoButton = styled.button`
