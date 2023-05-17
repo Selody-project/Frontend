@@ -1,9 +1,9 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { toast } from "react-toastify";
-import axios from "axios";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 
 const customFetch = axios.create({
-  baseURL: "/back",
+  baseURL: '/back',
   withCredentials: true,
 });
 
@@ -15,77 +15,96 @@ const initialState = {
   token: null,
 };
 
-export const signup = createAsyncThunk("user/signup", async ({ email, nickname, password, navigate }, thunkAPI) => {
-  try {
-    const response = await customFetch.post(`/api/auth/join`, { email, nickname, password });
-    if (response.statusText !== "OK") {
-      throw response.data;
+export const signup = createAsyncThunk(
+  'user/signup',
+  async ({ email, nickname, password, navigate }, thunkAPI) => {
+    try {
+      const response = await customFetch.post(`/api/auth/join`, {
+        email,
+        nickname,
+        password,
+      });
+      if (response.statusText !== 'OK') {
+        throw response.data;
+      }
+
+      navigate('/');
+
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
-
-    navigate("/");
-
-    return response.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
   }
-});
+);
 
-export const login = createAsyncThunk("user/login", async ({ email, password, navigate }, thunkAPI) => {
-  try {
-    const response = await customFetch.post(`/api/auth/login`, { email, password });
+export const login = createAsyncThunk(
+  'user/login',
+  async ({ email, password, navigate }, thunkAPI) => {
+    try {
+      const response = await customFetch.post(`/api/auth/login`, {
+        email,
+        password,
+      });
 
-    if (response.statusText !== "OK") {
-      throw response.data;
+      if (response.statusText !== 'OK') {
+        throw response.data;
+      }
+
+      // navigate("/");
+
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
-
-    // navigate("/");
-
-    return response.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
   }
-});
+);
 
-export const naverLogin = createAsyncThunk("user/naverLogin", async ({ access_Token, navigate }, thunkAPI) => {
-  try {
-    const response = await fetch("/back/api/auth/naver", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ accessToken: access_Token }),
-    });
+export const naverLogin = createAsyncThunk(
+  'user/naverLogin',
+  async ({ access_Token, navigate }, thunkAPI) => {
+    try {
+      const response = await fetch('/back/api/auth/naver', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ accessToken: access_Token }),
+      });
 
-    if (!response.ok) {
-      throw response;
+      if (!response.ok) {
+        throw response;
+      }
+
+      navigate('/');
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
-
-    navigate("/");
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
   }
-});
+);
 
-export const getCurrentUser = createAsyncThunk("user/getCurrentUser", async (_, thunkAPI) => {
-  try {
-    const response = await customFetch("/api/auth/token/verify");
+export const getCurrentUser = createAsyncThunk(
+  'user/getCurrentUser',
+  async (_, thunkAPI) => {
+    try {
+      const response = await customFetch('/api/auth/token/verify');
 
-    if (response.statusText !== "OK") {
-      throw response.data;
+      if (response.statusText !== 'OK') {
+        throw response.data;
+      }
+
+      return response.data;
+    } catch (error) {
+      console.log(error.message);
+      return;
     }
-
-    return response.data;
-  } catch (error) {
-    console.log(error.message);
-    return;
   }
-});
+);
 
 const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {
     logout: (state) => {
@@ -105,8 +124,8 @@ const userSlice = createSlice({
       .addCase(signup.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         console.log(payload);
-        state.user = payload.nickname;
-        toast.success(`환영합니다! ${state.user}님`);
+        state.user = payload;
+        toast.success(`환영합니다! ${state.user.nickname}님`);
       })
       .addCase(signup.rejected, (state, { payload }) => {
         state.isLoading = false;
@@ -119,8 +138,8 @@ const userSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.user = payload.nickname;
-        toast.success(`안녕하세요! ${state.user}님`);
+        state.user = payload;
+        toast.success(`안녕하세요! ${state.user.nickname}님`);
       })
       .addCase(login.rejected, (state, { payload }) => {
         state.isLoading = false;
@@ -132,8 +151,8 @@ const userSlice = createSlice({
       })
       .addCase(naverLogin.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.user = payload.nickname;
-        toast.success(`안녕하세요! ${state.user}님`);
+        state.user = payload;
+        toast.success(`안녕하세요! ${state.user.nickname}님`);
       })
       .addCase(naverLogin.rejected, (state, { payload }) => {
         state.isLoading = false;
@@ -146,7 +165,7 @@ const userSlice = createSlice({
       })
       .addCase(getCurrentUser.fulfilled, (state, { payload }) => {
         state.userLoading = false;
-        state.user = payload?.exUser.nickname;
+        state.user = payload?.exUser;
       })
       .addCase(getCurrentUser.rejected, (state, { payload }) => {
         state.userLoading = false;

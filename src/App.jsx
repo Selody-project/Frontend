@@ -1,22 +1,37 @@
-import React, { useEffect } from "react";
-import { createBrowserRouter, RouterProvider, useNavigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useEffect } from 'react';
+import {
+  createBrowserRouter,
+  RouterProvider,
+  useNavigate,
+} from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-import { Root, ErrorPage, LandingPage, LoginPage, SignUpPage, PersonalSchedulePage } from "./pages/index";
-import { useDispatch, useSelector } from "react-redux";
-import { getCurrentUser } from "./store/user/user-slice.jsx";
+import {
+  Root,
+  ErrorPage,
+  LandingPage,
+  LoginPage,
+  SignUpPage,
+  PersonalSchedulePage,
+  MyPage,
+} from './pages/index';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCurrentUser } from './store/user/user-slice.jsx';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <Root />,
     errorElement: <ErrorPage />,
-    children: [{ index: true, element: <PersonalSchedulePage /> }],
+    children: [
+      { index: true, element: <PersonalSchedulePage /> },
+      { path: 'mypage', element: <MyPage /> },
+    ],
   },
-  { path: "/landing", element: <LandingPage /> },
-  { path: "/login", element: <LoginPage /> },
-  { path: "/signup", element: <SignUpPage /> },
+  { path: '/landing', element: <LandingPage /> },
+  { path: '/login', element: <LoginPage /> },
+  { path: '/signup', element: <SignUpPage /> },
 ]);
 
 export default function App() {
@@ -28,7 +43,7 @@ export default function App() {
 
   return (
     <>
-      <ToastContainer position="top-center" style={{ width: "auto" }} />
+      <ToastContainer position="top-center" style={{ width: 'auto' }} />
       <RouterProvider router={router} />
     </>
   );
