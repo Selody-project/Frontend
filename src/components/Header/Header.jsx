@@ -30,11 +30,11 @@ const Header = () => {
         <i className={`fas fa-${menuOpen ? 'times' : 'bars'}`}></i>
       </HamburgerMenu>
       <Navigation open={menuOpen}>
-        <NavLink to="/share">공유일정 확인</NavLink>
-        <NavLink to="/">개인일정</NavLink>
-        <NavLink to="/community">공유채팅</NavLink>
-        <NavLink to="/mypage">마이페이지</NavLink>
-        <CreateButton>공유 페이지 생성</CreateButton>
+        <NavLink to="/share">공유일정 확인1</NavLink>
+        <NavLink to="/">개인일정1</NavLink>
+        <NavLink to="/community">공유채팅1</NavLink>
+        <NavLink to="/mypage">마이페이지1</NavLink>
+        <CreateButton>공유 페이지 생성1</CreateButton>
       </Navigation>
     </HeaderContainer>
   );
