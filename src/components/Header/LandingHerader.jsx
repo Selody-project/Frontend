@@ -31,7 +31,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: space-around;
   height: 5rem;
-  width: 100vw;
+  max-width: 100vw;
   background: #cdd3df;
   h1 {
     font-size: 2.5rem;
