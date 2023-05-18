@@ -1,157 +1,99 @@
-import { useState } from "react";
-import ReactVisibilitySensor from "react-visibility-sensor";
-import { motion } from "framer-motion";
-
-import { BG02, P01, P02, P03, P04 } from "../../img/index.js";
-import styled from "styled-components";
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import ReactTypingEffect from 'react-typing-effect';
+import styled from 'styled-components';
 
 const Landing = () => {
-  const [elIsVisible, setElIsVisible] = useState(false);
-  const bg = {
-    true: {
-      left: "7rem",
-    },
-    false: {
-      left: "19rem",
-    },
-  };
-  const musicPlayer = {
-    true: {
-      left: "295px",
-    },
-    false: {
-      left: "235px",
-    },
-  };
-  const rect = {
-    true: {
-      left: "11rem",
-    },
-    false: {
-      left: "13rem",
-    },
-  };
-  const heart = {
-    true: {
-      left: "9rem",
-    },
-    false: {
-      left: "12.5rem",
+  const bounceAnimation = {
+    y: ['0px', '20px', '0px'],
+    transition: {
+      y: {
+        duration: 1,
+        repeat: Infinity,
+        ease: 'easeInOut',
+      },
     },
   };
 
   return (
-    <ReactVisibilitySensor
-      onChange={(isVisible) => setElIsVisible(isVisible)}
-      minTopValue={300}
-    >
-      <Wrapper>
-        <div className="left">
-          <span>
-            그룹간의 <b>일정</b>을 공유해보세요
-          </span>
-          <span className="info">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Reprehenderit atque sed aliquid,
-            <br /> error illum facere veniam explicabo ea, facilis in nulla ex
-            possimus.
-            <br /> Facilis minima, neque alias dicta porro error!
-          </span>
-        </div>
-        <div className="right">
-          <motion.img
-            transition={{ duration: 2, type: "ease-out" }}
-            variants={bg}
-            animate={`${elIsVisible}`}
-            src={BG02}
-          />
-          <img src={P01} />
-          <motion.img
-            variants={musicPlayer}
-            animate={`${elIsVisible}`}
-            transition={{
-              duration: 2,
-              type: "ease-out",
-            }}
-            src={P02}
-          />
-          <motion.img
-            variants={rect}
-            animate={`${elIsVisible}`}
-            transition={{
-              type: "ease-out",
-              duration: 2,
-            }}
-            src={P03}
-          />
-          <motion.img
-            variants={heart}
-            animate={`${elIsVisible}`}
-            transition={{
-              type: "ease-out",
-              duration: 2,
-            }}
-            src={P04}
+    <Wrapper>
+      <div className="left">
+        <motion.img
+          src="/logo.svg"
+          animate={bounceAnimation}
+          width={500}
+          height={500}
+        />
+      </div>
+      <div className="right">
+        <h1>Selody와 함께 그룹 일정 공유 및 관리를 해보세요 !</h1>
+        <div className="typing-animation">
+          <ReactTypingEffect
+            text={[
+              'Selody는 개인 일정 관리 및 그룹 일정을 관리하는 플랫폼입니다. 프로젝트 공동 작업에서 이벤트 계획에 이르기까지 Selody는 일정을 단순화하여 더 쉽고 체계적으로 관리할 수 있습니다. 오늘 Selody와 함께 시작하세요!',
+            ]}
+            speed={40}
+            eraseSpeed={30}
+            typingDelay={500}
+            eraseDelay={5000}
           />
         </div>
-      </Wrapper>
-    </ReactVisibilitySensor>
+        <Link to="/login" className="auth-btn">
+          시작하기
+        </Link>
+      </div>
+    </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  background: #081730;
-  color: #fff;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 5rem;
-  max-width: 100vw;
+  padding: 2rem 5rem;
+  background: #fff;
+  color: #383838;
   height: calc(100vh - 5rem);
-  position: relative;
-  overflow: hidden;
+  max-width: 100vw;
+
   .left {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
-    font-size: 2rem;
-  }
-  .info {
-    font-size: 1rem;
-    color: #525d6e;
-    margin-top: 1rem;
-  }
-  .right {
-    position: relative;
     width: 50%;
-    img {
-      position: absolute;
-      &:nth-child(1) {
-        width: 100%;
-        top: -8rem;
-        left: 19rem;
-      }
-      &:nth-child(2) {
-        top: -15rem;
-        left: 13rem;
-        height: 34rem;
-      }
-      &:nth-child(3) {
-        top: 94px;
-        left: 235px;
-        width: 175px;
-      }
-      &:nth-child(4) {
-        top: 12rem;
-        left: 13rem;
-        width: 5rem;
-      }
-      &:nth-child(5) {
-        top: 12rem;
-        left: 12.5rem;
-        width: 5rem;
-      }
+  }
+
+  .right {
+    .typing-animation {
+      min-height: 100px;
+    }
+
+    max-width: 50%;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    color: #3f72af;
+    margin-bottom: 2rem;
+  }
+
+  p {
+    font-size: 1.2rem;
+    color: #112d4e;
+    margin-bottom: 2rem;
+  }
+
+  .auth-btn {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff;
+    background-color: #3f72af;
+    padding: 1rem 2rem;
+    border-radius: 0.25rem;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #112d4e;
     }
   }
 `;

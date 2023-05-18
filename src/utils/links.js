@@ -1,4 +1,4 @@
 export const links = [
-  { name: "community", route: "/" },
-  { name: "schedule", route: "/personal" },
+  { name: 'community', route: '/community' },
+  { name: 'schedule', route: '/' },
 ];

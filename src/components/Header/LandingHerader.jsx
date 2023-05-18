@@ -1,8 +1,7 @@
-import React from "react";
-
-import styled from "styled-components";
-import { links } from "../../utils/links.js";
-import { Link } from "react-router-dom";
+import React from 'react';
+import styled from 'styled-components';
+import { links } from '../../utils/links.js';
+import { Link } from 'react-router-dom';
 
 const LandingHerader = () => {
   return (
@@ -32,23 +31,24 @@ const Wrapper = styled.div`
   justify-content: space-around;
   height: 5rem;
   max-width: 100vw;
-  background: #cdd3df;
+  background: #ffffff;
   h1 {
     font-size: 2.5rem;
+    color: #3f72af;
   }
   .menu {
     a {
-      color: #555;
+      color: #112d4e;
       margin: 0 1rem;
       padding-bottom: 0.5rem;
       font-size: 1.15rem;
       font-weight: 500;
       text-transform: uppercase;
       transition: all 0.3s;
-      border-bottom: 4px solid #cdd3df;
+      border-bottom: 4px solid transparent;
       &:hover {
-        color: #000;
-        border-color: #162e5e;
+        color: #3f72af;
+        border-color: #3f72af;
       }
     }
   }
@@ -56,11 +56,10 @@ const Wrapper = styled.div`
     a {
       font-size: 1.25rem;
       font-weight: 700;
-      color: #000;
+      color: #3f72af;
       transition: all 0.3s;
       &:hover {
-        color: #3152c1;
-        border-color: #162e5e;
+        color: #112d4e;
       }
     }
   }
