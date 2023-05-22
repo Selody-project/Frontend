@@ -25,7 +25,7 @@ const buttonStlyes = {
 
 const Wrapper = styled.nav`
 	display: flex;
-	justify-content: space-around;
+	justify-content: space-between;
 	align-items: center;
 	padding: 0 105px 0 76px;
 	height: 77px;
