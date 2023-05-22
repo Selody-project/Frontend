@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getCurrentUser } from "./store/user/user-slice";
 import { ToastContainer } from "react-toastify";
-import router from "./Router";
+import router from "@/Router";
 
 export default function App() {
 	const dispatchFn = useDispatch();

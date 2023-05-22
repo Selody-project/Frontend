@@ -1,12 +1,13 @@
-const { createBrowserRouter } = require("react-router-dom");
-const {
-	Root,
+import { createBrowserRouter } from "react-router-dom";
+import SharePage from "./pages/ShagePage";
+import {
 	ErrorPage,
-	PersonalSchedulePage,
 	LandingPage,
 	LoginPage,
+	PersonalSchedulePage,
+	Root,
 	SignUpPage,
-} = require("./pages");
+} from "@/pages";
 
 const router = createBrowserRouter([
 	{
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
 	{ path: "/landing", element: <LandingPage /> },
 	{ path: "/login", element: <LoginPage /> },
 	{ path: "/signup", element: <SignUpPage /> },
+	{ path: "/share", element: <SharePage /> },
 ]);
 
 export default router;
