@@ -9,7 +9,7 @@ const Root = () => {
 		return <p>Loading,,,</p>;
 	}
 	if (!user) {
-		return <Navigate to="/share" />;
+		return <Navigate to="/landing" />;
 	}
 
 	return (

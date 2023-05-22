@@ -1,5 +1,11 @@
+import Navbar from "@/components/Share/Navbar";
+
 const SharePage = () => {
-	return <h1>this is share page</h1>;
+	return (
+		<>
+			<Navbar />
+		</>
+	);
 };
 
 export default SharePage;
