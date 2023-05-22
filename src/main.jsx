@@ -1,17 +1,15 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import Modal from "react-modal";
-import App from "./App";
-
-import { Provider } from "react-redux";
+import App from "@/App";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { store } from "./store/store";
-import GlobalStyles from "./styles/GlobalStyles";
+import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
-import { lightTheme } from "./styles/theme";
+import { lightTheme } from "@/styles/theme";
+import GlobalStyles from "@/styles/GlobalStyles";
+import ReactModal from "react-modal";
+import ReactDOM from "react-dom/client";
+import { store } from "@/store/store";
 
-if (Modal && Modal.setAppElement) {
-  Modal.setAppElement("#root");
+if (ReactModal && ReactModal.setAppElement) {
+  ReactModal.setAppElement("#root");
 }
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>

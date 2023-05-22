@@ -1,11 +1,16 @@
-import React, { useEffect } from "react";
-import { createBrowserRouter, RouterProvider, useNavigate } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  ErrorPage,
+  LandingPage,
+  LoginPage,
+  PersonalSchedulePage,
+  Root,
+  SignUpPage,
+} from "@/pages";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getCurrentUser } from "./store/user/user-slice";
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
-import { Root, ErrorPage, LandingPage, LoginPage, SignUpPage, PersonalSchedulePage } from "./pages/index";
-import { useDispatch, useSelector } from "react-redux";
-import { getCurrentUser } from "./store/user/user-slice.jsx";
 
 const router = createBrowserRouter([
   {
