@@ -7,6 +7,8 @@ import { Provider } from "react-redux";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { store } from "./store/store";
 import GlobalStyles from "./styles/GlobalStyles";
+import { ThemeProvider } from "styled-components";
+import { lightTheme } from "./styles/theme";
 
 if (Modal && Modal.setAppElement) {
   Modal.setAppElement("#root");
@@ -14,8 +16,10 @@ if (Modal && Modal.setAppElement) {
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <GoogleOAuthProvider clientId="379597382111-vo2ht0r8a3d0ais7v12q7777lu48al1a.apps.googleusercontent.com">
-      <GlobalStyles />
-      <App />
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyles />
+        <App />
+      </ThemeProvider>
     </GoogleOAuthProvider>
   </Provider>
 );
