@@ -4,7 +4,7 @@ export const lightTheme = {
     backgroundInverse: "#7A8997",
     positive: "#E1FFD4",
     negative: "#FEDED2",
-    primary: "#FF4785",
+    primary: "#6C55FE",
     secondary: "#1EA7FD",
     tertiary: "#DDDDDD",
     text: "#222222",
