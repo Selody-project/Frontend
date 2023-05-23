@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Calendar } from "react-calendar";
 import { Button } from "../Button";
 
 const Main = () => {
@@ -231,6 +230,9 @@ const CalendarBody = styled.div`
 				font-weight: 400;
 				color: black;
 			}
+		}
+		&:not(:first-child) {
+			margin-left: -1px;
 		}
 		&:not(:first-child) div {
 			border-top: none;

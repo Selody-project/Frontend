@@ -1,65 +1,64 @@
 import styled, { css } from "styled-components";
+import PropTypes from "prop-types";
 
-const getSizeStyles = ({
-	width,
-	height,
+const getStyles = ({
 	color,
 	backgroundColor,
 	fontSize = 14,
 	fontWeight = 400,
-	border = 0,
-	padding,
 }) => {
 	return css`
-		width: ${width}px;
-		height: ${height}px;
 		font-weight: ${fontWeight};
 		font-size: ${fontSize}px;
-		border: ${border};
 		color: ${color};
 		background-color: ${backgroundColor};
-		padding: ${padding};
-	`;
-};
-
-const getArrowStyles = ({ arrow }) => {
-	if (!arrow) return;
-	return css`
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-
-		& span {
-			width: 8px;
-			height: 8px;
-			border: solid #30374f;
-			border-width: 0 1.5px 1.5px 0;
-			transform: rotate(45deg) translateX(-4px);
-			transition: transform 0.3s ease;
-
-			&.active {
-				transform: rotate(225deg);
-			}
-		}
 	`;
 };
 
 const StyledButton = styled.button`
-	font-weight: ${({ theme }) => theme.typography.weight.common};
-	cursor: pointer;
-
-	${(props) => getSizeStyles(props)}
-	${(props) => getArrowStyles(props)}
+	width: 89px;
+	height: 34px;
+	${(props) => getStyles(props)}
 `;
 
-export const Button = ({ label, ...rest }) => {
-	if (rest.arrow) {
-		return (
-			<StyledButton {...rest}>
-				{label}
-				<span></span>
-			</StyledButton>
-		);
-	}
-	return <StyledButton {...rest}>{label}</StyledButton>;
+/**
+ * 버튼 컴포넌트 디자인
+ */
+export const Button = ({ label, ...props }) => {
+	return <StyledButton {...props}>{label}</StyledButton>;
+};
+
+Button.propTypes = {
+	/**
+	 * 배경색 지정
+	 */
+	backgroundColor: PropTypes.string,
+	/**
+	 * 글자색 지정
+	 */
+	color: PropTypes.string,
+	/**
+	 * 내용
+	 */
+	label: PropTypes.string.isRequired,
+	/**
+	 * Optional click handler
+	 */
+	onClick: PropTypes.func,
+	/**
+	 * 내용 크기
+	 */
+	fontSize: PropTypes.number,
+	/**
+	 * 내용 두께
+	 */
+	fontWeight: PropTypes.number,
+};
+
+Button.defaultProps = {
+	backgroundColor: "#6C55FE",
+	color: "white",
+	onClick: null,
+	fontWeight: 400,
+	fontSize: 14,
 };
