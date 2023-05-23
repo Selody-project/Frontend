@@ -49,6 +49,16 @@ const Main = () => {
 						<li>오늘 일정</li>
 						<li>예정</li>
 					</ScheduleList>
+					<ScheduleControlWrapper>
+						<div className="textWrapper">
+							<p className="title">일정 후보</p>
+							<p className="desc">함께 일정을 조율해보세요.</p>
+						</div>
+						<div className="buttonWrapper">
+							<button className="add">일정 후보 추가</button>
+							<button className="select">일정 후보 선택</button>
+						</div>
+					</ScheduleControlWrapper>
 				</ScheduleWrapper>
 			</MainWrapper>
 		</Wrapper>
@@ -127,6 +137,54 @@ const ScheduleList = styled.ul`
 			background-color: #c9ccd7;
 			color: white;
 			/* border: none; */
+		}
+	}
+`;
+
+const ScheduleControlWrapper = styled.div`
+	display: flex;
+	margin-top: 41px;
+	align-items: flex-start;
+	justify-content: space-between;
+
+	& div.textWrapper {
+		display: flex;
+	}
+
+	& p.title {
+		font-size: 20px;
+		font-weight: 600;
+		line-height: 24px;
+		color: #313131;
+	}
+
+	& p.desc {
+		font-size: 12px;
+		font-weight: 400;
+		line-height: 24px;
+		color: #2f2f2f;
+		margin-left: 13px;
+	}
+
+	& div.buttonWrapper {
+		display: flex;
+		flex-direction: column;
+		gap: 27px;
+
+		& button {
+			width: 121px;
+			height: 32px;
+			color: #ffffff;
+			
+			&.add {
+				font-size: 14px;
+				background-color: #c9ccd7;
+			}
+
+			&.select {
+				font-size: 12px;
+				background-color: #34363c;
+			}
 		}
 	}
 `;
