@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { Button } from "../Button";
+import { Button } from "@components/Button";
+import { Select } from "@components/Select";
 
 const Main = () => {
 	return (
@@ -11,13 +12,12 @@ const Main = () => {
 			<MainWrapper>
 				<CalendarWrapper>
 					<CalendarHeader>
-						<Button
-							label={"2023년 4월"}
-							backgroundColor={"transparent"}
+						<Select
+							label="2023년 4월"
 							fontSize={23}
-							arrow={true}
-							width={145}
-							height={28}
+							marginRight={12}
+							arrowWidth={12}
+							arrowHeight={6}
 						/>
 						<CalendarOptionsWrapper>
 							<UserLists />
