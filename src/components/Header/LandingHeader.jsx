@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { links } from '../../utils/links.js';
 import { Link } from 'react-router-dom';
 
-const LandingHerader = () => {
+const LandingHeader = () => {
   return (
     <Wrapper>
       <h1>Selody</h1>
@@ -65,4 +65,4 @@ const Wrapper = styled.div`
   }
 `;
 
-export default LandingHerader;
+export default LandingHeader;
