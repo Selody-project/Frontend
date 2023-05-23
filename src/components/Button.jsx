@@ -32,7 +32,7 @@ const getArrowStyles = ({ arrow }) => {
 		& span {
 			width: 8px;
 			height: 8px;
-			border: solid #30374F;
+			border: solid #30374f;
 			border-width: 0 1.5px 1.5px 0;
 			transform: rotate(45deg) translateX(-4px);
 			transition: transform 0.3s ease;

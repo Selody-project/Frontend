@@ -28,6 +28,7 @@ const Main = () => {
 								color={"white"}
 								width={89}
 								height={33}
+								fontWeight={500}
 							/>
 							<Button
 								label={"그룹 A"}
@@ -42,6 +43,13 @@ const Main = () => {
 						</CalendarOptionsWrapper>
 					</CalendarHeader>
 				</CalendarWrapper>
+				<ScheduleWrapper>
+					<ScheduleList>
+						<li className="selected">일정 후보</li>
+						<li>오늘 일정</li>
+						<li>예정</li>
+					</ScheduleList>
+				</ScheduleWrapper>
 			</MainWrapper>
 		</Wrapper>
 	);
@@ -93,5 +101,34 @@ const CalendarOptionsWrapper = styled.ul`
 `;
 
 const UserLists = styled.ul``;
+
+const ScheduleWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+`;
+
+const ScheduleList = styled.ul`
+	display: table;
+	border-collapse: collapse;
+	height: 33px;
+	cursor: pointer;
+
+	& li {
+		display: table-cell;
+		text-align: center;
+		vertical-align: middle;
+
+		box-sizing: border-box;
+		width: 136px;
+		background-color: white;
+		color: #30374f;
+		border: 1px solid #c9ccd7;
+		&.selected {
+			background-color: #c9ccd7;
+			color: white;
+			/* border: none; */
+		}
+	}
+`;
 
 export default Main;
