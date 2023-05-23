@@ -38,11 +38,11 @@ describe('PersonalSchedulePage', () => {
   test('renders Calendar component', () => {
     renderWithRedux(<PersonalSchedulePage />);
 
-    // Check if the "월간" button is rendered
+    // 월간 버튼 확인
     const monthlyButton = screen.getByText(/월간/i);
     expect(monthlyButton).toBeInTheDocument();
 
-    // Check if the "주간" button is rendered
+    // 주간 버튼 확인
     const weeklyButton = screen.getByText(/주간/i);
     expect(weeklyButton).toBeInTheDocument();
   });
