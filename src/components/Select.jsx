@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
-import { number, string } from "prop-types";
 import { ReactComponent as UnderArrow } from "../img/UnderArrow.svg";
+import { PropTypes } from "prop-types";
 
 const getStyles = ({
 	width,
@@ -9,7 +9,8 @@ const getStyles = ({
 	fontWeight,
 	color,
 	backgroundColor,
-	marginRight,
+	marginLeft,
+	border,
 }) => {
 	return css`
 		width: ${width}px;
@@ -18,62 +19,70 @@ const getStyles = ({
 		font-weight: ${fontWeight};
 		color: ${color};
 		background-color: ${backgroundColor};
-		margin-right: ${marginRight}px;
+		border: ${border};
+		& svg {
+			margin-left: ${marginLeft}px;
+		}
 	`;
 };
 
 const StyledSelect = styled.div`
 	display: flex;
 	align-items: center;
+	justify-content: center;
+	cursor: pointer;
 	${(props) => getStyles(props)}
-`;
-
-const Wrapper = styled.div`
-	display: flex;
-	align-items: center;
 `;
 
 /**
  * 드롭다운으로 요소를 나타내는 Select 컴포넌트
  */
-export const Select = ({ label, arrowWidth, arrowHeight, ...props }) => {
+export const Select = ({ label, ...props }) => {
 	return (
-		<Wrapper>
-			<StyledSelect {...props}>{label}</StyledSelect>
+		<StyledSelect {...props}>
+			{label}
 			<UnderArrow />
-		</Wrapper>
+		</StyledSelect>
 	);
 };
 
-Select.prototype = {
+Select.propTypes = {
 	/**
 	 * 글자(내용)
 	 */
-	label: string.isRequired,
+	label: PropTypes.string.isRequired,
 	/**
 	 * 너비
 	 */
-	width: number,
+	width: PropTypes.number,
 	/**
 	 * 높이
 	 */
-	height: number,
+	height: PropTypes.number,
 	/**
 	 * 글자 크기
 	 */
-	fontSize: number,
+	fontSize: PropTypes.number,
 	/**
 	 * 글자 두꼐
 	 */
-	fontWeight: number,
+	fontWeight: PropTypes.number,
 	/**
 	 * 글자 색상
 	 */
-	color: string,
+	color: PropTypes.string,
 	/**
 	 * 배경 색상
 	 */
-	backgroundColor: string,
+	backgroundColor: PropTypes.string,
+	/**
+	 * 꺽쇠 위치
+	 */
+	marginLeft: PropTypes.number,
+	/**
+	 * 테두리 설정
+	 */
+	border: PropTypes.string,
 };
 
 Select.defaultProps = {
@@ -81,4 +90,5 @@ Select.defaultProps = {
 	fontWeight: 400,
 	color: "black",
 	backgroundColor: "white",
+	border: "none",
 };

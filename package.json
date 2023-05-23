@@ -24,6 +24,7 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.10.0",
     "react-toastify": "^9.1.2",
+    "storybook-builder-vite": "^0.1.23",
     "styled-components": "^5.3.9",
     "vite-plugin-svgr": "^3.2.0"
   },

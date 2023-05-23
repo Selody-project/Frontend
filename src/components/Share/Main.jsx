@@ -12,13 +12,7 @@ const Main = () => {
 			<MainWrapper>
 				<CalendarWrapper>
 					<CalendarHeader>
-						<Select
-							label="2023년 4월"
-							fontSize={23}
-							marginRight={12}
-							arrowWidth={12}
-							arrowHeight={6}
-						/>
+						<Select label="2023년 4월" fontSize={23} marginLeft={12} />
 						<CalendarOptionsWrapper>
 							<UserLists />
 							<Button
@@ -28,15 +22,13 @@ const Main = () => {
 								height={33}
 								fontWeight={500}
 							/>
-							<Button
+							<Select
 								label={"그룹 A"}
-								backgroundColor={"white"}
 								color={"#30374F"}
-								arrow={true}
 								width={137}
 								height={33}
 								border={"1px solid #C9CCD7"}
-								padding={"8px 10px"}
+								marginLeft={64}
 							/>
 						</CalendarOptionsWrapper>
 					</CalendarHeader>
