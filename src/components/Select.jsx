@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { ReactComponent as UnderArrow } from "../img/UnderArrow.svg";
-import { PropTypes } from "prop-types";
+import PropTypes from "prop-types";
 
 const getStyles = ({
 	width,
@@ -83,6 +83,10 @@ Select.propTypes = {
 	 * 테두리 설정
 	 */
 	border: PropTypes.string,
+	/**
+	 * Optional click handler
+	 */
+	onClick: PropTypes.func,
 };
 
 Select.defaultProps = {
@@ -91,4 +95,5 @@ Select.defaultProps = {
 	color: "black",
 	backgroundColor: "white",
 	border: "none",
+	onClick: null,
 };
