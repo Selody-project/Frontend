@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Button } from "@components/Button";
 import { Select } from "@components/Select";
 import { blind } from "@styles/blind";
+import { ReactComponent as LinkIcon } from "@/img/LinkIcon.svg";
 
 const Main = () => {
 	return (
@@ -103,6 +104,35 @@ const Main = () => {
 							</div>
 						</div>
 					</CalendarBody>
+					<PopuoGroup>
+						<span className="title">그룹 A</span>
+						<div className="code">
+							<input
+								type="text"
+								placeholder="초대할 사용자 이메일 또는 코드 입력"
+							/>
+							<Button
+								label={"초대"}
+								backgroundColor="#292B33"
+								width={60}
+								height={39}
+							/>
+						</div>
+						<div className="link">
+							<span>링크로 사용자 초대</span>
+							<Button
+								label={`링크복사`}
+								backgroundColor="transparent"
+								color="#292B33"
+								fontSize={12}
+								fontWeight={500}
+								height={21}
+								lineHeight={15}
+							>
+								<LinkIcon />
+							</Button>
+						</div>
+					</PopuoGroup>
 				</CalendarWrapper>
 				<ScheduleWrapper>
 					<ScheduleOptionList>
@@ -132,6 +162,10 @@ const Main = () => {
 							/>
 						</div>
 					</ScheduleControlWrapper>
+					<EmptySheduleList>
+						공유한 사용자들에게 일정 후보를
+						<br /> 먼저 제안해보세요!
+					</EmptySheduleList>
 					<ScheduleList>
 						<li>
 							<div>
@@ -248,9 +282,6 @@ const CalendarBody = styled.div`
 				color: black;
 			}
 		}
-		&:not(:first-child) {
-			margin-left: -1px;
-		}
 		&:not(:first-child) div {
 			border-top: none;
 		}
@@ -345,6 +376,20 @@ const ScheduleControlWrapper = styled.div`
 	}
 `;
 
+const EmptySheduleList = styled.div`
+	display: flex;
+	justify-content: center;
+	text-align: center;
+	line-height: 17px;
+	font-size: 14px;
+	color: #30374f;
+	align-items: center;
+	border: 1px solid #c9ccd7;
+	height: 186px;
+	margin-top: 27px;
+	font-weight: 500;
+`;
+
 const ScheduleList = styled.ul`
 	display: flex;
 	flex-direction: column;
@@ -379,6 +424,58 @@ const ScheduleList = styled.ul`
 			&.active {
 				transform: rotate(225deg);
 			}
+		}
+	}
+`;
+
+const PopuoGroup = styled.div`
+	/* position: absolute; */
+	padding: 21px 20px 22px;
+	background: #ffffff;
+	border: 1px solid #c9ccd7;
+	box-shadow: 2px 4px 8px #e7e9f0;
+	display: flex;
+	flex-direction: column;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 17px;
+	width: 421px;
+
+	span.title {
+		color: #30374f;
+	}
+
+	div.code {
+		display: flex;
+		gap: 7px;
+		margin-top: 16px;
+		align-items: center;
+		input {
+			height: 39px;
+			flex: 1;
+			box-sizing: border-box;
+			padding-left: 10px;
+			background-color: #f4f6fc;
+			border: none;
+
+			&::placeholder {
+				color: #9ca0ab;
+			}
+		}
+	}
+
+	div.link {
+		display: flex;
+		font-size: 12px;
+		line-height: 15px;
+		align-items: center;
+		margin-top: 13px;
+		border: 1px solid #ebedf3;
+		padding: 8px 10px;
+
+		span {
+			color: #9ca0ab;
+			flex: 1;
 		}
 	}
 `;

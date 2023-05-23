@@ -8,6 +8,7 @@ const getStyles = ({
 	fontWeight,
 	width,
 	height,
+	lineHeight,
 }) => {
 	return css`
 		font-weight: ${fontWeight};
@@ -16,18 +17,31 @@ const getStyles = ({
 		background-color: ${backgroundColor};
 		width: ${width}px;
 		height: ${height}px;
+		line-height: ${lineHeight}px;
+
+		& svg {
+			margin-right: 7.67px;
+		}
 	`;
 };
 
 const StyledButton = styled.button`
 	${(props) => getStyles(props)}
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `;
 
 /**
  * 버튼 컴포넌트 디자인
  */
-export const Button = ({ label, ...props }) => {
-	return <StyledButton {...props}>{label}</StyledButton>;
+export const Button = ({ label, children, ...props }) => {
+	return (
+		<StyledButton {...props}>
+			{children}
+			{label}
+		</StyledButton>
+	);
 };
 
 Button.propTypes = {
