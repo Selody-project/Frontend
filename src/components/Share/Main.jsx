@@ -44,11 +44,11 @@ const Main = () => {
 					</CalendarHeader>
 				</CalendarWrapper>
 				<ScheduleWrapper>
-					<ScheduleList>
+					<ScheduleOptionList>
 						<li className="selected">일정 후보</li>
 						<li>오늘 일정</li>
 						<li>예정</li>
-					</ScheduleList>
+					</ScheduleOptionList>
 					<ScheduleControlWrapper>
 						<div className="textWrapper">
 							<p className="title">일정 후보</p>
@@ -59,6 +59,29 @@ const Main = () => {
 							<button className="select">일정 후보 선택</button>
 						</div>
 					</ScheduleControlWrapper>
+					<ScheduleList>
+						<li>
+							<div>
+								<p>월요일 회의</p>
+								<p>4월 10일 오후 02:00 ~ 오후 04:00</p>
+							</div>
+							<div className="arrow"></div>
+						</li>
+						<li>
+							<div>
+								<p>월요일 회의</p>
+								<p>4월 10일 오후 02:00 ~ 오후 04:00</p>
+							</div>
+							<div className="arrow"></div>
+						</li>
+						<li>
+							<div>
+								<p>월요일 회의</p>
+								<p>4월 10일 오후 02:00 ~ 오후 04:00</p>
+							</div>
+							<div className="arrow"></div>
+						</li>
+					</ScheduleList>
 				</ScheduleWrapper>
 			</MainWrapper>
 		</Wrapper>
@@ -117,7 +140,7 @@ const ScheduleWrapper = styled.div`
 	flex-direction: column;
 `;
 
-const ScheduleList = styled.ul`
+const ScheduleOptionList = styled.ul`
 	display: table;
 	border-collapse: collapse;
 	height: 33px;
@@ -175,7 +198,7 @@ const ScheduleControlWrapper = styled.div`
 			width: 121px;
 			height: 32px;
 			color: #ffffff;
-			
+
 			&.add {
 				font-size: 14px;
 				background-color: #c9ccd7;
@@ -184,6 +207,44 @@ const ScheduleControlWrapper = styled.div`
 			&.select {
 				font-size: 12px;
 				background-color: #34363c;
+			}
+		}
+	}
+`;
+
+const ScheduleList = styled.ul`
+	display: flex;
+	flex-direction: column;
+	margin-top: 15px;
+	gap: 13px;
+
+	& li {
+		display: flex;
+		flex: 1;
+		justify-content: space-between;
+		align-items: center;
+		padding: 15px 30px 14px 25px;
+		border: 1px solid #c9ccd7;
+
+		& div {
+			display: flex;
+			flex-direction: column;
+			font-size: 14px;
+			line-height: 17px;
+			font-weight: 500;
+			color: #30374f;
+		}
+
+		& .arrow {
+			width: 8px;
+			height: 8px;
+			border: solid #30374f;
+			border-width: 0 1.5px 1.5px 0;
+			transform: rotate(45deg) translateX(-4px);
+			transition: transform 0.3s ease;
+
+			&.active {
+				transform: rotate(225deg);
 			}
 		}
 	}
