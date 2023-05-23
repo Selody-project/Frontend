@@ -24,7 +24,6 @@ const Main = () => {
 							<Button
 								label={"사용자 초대"}
 								backgroundColor={"#9B9FAA"}
-								color={"white"}
 								width={89}
 								height={33}
 								fontWeight={500}
@@ -111,8 +110,20 @@ const Main = () => {
 							<p className="desc">함께 일정을 조율해보세요.</p>
 						</div>
 						<div className="buttonWrapper">
-							<button className="add">일정 후보 추가</button>
-							<button className="select">일정 후보 선택</button>
+							<Button
+								label={"일정 후보 추가"}
+								width={109}
+								height={32}
+								fontWeight={500}
+								backgroundColor={"#C9CCD7"}
+							/>
+							<Button
+								label={"일정 후보 선택"}
+								width={109}
+								height={32}
+								fontWeight={500}
+								backgroundColor="#34363C"
+							/>
 						</div>
 					</ScheduleControlWrapper>
 					<ScheduleList>
@@ -305,22 +316,6 @@ const ScheduleControlWrapper = styled.div`
 		display: flex;
 		flex-direction: column;
 		gap: 27px;
-
-		& button {
-			width: 121px;
-			height: 32px;
-			color: #ffffff;
-
-			&.add {
-				font-size: 14px;
-				background-color: #c9ccd7;
-			}
-
-			&.select {
-				font-size: 12px;
-				background-color: #34363c;
-			}
-		}
 	}
 `;
 

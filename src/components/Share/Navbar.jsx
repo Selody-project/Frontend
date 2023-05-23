@@ -10,17 +10,15 @@ const Navbar = () => {
 				<NavLink to={"1234"}>개인 일정</NavLink>
 				<NavLink to={"4567"}>커뮤니티</NavLink>
 			</div>
-			<Button {...buttonStlyes} />
+			<Button
+				label={"공유 페이지 생성"}
+				width={137}
+				height={47}
+				fontWeight={500}
+				backgroundColor={"#9B9FAA"}
+			/>
 		</Wrapper>
 	);
-};
-
-const buttonStlyes = {
-	label: "공유 페이지 생성",
-	width: 137,
-	height: 47,
-	backgroundColor: "#9B9FAA",
-	color: "white",
 };
 
 const Wrapper = styled.nav`

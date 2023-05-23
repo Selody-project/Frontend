@@ -4,20 +4,22 @@ import PropTypes from "prop-types";
 const getStyles = ({
 	color,
 	backgroundColor,
-	fontSize = 14,
-	fontWeight = 400,
+	fontSize,
+	fontWeight,
+	width,
+	height,
 }) => {
 	return css`
 		font-weight: ${fontWeight};
 		font-size: ${fontSize}px;
 		color: ${color};
 		background-color: ${backgroundColor};
+		width: ${width}px;
+		height: ${height}px;
 	`;
 };
 
 const StyledButton = styled.button`
-	width: 89px;
-	height: 34px;
 	${(props) => getStyles(props)}
 `;
 
@@ -53,6 +55,14 @@ Button.propTypes = {
 	 * 내용 두께
 	 */
 	fontWeight: PropTypes.number,
+	/**
+	 * 너비
+	 */
+	width: PropTypes.number,
+	/**
+	 * 높이
+	 */
+	height: PropTypes.number,
 };
 
 Button.defaultProps = {
@@ -61,4 +71,6 @@ Button.defaultProps = {
 	onClick: null,
 	fontWeight: 400,
 	fontSize: 14,
+	width: 89,
+	height: 34,
 };
