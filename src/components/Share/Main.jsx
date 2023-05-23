@@ -42,6 +42,63 @@ const Main = () => {
 							/>
 						</CalendarOptionsWrapper>
 					</CalendarHeader>
+					<CalendarDateHeader>
+						<p>일</p>
+						<p>월</p>
+						<p>화</p>
+						<p>수</p>
+						<p>목</p>
+						<p>금</p>
+						<p>토</p>
+					</CalendarDateHeader>
+					<CalendarBody>
+						<div>
+							<div className="day">
+								<p>1</p>
+							</div>
+							<div className="day">
+								<p>2</p>
+							</div>
+							<div className="day">
+								<p>3</p>
+							</div>
+							<div className="day">
+								<p>4</p>
+							</div>
+							<div className="day">
+								<p>5</p>
+							</div>
+							<div className="day">
+								<p>6</p>
+							</div>
+							<div className="day">
+								<p>7</p>
+							</div>
+						</div>
+						<div>
+							<div className="day">
+								<p>1</p>
+							</div>
+							<div className="day">
+								<p>2</p>
+							</div>
+							<div className="day">
+								<p>3</p>
+							</div>
+							<div className="day">
+								<p>4</p>
+							</div>
+							<div className="day">
+								<p>5</p>
+							</div>
+							<div className="day">
+								<p>6</p>
+							</div>
+							<div className="day">
+								<p>7</p>
+							</div>
+						</div>
+					</CalendarBody>
 				</CalendarWrapper>
 				<ScheduleWrapper>
 					<ScheduleOptionList>
@@ -126,6 +183,59 @@ const CalendarHeader = styled.header`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+`;
+
+const CalendarDateHeader = styled.div`
+	margin-top: 46px;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+
+	& p {
+		font-size: 17px;
+		font-weight: 400;
+		line-height: 21px;
+		color: #d1d3dc;
+
+		&:first-child {
+			color: #ff9797;
+		}
+
+		&:last-child {
+			color: #85a0ff;
+		}
+	}
+`;
+
+const CalendarBody = styled.div`
+	margin-top: 33px;
+
+	& div {
+		display: grid;
+		grid-template-columns: repeat(7, 1fr);
+
+		& div {
+			position: relative;
+			width: 100%;
+			height: 0;
+			padding-top: 81.04%;
+			background-color: white;
+			border: 1px solid #c9ccd7;
+
+			& p {
+				position: absolute;
+				left: 8px;
+				top: 9px;
+				font-size: 14px;
+				line-height: 17px;
+				font-weight: 400;
+				color: black;
+			}
+		}
+		&:not(:first-child) div {
+			border-top: none;
+		}
+	}
 `;
 
 const CalendarOptionsWrapper = styled.ul`
