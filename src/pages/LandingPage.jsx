@@ -1,11 +1,11 @@
-import React from "react";
-import Landing from "../components/Home/Landing";
-import LandingHerader from "../components/Header/LandingHerader.jsx";
+import React from 'react';
+import Landing from '../components/Home/Landing';
+import LandingHeader from '../components/Header/LandingHeader';
 
 const LandingPage = () => {
   return (
     <>
-      <LandingHerader />
+      <LandingHeader />
       <Landing />
     </>
   );
