@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Button } from "@components/Button";
 import { Select } from "@components/Select";
+import { blind } from "@styles/blind";
 
 const Main = () => {
 	return (
@@ -14,7 +15,20 @@ const Main = () => {
 					<CalendarHeader>
 						<Select label="2023년 4월" fontSize={23} marginLeft={12} />
 						<CalendarOptionsWrapper>
-							<UserLists />
+							<UserLists>
+								<li>
+									<span>user1</span>
+								</li>
+								<li>
+									<span>user2</span>
+								</li>
+								<li>
+									<span>user3</span>
+								</li>
+								<li>
+									<span>user4</span>
+								</li>
+							</UserLists>
 							<Button
 								label={"사용자 초대"}
 								backgroundColor={"#9B9FAA"}
@@ -248,7 +262,27 @@ const CalendarOptionsWrapper = styled.ul`
 	gap: 14px;
 `;
 
-const UserLists = styled.ul``;
+const UserLists = styled.ul`
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: flex-start;
+	align-items: center;
+	margin-right: 6px;
+
+	li {
+		width: 26px;
+		height: 26px;
+		border-radius: 50%;
+		border: 1px solid #60c8c8;
+		margin-right: -6px;
+		background-color: #eff0f4;
+		z-index: 1;
+
+		span {
+			${blind}
+		}
+	}
+`;
 
 const ScheduleWrapper = styled.div`
 	display: flex;
