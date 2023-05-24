@@ -40,7 +40,7 @@ const Landing = () => {
 							text={[
 								"Selody는 개인 일정 관리 및 그룹 일정을 관리하는 플랫폼입니다. 프로젝트 공동 작업에서 이벤트 계획에 이르기까지 Selody는 일정을 단순화하여 더 쉽고 체계적으로 관리할 수 있습니다. 오늘 Selody와 함께 시작하세요!",
 							]}
-							speed={40}
+							speed={25}
 							eraseSpeed={30}
 							typingDelay={500}
 							eraseDelay={5000}
