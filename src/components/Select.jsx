@@ -2,6 +2,27 @@ import styled, { css } from "styled-components";
 import { ReactComponent as UnderArrow } from "../img/UnderArrow.svg";
 import PropTypes from "prop-types";
 
+/**
+ * 드롭다운으로 요소를 나타내는 Select 컴포넌트
+ */
+export const Select = ({ label, desc, isSelected, ...props }) => {
+	return (
+		<StyledSelect {...props}>
+			<Labels label={label} desc={desc} />
+			<UnderArrow className={isSelected ? "active" : ""} />
+		</StyledSelect>
+	);
+};
+
+const Labels = ({ label, desc }) => {
+	return (
+		<div className="labelWrapper">
+			<p>{label}</p>
+			<p>{desc}</p>
+		</div>
+	);
+};
+
 const getStyles = ({
 	width,
 	height,
@@ -9,7 +30,7 @@ const getStyles = ({
 	fontWeight,
 	color,
 	backgroundColor,
-	marginLeft,
+	padding,
 	border,
 }) => {
 	return css`
@@ -20,31 +41,31 @@ const getStyles = ({
 		color: ${color};
 		background-color: ${backgroundColor};
 		border: ${border};
-		& svg {
-			margin-left: ${marginLeft}px;
-		}
+		padding: ${padding};
 	`;
 };
 
 const StyledSelect = styled.div`
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-between;
 	cursor: pointer;
+
+	& .labelWrapper {
+		line-height: 17px;
+	}
+
+	& svg {
+		/* transform: rotate(45deg) translateX(-4px); */
+		transition: transform 0.3s ease;
+
+		&.active {
+			transform: rotate(180deg);
+		}
+	}
+
 	${(props) => getStyles(props)}
 `;
-
-/**
- * 드롭다운으로 요소를 나타내는 Select 컴포넌트
- */
-export const Select = ({ label, ...props }) => {
-	return (
-		<StyledSelect {...props}>
-			{label}
-			<UnderArrow />
-		</StyledSelect>
-	);
-};
 
 Select.propTypes = {
 	/**

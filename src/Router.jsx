@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import SharePage from "./pages/ShagePage";
+import SharePage from "./pages/SharePage";
 import {
 	ErrorPage,
 	LandingPage,

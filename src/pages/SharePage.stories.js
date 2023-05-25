@@ -1,4 +1,4 @@
-import SharePage from "@/pages/ShagePage";
+import SharePage from "@/pages/SharePage";
 import { withRouter } from "storybook-addon-react-router-v6";
 
 export default {

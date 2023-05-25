@@ -3,6 +3,17 @@ import { Button } from "@components/Button";
 import { Select } from "@components/Select";
 import { blind } from "@styles/blind";
 import { ReactComponent as LinkIcon } from "@/img/LinkIcon.svg";
+import { ToggleSelect } from "../ToggleSelect";
+
+const desc = [
+	{
+		title: "프로젝트 일정 및 아이디어 회의1234",
+	},
+	{
+		title: "프로젝트 일정 및 아이디어 회의",
+		desc: [{ title: "팀원 A, 팀원 B, 팀원 C, 팀원 D" }],
+	},
+];
 
 const Main = () => {
 	return (
@@ -14,7 +25,7 @@ const Main = () => {
 			<MainWrapper>
 				<CalendarWrapper>
 					<CalendarHeader>
-						<Select label="2023년 4월" fontSize={23} marginLeft={12} />
+						<Select label="2023년 4월" fontSize={23} width={145} height={28} />
 						<CalendarOptionsWrapper>
 							<UserLists>
 								<li>
@@ -43,7 +54,7 @@ const Main = () => {
 								width={137}
 								height={33}
 								border={"1px solid #C9CCD7"}
-								marginLeft={64}
+								padding="0 11px 0 10px"
 							/>
 						</CalendarOptionsWrapper>
 					</CalendarHeader>
@@ -167,27 +178,22 @@ const Main = () => {
 						<br /> 먼저 제안해보세요!
 					</EmptySheduleList>
 					<ScheduleList>
-						<li>
-							<div>
-								<p>월요일 회의</p>
-								<p>4월 10일 오후 02:00 ~ 오후 04:00</p>
-							</div>
-							<div className="arrow"></div>
-						</li>
-						<li>
-							<div>
-								<p>월요일 회의</p>
-								<p>4월 10일 오후 02:00 ~ 오후 04:00</p>
-							</div>
-							<div className="arrow"></div>
-						</li>
-						<li>
-							<div>
-								<p>월요일 회의</p>
-								<p>4월 10일 오후 02:00 ~ 오후 04:00</p>
-							</div>
-							<div className="arrow"></div>
-						</li>
+						<ToggleSelect
+							isSelected={true}
+							descs={desc}
+							label="월요일 회의"
+							desc="4월 10일 오후 02:00 ~ 오후 04:00"
+							padding="15px 20px 14.5px 25px"
+							border="1px solid #C9CCD7"
+						/>
+						<ToggleSelect
+							isSelected={false}
+							descs={desc}
+							label="월요일 회의"
+							desc="4월 10일 오후 02:00 ~ 오후 04:00"
+							padding="15px 20px 14.5px 25px"
+							border="1px solid #C9CCD7"
+						/>
 					</ScheduleList>
 				</ScheduleWrapper>
 			</MainWrapper>
@@ -300,7 +306,7 @@ const UserLists = styled.ul`
 	align-items: center;
 	margin-right: 6px;
 
-	li {
+	& li {
 		width: 26px;
 		height: 26px;
 		border-radius: 50%;
@@ -395,37 +401,6 @@ const ScheduleList = styled.ul`
 	flex-direction: column;
 	margin-top: 15px;
 	gap: 13px;
-
-	& li {
-		display: flex;
-		flex: 1;
-		justify-content: space-between;
-		align-items: center;
-		padding: 15px 30px 14px 25px;
-		border: 1px solid #c9ccd7;
-
-		& div {
-			display: flex;
-			flex-direction: column;
-			font-size: 14px;
-			line-height: 17px;
-			font-weight: 500;
-			color: #30374f;
-		}
-
-		& .arrow {
-			width: 8px;
-			height: 8px;
-			border: solid #30374f;
-			border-width: 0 1.5px 1.5px 0;
-			transform: rotate(45deg) translateX(-4px);
-			transition: transform 0.3s ease;
-
-			&.active {
-				transform: rotate(225deg);
-			}
-		}
-	}
 `;
 
 const PopuoGroup = styled.div`
