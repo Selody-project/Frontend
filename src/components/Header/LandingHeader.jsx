@@ -41,7 +41,11 @@ const Wrapper = styled.div`
 	padding: 0 2rem;
 	height: 5rem;
 	max-width: 100vw;
-	background: #ffffff;
+	background: linear-gradient(
+		90deg,
+		rgba(108, 85, 254, 1) 0%,
+		rgba(17, 45, 78, 1) 100%
+	);
 
 	a {
 		text-decoration: none;
@@ -49,22 +53,22 @@ const Wrapper = styled.div`
 
 	h1 {
 		font-size: 2.5rem;
-		color: #3f72af;
+		color: #ffffff;
 	}
 
 	.menu {
 		a {
-			color: #112d4e;
+			color: #ffffff;
 			margin: 0 1rem;
 			padding-bottom: 0.5rem;
 			font-size: 1.15rem;
 			font-weight: 500;
 			text-transform: uppercase;
 			transition: all 0.3s;
-			border-bottom: 4px solid transparent;
+			border-bottom: 2px solid transparent;
 			&:hover {
-				color: #3f72af;
-				border-color: #3f72af;
+				color: #ffffff;
+				border-color: #ffffff;
 			}
 		}
 	}
@@ -73,10 +77,10 @@ const Wrapper = styled.div`
 		a {
 			font-size: 1.25rem;
 			font-weight: 700;
-			color: #3f72af;
+			color: #ffffff;
 			transition: all 0.3s;
 			&:hover {
-				color: #112d4e;
+				color: #ffffff;
 			}
 		}
 	}
