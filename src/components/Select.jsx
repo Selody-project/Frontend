@@ -5,11 +5,15 @@ import PropTypes from "prop-types";
 /**
  * 드롭다운으로 요소를 나타내는 Select 컴포넌트
  */
-export const Select = ({ label, desc, isSelected, ...props }) => {
+export const Select = ({ label, desc, isArrow, isSelected, ...props }) => {
 	return (
 		<StyledSelect {...props}>
 			<Labels label={label} desc={desc} />
-			<UnderArrow className={isSelected ? "active" : ""} />
+			{isArrow ? (
+				<UnderArrow className={isSelected ? "active" : ""} />
+			) : (
+				<Circle className={isSelected ? "active" : ""} />
+			)}
 		</StyledSelect>
 	);
 };
@@ -65,6 +69,29 @@ const StyledSelect = styled.div`
 	}
 
 	${(props) => getStyles(props)}
+`;
+
+const Circle = styled.div`
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	border: 1px solid #c9ccd7;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	&.active {
+		border-color: #313131;
+
+		&::before {
+			display: block;
+			content: "";
+			width: 14px;
+			height: 14px;
+			border-radius: 50%;
+			background-color: #313131;
+		}
+	}
 `;
 
 Select.propTypes = {

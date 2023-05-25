@@ -5,7 +5,11 @@ export const ToggleSelect = (props) => {
 	return (
 		<Wrapper isSelected={props.isSelected}>
 			<Select {...props} />
-			<DescList descs={props.descs} isSelected={props.isSelected} />
+			{props.isArrow ? (
+				<DescList descs={props.descs} isSelected={props.isSelected} />
+			) : (
+				""
+			)}
 		</Wrapper>
 	);
 };
