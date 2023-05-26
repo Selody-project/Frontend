@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate, Outlet, useNavigate } from 'react-router-dom';
+import { getCurrentUser } from '../store/user/user-slice.jsx';
 
 const Root = () => {
   const { userLoading, user } = useSelector((state) => state.user);

@@ -89,7 +89,9 @@ export const getCurrentUser = createAsyncThunk(
   'user/getCurrentUser',
   async (_, thunkAPI) => {
     try {
+      console.log('Before fetch');
       const response = await customFetch('/api/auth/token/verify');
+      console.log('After fetch');
 
       if (response.statusText !== 'OK') {
         throw response.data;
