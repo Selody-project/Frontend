@@ -53,31 +53,6 @@ export const UserInfoContainer = styled.div`
 	}
 `;
 
-export const ProfilePictureContainer = styled.div`
-	position: relative;
-	width: 82px;
-	height: 82px;
-	margin-bottom: 20px;
-`;
-
-export const ProfilePicture = styled.img`
-	width: 50%;
-	height: 50%;
-	object-fit: cover;
-	border-radius: 50%;
-`;
-
-export const ImageSelectionButton = styled.button`
-	position: absolute;
-	bottom: 0;
-	right: 0;
-	background-color: #6c63ff;
-	color: white;
-	border-radius: 50%;
-	border: none;
-	cursor: pointer;
-`;
-
 export const UserInfoSection = styled.div`
 	display: flex;
 	flex-direction: column;
