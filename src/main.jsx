@@ -1,20 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import Modal from 'react-modal';
-import App from './App';
-import './index.css';
+import App from "@/App";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { Provider } from "react-redux";
+import { ThemeProvider } from "styled-components";
+import { lightTheme } from "@/styles/theme";
+import GlobalStyles from "@/styles/GlobalStyles";
+import ReactModal from "react-modal";
+import ReactDOM from "react-dom/client";
+import { store } from "@/store/store";
 
-import { Provider } from 'react-redux';
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import { store } from './store/store';
-
-if (Modal && Modal.setAppElement) {
-  Modal.setAppElement('#root');
+if (ReactModal && ReactModal.setAppElement) {
+  ReactModal.setAppElement("#root");
 }
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <GoogleOAuthProvider clientId="379597382111-vo2ht0r8a3d0ais7v12q7777lu48al1a.apps.googleusercontent.com">
-      <App />
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyles />
+        <App />
+      </ThemeProvider>
     </GoogleOAuthProvider>
   </Provider>
 );
