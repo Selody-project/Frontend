@@ -1,6 +1,6 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import {
 	ErrorPage,
@@ -10,6 +10,7 @@ import {
 	Root,
 	SignUpPage,
 } from "@/pages";
+import { unwrapResult } from "@reduxjs/toolkit";
 import { getCurrentUser } from "./store/user/user-slice";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -27,10 +28,19 @@ const router = createBrowserRouter([
 
 export default function App() {
 	const dispatchFn = useDispatch();
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		dispatchFn(getCurrentUser());
-	}, []);
+		dispatchFn(getCurrentUser())
+			.unwrap()
+			.finally(() => {
+				setLoading(false);
+			});
+	}, [dispatchFn]);
+
+	if (loading) {
+		return <p>Loading...</p>;
+	}
 
 	return (
 		<>
