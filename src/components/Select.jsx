@@ -132,6 +132,10 @@ Select.propTypes = {
 	 */
 	border: PropTypes.string,
 	/**
+	 * 상하좌우 여백 설정
+	 */
+	padding: PropTypes.string,
+	/**
 	 * Optional click handler
 	 */
 	onClick: PropTypes.func,
@@ -143,5 +147,6 @@ Select.defaultProps = {
 	color: "black",
 	backgroundColor: "white",
 	border: "none",
+	isArrow: true,
 	onClick: null,
 };

@@ -8,7 +8,7 @@ export default {
 		backgroundColor: { control: "color" },
 		color: { control: "color" },
 		fontWeight: { control: { type: "range", min: 400, max: 800, step: 100 } },
-		fontSize: { control: "radio", options: [14, 15, 16, 17,23] },
+		fontSize: { control: "radio", options: [14, 15, 16, 17, 23] },
 	},
 };
 
@@ -30,5 +30,6 @@ export const Group = {
 		height: 33,
 		border: "1px solid #C9CCD7",
 		marginLeft: 64,
+		padding: "0 11px 0 10px",
 	},
 };

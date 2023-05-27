@@ -180,6 +180,7 @@ const Main = () => {
 					<ScheduleList>
 						<ToggleSelect
 							isSelected={true}
+							isArrow={true}
 							descs={desc}
 							label="월요일 회의"
 							desc="4월 10일 오후 02:00 ~ 오후 04:00"
