@@ -2,15 +2,17 @@ import styled from "styled-components";
 import { blind } from "@styles/blind";
 import { Button } from "@components/Button";
 import { ReactComponent as XImage } from "@/img/XImage.svg";
+import PropTypes from "prop-types";
 
 /**
- * 공통적으로 사용되는 Modal, Main Content는 추가해서 사용하세요!
+ * 공통적으로 사용되는 Modal, Main Content는 children props에 추가해서 사용하세요!
  */
 const Modal = ({
 	title,
 	desc,
 	submitTitle,
 	handleCloseModal,
+	handleSubmit,
 	children,
 	...props
 }) => {
@@ -33,6 +35,7 @@ const Modal = ({
 					backgroundColor="#C9CCD7"
 					width={132}
 					height={40}
+					onClick={handleSubmit}
 				/>
 			</StyledModal>
 		</ModalWrapper>
@@ -82,8 +85,8 @@ const StyledModal = styled.div`
 
 			.close-button {
 				background-color: transparent;
-        width: 16px;
-        height: 16px;
+				width: 16px;
+				height: 16px;
 			}
 		}
 
@@ -108,5 +111,40 @@ const StyledModal = styled.div`
 		margin-top: 66px;
 	}
 `;
+
+Modal.propTypes = {
+	/**
+	 * 제목을 설정해주세요
+	 */
+	title: PropTypes.string.isRequired,
+	/**
+	 * 추가하고자 하는 내용의 설명을 적어주세요
+	 */
+	desc: PropTypes.string.isRequired,
+	/**
+	 * 제출하기 버튼에 적을 내용을 적어주세요
+	 */
+	submitTitle: PropTypes.string,
+	/**
+	 * 닫기 버튼을 눌렀을 떄의 동작을 설정해주세요
+	 */
+	handleCloseModal: PropTypes.func.isRequired,
+	/**
+	 * 제출하기 버튼을 눌렀을 때의 동작을 설정해주세요
+	 */
+	handleSubmit: PropTypes.func.isRequired,
+	/**
+	 * Main Content에 담을 컴포넌트를 담아주세요
+	 */
+	children: PropTypes.elementType,
+};
+
+Modal.defaultProps = {
+	title: "공유 페이지 생성",
+	desc: "공유 페이지 명",
+	submitTitle: "생성하기",
+	handleCloseModal: () => alert("닫기"),
+	handleSubmit: () => alert("생성하기"),
+};
 
 export default Modal;
