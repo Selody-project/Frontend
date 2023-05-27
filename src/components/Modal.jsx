@@ -1,9 +1,19 @@
 import styled from "styled-components";
 import { blind } from "@styles/blind";
-import { closeButton } from "@styles/closeButton";
 import { Button } from "@components/Button";
+import { ReactComponent as XImage } from "@/img/XImage.svg";
 
-const Modal = ({ title, desc, submitTitle, handleCloseModal, ...props }) => {
+/**
+ * 공통적으로 사용되는 Modal, Main Content는 추가해서 사용하세요!
+ */
+const Modal = ({
+	title,
+	desc,
+	submitTitle,
+	handleCloseModal,
+	children,
+	...props
+}) => {
 	return (
 		<ModalWrapper>
 			<StyledModal>
@@ -12,10 +22,12 @@ const Modal = ({ title, desc, submitTitle, handleCloseModal, ...props }) => {
 						<p className="title">{title}</p>
 						<button className=" close-button" onClick={handleCloseModal}>
 							<span className="blind">close-button</span>
+							<XImage />
 						</button>
 					</div>
 					<input className="desc" placeholder={desc} />
 				</div>
+				{children}
 				<Button
 					label={submitTitle}
 					backgroundColor="#C9CCD7"
@@ -69,8 +81,9 @@ const StyledModal = styled.div`
 			}
 
 			.close-button {
-				${closeButton({ width: 16, height: 16 })}
 				background-color: transparent;
+        width: 16px;
+        height: 16px;
 			}
 		}
 
@@ -90,8 +103,9 @@ const StyledModal = styled.div`
 		}
 	}
 
-	& button {
+	& > button {
 		align-self: flex-end;
+		margin-top: 66px;
 	}
 `;
 

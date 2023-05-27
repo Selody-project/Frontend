@@ -203,7 +203,7 @@ const Main = () => {
 				title={"공유 페이지 생성"}
 				desc={"공유 페이지 명"}
 				submitTitle={"생성하기"}
-			/>
+			></Modal>
 		</Wrapper>
 	);
 };
