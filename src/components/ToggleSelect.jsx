@@ -156,7 +156,6 @@ ToggleSelect.defaultProps = {
 	fontWeight: 400,
 	color: "black",
 	backgroundColor: "white",
-	border: "none",
 	onClick: null,
 	border: "1px solid #C9CCD7",
 	padding: "15px 20px 14.5px 25px",

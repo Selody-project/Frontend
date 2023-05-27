@@ -4,6 +4,7 @@ import { Select } from "@components/Select";
 import { blind } from "@styles/blind";
 import { ReactComponent as LinkIcon } from "@/img/LinkIcon.svg";
 import { ToggleSelect } from "../ToggleSelect";
+import Modal from "../Modal";
 
 const desc = [
 	{
@@ -198,6 +199,11 @@ const Main = () => {
 					</ScheduleList>
 				</ScheduleWrapper>
 			</MainWrapper>
+			<Modal
+				title={"공유 페이지 생성"}
+				desc={"공유 페이지 명"}
+				submitTitle={"생성하기"}
+			/>
 		</Wrapper>
 	);
 };
