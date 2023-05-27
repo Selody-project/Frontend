@@ -3,6 +3,7 @@ import { blind } from "@styles/blind";
 import { Button } from "@components/Button";
 import { ReactComponent as XImage } from "@/img/XImage.svg";
 import PropTypes from "prop-types";
+import { useState } from "react";
 
 /**
  * 공통적으로 사용되는 Modal, Main Content는 children props에 추가해서 사용하세요!
@@ -16,29 +17,37 @@ const Modal = ({
 	children,
 	...props
 }) => {
+	const [isVisible, setIsVisible] = useState(true);
 	return (
-		<ModalWrapper>
-			<StyledModal>
-				<div className="wrapper">
-					<div className="header">
-						<p className="title">{title}</p>
-						<button className=" close-button" onClick={handleCloseModal}>
-							<span className="blind">close-button</span>
-							<XImage />
-						</button>
-					</div>
-					<input className="desc" placeholder={desc} />
-				</div>
-				{children}
-				<Button
-					label={submitTitle}
-					backgroundColor="#C9CCD7"
-					width={132}
-					height={40}
-					onClick={handleSubmit}
-				/>
-			</StyledModal>
-		</ModalWrapper>
+		<>
+			{isVisible && (
+				<ModalWrapper>
+					<StyledModal>
+						<div className="wrapper">
+							<div className="header">
+								<p className="title">{title}</p>
+								<button
+									className=" close-button"
+									onClick={() => setIsVisible(false)}
+								>
+									<span className="blind">close-button</span>
+									<XImage />
+								</button>
+							</div>
+							<input className="desc" placeholder={desc} />
+						</div>
+						{children}
+						<Button
+							label={submitTitle}
+							backgroundColor="#C9CCD7"
+							width={132}
+							height={40}
+							onClick={handleSubmit}
+						/>
+					</StyledModal>
+				</ModalWrapper>
+			)}
+		</>
 	);
 };
 
@@ -128,11 +137,11 @@ Modal.propTypes = {
 	/**
 	 * 닫기 버튼을 눌렀을 떄의 동작을 설정해주세요
 	 */
-	handleCloseModal: PropTypes.func.isRequired,
+	handleCloseModal: PropTypes.func,
 	/**
 	 * 제출하기 버튼을 눌렀을 때의 동작을 설정해주세요
 	 */
-	handleSubmit: PropTypes.func.isRequired,
+	handleSubmit: PropTypes.func,
 	/**
 	 * Main Content에 담을 컴포넌트를 담아주세요
 	 */
@@ -143,7 +152,7 @@ Modal.defaultProps = {
 	title: "공유 페이지 생성",
 	desc: "공유 페이지 명",
 	submitTitle: "생성하기",
-	handleCloseModal: () => alert("닫기"),
+	handleCloseModal: () => setIsVisible(false),
 	handleSubmit: () => alert("생성하기"),
 };
 
