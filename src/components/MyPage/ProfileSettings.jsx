@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
 	UserInfoContainer,
 	UserInfoSection,
@@ -10,13 +10,20 @@ import {
 	PasswordChangeButton,
 	SaveButton,
 } from "../../pages/MyPage.styles";
+import { updateUserProfile } from "../../store/user/user-slice";
 
 const ProfileSettings = () => {
+	const dispatch = useDispatch();
 	const { nickname, email } = useSelector((state) => state.user.user);
-	const [password, setPassword] = useState("");
+	const [newPassword, setNewPassword] = useState("");
+	const [newNickname, setNewNickname] = useState(nickname); // for storing new nickname value
+
+	const handleNicknameChange = (e) => {
+		setNewNickname(e.target.value);
+	};
 
 	const handlePasswordChange = (e) => {
-		setPassword(e.target.value);
+		setNewPassword(e.target.value);
 	};
 
 	const handlePasswordSubmit = (e) => {
@@ -26,7 +33,7 @@ const ProfileSettings = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		// 저장하기 로직 작성
+		dispatch(updateUserProfile({ name: newNickname, passwd: newPassword }));
 	};
 
 	return (
@@ -36,7 +43,12 @@ const ProfileSettings = () => {
 				<UserInfoItem>
 					<div>
 						<Label htmlFor="nickname">닉네임</Label>
-						<InputField id="nickname" type="text" defaultValue={nickname} />
+						<InputField
+							id="nickname"
+							type="text"
+							value={newNickname}
+							onChange={handleNicknameChange}
+						/>
 					</div>
 					<div>
 						<Label htmlFor="email">이메일</Label>
@@ -54,7 +66,7 @@ const ProfileSettings = () => {
 						/>
 						<PasswordChangeButton
 							onClick={handlePasswordSubmit}
-							disabled={!password}
+							disabled={!newPassword}
 						>
 							변경
 						</PasswordChangeButton>
@@ -62,7 +74,7 @@ const ProfileSettings = () => {
 				</UserInfoItem>
 				<hr />
 			</UserInfoSection>
-			<SaveButton onClick={handleSubmit} disabled={!password}>
+			<SaveButton onClick={handleSubmit} disabled={!newPassword}>
 				저장하기
 			</SaveButton>
 		</UserInfoContainer>
