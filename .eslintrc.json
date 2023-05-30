@@ -1,7 +1,8 @@
 {
 	"env": {
 		"browser": true,
-		"es6": true
+		"es6": true,
+		"jest": true
 	},
 	"extends": [
 		"eslint:recommended",
@@ -16,6 +17,8 @@
 		"ecmaVersion": "latest",
 		"sourceType": "module"
 	},
-	"plugins": ["react"],
-	"rules": {}
+	"plugins": ["react", "prettier", "react-hooks", "import", "jsx-a11y"],
+	"rules": {
+		"react/function-component-definition": 0
+	}
 }

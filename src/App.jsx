@@ -1,4 +1,7 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { ToastContainer } from "react-toastify";
 import {
 	ErrorPage,
 	LandingPage,
@@ -7,10 +10,8 @@ import {
 	Root,
 	SignUpPage,
 } from "@/pages";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
 import { getCurrentUser } from "./store/user/user-slice";
-import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const router = createBrowserRouter([
 	{
