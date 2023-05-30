@@ -10,7 +10,7 @@ import {
 	Root,
 	SignUpPage,
 } from "@/pages";
-import { getCurrentUser } from "./store/user/user-slice";
+import { getCurrentUser } from "./features/user/user-service.js";
 import "react-toastify/dist/ReactToastify.css";
 
 const router = createBrowserRouter([
