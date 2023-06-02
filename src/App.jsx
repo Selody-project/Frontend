@@ -4,16 +4,9 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import {
-	Root,
-	ErrorPage,
-	LandingPage,
-	LoginPage,
-	SignUpPage,
-	PersonalSchedulePage,
-	MyPage,
-} from "./pages/index";
-import { getCurrentUser } from "./store/user/user-slice";
+import { Root, ErrorPage, LandingPage, LoginPage, SignUpPage } from "@/pages";
+import { getCurrentUser } from "./features/user/user-service.js";
+import "react-toastify/dist/ReactToastify.css";
 
 const router = createBrowserRouter([
 	{

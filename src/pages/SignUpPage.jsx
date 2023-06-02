@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
 import {
 	Container,
 	Header,
@@ -16,7 +15,8 @@ import {
 	DuplicateCheckButton,
 	SignUpButton,
 } from "./SignUpPage.styles";
-import { signup } from "../store/user/user-slice";
+import { toast } from "react-toastify";
+import { signup } from "../features/user/user-service.js";
 
 function SignUpPage() {
 	const dispatchFn = useDispatch();
