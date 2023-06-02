@@ -92,7 +92,8 @@ const userSlice = createSlice({
 			})
 			.addCase(getCurrentUser.fulfilled, (state, { payload }) => {
 				state.userLoading = false;
-				state.user = payload?.exUser.nickname;
+				console.log(payload);
+				state.user = payload?.user.nickname;
 			})
 			.addCase(getCurrentUser.rejected, (state, { payload }) => {
 				state.userLoading = false;
