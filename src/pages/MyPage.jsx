@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../components/Header/Header";
-import { getCurrentUser } from "../store/user/user-slice";
+import { getCurrentUser } from "../features/user/user-service";
 import ProfileSettings from "../components/MyPage/ProfileSettings";
 import SharedSettings from "../components/MyPage/SharedSettings";
 import { MyPageContainer, TabsContainer, Tab } from "./MyPage.styles";
 
 const MyPage = () => {
 	const [selectedTab, setSelectedTab] = useState("profile");
-	const { user } = useSelector((state) => state.user);
+	const { myPageInfo } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		console.log(user);
-		if (user.message) {
+		console.log(myPageInfo);
+		if (myPageInfo.message) {
 			dispatch(getCurrentUser());
 		}
-	}, [dispatch, user]);
+	}, [dispatch, myPageInfo]);
 
 	return (
 		<>

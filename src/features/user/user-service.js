@@ -107,3 +107,25 @@ export const getCurrentUser = createAsyncThunk(
 		}
 	},
 );
+
+export const updateUserProfile = createAsyncThunk(
+	"user/updateUserProfile",
+	async ({ name, passwd }, thunkAPI) => {
+		try {
+			const response = await customFetch.put(`/api/user/profile`, {
+				nickname: name,
+				password: passwd,
+			});
+			console.log("response: ", response);
+
+			if (response.statusText !== "OK") {
+				console.log("response.data실패: ", response.data);
+				throw response.data;
+			}
+
+			return response.data;
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error.message);
+		}
+	},
+);

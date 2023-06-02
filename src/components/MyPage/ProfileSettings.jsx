@@ -10,11 +10,11 @@ import {
 	PasswordChangeButton,
 	SaveButton,
 } from "../../pages/MyPage.styles";
-import { updateUserProfile } from "../../store/user/user-slice";
+import { updateUserProfile } from "../../features/user/user-service";
 
 const ProfileSettings = () => {
 	const dispatch = useDispatch();
-	const { nickname, email } = useSelector((state) => state.user.user);
+	const { nickname, email } = useSelector((state) => state.user.myPageInfo);
 	const [newPassword, setNewPassword] = useState("");
 	const [newNickname, setNewNickname] = useState(nickname); // for storing new nickname value
 
@@ -74,7 +74,10 @@ const ProfileSettings = () => {
 				</UserInfoItem>
 				<hr />
 			</UserInfoSection>
-			<SaveButton onClick={handleSubmit} disabled={!newPassword}>
+			<SaveButton
+				onClick={handleSubmit}
+				disabled={newNickname === nickname && !newPassword}
+			>
 				저장하기
 			</SaveButton>
 		</UserInfoContainer>

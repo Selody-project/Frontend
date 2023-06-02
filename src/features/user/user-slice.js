@@ -5,11 +5,13 @@ import {
 	naverLogin,
 	logout,
 	getCurrentUser,
+	updateUserProfile,
 } from "./user-service.js";
 import { toast } from "react-toastify";
 
 const initialState = {
 	user: null,
+	myPageInfo: null,
 	isLoading: false,
 	userLoading: true,
 	menuOpen: false,
@@ -39,6 +41,7 @@ const userSlice = createSlice({
 				state.isLoading = false;
 				console.log(payload);
 				state.user = payload.nickname;
+				state.myPageInfo = payload;
 				toast.success(`환영합니다! ${state.user}님`);
 			})
 			.addCase(signup.rejected, (state, { payload }) => {
@@ -53,6 +56,7 @@ const userSlice = createSlice({
 			.addCase(login.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
 				state.user = payload.nickname;
+				state.myPageInfo = payload;
 				toast.success(`안녕하세요! ${state.user}님`);
 			})
 			.addCase(login.rejected, (state, { payload }) => {
@@ -66,6 +70,7 @@ const userSlice = createSlice({
 			.addCase(naverLogin.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
 				state.user = payload.nickname;
+				state.myPageInfo = payload;
 				toast.success(`안녕하세요! ${state.user}님`);
 			})
 			.addCase(naverLogin.rejected, (state, { payload }) => {
@@ -80,6 +85,7 @@ const userSlice = createSlice({
 			.addCase(logout.fulfilled, (state, { payload }) => {
 				state.userLoading = false;
 				state.user = null;
+				state.myPageInfo = null;
 				toast.success("로그아웃에 성공하였습니다.");
 			})
 			.addCase(logout.rejected, (state, { payload }) => {
@@ -93,10 +99,25 @@ const userSlice = createSlice({
 			.addCase(getCurrentUser.fulfilled, (state, { payload }) => {
 				state.userLoading = false;
 				state.user = payload?.exUser.nickname;
+				state.myPageInfo = payload?.exUser;
 			})
 			.addCase(getCurrentUser.rejected, (state, { payload }) => {
 				state.userLoading = false;
 				console.log(payload);
+			})
+			// Update user profile
+			.addCase(updateUserProfile.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(updateUserProfile.fulfilled, (state, { payload }) => {
+				state.isLoading = false;
+				state.user = payload.nickname;
+				state.myPageInfo = payload;
+				toast.success("프로필이 수정되었습니다.");
+			})
+			.addCase(updateUserProfile.rejected, (state, { payload }) => {
+				state.isLoading = false;
+				toast.error(payload);
 			});
 	},
 });
