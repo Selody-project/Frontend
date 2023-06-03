@@ -22,6 +22,8 @@ const PersonalTodoList = () => {
 	const { schedule } = useSelector((state) => state.schedule);
 	const dispatch = useDispatch();
 
+	console.log(schedule);
+
 	const handleMenuOpen = () => {
 		dispatch(handleMenuToggle());
 	};
@@ -62,7 +64,12 @@ const PersonalTodoList = () => {
 					) : (
 						<TodoList>
 							{schedule.map((s) => {
-								return <PersonalTodoItem schedule={s} />;
+								return (
+									<PersonalTodoItem
+										key={s.startTime + s.endTime}
+										schedule={s}
+									/>
+								);
 							})}
 						</TodoList>
 					)}

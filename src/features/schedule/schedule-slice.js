@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { createSchedule } from "./schedule-service.js";
 
 const initialState = {
 	schedule: [],
+	backSchedule: [],
+	isLoading: false,
 };
 
 const scheduleSlice = createSlice({
@@ -11,6 +14,21 @@ const scheduleSlice = createSlice({
 		saveSchedule: (state, { payload }) => {
 			state.schedule.push(payload);
 		},
+	},
+	extraReducers: (builder) => {
+		builder
+			.addCase(createSchedule.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(createSchedule.fulfilled, (state, payload) => {
+				state.isLoading = false;
+				console.log(payload);
+				state.backSchedule = payload;
+			})
+			.addCase(createSchedule.rejected, (state, { payload }) => {
+				state.isLoading = false;
+				console.log(payload);
+			});
 	},
 });
 
