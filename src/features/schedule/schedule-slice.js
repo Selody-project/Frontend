@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createSchedule } from "./schedule-service.js";
+import { toast } from "react-toastify";
 
 const initialState = {
 	schedule: [],
-	backSchedule: [],
+	// backSchedule: [],
 	isLoading: false,
 };
 
@@ -20,10 +21,11 @@ const scheduleSlice = createSlice({
 			.addCase(createSchedule.pending, (state) => {
 				state.isLoading = true;
 			})
-			.addCase(createSchedule.fulfilled, (state, payload) => {
+			.addCase(createSchedule.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
 				console.log(payload);
-				state.backSchedule = payload;
+				toast.success("일정 추가에 성공하셨습니다!");
+				// state.backSchedule = payload.scheduleArr;
 			})
 			.addCase(createSchedule.rejected, (state, { payload }) => {
 				state.isLoading = false;

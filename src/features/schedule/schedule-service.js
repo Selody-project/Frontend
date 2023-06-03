@@ -28,7 +28,7 @@ export const createSchedule = createAsyncThunk(
 				freq: repeat,
 				recurrence: 0,
 			});
-			if (response.status !== 200) {
+			if (response.status !== 201) {
 				throw response.data;
 			}
 			return response.data;
