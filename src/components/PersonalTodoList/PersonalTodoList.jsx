@@ -12,12 +12,17 @@ import {
 	TodoTitle,
 	TodoSubtitle,
 	TodoButton,
+	TodoList,
 } from "./PersonalTodoList.styles";
+import PersonalTodoItem from "./PersonalTodoItem.jsx";
 
 const PersonalTodoList = () => {
 	const [selectedTab, setSelectedTab] = useState(false);
 	const menuOpen = useSelector((state) => state.user.menuOpen);
+	const { schedule } = useSelector((state) => state.schedule);
 	const dispatch = useDispatch();
+
+	console.log(schedule);
 
 	const handleMenuOpen = () => {
 		dispatch(handleMenuToggle());
@@ -51,10 +56,23 @@ const PersonalTodoList = () => {
 						</AddEventButton>
 					</TodoTitle>
 					<TodoSubtitle>하루동안의 할 일을 관리합니다.</TodoSubtitle>
-					<TodoButton onClick={handleMenuOpen}>
-						아직 추가된 일정이 없습니다! <br />할 일을 추가하여 하루동안 할 일을
-						관리해보세요.
-					</TodoButton>
+					{schedule.length === 0 ? (
+						<TodoButton onClick={handleMenuOpen}>
+							아직 추가된 일정이 없습니다! <br />할 일을 추가하여 하루동안 할
+							일을 관리해보세요.
+						</TodoButton>
+					) : (
+						<TodoList>
+							{schedule.map((s) => {
+								return (
+									<PersonalTodoItem
+										key={s.startTime + s.endTime}
+										schedule={s}
+									/>
+								);
+							})}
+						</TodoList>
+					)}
 				</TodoBody>
 			</TodoContainer>
 			{menuOpen && <ModalWindow />}
