@@ -1,16 +1,12 @@
+import customFetch from "@/components/Base/BaseAxios.js";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-
-const customFetch = axios.create({
-	baseURL: "/back",
-	withCredentials: true,
-});
 
 export const signup = createAsyncThunk(
 	"user/signup",
 	async ({ email, nickname, password, navigate }, thunkAPI) => {
 		try {
-			const response = await customFetch.post(`/api/auth/join`, {
+			const response = await axios.post(`/back/api/auth/join`, {
 				email,
 				nickname,
 				password,
@@ -19,10 +15,11 @@ export const signup = createAsyncThunk(
 				throw response.data;
 			}
 
-			navigate("/");
+			// navigate("/");
 
 			return response.data;
 		} catch (error) {
+			console.log(error);
 			return thunkAPI.rejectWithValue(error.message);
 		}
 	},
