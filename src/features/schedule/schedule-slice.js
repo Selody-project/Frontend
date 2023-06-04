@@ -13,7 +13,7 @@ const scheduleSlice = createSlice({
 	initialState,
 	reducers: {
 		saveSchedule: (state, { payload }) => {
-			state.schedule.push(payload);
+			state.schedule = [...state.schedule, payload];
 		},
 	},
 	extraReducers: (builder) => {
@@ -23,9 +23,7 @@ const scheduleSlice = createSlice({
 			})
 			.addCase(createSchedule.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
-				console.log(payload);
 				toast.success("일정 추가에 성공하셨습니다!");
-				// state.backSchedule = payload.scheduleArr;
 			})
 			.addCase(createSchedule.rejected, (state, { payload }) => {
 				state.isLoading = false;
