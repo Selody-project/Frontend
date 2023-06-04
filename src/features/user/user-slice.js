@@ -41,7 +41,7 @@ const userSlice = createSlice({
 				state.user = payload.nickname;
 				toast.success(`환영합니다! ${state.user}님`);
 			})
-			.addCase(signup.rejected, (state, { payload }) => {
+			.addCase(signup.rejected, (state, payload) => {
 				state.isLoading = false;
 				console.log(payload);
 				toast.error(payload);
@@ -92,7 +92,8 @@ const userSlice = createSlice({
 			})
 			.addCase(getCurrentUser.fulfilled, (state, { payload }) => {
 				state.userLoading = false;
-				state.user = payload?.exUser.nickname;
+				console.log(payload);
+				state.user = payload?.user?.nickname;
 			})
 			.addCase(getCurrentUser.rejected, (state, { payload }) => {
 				state.userLoading = false;
