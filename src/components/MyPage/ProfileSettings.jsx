@@ -1,45 +1,66 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
 	UserInfoContainer,
 	UserInfoSection,
 	UserInfoItem,
+	ChangeButton,
 	Label,
 	InputField,
-	PasswordContainer,
-	PasswordChangeButton,
-	SaveButton,
+	ImageContainer,
+	ImagePreview,
+	ImageInput,
 } from "../../pages/MyPage.styles";
-import { updateUserProfile } from "../../features/user/user-service";
 
 const ProfileSettings = () => {
-	const dispatch = useDispatch();
-	const { nickname, email } = useSelector((state) => state.user.myPageInfo);
-	const [newPassword, setNewPassword] = useState("");
-	const [newNickname, setNewNickname] = useState(nickname); // for storing new nickname value
+	const { nickname, email, imageUrl } = useSelector(
+		(state) => state.user.myPageInfo,
+	);
+
+	const [newNickname, setNewNickname] = useState(nickname);
+	const [newImage, setNewImage] = useState(imageUrl);
 
 	const handleNicknameChange = (e) => {
 		setNewNickname(e.target.value);
 	};
 
-	const handlePasswordChange = (e) => {
-		setNewPassword(e.target.value);
+	const handleImageChange = (e) => {
+		if (e.target.files && e.target.files[0]) {
+			setNewImage(URL.createObjectURL(e.target.files[0]));
+		}
 	};
 
-	const handlePasswordSubmit = (e) => {
+	const handleImageSubmit = (e) => {
 		e.preventDefault();
-		// 비밀번호 변경 로직 작성
+		// Image upload logic here
 	};
 
-	const handleSubmit = (e) => {
+	const handleNicknameSubmit = (e) => {
 		e.preventDefault();
-		dispatch(updateUserProfile({ name: newNickname, passwd: newPassword }));
+		// Nickname update logic here
 	};
 
 	return (
 		<UserInfoContainer>
-			<hr />
 			<UserInfoSection>
+				<UserInfoItem>
+					<ImageContainer>
+						<Label htmlFor="image" style={{ marginRight: "20px" }}>
+							프로필 이미지
+						</Label>
+						<ImagePreview src={newImage} alt="profile" />
+						<ChangeButton onClick={handleImageSubmit} disabled={!newImage}>
+							저장
+						</ChangeButton>
+					</ImageContainer>
+					<ImageInput
+						type="file"
+						id="image"
+						name="image"
+						onChange={handleImageChange}
+					/>
+				</UserInfoItem>
+				<hr />
 				<UserInfoItem>
 					<div>
 						<Label htmlFor="nickname">닉네임</Label>
@@ -49,37 +70,21 @@ const ProfileSettings = () => {
 							value={newNickname}
 							onChange={handleNicknameChange}
 						/>
+						<ChangeButton
+							onClick={handleNicknameSubmit}
+							disabled={newNickname === nickname}
+						>
+							저장
+						</ChangeButton>
 					</div>
+					<hr />
 					<div>
 						<Label htmlFor="email">이메일</Label>
 						<InputField id="email" type="email" defaultValue={email} disabled />
 					</div>
 				</UserInfoItem>
 				<hr />
-				<UserInfoItem>
-					<PasswordContainer>
-						<Label htmlFor="password">비밀번호</Label>
-						<InputField
-							id="password"
-							type="password"
-							onChange={handlePasswordChange}
-						/>
-						<PasswordChangeButton
-							onClick={handlePasswordSubmit}
-							disabled={!newPassword}
-						>
-							변경
-						</PasswordChangeButton>
-					</PasswordContainer>
-				</UserInfoItem>
-				<hr />
 			</UserInfoSection>
-			<SaveButton
-				onClick={handleSubmit}
-				disabled={newNickname === nickname && !newPassword}
-			>
-				저장하기
-			</SaveButton>
 		</UserInfoContainer>
 	);
 };

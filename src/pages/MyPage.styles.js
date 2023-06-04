@@ -23,6 +23,7 @@ export const Tab = styled.div`
 	align-items: center;
 	min-width: 160px;
 	padding: 12px 20px;
+	margin-right: 10px;
 	margin-bottom: 5px;
 	border-radius: 50px;
 	background-color: ${(props) => (props.selected ? "#6c63ff" : "transparent")};
@@ -38,19 +39,14 @@ export const UserInfoContainer = styled.div`
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	min-width: 800px;
-	min-height: 500px;
-	margin-top: 20px;
-	margin-left: 40px;
+	min-width: 600px;
+	width: 800px;
 	padding: 50px;
+	margin: 50px auto;
 	border: 2px solid #c6c9d4;
-	border-radius: 50px;
-
-	hr {
-		border: 1px solid #c6c9d4;
-		margin: 20px 0px 20px 0px;
-		opacity: 0.3;
-	}
+	border-radius: 20px;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+	background: white;
 `;
 
 export const UserInfoSection = styled.div`
@@ -63,36 +59,7 @@ export const UserInfoItem = styled.div`
 	justify-content: space-between;
 `;
 
-export const Label = styled.label`
-	display: inline-block;
-	width: 60px;
-	color: #262626;
-	font-weight: 600;
-	font-size: 14px;
-	line-height: 17px;
-`;
-
-export const InputField = styled.input`
-	width: 200px;
-	height: 32px;
-	margin-left: 10px;
-	padding: 5px;
-	background-color: #f0f0f0;
-	border: none;
-
-	outline: none;
-	&:focus {
-		border: 1px solid #6c63ff;
-	}
-`;
-
-export const PasswordContainer = styled.div`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-`;
-
-export const PasswordChangeButton = styled.button`
+export const ChangeButton = styled.button`
 	width: 50px;
 	height: 40px;
 	background-color: #6c63ff;
@@ -113,20 +80,90 @@ export const PasswordChangeButton = styled.button`
 	}
 `;
 
-export const SaveButton = styled.button`
-	position: absolute;
-	bottom: 50px;
-	right: 50px;
+export const Label = styled.label`
+	font-size: 16px;
+	color: #555555;
+	margin-right: 15px;
+	margin-bottom: 15px;
+`;
+
+export const InputField = styled.input`
+	height: 40px;
+	padding: 5px;
+	border-radius: 5px;
+	border: 1px solid #c6c9d4;
+	transition: border 0.3s ease;
+	outline: none;
+
+	&:focus {
+		border: 1px solid #6c63ff;
+	}
+`;
+
+export const PwInfoItem = styled.div`
 	display: flex;
-	justify-content: center;
-	width: 150px;
+	flex-direction: column;
+	margin-bottom: 25px;
+`;
+
+export const PasswordContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 20px;
+`;
+
+export const SaveButton = styled.button`
+	width: 100%;
+	height: 50px;
+	background-color: #6c63ff;
+	color: #ffffff;
+	border: none;
+	border-radius: 5px;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+
+	&:hover {
+		background-color: #5a4ee3;
+	}
+
+	&:disabled {
+		background-color: #c6c9d4;
+		cursor: not-allowed;
+	}
+`;
+
+export const ImageContainer = styled.div`
+	display: flex;
+	align-items: center;
+`;
+
+export const ImagePreview = styled.img`
+	width: 100px;
+	height: 100px;
+	margin-right: 15px;
+	margin-bottom: 15px;
+	border-radius: 50%;
+	object-fit: cover;
+`;
+
+export const ImageInput = styled.input`
+	display: none;
+	&:checked + ${ImagePreview} {
+		border: 2px solid #6c63ff;
+	}
+`;
+
+export const ImageChangeButton = styled.button`
+	width: 100px;
+	height: 30px;
 	background-color: #6c63ff;
 	color: white;
 	border: none;
 	border-radius: 5px;
-	padding: 10px 20px;
+	margin-left: 15px;
 	cursor: pointer;
-	font-size: 16px;
+	transition: all 0.2s ease-in-out;
 
 	&:hover {
 		background-color: #5a4ee3;

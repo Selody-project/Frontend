@@ -4,7 +4,15 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import { Root, ErrorPage, LandingPage, LoginPage, SignUpPage } from "@/pages";
+import {
+	Root,
+	ErrorPage,
+	LandingPage,
+	LoginPage,
+	SignUpPage,
+	PersonalSchedulePage,
+	MyPage,
+} from "@/pages";
 import { getCurrentUser } from "./features/user/user-service.js";
 import "react-toastify/dist/ReactToastify.css";
 
