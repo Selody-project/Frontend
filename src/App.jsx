@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { unwrapResult } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import {
 	Root,
@@ -33,19 +31,10 @@ const router = createBrowserRouter([
 
 export default function App() {
 	const dispatchFn = useDispatch();
-	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		dispatchFn(getCurrentUser())
-			.unwrap()
-			.finally(() => {
-				setLoading(false);
-			});
-	}, [dispatchFn]);
-
-	if (loading) {
-		return <p>Loading...</p>;
-	}
+		dispatchFn(getCurrentUser());
+	}, []);
 
 	return (
 		<>

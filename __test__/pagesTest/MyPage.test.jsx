@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { useSelector, Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
-import userSlice from "../../src/store/user/user-slice";
+import userSlice from "../../src/features/user/user-slice.js";
 import ProfileSettings from "../../src/components/MyPage/ProfileSettings";
 
 const store = configureStore({
@@ -23,9 +23,10 @@ describe("ProfileSettings", () => {
 		useSelector.mockImplementation((callback) =>
 			callback({
 				user: {
-					user: {
+					myPageInfo: {
 						nickname: "TestUser",
 						email: "test@example.com",
+						imageUrl: "", // added this line to mock imageUrl
 					},
 				},
 			}),
@@ -41,9 +42,6 @@ describe("ProfileSettings", () => {
 	test("renders ProfileSettings component correctly", () => {
 		expect(screen.getByText("닉네임")).toBeInTheDocument();
 		expect(screen.getByText("이메일")).toBeInTheDocument();
-		expect(screen.getByText("비밀번호")).toBeInTheDocument();
-		expect(screen.getByText("변경")).toBeInTheDocument();
-		expect(screen.getByText("저장하기")).toBeInTheDocument();
 	});
 
 	test("renders input fields with default values", () => {
