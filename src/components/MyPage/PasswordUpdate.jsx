@@ -65,8 +65,9 @@ const PasswordUpdate = () => {
 					onClick={handlePasswordSubmit}
 					disabled={
 						!(
-							newPassword &&
 							currentPassword &&
+							newPassword &&
+							confirmNewPassword &&
 							newPassword === confirmNewPassword
 						)
 					}

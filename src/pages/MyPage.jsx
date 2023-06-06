@@ -17,7 +17,7 @@ const MyPage = () => {
 		if (myPageInfo.message) {
 			dispatch(getCurrentUser());
 		}
-	}, [dispatch, myPageInfo]);
+	}, [dispatch]);
 
 	return (
 		<>
