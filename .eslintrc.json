@@ -19,6 +19,12 @@
 	},
 	"plugins": ["react", "prettier", "react-hooks", "import", "jsx-a11y"],
 	"rules": {
-		"react/function-component-definition": 0
+		"react/function-component-definition": 0,
+		"import/prefer-default-export": "off",
+		"import/no-extraneous-dependencies": "off",
+		"import/extensions": "off",
+		"import/no-unresolved": "off",
+		"react/jsx-boolean-value": "off",
+		"arrow-body-style": "off"
 	}
 }

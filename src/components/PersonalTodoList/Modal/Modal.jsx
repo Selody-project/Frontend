@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import Modal from "react-modal";
-
 import { useDispatch, useSelector } from "react-redux";
-import { handleMenuToggle } from "../../../features/user/user-slice.js";
 import { toast } from "react-toastify";
-
-import { ModalOverlay, ModalContainer } from "./Modal.styles";
+import Offcanvas from "react-bootstrap/Offcanvas";
+import { handleMenuToggle } from "../../../features/user/user-slice.js";
 import ModalHeader from "./ModalHeader";
 import ModalBody from "./ModalBody";
 import ModalFooter from "./ModalFooter";
@@ -25,13 +22,10 @@ const ModalWindow = () => {
 
 	const today = new Date().toISOString().slice(0, 10);
 	let currentDate = today.replace(/-/g, ".");
-	currentDate =
-		currentDate.slice(0, 4) +
-		"년 " +
-		currentDate.slice(5, 7) +
-		"월 " +
-		currentDate.slice(8, 10) +
-		"일";
+	currentDate = `${currentDate.slice(0, 4)}년 ${currentDate.slice(
+		5,
+		7,
+	)}월 ${currentDate.slice(8, 10)}일`;
 
 	const menuOpen = useSelector((state) => state.user.menuOpen);
 	const dispatch = useDispatch();
@@ -52,16 +46,13 @@ const ModalWindow = () => {
 		return true;
 	};
 
-	const checkFieldsFilled = () => {
-		return (
-			formValues.title &&
-			formValues.details &&
-			formValues.startDate &&
-			formValues.startTime &&
-			formValues.endDate &&
-			formValues.endTime
-		);
-	};
+	const checkFieldsFilled = () =>
+		formValues.title &&
+		formValues.details &&
+		formValues.startDate &&
+		formValues.startTime &&
+		formValues.endDate &&
+		formValues.endTime;
 
 	const handleSubmit = () => {
 		// 시간 유효성 검사
@@ -83,37 +74,35 @@ const ModalWindow = () => {
 			repeat: "none",
 			notification: "none",
 		});
+
+		// 메뉴 닫기
+		handleMenuOpen();
 	};
 
 	return (
-		<Modal
-			data-testid="modal"
-			ariaHideApp={false}
-			isOpen={menuOpen}
-			onRequestClose={handleMenuOpen}
-			style={{
-				overlay: { background: "transparent" },
-				content: { background: "transparent", border: "none" },
-			}}
+		<Offcanvas
+			show={menuOpen}
+			onHide={handleMenuOpen}
+			placement="end"
+			style={{ width: "30%" }}
 		>
-			<ModalOverlay>
-				<ModalContainer>
-					<ModalHeader
-						currentDate={currentDate}
-						handleMenuOpen={handleMenuOpen}
-					/>
-					<ModalBody
-						formValues={formValues}
-						setFormValues={setFormValues}
-						today={today}
-					/>
-					<ModalFooter
-						handleSubmit={handleSubmit}
-						checkFieldsFilled={checkFieldsFilled}
-					/>
-				</ModalContainer>
-			</ModalOverlay>
-		</Modal>
+			<Offcanvas.Header closeButton>
+				<Offcanvas.Title>
+					<ModalHeader currentDate={currentDate} />
+				</Offcanvas.Title>
+			</Offcanvas.Header>
+			<Offcanvas.Body>
+				<ModalBody
+					formValues={formValues}
+					setFormValues={setFormValues}
+					today={today}
+				/>
+				<ModalFooter
+					handleSubmit={handleSubmit}
+					checkFieldsFilled={checkFieldsFilled}
+				/>
+			</Offcanvas.Body>
+		</Offcanvas>
 	);
 };
 
