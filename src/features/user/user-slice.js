@@ -5,6 +5,7 @@ import {
 	naverLogin,
 	logout,
 	getCurrentUser,
+	googleLogin,
 } from "./user-service.js";
 import { toast } from "react-toastify";
 
@@ -69,6 +70,20 @@ const userSlice = createSlice({
 				toast.success(`안녕하세요! ${state.user}님`);
 			})
 			.addCase(naverLogin.rejected, (state, { payload }) => {
+				state.isLoading = false;
+				console.log(payload);
+				// toast.error(payload);
+			})
+			// google 로그인
+			.addCase(googleLogin.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(googleLogin.fulfilled, (state, { payload }) => {
+				state.isLoading = false;
+				state.user = payload.nickname;
+				toast.success(`안녕하세요! ${state.user}님`);
+			})
+			.addCase(googleLogin.rejected, (state, { payload }) => {
 				state.isLoading = false;
 				console.log(payload);
 				// toast.error(payload);
