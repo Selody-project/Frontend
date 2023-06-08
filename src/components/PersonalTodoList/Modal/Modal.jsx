@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import Offcanvas from "react-bootstrap/Offcanvas";
+import { Button } from "react-bootstrap";
 import { handleMenuToggle } from "../../../features/user/user-slice.js";
+import { saveSchedule } from "@/features/schedule/schedule-slice.js";
 import ModalHeader from "./ModalHeader";
 import ModalBody from "./ModalBody";
 import ModalFooter from "./ModalFooter";
-import { saveSchedule } from "@/features/schedule/schedule-slice.js";
 
 const ModalWindow = () => {
 	const [formValues, setFormValues] = useState({
@@ -79,19 +80,45 @@ const ModalWindow = () => {
 		handleMenuOpen();
 	};
 
+	// return (
+	// 	<Offcanvas
+	// 		show={menuOpen}
+	// 		onHide={handleMenuOpen}
+	// 		placement="end"
+	// 		style={{ width: "40%" }}
+	// 	>
+	// 		<Offcanvas.Header closeButton>
+	// 			<Offcanvas.Title>
+	// 				<ModalHeader currentDate={currentDate} />
+	// 			</Offcanvas.Title>
+	// 		</Offcanvas.Header>
+	// 		<Offcanvas.Body>
+	// 			<ModalBody
+	// 				formValues={formValues}
+	// 				setFormValues={setFormValues}
+	// 				today={today}
+	// 			/>
+	// 			<ModalFooter
+	// 				handleSubmit={handleSubmit}
+	// 				checkFieldsFilled={checkFieldsFilled}
+	// 			/>
+	// 		</Offcanvas.Body>
+	// 	</Offcanvas>
+	// );
 	return (
 		<Offcanvas
 			show={menuOpen}
 			onHide={handleMenuOpen}
 			placement="end"
-			style={{ width: "30%" }}
+			className="bg-light text-dark"
+			style={{ width: "45%" }}
 		>
-			<Offcanvas.Header closeButton>
+			<Offcanvas.Header closeButton className="bg-primary text-white">
 				<Offcanvas.Title>
 					<ModalHeader currentDate={currentDate} />
 				</Offcanvas.Title>
 			</Offcanvas.Header>
-			<Offcanvas.Body>
+			<Offcanvas.Body className="p-4">
 				<ModalBody
 					formValues={formValues}
 					setFormValues={setFormValues}

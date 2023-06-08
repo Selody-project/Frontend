@@ -62,7 +62,7 @@ const CalendarContainer = () => {
 	}));
 
 	return (
-		<Wrapper>
+		<Wrapper data-testid="calendar-container">
 			<div className="calendar">
 				<FullCalendar
 					plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -76,7 +76,6 @@ const CalendarContainer = () => {
 					selectable={true}
 					weekends={true}
 					allDaySlot={false}
-					// 이벤트 클릭시 모달창 띄우기
 					eventClick={(info) => {
 						console.log(info);
 					}}

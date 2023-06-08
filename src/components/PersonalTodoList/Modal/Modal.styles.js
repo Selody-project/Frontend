@@ -21,24 +21,14 @@ export const ModalHeaderStyled = styled.div`
 	font-weight: 600;
 `;
 
-export const ModalInputLabel = styled.label`
-	display: block;
-	font-size: 16px;
-	font-weight: 600;
-	margin-bottom: 15px;
-`;
-
 export const ModalTitle = styled.input`
-	border: none;
-	border-bottom: 2px solid black;
+	border: 1px solid #ced4da;
 	font-size: 16px;
 	margin-bottom: 20px;
 	width: 100%;
 	height: 40px;
-
-	&:focus {
-		outline: none;
-	}
+	border-radius: 4px;
+	padding: 0 10px;
 
 	&::placeholder {
 		font-family: "Inter", sans-serif;
@@ -47,14 +37,23 @@ export const ModalTitle = styled.input`
 
 export const ModalInput = styled.input`
 	display: block;
-	border: none;
-	border-radius: 4px;
+	border: 1px solid #ced4da;
 	background: #f4f6fc;
-	font-size: 14px;
+	font-size: 16px;
 	margin-bottom: 20px;
 	width: 100%;
-	height: 35px;
+	height: 40px;
+	border-radius: 4px;
+	padding: 0 10px;
 	font-family: "Inter", sans-serif;
+
+	&::placeholder {
+		font-family: "Inter", sans-serif;
+	}
+
+	&:focus {
+		outline: none;
+	}
 `;
 
 export const ModalInputGap = styled.div`
@@ -62,13 +61,16 @@ export const ModalInputGap = styled.div`
 `;
 
 export const ModalTextarea = styled.textarea`
-	border: none;
+	border: 1px solid #ced4da;
 	background: #f4f6fc;
 	display: block;
 	font-size: 16px;
 	margin-bottom: 20px;
 	resize: none;
 	width: 100%;
+	height: 100px;
+	border-radius: 4px;
+	padding: 10px;
 
 	&::placeholder {
 		font-family: "Inter", sans-serif;
@@ -84,61 +86,4 @@ export const ModalDateColumn = styled.div`
 	display: flex;
 	width: 45%;
 	border: none;
-`;
-
-export const ModalSelectRow = styled.div`
-	display: flex;
-	justify-content: start;
-	margin-bottom: 50px;
-`;
-
-export const SelectContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: start;
-`;
-
-export const Select = styled.select`
-	width: 150px;
-	margin-right: 20px;
-	padding: 6px 12px;
-	background-color: white;
-	border: 1px solid #ced4da;
-	border-radius: 4px;
-	font-size: 1rem;
-	color: #495057;
-	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-	&:focus {
-		border-color: #80bdff;
-		outline: 0;
-		box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-	}
-`;
-
-export const SelectLabel = styled.label`
-	font-size: 14px;
-	font-weight: 500;
-	margin-bottom: 10px;
-`;
-
-export const SaveButton = styled.button`
-	width: 150px;
-	background: ${({ disabled }) => (disabled ? "#ccc" : "#6c55fe")};
-	border: none;
-	border-radius: 4px;
-	color: #ffffff;
-	cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
-	font-family: "Inter", sans-serif;
-	font-size: 16px;
-	font-weight: 600;
-	padding: 10px 20px;
-	position: absolute;
-	right: 20px;
-	opacity: ${({ disabled }) => (disabled ? 0.6 : 1)};
-	pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")};
-	transition: background 0.3s, opacity 0.3s;
-
-	&:hover {
-		background: ${({ disabled }) => (disabled ? "#ccc" : "#A495FF")};
-	}
 `;
