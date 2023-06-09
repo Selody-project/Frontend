@@ -6,26 +6,27 @@ export const TodoContainer = styled.div`
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	margin-left: 20px;
-	height: 450px;
+	height: auto;
 	min-width: 450px;
-	max-width: 450px;
+	max-width: 800px;
+	background-color: #f5f5f5;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	border-radius: 15px;
 	font-family: "Inter";
+	padding: 20px;
 `;
 
 export const TodoHeader = styled.div`
 	display: flex;
 	margin-bottom: 20px;
+	width: 100%;
 `;
 
 export const TodoTabs = styled.div`
-	min-width: 350px;
-	max-width: 350px;
-	display: flex;
 	width: 100%;
-	height: 33px;
-	border: 2px solid #e5e5e5;
-	border-radius: 5px;
+	display: flex;
+	height: 40px;
+	border-bottom: 1px solid #e5e5e5;
 `;
 
 export const TodoTab = styled.button`
@@ -33,28 +34,27 @@ export const TodoTab = styled.button`
 	align-items: center;
 	justify-content: center;
 	width: 50%;
+	background: ${(props) => (props.selected ? "#A495FF" : "white")};
+	border: 1px solid #e5e5e5;
+	border-bottom: none;
 	border-radius: 5px;
-	background: ${(props) => (props.selected ? "#A495FF" : "none")};
-	border: none;
 	font-size: 16px;
 	font-weight: 600;
 	cursor: pointer;
 	color: ${(props) => (props.selected ? "white" : "#121127")};
 	opacity: ${(props) => (props.selected ? "1" : "0.6")};
 	transition: opacity 0.3s ease, background 0.3s ease, color 0.3s ease;
+	padding: 10px 0;
 
 	&:hover {
 		opacity: 1;
 		background: #a495ff;
 		color: white;
-		border-radius: 5px;
 	}
 `;
 
 export const AddEventButton = styled.button`
 	display: flex;
-	justify-content: center;
-	flex-direction: column;
 	align-items: center;
 	background: none;
 	border: none;
@@ -73,13 +73,12 @@ export const TodoBody = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	background-color: rgba(230, 233, 236, 0.4);
-	height: 400px;
-	min-width: 450px;
-	max-width: 450px;
-	border-radius: 48px;
-	// box-shadow: 0px 5px 50px 4px rgba(0, 0, 0, 0.15);
+	background-color: #fff;
+	height: auto;
+	width: 100%;
+	border-radius: 15px;
 	padding: 20px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 `;
 
 export const TodoTitle = styled.h2`
@@ -92,23 +91,20 @@ export const TodoTitle = styled.h2`
 	line-height: 24px;
 	color: #313131;
 	margin-top: 0px;
-	margin-bottom: 0px;
+	margin-bottom: 10px;
 `;
 
 export const TodoSubtitle = styled.h3`
 	font-weight: 500;
 	font-size: 14px;
-	line-height: 15px;
-	color: #2f2f2f;
-	margin-bottom: 20px;
+	line-height: 20px;
 	color: #777;
-	padding: 0;
-	margin: 0;
+	margin-bottom: 20px;
 `;
 
 export const TodoButton = styled.button`
 	width: 100%;
-	height: 60%;
+	height: 200px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -130,10 +126,29 @@ export const TodoButton = styled.button`
 
 export const TodoList = styled.ul`
 	width: 100%;
-	height: 100%;
+	height: 400px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
-	gap: 4%;
+	justify-content: flex-start;
+	gap: 20px;
+	padding: 0;
+	margin: 0;
+	overflow-y: auto;
+
+	&::-webkit-scrollbar {
+		width: 10px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: #f1f1f1;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: #888;
+	}
+
+	&::-webkit-scrollbar-thumb:hover {
+		background: #555;
+	}
 `;

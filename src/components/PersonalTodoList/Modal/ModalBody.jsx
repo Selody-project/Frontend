@@ -1,4 +1,5 @@
 import React from "react";
+import { Form, Row, Col } from "react-bootstrap";
 import {
 	ModalTitle,
 	ModalInput,
@@ -7,7 +8,6 @@ import {
 	ModalDateRow,
 	ModalDateColumn,
 } from "./Modal.styles";
-import { Form, Row, Col } from "react-bootstrap";
 
 const ModalBody = ({ formValues, setFormValues, today }) => {
 	return (

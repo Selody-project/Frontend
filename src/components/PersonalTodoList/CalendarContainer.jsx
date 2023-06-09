@@ -76,6 +76,7 @@ const CalendarContainer = () => {
 					selectable={true}
 					weekends={true}
 					allDaySlot={false}
+					locale="ko"
 					eventClick={(info) => {
 						console.log(info);
 					}}
