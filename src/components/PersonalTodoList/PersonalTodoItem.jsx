@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import BaseCard from "../Base/BaseCard.jsx";
-
-import { MdCheck, MdEdit, MdDelete } from "react-icons/md";
-import { Wrapper as TodoItemWrapper } from "./PersonalTodoItem.styles.js";
 import { useDispatch } from "react-redux";
+import { MdCheck, MdEdit, MdDelete } from "react-icons/md";
+import BaseCard from "../Base/BaseCard.jsx";
+import { Wrapper as TodoItemWrapper } from "./PersonalTodoItem.styles.js";
 import { createSchedule } from "@/features/schedule/schedule-service.js";
 
 const PersonalTodoItem = ({ schedule }) => {
