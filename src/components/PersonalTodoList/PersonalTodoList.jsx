@@ -30,7 +30,7 @@ const PersonalTodoList = () => {
 
 	return (
 		<>
-			<TodoContainer>
+			<TodoContainer data-testid="personal-todo-list">
 				<TodoHeader>
 					<TodoTabs>
 						<TodoTab
