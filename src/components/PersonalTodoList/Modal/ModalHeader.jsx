@@ -1,11 +1,10 @@
-import React from 'react';
-import { ModalHeaderStyled, ModalCloseButton } from './Modal.styles';
+import React from "react";
+import { ModalHeaderStyled } from "./Modal.styles";
 
-const ModalHeader = ({ currentDate, handleMenuOpen }) => (
-  <ModalHeaderStyled>
-    <span>{currentDate}</span>
-    <ModalCloseButton onClick={handleMenuOpen}>×</ModalCloseButton>
-  </ModalHeaderStyled>
+const ModalHeader = ({ currentDate }) => (
+	<ModalHeaderStyled>
+		<span>{currentDate}</span>
+	</ModalHeaderStyled>
 );
 
 export default ModalHeader;

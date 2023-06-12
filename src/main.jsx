@@ -4,13 +4,9 @@ import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
 import { lightTheme } from "@/styles/theme";
 import GlobalStyles from "@/styles/GlobalStyles";
-import ReactModal from "react-modal";
 import ReactDOM from "react-dom/client";
 import { store } from "@/store";
 
-if (ReactModal && ReactModal.setAppElement) {
-	ReactModal.setAppElement("#root");
-}
 ReactDOM.createRoot(document.getElementById("root")).render(
 	<Provider store={store}>
 		<GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
