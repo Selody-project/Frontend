@@ -30,6 +30,7 @@ const scheduleSlice = createSlice({
 			})
 			.addCase(createSchedule.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
+				window.location.reload();
 				toast.success("일정 추가에 성공하셨습니다!");
 			})
 			.addCase(createSchedule.rejected, (state, { payload }) => {
