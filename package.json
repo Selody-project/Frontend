@@ -12,7 +12,6 @@
 		"build-storybook": "storybook build"
 	},
 	"dependencies": {
-		"@esbuild/linux-x64": "^0.17.19",
 		"@fullcalendar/core": "^6.1.8",
 		"@fullcalendar/daygrid": "^6.1.8",
 		"@fullcalendar/interaction": "^6.1.8",

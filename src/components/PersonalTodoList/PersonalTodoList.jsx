@@ -15,6 +15,8 @@ import {
 	TodoList,
 } from "./PersonalTodoList.styles";
 import PersonalTodoItem from "./PersonalTodoItem.jsx";
+import { useEffect } from "react";
+import { getSchedule } from "@/features/schedule/schedule-service.js";
 
 const PersonalTodoList = () => {
 	const [selectedTab, setSelectedTab] = useState(false);
@@ -22,11 +24,13 @@ const PersonalTodoList = () => {
 	const { schedule } = useSelector((state) => state.schedule);
 	const dispatch = useDispatch();
 
-	console.log(schedule);
-
 	const handleMenuOpen = () => {
 		dispatch(handleMenuToggle());
 	};
+
+	useEffect(() => {
+		dispatch(getSchedule());
+	}, []);
 
 	return (
 		<>
@@ -66,7 +70,7 @@ const PersonalTodoList = () => {
 							{schedule.map((s) => {
 								return (
 									<PersonalTodoItem
-										key={s.startTime + s.endTime}
+										key={s.startDateTime + s.endDateTime}
 										schedule={s}
 									/>
 								);
@@ -75,7 +79,7 @@ const PersonalTodoList = () => {
 					)}
 				</TodoBody>
 			</TodoContainer>
-			{menuOpen && <ModalWindow />}
+			{menuOpen && <ModalWindow schedule={schedule} />}
 		</>
 	);
 };

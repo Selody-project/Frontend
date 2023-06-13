@@ -107,7 +107,6 @@ const userSlice = createSlice({
 			})
 			.addCase(getCurrentUser.fulfilled, (state, { payload }) => {
 				state.userLoading = false;
-				console.log(payload);
 				state.user = payload?.user?.nickname;
 			})
 			.addCase(getCurrentUser.rejected, (state, { payload }) => {

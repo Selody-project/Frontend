@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { Wrapper } from "./CalendarContainer.styles";
+import { useDispatch } from "react-redux";
+import { currentMonthFn } from "@/features/schedule/schedule-slice";
 
 const CalendarContainer = () => {
 	const colors = [
@@ -32,6 +34,31 @@ const CalendarContainer = () => {
 	const schedule = useSelector((state) => state.schedule.schedule);
 	const [events, setEvents] = useState([]);
 	const [currentWeekStart, setCurrentWeekStart] = useState(new Date());
+	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
+	const calendarRef = useRef(null);
+	const dispatch = useDispatch();
+
+	const updateCurrentMonth = () => {
+		const calendarApi = calendarRef.current.getApi();
+		const calendarDate = calendarApi.getDate();
+		setCurrentMonth(calendarDate.getMonth() + 1);
+	};
+
+	const handleNextMonth = () => {
+		const calendarApi = calendarRef.current.getApi();
+		calendarApi.next();
+		updateCurrentMonth();
+	};
+
+	const handlePrevMonth = () => {
+		const calendarApi = calendarRef.current.getApi();
+		calendarApi.prev();
+		updateCurrentMonth();
+	};
+
+	useEffect(() => {
+		dispatch(currentMonthFn(currentMonth));
+	}, [currentMonth]);
 
 	useEffect(() => {
 		currentWeekStart.setDate(
@@ -41,9 +68,8 @@ const CalendarContainer = () => {
 
 	useEffect(() => {
 		const scheduleEvents = schedule.map((event) => {
-			const startDate = new Date(`${event.startDate}T${event.startTime}`);
-			const endDate = new Date(`${event.endDate}T${event.endTime}`);
-			console.log(startDate, endDate);
+			const startDate = new Date(event.startDateTime);
+			const endDate = new Date(event.endDateTime);
 
 			return {
 				start: startDate,
@@ -56,8 +82,8 @@ const CalendarContainer = () => {
 
 	const fullCalendarEvents = events.map((event) => ({
 		title: event.text,
-		start: event.start.toISOString(),
-		end: event.end.toISOString(),
+		start: event.start.toISOString().replace(".000Z", ""),
+		end: event.end.toISOString().replace(".000Z", ""),
 		color: colors[events.indexOf(event) % colors.length],
 	}));
 
@@ -65,11 +91,22 @@ const CalendarContainer = () => {
 		<Wrapper data-testid="calendar-container">
 			<div className="calendar">
 				<FullCalendar
+					ref={calendarRef}
 					plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
 					initialView="dayGridMonth"
 					events={fullCalendarEvents}
+					customButtons={{
+						customNext: {
+							text: "Next",
+							click: handleNextMonth,
+						},
+						customPrev: {
+							text: "Prev",
+							click: handlePrevMonth,
+						},
+					}}
 					headerToolbar={{
-						left: "prev,next today",
+						left: "customPrev,customNext today",
 						center: "title",
 						right: "dayGridMonth,timeGridWeek,timeGridDay",
 					}}

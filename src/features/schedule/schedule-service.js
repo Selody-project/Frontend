@@ -1,5 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import convertToUTC from "@/utils/convertToUTC.js";
+import convertToUTC, {
+	generateEndDateTime,
+	generateStartDateTime,
+} from "@/utils/convertToUTC.js";
 import customFetch from "@/components/Base/BaseAxios.js";
 
 export const createSchedule = createAsyncThunk(
@@ -29,6 +32,48 @@ export const createSchedule = createAsyncThunk(
 				recurrence: 0,
 			});
 			if (response.status !== 201) {
+				throw response.data;
+			}
+			return response.data;
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error.response.data);
+		}
+	},
+);
+
+export const getSchedule = createAsyncThunk(
+	"schedule/getSchedule",
+	async (_, thunkAPI) => {
+		const state = thunkAPI.getState();
+		const month = state.schedule.month;
+		const year = 2023;
+
+		const startDateTime = generateStartDateTime(year, month);
+		const endDateTime = generateEndDateTime(year, month);
+
+		try {
+			const response = await customFetch.get(
+				`/api/user/calendar?startDateTime=${startDateTime.replace(
+					".000Z",
+					"",
+				)}&endDateTime=${endDateTime.replace(".000Z", "")}`,
+			);
+			if (response.status !== 200) {
+				throw response.data;
+			}
+			return response.data;
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error.response.data);
+		}
+	},
+);
+
+export const deleteSchedule = createAsyncThunk(
+	"schedule/deleteSchedule",
+	async (id, thunkAPI) => {
+		try {
+			const response = await customFetch.delete(`/api/user/calendar/${id}`);
+			if (response.status !== 200) {
 				throw response.data;
 			}
 			return response.data;

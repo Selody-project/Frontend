@@ -7,6 +7,7 @@ import { saveSchedule } from "@/features/schedule/schedule-slice.js";
 import ModalHeader from "./ModalHeader";
 import ModalBody from "./ModalBody";
 import ModalFooter from "./ModalFooter";
+import { createSchedule } from "@/features/schedule/schedule-service.js";
 
 const ModalWindow = () => {
 	const [formValues, setFormValues] = useState({
@@ -61,7 +62,8 @@ const ModalWindow = () => {
 		}
 
 		// 일정 저장 로직
-		dispatch(saveSchedule(formValues));
+		// dispatch(saveSchedule(formValues));
+		dispatch(createSchedule(formValues));
 
 		// 폼 초기화
 		setFormValues({
@@ -81,6 +83,7 @@ const ModalWindow = () => {
 
 	return (
 		<Offcanvas
+			as="form"
 			show={menuOpen}
 			onHide={handleMenuOpen}
 			placement="end"
