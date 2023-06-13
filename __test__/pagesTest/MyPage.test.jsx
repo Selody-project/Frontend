@@ -1,51 +1,47 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
-import "@testing-library/jest-dom/extend-expect";
-import { useSelector, Provider } from "react-redux";
-import { configureStore } from "@reduxjs/toolkit";
-import userSlice from "../../src/features/user/user-slice.js";
-import ProfileSettings from "../../src/components/MyPage/ProfileSettings";
+import { render } from "@testing-library/react";
+import { Provider } from "react-redux";
+import { MemoryRouter } from "react-router-dom";
+import configureStore from "redux-mock-store";
+import MyPage from "../../src/pages/MyPage";
 
-const store = configureStore({
-	reducer: {
-		user: userSlice,
-	},
-});
+const mockStore = configureStore([]);
 
-jest.mock("react-redux", () => ({
-	...jest.requireActual("react-redux"),
-	useDispatch: jest.fn(),
-	useSelector: jest.fn(),
-}));
+describe("MyPage Component", () => {
+	let store;
 
-describe("ProfileSettings", () => {
 	beforeEach(() => {
-		useSelector.mockImplementation((callback) =>
-			callback({
+		store = mockStore({
+			user: {
 				user: {
-					myPageInfo: {
-						nickname: "TestUser",
-						email: "test@example.com",
-						imageUrl: "", // added this line to mock imageUrl
-					},
+					nickname: "test",
+					email: "test@test.com",
+					imageUrl: "",
 				},
-			}),
-		);
+			},
+		});
+	});
 
+	it("renders without crashing", () => {
 		render(
 			<Provider store={store}>
-				<ProfileSettings />
+				<MemoryRouter>
+					<MyPage />
+				</MemoryRouter>
 			</Provider>,
 		);
 	});
 
-	test("renders ProfileSettings component correctly", () => {
-		expect(screen.getByText("닉네임")).toBeInTheDocument();
-		expect(screen.getByText("이메일")).toBeInTheDocument();
-	});
-
-	test("renders input fields with default values", () => {
-		expect(screen.getByDisplayValue("TestUser")).toBeInTheDocument();
-		expect(screen.getByDisplayValue("test@example.com")).toBeInTheDocument();
+	it("renders all the tabs", () => {
+		const { getByText } = render(
+			<Provider store={store}>
+				<MemoryRouter>
+					<MyPage />
+				</MemoryRouter>
+			</Provider>,
+		);
+		expect(getByText("프로필 및 계정 관리")).toBeInTheDocument();
+		expect(getByText("공유일정 및 채팅관리")).toBeInTheDocument();
+		expect(getByText("비밀번호 변경")).toBeInTheDocument();
 	});
 });
