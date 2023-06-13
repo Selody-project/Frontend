@@ -1,6 +1,6 @@
-import customFetch from "@/components/Base/BaseAxios.js";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import customFetch from "@/components/Base/BaseAxios";
 
 export const signup = createAsyncThunk(
 	"user/signup",
@@ -107,16 +107,32 @@ export const getCurrentUser = createAsyncThunk(
 
 export const updateUserProfile = createAsyncThunk(
 	"user/updateUserProfile",
-	async ({ name, passwd }, thunkAPI) => {
+	async ({ nickname }, thunkAPI) => {
 		try {
-			const response = await customFetch.put(`/api/user/profile`, {
-				nickname: name,
-				password: passwd,
+			const response = await customFetch.patch(`/api/user/profile`, {
+				nickname,
 			});
-			console.log("response: ", response);
 
 			if (response.statusText !== "OK") {
-				console.log("response.data실패: ", response.data);
+				throw response.data;
+			}
+
+			return response.data;
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error.message);
+		}
+	},
+);
+
+export const updateUserPassword = createAsyncThunk(
+	"user/updateUserPassword",
+	async ({ password }, thunkAPI) => {
+		try {
+			const response = await customFetch.patch(`/api/user/profile/password`, {
+				password,
+			});
+
+			if (response.statusText !== "OK") {
 				throw response.data;
 			}
 

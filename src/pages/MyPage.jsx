@@ -9,15 +9,14 @@ import { MyPageContainer, TabsContainer, Tab } from "./MyPage.styles";
 
 const MyPage = () => {
 	const [selectedTab, setSelectedTab] = useState("profile");
-	const { myPageInfo } = useSelector((state) => state.user);
+	const { user } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		console.log(myPageInfo);
-		if (myPageInfo.message) {
+		if (typeof user !== "object") {
 			dispatch(getCurrentUser());
 		}
-	}, [dispatch]);
+	}, []);
 
 	return (
 		<>
@@ -44,7 +43,7 @@ const MyPage = () => {
 						비밀번호 변경
 					</Tab>
 				</TabsContainer>
-				{selectedTab === "profile" && <ProfileSettings />}
+				{selectedTab === "profile" && <ProfileSettings userInfo={user} />}
 				{selectedTab === "shared" && <SharedSettings />}
 				{selectedTab === "PasswordUpdate" && <PasswordUpdate />}
 			</MyPageContainer>

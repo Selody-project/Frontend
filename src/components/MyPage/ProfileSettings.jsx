@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
 	UserInfoContainer,
 	UserInfoSection,
@@ -11,12 +12,13 @@ import {
 	ImagePreview,
 	ImageInput,
 } from "../../pages/MyPage.styles";
+import { updateUserProfile } from "@/features/user/user-service";
 
 const ProfileSettings = () => {
-	const { nickname, email, imageUrl } = useSelector(
-		(state) => state.user.myPageInfo,
-	);
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
+	const { nickname, email, imageUrl } = useSelector((state) => state.user.user);
 	const [newNickname, setNewNickname] = useState(nickname);
 	const [newImage, setNewImage] = useState(imageUrl);
 
@@ -37,7 +39,9 @@ const ProfileSettings = () => {
 
 	const handleNicknameSubmit = (e) => {
 		e.preventDefault();
-		// Nickname update logic here
+
+		dispatch(updateUserProfile({ nickname: newNickname }));
+		navigate("/mypage");
 	};
 
 	return (
@@ -67,7 +71,7 @@ const ProfileSettings = () => {
 						<InputField
 							id="nickname"
 							type="text"
-							value={newNickname}
+							defaultValue={nickname}
 							onChange={handleNicknameChange}
 						/>
 						<ChangeButton

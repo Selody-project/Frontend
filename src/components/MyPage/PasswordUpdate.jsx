@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
 	UserInfoContainer,
 	PwInfoItem,
@@ -7,8 +9,12 @@ import {
 	InputField,
 	SaveButton,
 } from "../../pages/MyPage.styles";
+import { updateUserPassword } from "@/features/user/user-service";
 
 const PasswordUpdate = () => {
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+
 	const [currentPassword, setCurrentPassword] = useState("");
 	const [newPassword, setNewPassword] = useState("");
 	const [confirmNewPassword, setConfirmNewPassword] = useState("");
@@ -31,7 +37,9 @@ const PasswordUpdate = () => {
 			console.log("비밀번호가 일치하지 않습니다.");
 			return;
 		}
-		// 비밀번호 변경 로직 작성
+
+		dispatch(updateUserPassword({ password: newPassword }));
+		navigate("/mypage");
 	};
 
 	return (
