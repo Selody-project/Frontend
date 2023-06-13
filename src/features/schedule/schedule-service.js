@@ -46,7 +46,7 @@ export const getSchedule = createAsyncThunk(
 	async (_, thunkAPI) => {
 		const state = thunkAPI.getState();
 		const month = state.schedule.month;
-		const year = 2023;
+		const year = state.schedule.year;
 
 		const startDateTime = generateStartDateTime(year, month);
 		const endDateTime = generateEndDateTime(year, month);

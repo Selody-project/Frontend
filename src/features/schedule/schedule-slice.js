@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 const initialState = {
 	schedule: [],
 	month: 0,
+	year: 0,
 	isLoading: false,
 };
 
@@ -17,6 +18,9 @@ const scheduleSlice = createSlice({
 		},
 		currentMonthFn: (state, { payload }) => {
 			state.month = payload;
+		},
+		currentYearFn: (state, { payload }) => {
+			state.year = payload;
 		},
 	},
 	extraReducers: (builder) => {
@@ -47,6 +51,7 @@ const scheduleSlice = createSlice({
 	},
 });
 
-export const { saveSchedule, currentMonthFn } = scheduleSlice.actions;
+export const { saveSchedule, currentMonthFn, currentYearFn } =
+	scheduleSlice.actions;
 
 export default scheduleSlice.reducer;

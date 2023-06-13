@@ -21,7 +21,7 @@ import { getSchedule } from "@/features/schedule/schedule-service.js";
 const PersonalTodoList = () => {
 	const [selectedTab, setSelectedTab] = useState(false);
 	const menuOpen = useSelector((state) => state.user.menuOpen);
-	const { schedule } = useSelector((state) => state.schedule);
+	const { schedule, month, year } = useSelector((state) => state.schedule);
 	const dispatch = useDispatch();
 
 	const handleMenuOpen = () => {
@@ -30,7 +30,7 @@ const PersonalTodoList = () => {
 
 	useEffect(() => {
 		dispatch(getSchedule());
-	}, []);
+	}, [month, year]);
 
 	return (
 		<>

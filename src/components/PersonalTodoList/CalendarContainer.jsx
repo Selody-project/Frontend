@@ -6,7 +6,10 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { Wrapper } from "./CalendarContainer.styles";
 import { useDispatch } from "react-redux";
-import { currentMonthFn } from "@/features/schedule/schedule-slice";
+import {
+	currentMonthFn,
+	currentYearFn,
+} from "@/features/schedule/schedule-slice";
 
 const CalendarContainer = () => {
 	const colors = [
@@ -35,6 +38,7 @@ const CalendarContainer = () => {
 	const [events, setEvents] = useState([]);
 	const [currentWeekStart, setCurrentWeekStart] = useState(new Date());
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
+	const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
 	const calendarRef = useRef(null);
 	const dispatch = useDispatch();
 
@@ -42,6 +46,7 @@ const CalendarContainer = () => {
 		const calendarApi = calendarRef.current.getApi();
 		const calendarDate = calendarApi.getDate();
 		setCurrentMonth(calendarDate.getMonth() + 1);
+		setCurrentYear(calendarDate.getFullYear());
 	};
 
 	const handleNextMonth = () => {
@@ -58,6 +63,7 @@ const CalendarContainer = () => {
 
 	useEffect(() => {
 		dispatch(currentMonthFn(currentMonth));
+		dispatch(currentYearFn(currentYear));
 	}, [currentMonth]);
 
 	useEffect(() => {
