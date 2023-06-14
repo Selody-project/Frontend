@@ -4,6 +4,7 @@ import LoginPage from './LoginPage';
 import Root from './Root';
 import SignUpPage from './SignUpPage';
 import PersonalSchedulePage from './PersonalSchedulePage';
+import MyPage from './MyPage';
 
 export {
   ErrorPage,
@@ -12,4 +13,5 @@ export {
   Root,
   SignUpPage,
   PersonalSchedulePage,
+  MyPage,
 };

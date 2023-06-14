@@ -1,12 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import {
 	signup,
 	login,
 	naverLogin,
 	logout,
 	getCurrentUser,
+	updateUserProfile,
+	updateUserPassword,
 } from "./user-service.js";
-import { toast } from "react-toastify";
 
 const initialState = {
 	user: null,
@@ -92,12 +94,38 @@ const userSlice = createSlice({
 			})
 			.addCase(getCurrentUser.fulfilled, (state, { payload }) => {
 				state.userLoading = false;
-				console.log(payload);
-				state.user = payload?.user?.nickname;
+				state.user = payload?.user;
 			})
 			.addCase(getCurrentUser.rejected, (state, { payload }) => {
 				state.userLoading = false;
 				console.log(payload);
+			})
+			// 유저 프로필 수정
+			.addCase(updateUserProfile.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(updateUserProfile.fulfilled, (state, { payload }) => {
+				state.isLoading = false;
+				state.user = payload;
+				toast.success("프로필이 수정되었습니다.");
+			})
+			.addCase(updateUserProfile.rejected, (state, { payload }) => {
+				state.isLoading = false;
+				console.log(payload);
+				toast.error(payload);
+			})
+			// 유저 비밀번호 수정
+			.addCase(updateUserPassword.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(updateUserPassword.fulfilled, (state, { payload }) => {
+				state.isLoading = false;
+				toast.success("비밀번호가 수정되었습니다.");
+			})
+			.addCase(updateUserPassword.rejected, (state, { payload }) => {
+				state.isLoading = false;
+				console.log(payload);
+				toast.error(payload);
 			});
 	},
 });
