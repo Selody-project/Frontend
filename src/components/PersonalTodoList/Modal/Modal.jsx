@@ -22,6 +22,8 @@ const ModalWindow = () => {
 		startTime: "",
 		endDate: "",
 		endTime: "",
+		untilDate: "",
+		untilTime: "",
 		repeat: "none",
 		notification: "none",
 	});
@@ -54,7 +56,9 @@ const ModalWindow = () => {
 		formValues.startDate &&
 		formValues.startTime &&
 		formValues.endDate &&
-		formValues.endTime;
+		formValues.endTime &&
+		formValues.untilDate &&
+		formValues.untilTime;
 
 	const handleSubmit = () => {
 		// 시간 유효성 검사
@@ -78,6 +82,8 @@ const ModalWindow = () => {
 			startTime: "",
 			endDate: "",
 			endTime: "",
+			untilDate: "",
+			untilTime: "",
 			repeat: "none",
 			notification: "none",
 		});

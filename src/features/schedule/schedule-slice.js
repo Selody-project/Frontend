@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 
 const initialState = {
 	schedule: [],
+	recSchedule: [],
 	month: 0,
 	year: 0,
 	isLoading: false,
@@ -46,7 +47,9 @@ const scheduleSlice = createSlice({
 			.addCase(getSchedule.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
 				console.log(payload.nonRecurrenceSchedule);
+				console.log(payload.recurrenceSchedule);
 				state.schedule = payload.nonRecurrenceSchedule;
+				state.recSchedule = payload.recurrenceSchedule;
 			})
 			.addCase(getSchedule.rejected, (state, { payload }) => {
 				state.isLoading = false;

@@ -8,7 +8,7 @@ const ModalFooter = ({ handleSubmit, checkFieldsFilled }) => {
 		<Button
 			variant="primary"
 			onClick={handleSubmit}
-			disabled={!checkFieldsFilled()}
+			// disabled={!checkFieldsFilled()}
 			className="mt-3"
 		>
 			{edit ? "수정하기" : "저장하기"}

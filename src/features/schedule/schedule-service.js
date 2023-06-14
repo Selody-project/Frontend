@@ -16,11 +16,16 @@ export const createSchedule = createAsyncThunk(
 			startTime,
 			endTime,
 			repeat,
-			notification,
+			untilDate,
+			untilTime,
 		} = schedule;
 
 		const startDateTime = convertToUTC(startDate, startTime);
 		const endDateTime = convertToUTC(endDate, endTime);
+		const untileDateTime = convertToUTC(untilDate, untilTime);
+
+		const rec = repeat === "none" ? 0 : 1;
+		const inter = repeat === "none" ? null : 1;
 
 		try {
 			const response = await customFetch.post(`/api/user/calendar`, {
@@ -29,7 +34,10 @@ export const createSchedule = createAsyncThunk(
 				startDateTime,
 				endDateTime,
 				freq: repeat,
-				recurrence: 0,
+				recurrence: rec,
+				interval: inter,
+				byweekday: "",
+				until: untileDateTime,
 			});
 			if (response.status !== 201) {
 				throw response.data;
