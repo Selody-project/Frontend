@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { handleMenuToggle } from "../../features/user/user-slice.js";
+import { handleMenuToggle, setEdit } from "../../features/user/user-slice.js";
 import ModalWindow from "./Modal/Modal";
 import {
 	TodoContainer,
@@ -20,14 +20,14 @@ import { getSchedule } from "@/features/schedule/schedule-service.js";
 
 const PersonalTodoList = () => {
 	const [selectedTab, setSelectedTab] = useState(false);
-	const menuOpen = useSelector((state) => state.user.menuOpen);
+	const { menuOpen, edit } = useSelector((state) => state.user);
 	const { schedule, month, year } = useSelector((state) => state.schedule);
 	const dispatch = useDispatch();
 
 	const handleMenuOpen = () => {
+		dispatch(setEdit(false));
 		dispatch(handleMenuToggle());
 	};
-
 	useEffect(() => {
 		dispatch(getSchedule());
 	}, [month, year]);
@@ -79,7 +79,7 @@ const PersonalTodoList = () => {
 					)}
 				</TodoBody>
 			</TodoContainer>
-			{menuOpen && <ModalWindow schedule={schedule} />}
+			{menuOpen && <ModalWindow />}
 		</>
 	);
 };

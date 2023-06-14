@@ -15,6 +15,7 @@ const initialState = {
 	userLoading: true,
 	menuOpen: false,
 	token: null,
+	edit: false,
 };
 
 const userSlice = createSlice({
@@ -25,7 +26,9 @@ const userSlice = createSlice({
 			state.user = null;
 			toast.success("로그아웃에 성공하셨습니다.");
 		},
-
+		setEdit: (state, { payload }) => {
+			state.edit = payload;
+		},
 		handleMenuToggle: (state) => {
 			state.menuOpen = !state.menuOpen;
 		},
@@ -54,11 +57,10 @@ const userSlice = createSlice({
 			.addCase(login.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
 				state.user = payload.nickname;
-				toast.success(`안녕하세요! ${state.user}님`);
 			})
 			.addCase(login.rejected, (state, { payload }) => {
 				state.isLoading = false;
-				toast.error(payload);
+				console.log(payload);
 			})
 			// naver 로그인
 			.addCase(naverLogin.pending, (state) => {
@@ -67,12 +69,10 @@ const userSlice = createSlice({
 			.addCase(naverLogin.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
 				state.user = payload.nickname;
-				toast.success(`안녕하세요! ${state.user}님`);
 			})
 			.addCase(naverLogin.rejected, (state, { payload }) => {
 				state.isLoading = false;
 				console.log(payload);
-				// toast.error(payload);
 			})
 			// google 로그인
 			.addCase(googleLogin.pending, (state) => {
@@ -81,12 +81,10 @@ const userSlice = createSlice({
 			.addCase(googleLogin.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
 				state.user = payload.nickname;
-				toast.success(`안녕하세요! ${state.user}님`);
 			})
 			.addCase(googleLogin.rejected, (state, { payload }) => {
 				state.isLoading = false;
 				console.log(payload);
-				// toast.error(payload);
 			})
 			// 로그아웃
 			.addCase(logout.pending, (state) => {
@@ -116,6 +114,6 @@ const userSlice = createSlice({
 	},
 });
 
-export const { handleMenuToggle, logoutHandler } = userSlice.actions;
+export const { handleMenuToggle, logoutHandler, setEdit } = userSlice.actions;
 
 export default userSlice.reducer;
