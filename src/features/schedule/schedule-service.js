@@ -36,7 +36,6 @@ export const createSchedule = createAsyncThunk(
 				freq: repeat,
 				recurrence: rec,
 				interval: inter,
-				byweekday: "",
 				until: untileDateTime,
 			});
 			if (response.status !== 201) {
