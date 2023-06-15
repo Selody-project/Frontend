@@ -10,8 +10,14 @@ import { setId } from "@/features/schedule/schedule-slice.js";
 const PersonalTodoItem = ({ schedule }) => {
 	const dispatch = useDispatch();
 
-	const [sDate, sTime] = schedule.startDateTime.split("T");
-	const [eDate, eTime] = schedule.endDateTime.split("T");
+	let sDate, sTime, eDate, eTime, uDate, uTime;
+
+	if (schedule.recurrence === 0) {
+		[sDate, sTime] = schedule.startDateTime.split("T");
+		[eDate, eTime] = schedule.endDateTime.split("T");
+	} else {
+		[uDate, uTime] = schedule.until.split("T");
+	}
 
 	const menuHandler = () => {
 		dispatch(setEdit(true));
@@ -24,11 +30,18 @@ const PersonalTodoItem = ({ schedule }) => {
 			<TodoItemWrapper>
 				<div className="info">
 					<h3>{schedule.title}</h3>
-					<p>
-						<span>{`${sDate} - ${sTime.replace(".000Z", "")}`}</span>
-						<br />
-						<span>{`${eDate} - ${eTime.replace(".000Z", "")}`}</span>
-					</p>
+					{schedule.recurrence === 0 && (
+						<p>
+							<span>{`${sDate} - ${sTime.replace(".000Z", "")}`}</span>
+							<br />
+							<span>{`${eDate} - ${eTime.replace(".000Z", "")}`}</span>
+						</p>
+					)}
+					{schedule.recurrence === 1 && (
+						<p>
+							~ <span>{`${uDate} - ${uTime.replace(".000Z", "")}`}</span>
+						</p>
+					)}
 				</div>
 				<div className="icon">
 					<MdEdit onClick={menuHandler} />

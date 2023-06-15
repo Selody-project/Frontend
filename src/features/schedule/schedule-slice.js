@@ -3,8 +3,9 @@ import { createSchedule, getSchedule } from "./schedule-service.js";
 import { toast } from "react-toastify";
 
 const initialState = {
+	totalSchedule: [],
 	schedule: [],
-	recSchedule: [],
+	recSchedules: [],
 	month: 0,
 	year: 0,
 	isLoading: false,
@@ -46,10 +47,12 @@ const scheduleSlice = createSlice({
 			})
 			.addCase(getSchedule.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
-				console.log(payload.nonRecurrenceSchedule);
-				console.log(payload.recurrenceSchedule);
 				state.schedule = payload.nonRecurrenceSchedule;
-				state.recSchedule = payload.recurrenceSchedule;
+				state.recSchedules = payload.recurrenceSchedule;
+				state.totalSchedule = [
+					...payload.nonRecurrenceSchedule,
+					...state.recSchedules,
+				];
 			})
 			.addCase(getSchedule.rejected, (state, { payload }) => {
 				state.isLoading = false;

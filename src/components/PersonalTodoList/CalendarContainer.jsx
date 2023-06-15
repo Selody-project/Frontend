@@ -10,6 +10,7 @@ import {
 	currentMonthFn,
 	currentYearFn,
 } from "@/features/schedule/schedule-slice";
+import { getRandomColor } from "@/utils/color";
 
 const CalendarContainer = () => {
 	const colors = [
@@ -34,7 +35,7 @@ const CalendarContainer = () => {
 		"#022f40",
 		"#6b0504",
 	];
-	const schedule = useSelector((state) => state.schedule.schedule);
+	const { schedule, recSchedules } = useSelector((state) => state.schedule);
 	const [events, setEvents] = useState([]);
 	const [currentWeekStart, setCurrentWeekStart] = useState(new Date());
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
@@ -61,6 +62,15 @@ const CalendarContainer = () => {
 		updateCurrentMonth();
 	};
 
+	const eventColorMap = useRef({});
+
+	const getColorForEvent = (eventId) => {
+		if (!eventColorMap.current[eventId]) {
+			eventColorMap.current[eventId] = getRandomColor();
+		}
+		return eventColorMap.current[eventId];
+	};
+
 	useEffect(() => {
 		dispatch(currentMonthFn(currentMonth));
 		dispatch(currentYearFn(currentYear));
@@ -81,16 +91,39 @@ const CalendarContainer = () => {
 				start: startDate,
 				end: endDate,
 				text: event.title,
+				colors: getColorForEvent(event.id),
 			};
 		});
-		setEvents(scheduleEvents);
-	}, [schedule]);
+
+		const recSchedule = recSchedules
+			.map((rec) => {
+				const color = getColorForEvent(rec.id);
+
+				return rec.recurrenceDateList.map((event) => {
+					const startDate = new Date(event.startDateTime);
+					const endDate = new Date(event.endDateTime);
+
+					return {
+						start: startDate,
+						end: endDate,
+						text: rec.title,
+						colors: color,
+					};
+				});
+			})
+			.flat();
+
+		setEvents([...scheduleEvents, ...recSchedule]);
+	}, [schedule, recSchedules]);
 
 	const fullCalendarEvents = events.map((event) => ({
 		title: event.text,
 		start: event.start.toISOString().replace(".000Z", ""),
 		end: event.end.toISOString().replace(".000Z", ""),
-		color: colors[events.indexOf(event) % colors.length],
+		color:
+			event.colors !== ""
+				? event.colors
+				: colors[events.indexOf(event) % colors.length],
 	}));
 
 	return (

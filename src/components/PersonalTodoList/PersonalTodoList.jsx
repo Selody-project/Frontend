@@ -21,7 +21,7 @@ import { getSchedule } from "@/features/schedule/schedule-service.js";
 const PersonalTodoList = () => {
 	const [selectedTab, setSelectedTab] = useState(false);
 	const { menuOpen, edit } = useSelector((state) => state.user);
-	const { schedule, month, year } = useSelector((state) => state.schedule);
+	const { month, year, totalSchedule } = useSelector((state) => state.schedule);
 	const dispatch = useDispatch();
 
 	const handleMenuOpen = () => {
@@ -60,17 +60,17 @@ const PersonalTodoList = () => {
 						</AddEventButton>
 					</TodoTitle>
 					<TodoSubtitle>하루동안의 할 일을 관리합니다.</TodoSubtitle>
-					{schedule.length === 0 ? (
+					{totalSchedule.length === 0 ? (
 						<TodoButton onClick={handleMenuOpen}>
 							아직 추가된 일정이 없습니다! <br />할 일을 추가하여 하루동안 할
 							일을 관리해보세요.
 						</TodoButton>
 					) : (
 						<TodoList>
-							{schedule.map((s) => {
+							{totalSchedule.map((s) => {
 								return (
 									<PersonalTodoItem
-										key={s.startDateTime + s.endDateTime}
+										key={Math.random().toString()}
 										schedule={s}
 									/>
 								);
