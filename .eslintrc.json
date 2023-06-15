@@ -25,6 +25,7 @@
 		"import/extensions": "off",
 		"import/no-unresolved": "off",
 		"react/jsx-boolean-value": "off",
-		"arrow-body-style": "off"
+		"arrow-body-style": "off",
+		"no-param-reassign": "off"
 	}
 }
