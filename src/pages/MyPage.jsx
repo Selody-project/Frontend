@@ -37,6 +37,7 @@ const MyPage = () => {
 						공유일정 및 채팅관리
 					</Tab>
 					<Tab
+						id="PasswordUpdate"
 						selected={selectedTab === "PasswordUpdate"}
 						onClick={() => setSelectedTab("PasswordUpdate")}
 					>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
@@ -18,9 +18,20 @@ const ProfileSettings = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
-	const { nickname, email, imageUrl } = useSelector((state) => state.user.user);
+	const { nickname, email, imageUrl, provider } = useSelector(
+		(state) => state.user.user,
+	);
 	const [newNickname, setNewNickname] = useState(nickname);
 	const [newImage, setNewImage] = useState(imageUrl);
+
+	useEffect(() => {
+		if (provider === "google" || provider === "naver") {
+			document.getElementById("PasswordUpdate").style.display = "none";
+			document.querySelectorAll("#changeBtn").forEach((btn) => {
+				btn.style.display = "none";
+			});
+		}
+	}, []);
 
 	const handleNicknameChange = (e) => {
 		setNewNickname(e.target.value);
@@ -53,7 +64,11 @@ const ProfileSettings = () => {
 							프로필 이미지
 						</Label>
 						<ImagePreview src={newImage} alt="profile" />
-						<ChangeButton onClick={handleImageSubmit} disabled={!newImage}>
+						<ChangeButton
+							id="changeBtn"
+							onClick={handleImageSubmit}
+							disabled={!newImage}
+						>
 							저장
 						</ChangeButton>
 					</ImageContainer>
@@ -75,6 +90,7 @@ const ProfileSettings = () => {
 							onChange={handleNicknameChange}
 						/>
 						<ChangeButton
+							id="changeBtn"
 							onClick={handleNicknameSubmit}
 							disabled={newNickname === nickname}
 						>

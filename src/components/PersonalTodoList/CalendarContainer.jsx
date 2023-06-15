@@ -43,7 +43,6 @@ const CalendarContainer = () => {
 		const scheduleEvents = schedule.map((event) => {
 			const startDate = new Date(`${event.startDate}T${event.startTime}`);
 			const endDate = new Date(`${event.endDate}T${event.endTime}`);
-			console.log(startDate, endDate);
 
 			return {
 				start: startDate,
