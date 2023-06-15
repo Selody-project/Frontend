@@ -7,7 +7,7 @@ import CalendarContainer from "../components/PersonalTodoList/CalendarContainer.
 const MainContainer = styled.main`
 	display: flex;
 	justify-content: space-between;
-	margin: 70px 60px 0px 40px;
+	margin: 100px 80px 0px 60px;
 	font-family: "Inter", sans-serif;
 `;
 

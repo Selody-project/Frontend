@@ -76,6 +76,7 @@ const CalendarContainer = () => {
 					weekends={true}
 					allDaySlot={false}
 					locale="ko"
+					height={750}
 					eventClick={(info) => {
 						console.log(info);
 					}}

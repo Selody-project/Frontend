@@ -6,20 +6,21 @@ export const TodoContainer = styled.div`
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	height: auto;
 	min-width: 450px;
-	max-width: 800px;
+	height: 100%;
 	background-color: #f5f5f5;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 	border-radius: 15px;
 	font-family: "Inter";
 	padding: 20px;
+	margin-left: 20px;
 `;
 
 export const TodoHeader = styled.div`
 	display: flex;
 	margin-bottom: 20px;
 	width: 100%;
+	background-color: #f5f5f5;
 `;
 
 export const TodoTabs = styled.div`
@@ -42,13 +43,14 @@ export const TodoTab = styled.button`
 	font-weight: 600;
 	cursor: pointer;
 	color: ${(props) => (props.selected ? "white" : "#121127")};
-	opacity: ${(props) => (props.selected ? "1" : "0.6")};
+	opacity: ${(props) => (props.selected ? "1" : "0.7")};
 	transition: opacity 0.3s ease, background 0.3s ease, color 0.3s ease;
 	padding: 10px 0;
 
-	&:hover {
+	&:hover,
+	&[aria-selected="true"] {
 		opacity: 1;
-		background: #a495ff;
+		background: #6c55fe;
 		color: white;
 	}
 `;
@@ -73,7 +75,7 @@ export const TodoBody = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	background-color: #fff;
+	background-color: #ffffff;
 	height: auto;
 	width: 100%;
 	border-radius: 15px;
@@ -131,6 +133,7 @@ export const TodoList = styled.ul`
 	flex-direction: column;
 	align-items: center;
 	justify-content: flex-start;
+	border-radius: 10px;
 	gap: 20px;
 	padding: 0;
 	margin: 0;

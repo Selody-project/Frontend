@@ -2,17 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
-	UserInfoContainer,
-	UserInfoSection,
-	UserInfoItem,
-	ChangeButton,
-	Label,
-	InputField,
-	ImageContainer,
-	ImagePreview,
-	ImageInput,
-} from "../../pages/MyPage.styles";
+	Button,
+	TextField,
+	Avatar,
+	Box,
+	Typography,
+	Grid,
+} from "@mui/material";
 import { updateUserProfile } from "@/features/user/user-service";
+import { UserInfoContainer } from "./MyPageDetail.styles";
 
 const ProfileSettings = () => {
 	const navigate = useNavigate();
@@ -30,6 +28,9 @@ const ProfileSettings = () => {
 			document.querySelectorAll("#changeBtn").forEach((btn) => {
 				btn.style.display = "none";
 			});
+			document.getElementById("email").style.display = "none";
+
+			// setNewImage(password);
 		}
 	}, []);
 
@@ -56,55 +57,76 @@ const ProfileSettings = () => {
 	};
 
 	return (
-		<UserInfoContainer>
-			<UserInfoSection>
-				<UserInfoItem>
-					<ImageContainer>
-						<Label htmlFor="image" style={{ marginRight: "20px" }}>
-							프로필 이미지
-						</Label>
-						<ImagePreview src={newImage} alt="profile" />
-						<ChangeButton
-							id="changeBtn"
-							onClick={handleImageSubmit}
-							disabled={!newImage}
-						>
-							저장
-						</ChangeButton>
-					</ImageContainer>
-					<ImageInput
+		<UserInfoContainer maxWidth="md">
+			<Box sx={{ marginTop: 3, marginBottom: 2 }}>
+				<Typography variant="h4" component="h1" align="center">
+					{nickname}님의 프로필
+				</Typography>
+				<Typography variant="subtitle1" component="h2" align="center">
+					프로필 사진과 닉네임을 변경할 수 있습니다.
+				</Typography>
+			</Box>
+			<Grid container spacing={3} direction="column" align="center">
+				<Grid item id="avatarGrid">
+					<Avatar
+						src={newImage}
+						id="avatar"
+						alt="profile"
+						sx={{
+							width: 100,
+							height: 100,
+							margin: "auto",
+							bgcolor: "deepOrange.500",
+						}}
+					/>
+					<TextField
 						type="file"
 						id="image"
 						name="image"
 						onChange={handleImageChange}
+						sx={{ marginTop: 2 }}
 					/>
-				</UserInfoItem>
-				<hr />
-				<UserInfoItem>
-					<div>
-						<Label htmlFor="nickname">닉네임</Label>
-						<InputField
-							id="nickname"
-							type="text"
-							defaultValue={nickname}
-							onChange={handleNicknameChange}
-						/>
-						<ChangeButton
-							id="changeBtn"
-							onClick={handleNicknameSubmit}
-							disabled={newNickname === nickname}
-						>
-							저장
-						</ChangeButton>
-					</div>
-					<hr />
-					<div>
-						<Label htmlFor="email">이메일</Label>
-						<InputField id="email" type="email" defaultValue={email} disabled />
-					</div>
-				</UserInfoItem>
-				<hr />
-			</UserInfoSection>
+					<Button
+						id="changeBtn"
+						variant="contained"
+						color="secondary"
+						onClick={handleImageSubmit}
+						disabled={!newImage}
+						sx={{ height: 55, marginTop: 2, marginLeft: 1 }}
+					>
+						저장
+					</Button>
+				</Grid>
+			</Grid>
+			<Grid container spacing={6} direction="row" justifyContent="center">
+				<Grid item>
+					<TextField
+						id="nickname"
+						label="닉네임"
+						defaultValue={nickname}
+						onChange={handleNicknameChange}
+						sx={{ marginTop: 2 }}
+					/>
+					<Button
+						id="changeBtn"
+						variant="contained"
+						color="secondary"
+						onClick={handleNicknameSubmit}
+						disabled={newNickname === nickname}
+						sx={{ height: 55, marginTop: 2, marginLeft: 1 }}
+					>
+						저장
+					</Button>
+				</Grid>
+				<Grid item id="email">
+					<TextField
+						type="email"
+						defaultValue={email}
+						disabled
+						sx={{ marginTop: 2 }}
+					/>
+				</Grid>
+			</Grid>
 		</UserInfoContainer>
 	);
 };

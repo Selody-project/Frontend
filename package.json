@@ -12,12 +12,16 @@
 		"build-storybook": "storybook build"
 	},
 	"dependencies": {
+		"@emotion/react": "^11.11.1",
+		"@emotion/styled": "^11.11.0",
 		"@esbuild/linux-x64": "^0.17.19",
 		"@fullcalendar/core": "^6.1.8",
 		"@fullcalendar/daygrid": "^6.1.8",
 		"@fullcalendar/interaction": "^6.1.8",
 		"@fullcalendar/react": "^6.1.8",
 		"@fullcalendar/timegrid": "^6.1.8",
+		"@mui/material": "^5.13.5",
+		"@react-oauth/google": "^0.11.0",
 		"@reduxjs/toolkit": "^1.9.3",
 		"axios": "^1.4.0",
 		"bootstrap": "^5.3.0",
