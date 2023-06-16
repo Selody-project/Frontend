@@ -29,8 +29,8 @@ const ProfileSettings = () => {
 				btn.style.display = "none";
 			});
 			document.getElementById("email").style.display = "none";
-
-			// setNewImage(password);
+			document.getElementById("image").disabled = true;
+			document.getElementById("nickname").disabled = true;
 		}
 	}, []);
 
