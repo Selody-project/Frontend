@@ -1,58 +1,99 @@
-import { rest } from "msw";
+import configureMockStore from "redux-mock-store";
+import thunk from "redux-thunk";
 import { server } from "../__mocks__/msw/server.js";
-
-import { store } from "../../src/store/index.js";
 import { createSchedule } from "../../src/features/schedule/schedule-service.js";
 
-const mockSchedule = {
-	title: "Test title",
-	details: "Test details",
-	startDate: "2023-06-04",
-	endDate: "2023-06-20",
-	startTime: "10:00",
-	endTime: "11:00",
-	repeat: "None",
-	notification: "None",
-};
+const mockStore = configureMockStore([thunk]);
+
+jest.mock("react-toastify", () => ({
+	toast: {
+		success: jest.fn(),
+	},
+}));
 
 describe("schedule slice", () => {
-	beforeAll(() => {
-		server.use(
-			rest.post("/api/user/calendar", (req, res, ctx) => {
-				return res(ctx.status(500));
-			}),
-		);
+	let store;
+
+	beforeEach(() => {
+		store = mockStore({
+			schedule: {
+				totalSchedule: [],
+				schedule: [],
+				recSchedules: [],
+				month: 0,
+				year: 0,
+				isLoading: false,
+				id: null,
+			},
+		});
 	});
 
-	it("handles createSchedule failure", async () => {
-		const initialScheduleState = {
-			schedule: [],
-			isLoading: false,
+	beforeAll(() => server.listen());
+	afterEach(() => server.resetHandlers());
+	afterAll(() => server.close());
+
+	it("should handle createSchedule success with recurrence", async () => {
+		const mockPayload = {
+			schedule: {
+				title: "test-title",
+				details: "test-content",
+				startDate: "2023-05-06",
+				endDate: "2023-05-07",
+				startTime: "09:00",
+				endTime: "17:00",
+				repeat: "WEEKLY",
+				untilDate: "2026-01-05",
+				untilTime: "12:00",
+			},
 		};
 
-		expect(store.getState().schedule).toEqual(initialScheduleState);
+		const createResponse = await store
+			.dispatch(createSchedule(mockPayload.schedule))
+			.unwrap();
+		expect(createResponse).toEqual({
+			message: "Successfully create user schedule",
+		});
 
-		server.use(
-			rest.post("/api/user/calendar", (req, res, ctx) => {
-				return res(ctx.status(500));
-			}),
-		);
+		const fetchResponse = await store
+			.dispatch(createSchedule(mockPayload.schedule))
+			.unwrap();
 
-		await store.dispatch(createSchedule(mockSchedule));
-
-		expect(store.getState().schedule.isLoading).toBe(false);
+		const actions = store.getActions();
+		expect(actions[0].type).toEqual("schedule/createSchedule/pending");
+		expect(actions[1].type).toEqual("schedule/getSchedule/pending");
+		expect(actions[2].type).toEqual("schedule/createSchedule/fulfilled");
+		expect(actions[3].type).toEqual("schedule/createSchedule/pending");
+		expect(actions[4].type).toEqual("schedule/getSchedule/fulfilled");
 	});
 
-	it("handles createSchedule success", async () => {
-		const initialScheduleState = {
-			schedule: [],
-			isLoading: false,
+	it("should handle createSchedule success without recurrence", async () => {
+		const mockPayload = {
+			schedule: {
+				title: "test-title",
+				details: "test-content",
+				startDate: "2023-05-06",
+				endDate: "2023-05-07",
+				startTime: "09:00",
+				endTime: "17:00",
+				repeat: "none",
+			},
 		};
 
-		expect(store.getState().schedule).toEqual(initialScheduleState);
+		const createResponse = await store
+			.dispatch(createSchedule(mockPayload.schedule))
+			.unwrap();
+		expect(createResponse).toEqual({
+			message: "Successfully create user schedule",
+		});
+		const fetchResponse = await store
+			.dispatch(createSchedule(mockPayload.schedule))
+			.unwrap();
 
-		await store.dispatch(createSchedule(mockSchedule));
-
-		expect(store.getState().schedule.isLoading).toBe(false);
+		const actions = store.getActions();
+		expect(actions[0].type).toEqual("schedule/createSchedule/pending");
+		expect(actions[1].type).toEqual("schedule/getSchedule/pending");
+		expect(actions[2].type).toEqual("schedule/createSchedule/fulfilled");
+		expect(actions[3].type).toEqual("schedule/createSchedule/pending");
+		expect(actions[4].type).toEqual("schedule/getSchedule/fulfilled");
 	});
 });

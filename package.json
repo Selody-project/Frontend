@@ -12,7 +12,6 @@
 		"build-storybook": "storybook build"
 	},
 	"dependencies": {
-		"@esbuild/linux-x64": "^0.17.19",
 		"@fullcalendar/core": "^6.1.8",
 		"@fullcalendar/daygrid": "^6.1.8",
 		"@fullcalendar/interaction": "^6.1.8",
@@ -31,6 +30,7 @@
 		"react-router-dom": "^6.10.0",
 		"react-toastify": "^9.1.2",
 		"react-typing-effect": "^2.0.5",
+		"redux-mock-store": "^1.5.4",
 		"styled-components": "^5.3.9"
 	},
 	"devDependencies": {
