@@ -4,6 +4,10 @@ import convertToUTC, {
 	generateStartDateTime,
 } from "@/utils/convertToUTC.js";
 import customFetch from "@/components/Base/BaseAxios.js";
+import {
+	convertToLocalTimezone,
+	convertRecurrenceToLocalTimezone,
+} from "@/utils/convertToLocalTimeZone.js";
 
 export const createSchedule = createAsyncThunk(
 	"schedule/createSchedule",
@@ -73,6 +77,14 @@ export const getSchedule = createAsyncThunk(
 			if (response.status !== 200) {
 				throw response.data;
 			}
+
+			response.data.nonRecurrenceSchedule = convertToLocalTimezone(
+				response.data.nonRecurrenceSchedule,
+			);
+			response.data.recurrenceSchedule = convertRecurrenceToLocalTimezone(
+				response.data.recurrenceSchedule,
+			);
+
 			return response.data;
 		} catch (error) {
 			if (error.response) {

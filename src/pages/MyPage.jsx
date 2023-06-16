@@ -13,7 +13,6 @@ const MyPage = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		console.log(user);
 		if (typeof user !== "object") {
 			dispatch(getCurrentUser());
 		}

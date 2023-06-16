@@ -5,35 +5,27 @@ export const Wrapper = styled.form`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 0 1rem;
-	.check {
-		display: inline-block;
-		width: 24px;
-		height: 24px;
-		border-radius: 50%;
-		background-color: ${(props) => (props.checked ? "#C9CCD7" : "transparent")};
-		border: ${(props) => (props.checked ? "none" : "2px solid #C9CCD7")};
-		cursor: pointer;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
+	padding: 0.5rem 1rem;
+
 	.info {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+
 		h3 {
 			font-size: 1.15rem;
 			font-weight: 700;
 			padding-bottom: 0.3rem;
 		}
+
 		p {
-			span {
-				padding-right: 0.2rem;
-			}
+			font-size: 0.9rem;
+			font-weight: 400;
+			color: black;
 		}
 	}
 	.icon svg {
+		margin-left: 0.5rem;
 		color: #a495ff;
 		font-size: 1.5rem;
 		cursor: pointer;
