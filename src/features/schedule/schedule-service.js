@@ -44,7 +44,11 @@ export const createSchedule = createAsyncThunk(
 			thunkAPI.dispatch(getSchedule());
 			return response.data;
 		} catch (error) {
-			return thunkAPI.rejectWithValue(error.response.data);
+			if (error.response) {
+				return thunkAPI.rejectWithValue(error.response.data);
+			} else {
+				return thunkAPI.rejectWithValue(error.message);
+			}
 		}
 	},
 );
@@ -71,7 +75,11 @@ export const getSchedule = createAsyncThunk(
 			}
 			return response.data;
 		} catch (error) {
-			return thunkAPI.rejectWithValue(error.response.data);
+			if (error.response) {
+				return thunkAPI.rejectWithValue(error.response.data);
+			} else {
+				return thunkAPI.rejectWithValue(error.message);
+			}
 		}
 	},
 );
@@ -87,7 +95,11 @@ export const deleteSchedule = createAsyncThunk(
 			thunkAPI.dispatch(getSchedule());
 			return response.data;
 		} catch (error) {
-			return thunkAPI.rejectWithValue(error.response.data);
+			if (error.response) {
+				return thunkAPI.rejectWithValue(error.response.data);
+			} else {
+				return thunkAPI.rejectWithValue(error.message);
+			}
 		}
 	},
 );
@@ -125,7 +137,11 @@ export const updateSchedule = createAsyncThunk(
 			thunkAPI.dispatch(getSchedule());
 			return response.data;
 		} catch (error) {
-			return thunkAPI.rejectWithValue(error.response.data);
+			if (error.response) {
+				return thunkAPI.rejectWithValue(error.response.data);
+			} else {
+				return thunkAPI.rejectWithValue(error.message);
+			}
 		}
 	},
 );

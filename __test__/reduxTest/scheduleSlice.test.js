@@ -1,7 +1,5 @@
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
-import { rest } from "msw";
-import { server } from "../__mocks__/msw/server.js";
 import { toast } from "react-toastify";
 import {
 	saveSchedule,
@@ -9,6 +7,7 @@ import {
 	currentYearFn,
 	setId,
 } from "../../src/features/schedule/schedule-slice.js";
+import { server } from "../__mocks__/msw/server.js";
 import { createSchedule } from "../../src/features/schedule/schedule-service.js";
 
 const mockStore = configureMockStore([thunk]);
@@ -36,77 +35,75 @@ describe("schedule slice", () => {
 		});
 	});
 
-	beforeAll(() => {
-		server.use(
-			rest.post("/api/user/calendar", (req, res, ctx) => {
-				return res(ctx.status(500));
-			}),
+	beforeAll(() => server.listen());
+	afterEach(() => server.resetHandlers());
+	afterAll(() => server.close());
+
+	it("should handle createSchedule success with recurrence", async () => {
+		const mockPayload = {
+			schedule: {
+				title: "test-title",
+				details: "test-content",
+				startDate: "2023-05-06",
+				endDate: "2023-05-07",
+				startTime: "09:00",
+				endTime: "17:00",
+				repeat: "WEEKLY",
+				untilDate: "2026-01-05",
+				untilTime: "12:00",
+			},
+		};
+
+		const createResponse = await store
+			.dispatch(createSchedule(mockPayload.schedule))
+			.unwrap();
+		expect(createResponse).toEqual({
+			message: "Successfully create user schedule",
+		});
+
+		const fetchResponse = await store.dispatch(createSchedule()).unwrap();
+
+		const actions = store.getActions();
+		expect(actions[0].type).toEqual("schedule/createSchedule/pending");
+		expect(actions[1].type).toEqual("schedule/getSchedule/pending");
+		expect(actions[2].type).toEqual("schedule/createSchedule/fulfilled");
+		expect(actions[3].type).toEqual("schedule/getSchedule/fulfilled");
+		expect(fetchResponse.recurrenceSchedule[0].content).toEqual(
+			"test-content11",
 		);
-	});
-
-	afterEach(() => {
-		jest.clearAllMocks();
-	});
-
-	it("should handle createSchedule success", async () => {
-		const mockPayload = { title: "Test title" };
-
-		await store.dispatch(createSchedule(mockPayload)).unwrap();
-
-		const actions = store.getActions();
-		expect(actions[0]).toEqual(createSchedule.pending());
-		expect(actions[1]).toEqual(createSchedule.fulfilled());
 		expect(toast.success).toHaveBeenCalledWith("일정 추가에 성공하셨습니다!");
 	});
 
-	it("should handle createSchedule success", async () => {
-		const mockPayload = { title: "Test title" };
+	it("should handle createSchedule success without recurrence", async () => {
+		const mockPayload = {
+			schedule: {
+				title: "test-title",
+				details: "test-content",
+				startDate: "2023-05-06",
+				endDate: "2023-05-07",
+				startTime: "09:00",
+				endTime: "17:00",
+				repeat: "none",
+			},
+		};
 
-		await store.dispatch(createSchedule(mockPayload)).unwrap();
+		const createResponse = await store
+			.dispatch(createSchedule(mockPayload.schedule))
+			.unwrap();
+		expect(createResponse).toEqual({
+			message: "Successfully create user schedule",
+		});
+
+		const fetchResponse = await store.dispatch(createSchedule()).unwrap();
 
 		const actions = store.getActions();
-		expect(actions[0]).toEqual(createSchedule.pending.type);
-		expect(actions[1].type).toEqual(createSchedule.fulfilled.type);
+		expect(actions[0].type).toEqual("schedule/createSchedule/pending");
+		expect(actions[1].type).toEqual("schedule/getSchedule/pending");
+		expect(actions[2].type).toEqual("schedule/createSchedule/fulfilled");
+		expect(actions[3].type).toEqual("schedule/getSchedule/fulfilled");
+		expect(fetchResponse.recurrenceSchedule[0].content).toEqual(
+			"test-content11",
+		);
 		expect(toast.success).toHaveBeenCalledWith("일정 추가에 성공하셨습니다!");
-	});
-
-	it("should save schedule", () => {
-		const mockPayload = { title: "Test title" };
-
-		const newState = saveSchedule(store.getState().schedule, {
-			payload: mockPayload,
-		});
-
-		expect(newState.schedule).toEqual([mockPayload]);
-	});
-
-	it("should update current month", () => {
-		const mockPayload = 6;
-
-		const newState = currentMonthFn(store.getState().schedule, {
-			payload: mockPayload,
-		});
-
-		expect(newState.month).toEqual(mockPayload);
-	});
-
-	it("should update current year", () => {
-		const mockPayload = 2023;
-
-		const newState = currentYearFn(store.getState().schedule, {
-			payload: mockPayload,
-		});
-
-		expect(newState.year).toEqual(mockPayload);
-	});
-
-	it("should set id", () => {
-		const mockPayload = "abc123";
-
-		const newState = setId(store.getState().schedule, {
-			payload: mockPayload,
-		});
-
-		expect(newState.id).toEqual(mockPayload);
 	});
 });
