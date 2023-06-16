@@ -9,7 +9,6 @@ import {
 	googleLogin,
 	updateUserProfile,
 	updateUserPassword,
-
 } from "./user-service.js";
 
 const initialState = {
@@ -108,8 +107,7 @@ const userSlice = createSlice({
 			})
 			.addCase(getCurrentUser.fulfilled, (state, { payload }) => {
 				state.userLoading = false;
-				state.user = payload?.user?.nickname;
-
+				state.user = payload?.user;
 			})
 			.addCase(getCurrentUser.rejected, (state, { payload }) => {
 				state.userLoading = false;
