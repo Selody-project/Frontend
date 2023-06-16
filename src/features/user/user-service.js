@@ -38,8 +38,6 @@ export const login = createAsyncThunk(
 				throw response.data;
 			}
 
-			// navigate("/");
-
 			return response.data;
 		} catch (error) {
 			return thunkAPI.rejectWithValue(error.message);
@@ -58,8 +56,6 @@ export const naverLogin = createAsyncThunk(
 			if (response.statusText !== "OK") {
 				throw response.data;
 			}
-
-			navigate("/");
 
 			return response.data;
 		} catch (error) {

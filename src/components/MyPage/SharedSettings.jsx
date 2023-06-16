@@ -1,5 +1,5 @@
 import React from "react";
-import { UserInfoContainer } from "../../pages/MyPage.styles";
+import { UserInfoContainer } from "./MyPageDetail.styles";
 
 const SharedSettings = () => (
 	<UserInfoContainer>{/* Add shared settings */}</UserInfoContainer>
