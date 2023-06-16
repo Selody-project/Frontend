@@ -68,6 +68,26 @@ export const naverLogin = createAsyncThunk(
 	},
 );
 
+export const googleLogin = createAsyncThunk(
+	"user/googleLogin",
+	async (googleInfo, thunkAPI) => {
+		try {
+			const response = await customFetch.post("/api/auth/google", {
+				accessToken: googleInfo.credential,
+			});
+
+			if (response.statusText !== "OK") {
+				throw response.data;
+			}
+
+			return response.data;
+		} catch (error) {
+			console.log(error.message);
+			return;
+		}
+	},
+);
+
 export const logout = createAsyncThunk(
 	"user/logout",
 	async ({ navigate }, thunkAPI) => {

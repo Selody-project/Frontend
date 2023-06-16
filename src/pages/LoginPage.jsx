@@ -63,6 +63,7 @@ function LoginPage() {
 
 	useEffect(() => {
 		if (user) {
+			toast.success(`안녕하세요! ${user}님`);
 			navigate("/");
 		}
 

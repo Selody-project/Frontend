@@ -1,48 +1,51 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { MdCheck, MdEdit, MdDelete } from "react-icons/md";
+import React from "react";
+import { MdEdit, MdDelete } from "react-icons/md";
 import BaseCard from "../Base/BaseCard.jsx";
 import { Wrapper as TodoItemWrapper } from "./PersonalTodoItem.styles.js";
-import { createSchedule } from "@/features/schedule/schedule-service.js";
+import { useDispatch } from "react-redux";
+import { deleteSchedule } from "@/features/schedule/schedule-service.js";
+import { handleMenuToggle, setEdit } from "@/features/user/user-slice.js";
+import { setId } from "@/features/schedule/schedule-slice.js";
 
 const PersonalTodoItem = ({ schedule }) => {
-	const dispatchFn = useDispatch();
+	const dispatch = useDispatch();
 
-	const [isChecked, setIsChecked] = useState(false);
-	const checkHandler = () => {
-		setIsChecked((prevState) => {
-			const newState = !prevState;
-			if (newState) {
-				// 체크박스가 체크되었을 때만 액션을 디스패치합니다.
-				dispatchFn(createSchedule(schedule));
-			}
-			return newState;
-		});
+	let sDate, sTime, eDate, eTime, uDate, uTime;
+
+	if (schedule.recurrence === 0) {
+		[sDate, sTime] = schedule.startDateTime.split("T");
+		[eDate, eTime] = schedule.endDateTime.split("T");
+	} else {
+		[uDate, uTime] = schedule.until.split("T");
+	}
+
+	const menuHandler = () => {
+		dispatch(setEdit(true));
+		dispatch(handleMenuToggle());
+		dispatch(setId(schedule.id));
 	};
-
-	// submitHandler는 이제 필요없으므로 삭제할 수 있습니다.
 
 	return (
 		<BaseCard>
-			<TodoItemWrapper checked={isChecked}>
-				<input
-					type="checkbox"
-					className="check"
-					checked={isChecked}
-					onChange={checkHandler}
-				/>
-				{isChecked && <MdCheck color="#fff" />}
+			<TodoItemWrapper>
 				<div className="info">
 					<h3>{schedule.title}</h3>
-					<p>
-						<span>{schedule.startDate}</span>
-						<span>~</span>
-						<span>{schedule.endDate}</span>
-					</p>
+					{schedule.recurrence === 0 && (
+						<p>
+							<span>{`${sDate} - ${sTime.replace(".000Z", "")}`}</span>
+							<br />
+							<span>{`${eDate} - ${eTime.replace(".000Z", "")}`}</span>
+						</p>
+					)}
+					{schedule.recurrence === 1 && (
+						<p>
+							~ <span>{`${uDate} - ${uTime.replace(".000Z", "")}`}</span>
+						</p>
+					)}
 				</div>
 				<div className="icon">
-					<MdEdit />
-					<MdDelete />
+					<MdEdit onClick={menuHandler} />
+					<MdDelete onClick={() => dispatch(deleteSchedule(schedule.id))} />
 				</div>
 			</TodoItemWrapper>
 		</BaseCard>

@@ -21,7 +21,6 @@ const ModalBody = ({ formValues, setFormValues, today }) => {
 					setFormValues({ ...formValues, title: e.target.value })
 				}
 			/>
-
 			<ModalTextarea
 				id="details"
 				rows="5"
@@ -31,8 +30,9 @@ const ModalBody = ({ formValues, setFormValues, today }) => {
 					setFormValues({ ...formValues, details: e.target.value })
 				}
 			/>
-
-			<Form.Label>날짜 및 시간</Form.Label>
+			<Form.Label>
+				{formValues.repeat === "none" ? "날짜 및 시간" : "반복 일정"}
+			</Form.Label>
 			<ModalDateRow>
 				<ModalDateColumn>
 					<ModalInput
@@ -84,30 +84,43 @@ const ModalBody = ({ formValues, setFormValues, today }) => {
 							}
 						>
 							<option value="none">반복 안함</option>
-							<option value="daily">매일</option>
-							<option value="weekly">매주</option>
-							<option value="monthly">매월</option>
-							<option value="yearly">매년</option>
+							<option value="DAILY">매일</option>
+							<option value="WEEKLY">매주</option>
+							<option value="MONTHLY">매월</option>
+							<option value="YEARLY">매년</option>
 						</Form.Select>
 					</Form.Group>
-				</Col>
-				<Col>
-					<Form.Group controlId="notification">
-						<Form.Label>알림 기능</Form.Label>
-						<Form.Select
-							value={formValues.notification}
-							onChange={(e) =>
-								setFormValues({ ...formValues, notification: e.target.value })
-							}
-						>
-							<option value="none">알림 안함</option>
-							<option value="5">5분</option>
-							<option value="15">15분</option>
-							<option value="30">30분</option>
-							<option value="60">1분</option>
-							<option value="120">2분</option>
-						</Form.Select>
-					</Form.Group>
+					{formValues.repeat !== "none" && (
+						<div>
+							<Form.Label style={{ marginTop: "1rem" }}>반복 기간</Form.Label>
+							<ModalDateRow>
+								<ModalDateColumn>
+									<ModalInput
+										type="date"
+										min={today}
+										value={formValues.untilDate}
+										onChange={(e) =>
+											setFormValues({
+												...formValues,
+												untilDate: e.target.value,
+											})
+										}
+									/>
+									<ModalInputGap />
+									<ModalInput
+										type="time"
+										value={formValues.untilTime}
+										onChange={(e) =>
+											setFormValues({
+												...formValues,
+												untilTime: e.target.value,
+											})
+										}
+									/>
+								</ModalDateColumn>
+							</ModalDateRow>
+						</div>
+					)}
 				</Col>
 			</Row>
 			<hr />

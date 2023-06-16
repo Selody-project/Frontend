@@ -7,8 +7,14 @@ import { saveSchedule } from "@/features/schedule/schedule-slice.js";
 import ModalHeader from "./ModalHeader";
 import ModalBody from "./ModalBody";
 import ModalFooter from "./ModalFooter";
+import {
+	createSchedule,
+	updateSchedule,
+} from "@/features/schedule/schedule-service.js";
 
 const ModalWindow = () => {
+	const { edit } = useSelector((state) => state.user);
+	const { id } = useSelector((state) => state.schedule);
 	const [formValues, setFormValues] = useState({
 		title: "",
 		details: "",
@@ -16,6 +22,8 @@ const ModalWindow = () => {
 		startTime: "",
 		endDate: "",
 		endTime: "",
+		untilDate: "",
+		untilTime: "",
 		repeat: "none",
 		notification: "none",
 	});
@@ -29,10 +37,6 @@ const ModalWindow = () => {
 
 	const menuOpen = useSelector((state) => state.user.menuOpen);
 	const dispatch = useDispatch();
-
-	const handleMenuOpen = () => {
-		dispatch(handleMenuToggle());
-	};
 
 	const isTimeValid = () => {
 		if (formValues.startDate === formValues.endDate) {
@@ -52,7 +56,9 @@ const ModalWindow = () => {
 		formValues.startDate &&
 		formValues.startTime &&
 		formValues.endDate &&
-		formValues.endTime;
+		formValues.endTime &&
+		formValues.untilDate &&
+		formValues.untilTime;
 
 	const handleSubmit = () => {
 		// 시간 유효성 검사
@@ -61,7 +67,12 @@ const ModalWindow = () => {
 		}
 
 		// 일정 저장 로직
-		dispatch(saveSchedule(formValues));
+		if (!edit) {
+			dispatch(createSchedule(formValues));
+		}
+		if (edit) {
+			dispatch(updateSchedule({ schedule: formValues, id }));
+		}
 
 		// 폼 초기화
 		setFormValues({
@@ -71,18 +82,21 @@ const ModalWindow = () => {
 			startTime: "",
 			endDate: "",
 			endTime: "",
+			untilDate: "",
+			untilTime: "",
 			repeat: "none",
 			notification: "none",
 		});
 
 		// 메뉴 닫기
-		handleMenuOpen();
+		dispatch(handleMenuToggle());
 	};
 
 	return (
 		<Offcanvas
+			as="form"
 			show={menuOpen}
-			onHide={handleMenuOpen}
+			onHide={() => dispatch(handleMenuToggle())}
 			placement="end"
 			className="bg-light text-dark"
 			style={{ width: "37%" }}
@@ -101,6 +115,7 @@ const ModalWindow = () => {
 				<ModalFooter
 					handleSubmit={handleSubmit}
 					checkFieldsFilled={checkFieldsFilled}
+					edit={edit}
 				/>
 			</Offcanvas.Body>
 		</Offcanvas>

@@ -38,7 +38,11 @@ export default function App() {
 
 	return (
 		<>
-			<ToastContainer position="top-center" style={{ width: "auto" }} />
+			<ToastContainer
+				position="top-center"
+				style={{ width: "auto" }}
+				autoClose={800}
+			/>
 			<RouterProvider router={router} />
 		</>
 	);
