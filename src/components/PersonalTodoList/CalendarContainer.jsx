@@ -62,6 +62,12 @@ const CalendarContainer = () => {
 		updateCurrentMonth();
 	};
 
+	const handleToday = () => {
+		const calendarApi = calendarRef.current.getApi();
+		calendarApi.today();
+		updateCurrentMonth();
+	};
+
 	const eventColorMap = useRef({});
 
 	const getColorForEvent = (eventId) => {
@@ -143,9 +149,13 @@ const CalendarContainer = () => {
 							text: "Prev",
 							click: handlePrevMonth,
 						},
+						customToday: {
+							text: "Today",
+							click: handleToday,
+						},
 					}}
 					headerToolbar={{
-						left: "customPrev,customNext today",
+						left: "customPrev,customNext customToday",
 						center: "title",
 						right: "dayGridMonth,timeGridWeek,timeGridDay",
 					}}
