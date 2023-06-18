@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.form`
-	height: 100%;
+	height: 5rem;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -19,6 +19,7 @@ export const Wrapper = styled.form`
 		justify-content: center;
 	}
 	.info {
+		margin-top: 1rem;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;

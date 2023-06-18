@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import React from "react";
+import { useSelector } from "react-redux";
+import { Navigate, Outlet } from "react-router-dom";
 
 const Root = () => {
 	const { userLoading, user } = useSelector((state) => state.user);
