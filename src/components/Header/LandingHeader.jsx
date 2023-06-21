@@ -35,10 +35,11 @@ const LandingHeader = () => (
 );
 
 const Wrapper = styled.div`
+	margin-top: -1rem;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 0 2rem;
+	padding: 2rem 2rem 0 2rem;
 	height: 5rem;
 	max-width: 100vw;
 	background: linear-gradient(

@@ -50,15 +50,9 @@ const CalendarContainer = () => {
 		setCurrentYear(calendarDate.getFullYear());
 	};
 
-	const handleNextMonth = () => {
+	const handleDateChange = (year, month) => {
 		const calendarApi = calendarRef.current.getApi();
-		calendarApi.next();
-		updateCurrentMonth();
-	};
-
-	const handlePrevMonth = () => {
-		const calendarApi = calendarRef.current.getApi();
-		calendarApi.prev();
+		calendarApi.gotoDate(new Date(year, month));
 		updateCurrentMonth();
 	};
 
@@ -129,30 +123,44 @@ const CalendarContainer = () => {
 	return (
 		<Wrapper data-testid="calendar-container">
 			<div className="calendar">
+				<div className="date-selector">
+					<select
+						className="date-dropdown"
+						value={`${currentYear}-${currentMonth}`}
+						onChange={(e) => {
+							const [year, month] = e.target.value.split("-");
+							handleDateChange(year, parseInt(month, 10) - 1);
+						}}
+					>
+						{Array.from(
+							{ length: 5 },
+							(_, i) => new Date().getFullYear() + i,
+						).map((year) =>
+							Array.from({ length: 12 }, (_, j) => j + 1).map((month) => (
+								<option key={`${year}-${month}`} value={`${year}-${month}`}>
+									{year}년 {month}월
+								</option>
+							)),
+						)}
+					</select>
+				</div>
 				<FullCalendar
 					ref={calendarRef}
 					plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
 					initialView="dayGridMonth"
 					events={fullCalendarEvents}
-					customButtons={{
-						customNext: {
-							text: "Next",
-							click: handleNextMonth,
-						},
-						customPrev: {
-							text: "Prev",
-							click: handlePrevMonth,
-						},
-					}}
 					headerToolbar={{
-						left: "customPrev,customNext today",
+						left: "",
 						center: "title",
-						right: "dayGridMonth,timeGridWeek,timeGridDay",
+						right: "dayGridMonth,timeGridWeek",
 					}}
 					selectable={true}
 					weekends={true}
 					allDaySlot={false}
 					locale="ko"
+					dayCellContent={(renderInfo) =>
+						renderInfo.dayNumberText.replace("일", "")
+					}
 					height={750}
 					eventClick={(info) => {
 						console.log(info);
