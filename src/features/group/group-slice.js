@@ -65,3 +65,5 @@ const groupSlice = createSlice({
 			});
 	},
 });
+
+export default groupSlice.reducer;

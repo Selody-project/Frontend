@@ -119,7 +119,6 @@ export const deleteSchedule = createAsyncThunk(
 export const updateSchedule = createAsyncThunk(
 	"schedule/updateSchedule",
 	async ({ schedule, id }, thunkAPI) => {
-		console.log(schedule);
 		const {
 			title,
 			details,
