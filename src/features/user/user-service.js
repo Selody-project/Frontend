@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import customFetch from "@/components/Base/BaseAxios";
@@ -14,7 +15,7 @@ export const signup = createAsyncThunk(
 			if (response.statusText !== "OK") {
 				throw response.data;
 			}
-
+			
 			// navigate("/");
 
 			return response.data;
@@ -47,6 +48,7 @@ export const login = createAsyncThunk(
 
 export const naverLogin = createAsyncThunk(
 	"user/naverLogin",
+	// eslint-disable-next-line no-unused-vars
 	async ({ access_Token, navigate }, thunkAPI) => {
 		try {
 			const response = await customFetch.post("/api/auth/naver", {
@@ -79,7 +81,6 @@ export const googleLogin = createAsyncThunk(
 			return response.data;
 		} catch (error) {
 			console.log(error.message);
-			return;
 		}
 	},
 );
@@ -98,7 +99,6 @@ export const logout = createAsyncThunk(
 			return response.data;
 		} catch (error) {
 			console.log(error.message);
-			return;
 		}
 	},
 );
@@ -116,7 +116,6 @@ export const getCurrentUser = createAsyncThunk(
 			return response.data;
 		} catch (error) {
 			console.log(error.message);
-			return;
 		}
 	},
 );
