@@ -9,6 +9,44 @@ import {
 	convertRecurrenceToLocalTimezone,
 } from "@/utils/convertToLocalTimeZone.js";
 
+export const getSchedule = createAsyncThunk(
+	"schedule/getSchedule",
+	async (_, thunkAPI) => {
+		const state = thunkAPI.getState();
+		const { month } = state.schedule;
+		const { year } = state.schedule;
+
+		const startDateTime = generateStartDateTime(year, month);
+		const endDateTime = generateEndDateTime(year, month);
+
+		try {
+			const response = await customFetch.get(
+				`/api/user/calendar?startDateTime=${startDateTime.replace(
+					".000Z",
+					"",
+				)}&endDateTime=${endDateTime.replace(".000Z", "")}`,
+			);
+			if (response.status !== 200) {
+				throw response.data;
+			}
+
+			response.data.nonRecurrenceSchedule = convertToLocalTimezone(
+				response.data.nonRecurrenceSchedule,
+			);
+			response.data.recurrenceSchedule = convertRecurrenceToLocalTimezone(
+				response.data.recurrenceSchedule,
+			);
+
+			return response.data;
+		} catch (error) {
+			if (error.response) {
+				return thunkAPI.rejectWithValue(error.response.data);
+			}
+			return thunkAPI.rejectWithValue(error.message);
+		}
+	},
+);
+
 export const createSchedule = createAsyncThunk(
 	"schedule/createSchedule",
 	async (schedule, thunkAPI) => {
@@ -50,48 +88,8 @@ export const createSchedule = createAsyncThunk(
 		} catch (error) {
 			if (error.response) {
 				return thunkAPI.rejectWithValue(error.response.data);
-			} else {
-				return thunkAPI.rejectWithValue(error.message);
 			}
-		}
-	},
-);
-
-export const getSchedule = createAsyncThunk(
-	"schedule/getSchedule",
-	async (_, thunkAPI) => {
-		const state = thunkAPI.getState();
-		const month = state.schedule.month;
-		const year = state.schedule.year;
-
-		const startDateTime = generateStartDateTime(year, month);
-		const endDateTime = generateEndDateTime(year, month);
-
-		try {
-			const response = await customFetch.get(
-				`/api/user/calendar?startDateTime=${startDateTime.replace(
-					".000Z",
-					"",
-				)}&endDateTime=${endDateTime.replace(".000Z", "")}`,
-			);
-			if (response.status !== 200) {
-				throw response.data;
-			}
-
-			response.data.nonRecurrenceSchedule = convertToLocalTimezone(
-				response.data.nonRecurrenceSchedule,
-			);
-			response.data.recurrenceSchedule = convertRecurrenceToLocalTimezone(
-				response.data.recurrenceSchedule,
-			);
-
-			return response.data;
-		} catch (error) {
-			if (error.response) {
-				return thunkAPI.rejectWithValue(error.response.data);
-			} else {
-				return thunkAPI.rejectWithValue(error.message);
-			}
+			return thunkAPI.rejectWithValue(error.message);
 		}
 	},
 );
@@ -109,9 +107,8 @@ export const deleteSchedule = createAsyncThunk(
 		} catch (error) {
 			if (error.response) {
 				return thunkAPI.rejectWithValue(error.response.data);
-			} else {
-				return thunkAPI.rejectWithValue(error.message);
 			}
+			return thunkAPI.rejectWithValue(error.message);
 		}
 	},
 );
@@ -119,7 +116,6 @@ export const deleteSchedule = createAsyncThunk(
 export const updateSchedule = createAsyncThunk(
 	"schedule/updateSchedule",
 	async ({ schedule, id }, thunkAPI) => {
-		console.log(schedule);
 		const {
 			title,
 			details,
@@ -128,7 +124,7 @@ export const updateSchedule = createAsyncThunk(
 			startTime,
 			endTime,
 			repeat,
-			notification,
+			// notification,
 		} = schedule;
 
 		const startDateTime = convertToUTC(startDate, startTime);
@@ -151,9 +147,8 @@ export const updateSchedule = createAsyncThunk(
 		} catch (error) {
 			if (error.response) {
 				return thunkAPI.rejectWithValue(error.response.data);
-			} else {
-				return thunkAPI.rejectWithValue(error.message);
 			}
+			return thunkAPI.rejectWithValue(error.message);
 		}
 	},
 );
