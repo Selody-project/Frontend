@@ -13,6 +13,7 @@ import {
 	HamburgerMenu,
 } from "./Header.styles";
 import { logout } from "@/features/user/user-service.js";
+import { openModal } from "@/features/ui/ui-slice.js";
 
 const Header = () => {
 	const menuOpen = useSelector((state) => state.user.menuOpen);
@@ -37,6 +38,9 @@ const Header = () => {
 				<NavLink to="/">개인일정</NavLink>
 				<NavLink to="/community">커뮤니티</NavLink>
 				<NavLink to="/mypage">마이페이지</NavLink>
+				<CreateButton type="button" onClick={() => dispatch(openModal())}>
+					공유 페이지 생성
+				</CreateButton>
 				<CreateButton type="submit" onClick={() => dispatch(logout(navigate))}>
 					로그아웃
 				</CreateButton>

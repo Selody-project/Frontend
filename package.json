@@ -75,8 +75,9 @@
 		"vite": "^4.3.0"
 	},
 	"lint-staged": {
-		"src/**/*.{js,jsx,ts,tsx}": [
-			"eslint --fix"
+		"**/*.{js,jsx,ts,tsx}": [
+			"eslint --fix",
+			"prettier --write"
 		]
 	},
 	"proxy": "http://localhost:8000"

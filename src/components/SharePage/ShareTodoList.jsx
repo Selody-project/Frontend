@@ -16,7 +16,7 @@ import {
 import PersonalTodoItem from "../PersonalTodoList/PersonalTodoItem.jsx";
 import { getSchedule } from "@/features/schedule/schedule-service.js";
 
-const PersonalTodoList = () => {
+const ShareTodoList = () => {
 	const [selectedTab, setSelectedTab] = useState(true);
 	const { menuOpen } = useSelector((state) => state.user);
 	const { month, year, totalSchedule } = useSelector((state) => state.schedule);
@@ -95,4 +95,4 @@ const PersonalTodoList = () => {
 	);
 };
 
-export default PersonalTodoList;
+export default ShareTodoList;
