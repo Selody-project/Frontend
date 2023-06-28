@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { useDispatch } from "react-redux";
@@ -9,6 +9,7 @@ import {
 	LoginPage,
 	SignUpPage,
 	PersonalSchedulePage,
+	GroupSchedulePage,
 	MyPage,
 } from "@/pages";
 import { getCurrentUser } from "./features/user/user-service.js";
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
 		errorElement: <ErrorPage />,
 		children: [
 			{ index: true, element: <PersonalSchedulePage /> },
+			{ path: "share", element: <GroupSchedulePage /> },
 			{ path: "mypage", element: <MyPage /> },
 		],
 	},

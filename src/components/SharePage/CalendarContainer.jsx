@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Autocomplete, TextField } from "@mui/material";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -34,6 +35,7 @@ const CalendarContainer = () => {
 		"#022f40",
 		"#6b0504",
 	];
+	const { groupList } = useSelector((state) => state.group.groupList);
 	const { schedule, recSchedules } = useSelector((state) => state.schedule);
 	const [events, setEvents] = useState([]);
 	const [currentWeekStart, setCurrentWeekStart] = useState(new Date());
@@ -129,6 +131,17 @@ const CalendarContainer = () => {
 				width: "100%",
 			}}
 		>
+			<div style={{ marginBottom: "2rem" }}>
+				<Autocomplete
+					id="combo-box-demo"
+					options={groupList}
+					getOptionLabel={(option) => option.name}
+					style={{ width: 150 }}
+					renderInput={(params) => (
+						<TextField {...params} label="Select a group" />
+					)}
+				/>
+			</div>
 			<Wrapper data-testid="calendar-container">
 				<div className="calendar">
 					<div className="date-selector">

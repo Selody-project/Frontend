@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { handleMenuToggle, setEdit } from "../../features/user/user-slice.js";
 import ModalWindow from "./Modal/Modal";
@@ -15,7 +15,6 @@ import {
 	TodoList,
 } from "./PersonalTodoList.styles";
 import PersonalTodoItem from "./PersonalTodoItem.jsx";
-import { useEffect } from "react";
 import { getSchedule } from "@/features/schedule/schedule-service.js";
 
 const PersonalTodoList = () => {
@@ -56,7 +55,7 @@ const PersonalTodoList = () => {
 						오늘의 할 일
 						<AddEventButton onClick={handleMenuOpen}>
 							<img src="/todo_add.svg" alt="Add-icon" />
-							일정추가
+							일정 추가
 						</AddEventButton>
 					</TodoTitle>
 					<TodoSubtitle>하루동안의 할 일을 관리합니다.</TodoSubtitle>

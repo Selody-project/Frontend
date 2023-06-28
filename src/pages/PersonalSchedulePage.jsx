@@ -4,10 +4,16 @@ import Header from "../components/Header/Header";
 import PersonalTodoList from "../components/PersonalTodoList/PersonalTodoList";
 import CalendarContainer from "../components/PersonalTodoList/CalendarContainer.jsx";
 
+// const MainContainer = styled.main`
+// 	display: flex;
+// 	justify-content: space-between;
+// 	margin: 100px 80px 0px 60px;
+// 	font-family: "Inter", sans-serif;
+// `;
 const MainContainer = styled.main`
 	display: flex;
-	justify-content: space-between;
-	margin: 100px 80px 0px 60px;
+	justify-content: center;
+	padding: 50px 60px 0;
 	font-family: "Inter", sans-serif;
 `;
 

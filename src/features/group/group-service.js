@@ -15,9 +15,8 @@ export const createGroup = createAsyncThunk(
 		} catch (error) {
 			if (error.response) {
 				return thunkAPI.rejectWithValue(error.response.data);
-			} else {
-				return thunkAPI.rejectWithValue(error.message);
 			}
+			return thunkAPI.rejectWithValue(error.message);
 		}
 	},
 );
@@ -34,9 +33,8 @@ export const getGroupList = createAsyncThunk(
 		} catch (error) {
 			if (error.response) {
 				return thunkAPI.rejectWithValue(error.response.data);
-			} else {
-				return thunkAPI.rejectWithValue(error.message);
 			}
+			return thunkAPI.rejectWithValue(error.message);
 		}
 	},
 );
@@ -53,9 +51,8 @@ export const deleteGroup = createAsyncThunk(
 		} catch (error) {
 			if (error.response) {
 				return thunkAPI.rejectWithValue(error.response.data);
-			} else {
-				return thunkAPI.rejectWithValue(error.message);
 			}
+			return thunkAPI.rejectWithValue(error.message);
 		}
 	},
 );
@@ -74,9 +71,8 @@ export const updateGroup = createAsyncThunk(
 		} catch (error) {
 			if (error.response) {
 				return thunkAPI.rejectWithValue(error.response.data);
-			} else {
-				return thunkAPI.rejectWithValue(error.message);
 			}
+			return thunkAPI.rejectWithValue(error.message);
 		}
 	},
 );
