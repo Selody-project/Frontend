@@ -83,7 +83,7 @@ export const Wrapper = styled.div`
 		position: absolute;
 		top: 0px;
 		left: 0px;
-		z-index: 1000;
+		z-index: 5;
 	}
 
 	.date-dropdown {

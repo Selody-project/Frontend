@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Autocomplete, TextField } from "@mui/material";
+import { Box, Button, TextField, Autocomplete } from "@mui/material";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -10,6 +10,7 @@ import {
 	currentMonthFn,
 	currentYearFn,
 } from "@/features/schedule/schedule-slice";
+import { getGroupList } from "@/features/group/group-service";
 import { getRandomColor } from "@/utils/color";
 
 const CalendarContainer = () => {
@@ -35,7 +36,7 @@ const CalendarContainer = () => {
 		"#022f40",
 		"#6b0504",
 	];
-	const { groupList } = useSelector((state) => state.group.groupList);
+	const groupList = useSelector((state) => state.group);
 	const { schedule, recSchedules } = useSelector((state) => state.schedule);
 	const [events, setEvents] = useState([]);
 	const [currentWeekStart, setCurrentWeekStart] = useState(new Date());
@@ -65,6 +66,10 @@ const CalendarContainer = () => {
 		}
 		return eventColorMap.current[eventId];
 	};
+
+	useEffect(() => {
+		dispatch(getGroupList());
+	}, [dispatch]);
 
 	useEffect(() => {
 		dispatch(currentMonthFn(currentMonth));
@@ -131,17 +136,22 @@ const CalendarContainer = () => {
 				width: "100%",
 			}}
 		>
-			<div style={{ marginBottom: "2rem" }}>
+			<Box
+				display="flex"
+				alignItems="center"
+				justifyContent="space-between"
+				marginBottom="2rem"
+			>
+				<Button variant="contained">사용자 초대</Button>
 				<Autocomplete
-					id="combo-box-demo"
-					options={groupList}
+					id="size-small-standard-multi"
+					size="small"
+					options={groupList.groupList}
 					getOptionLabel={(option) => option.name}
-					style={{ width: 150 }}
-					renderInput={(params) => (
-						<TextField {...params} label="Select a group" />
-					)}
+					style={{ width: 150, marginLeft: "1rem" }}
+					renderInput={(params) => <TextField {...params} label="그룹 선택" />}
 				/>
-			</div>
+			</Box>
 			<Wrapper data-testid="calendar-container">
 				<div className="calendar">
 					<div className="date-selector">

@@ -34,7 +34,7 @@ const groupSlice = createSlice({
 			})
 			.addCase(getGroupList.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
-				state.groupList = payload;
+				state.groupList = payload.groupList;
 			})
 			.addCase(getGroupList.rejected, (state) => {
 				state.isLoading = false;

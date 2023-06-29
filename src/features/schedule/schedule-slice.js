@@ -37,11 +37,9 @@ const scheduleSlice = createSlice({
 			.addCase(createSchedule.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
 				toast.success("일정 추가에 성공하셨습니다!");
-				console.log(payload);
 			})
 			.addCase(createSchedule.rejected, (state, { payload }) => {
 				state.isLoading = false;
-				console.log(payload);
 			})
 			.addCase(getSchedule.pending, (state) => {
 				state.isLoading = true;
@@ -57,7 +55,6 @@ const scheduleSlice = createSlice({
 			})
 			.addCase(getSchedule.rejected, (state, { payload }) => {
 				state.isLoading = false;
-				console.log(payload);
 			});
 	},
 });

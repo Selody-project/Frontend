@@ -9,7 +9,7 @@ import PasswordUpdate from "../components/MyPage/PasswordUpdate";
 
 const MyPage = () => {
 	const [selectedTab, setSelectedTab] = useState(0);
-	const { user } = useSelector((state) => state.user);
+	const { user, isLoading } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
