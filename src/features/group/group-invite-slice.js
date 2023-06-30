@@ -29,16 +29,17 @@ const groupSlice = createSlice({
 				state.isLoading = false;
 				console.log(payload);
 			})
-			// .addCase(getInvitation.pending, (state) => {
-			// 	state.isLoading = true;
-			// })
-			// .addCase(getInvitation.fulfilled, (state, { payload }) => {
-			// 	state.isLoading = false;
-			// })
-			// .addCase(getInvitation.rejected, (state, { payload }) => {
-			// 	state.isLoading = false;
-			// 	console.log(payload);
-			// })
+			.addCase(getInvitation.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(getInvitation.fulfilled, (state, { payload }) => {
+				state.isLoading = false;
+				// state.group = payload
+			})
+			.addCase(getInvitation.rejected, (state, { payload }) => {
+				state.isLoading = false;
+				console.log(payload);
+			})
 			.addCase(groupJoin.pending, (state) => {
 				state.isLoading = true;
 			})
