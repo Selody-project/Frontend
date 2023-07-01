@@ -10,8 +10,8 @@ import { closeModal, openModal } from "@/features/ui/ui-slice.js";
 
 const MainContainer = styled.main`
 	display: flex;
-	justify-content: space-between;
-	margin: 100px 80px 0px 60px;
+	justify-content: center;
+	padding: 50px 60px 0;
 	font-family: "Inter", sans-serif;
 `;
 

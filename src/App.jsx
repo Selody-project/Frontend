@@ -9,11 +9,11 @@ import {
 	LoginPage,
 	SignUpPage,
 	PersonalSchedulePage,
+	GroupSchedulePage,
 	MyPage,
 } from "@/pages";
 import { getCurrentUser } from "./features/user/user-service.js";
 import "react-toastify/dist/ReactToastify.css";
-import GroupSchedulePage from "./pages/GroupSchedulePage.jsx";
 
 const router = createBrowserRouter([
 	{

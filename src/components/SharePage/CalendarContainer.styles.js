@@ -82,7 +82,7 @@ export const Wrapper = styled.div`
 	.date-selector {
 		position: absolute;
 		top: 0px;
-		left: 35px;
+		left: 0px;
 		z-index: 5;
 	}
 

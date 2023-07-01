@@ -47,6 +47,8 @@ export const ModalWrapper = styled.div`
 		input {
 			border: none;
 			outline: none;
+			width: 100%;
+			height: 100%;
 			&::placeholder {
 				font-weight: 700;
 				color: #999;
@@ -87,6 +89,12 @@ export const ModalWrapper = styled.div`
 			background: rgba(0, 0, 0, 0.2);
 			padding: 1rem 2rem;
 			color: #fff;
+			&:disabled {
+				background: rgba(0, 0, 0, 0.5);
+			}
+			&:not(:disabled) {
+				background: rgba(0, 0, 0, 1);
+			}
 		}
 	}
 `;

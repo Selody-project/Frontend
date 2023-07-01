@@ -1,13 +1,35 @@
-import React, { Fragment } from "react";
-import { useSelector } from "react-redux";
+import React, { Fragment, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
+import Header from "../components/Header/Header";
+import ShareTodoList from "../components/SharePage/ShareTodoList";
+import CalendarContainer from "../components/SharePage/CalendarContainer.jsx";
+import { getGroupList } from "@/features/group/group-service.js";
 import CreateGroupModal from "@/components/Group/CreateGroupModal.jsx";
+
+const MainContainer = styled.main`
+	display: flex;
+	justify-content: center;
+	padding: 50px 60px 0;
+	font-family: "Inter", sans-serif;
+`;
 
 const GroupSchedulePage = () => {
 	const { isModalOpen } = useSelector((state) => state.ui);
 
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(getGroupList());
+	}, []);
+
 	return (
 		<>
-			<div />
+			<Header />
+			<MainContainer>
+				<CalendarContainer />
+				<ShareTodoList />
+			</MainContainer>
 			{isModalOpen && <CreateGroupModal />}
 		</>
 	);

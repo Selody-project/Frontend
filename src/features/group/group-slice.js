@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import {
 	createGroup,
 	deleteGroup,
@@ -21,47 +22,42 @@ const groupSlice = createSlice({
 			.addCase(createGroup.pending, (state) => {
 				state.isLoading = true;
 			})
-			.addCase(createGroup.fulfilled, (state, { payload }) => {
+			.addCase(createGroup.fulfilled, (state) => {
 				state.isLoading = false;
 				toast.success("그룹 생성에 성공하셨습니다!");
 			})
-			.addCase(createGroup.rejected, (state, { payload }) => {
+			.addCase(createGroup.rejected, (state) => {
 				state.isLoading = false;
-				console.log(payload);
 			})
 			.addCase(getGroupList.pending, (state) => {
 				state.isLoading = true;
 			})
 			.addCase(getGroupList.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
-				state.groupList = payload;
-				toast.success("그룹 리스트를 불러왔습니다.");
+				state.groupList = payload.groupList;
 			})
-			.addCase(getGroupList.rejected, (state, { payload }) => {
+			.addCase(getGroupList.rejected, (state) => {
 				state.isLoading = false;
-				console.log(payload);
 			})
 			.addCase(deleteGroup.pending, (state) => {
 				state.isLoading = true;
 			})
-			.addCase(deleteGroup.fulfilled, (state, { payload }) => {
+			.addCase(deleteGroup.fulfilled, (state) => {
 				state.isLoading = false;
 				toast.success("그룹을 삭제하는데 성공하였습니다.");
 			})
-			.addCase(deleteGroup.rejected, (state, { payload }) => {
+			.addCase(deleteGroup.rejected, (state) => {
 				state.isLoading = false;
-				console.log(payload);
 			})
 			.addCase(updateGroup.pending, (state) => {
 				state.isLoading = true;
 			})
-			.addCase(updateGroup.fulfilled, (state, { payload }) => {
+			.addCase(updateGroup.fulfilled, (state) => {
 				state.isLoading = false;
 				toast.success("그룹리더 변경에 성공하였습니다.");
 			})
-			.addCase(updateGroup.rejected, (state, { payload }) => {
+			.addCase(updateGroup.rejected, (state) => {
 				state.isLoading = false;
-				console.log(payload);
 			});
 	},
 });
