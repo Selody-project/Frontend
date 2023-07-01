@@ -36,7 +36,7 @@ const CalendarContainer = () => {
 	];
 	const { schedule, recSchedules } = useSelector((state) => state.schedule);
 	const [events, setEvents] = useState([]);
-	const [currentWeekStart, setCurrentWeekStart] = useState(new Date());
+	const [currentWeekStart] = useState(new Date());
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
 	const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
 	const calendarRef = useRef(null);

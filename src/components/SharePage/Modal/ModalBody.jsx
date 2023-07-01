@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Row, Col } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import {
 	ModalTitle,
 	ModalInput,
@@ -72,58 +72,25 @@ const ModalBody = ({ formValues, setFormValues, today }) => {
 					/>
 				</ModalDateColumn>
 			</ModalDateRow>
-			<hr />
-			<Row>
-				<Col>
-					<Form.Group controlId="repeat">
-						<Form.Label>반복 여부</Form.Label>
-						<Form.Select
-							value={formValues.repeat}
-							onChange={(e) =>
-								setFormValues({ ...formValues, repeat: e.target.value })
-							}
-						>
-							<option value="none">반복 안함</option>
-							<option value="DAILY">매일</option>
-							<option value="WEEKLY">매주</option>
-							<option value="MONTHLY">매월</option>
-							<option value="YEARLY">매년</option>
-						</Form.Select>
-					</Form.Group>
-					{formValues.repeat !== "none" && (
-						<div>
-							<Form.Label style={{ marginTop: "1rem" }}>반복 기간</Form.Label>
-							<ModalDateRow>
-								<ModalDateColumn>
-									<ModalInput
-										type="date"
-										min={today}
-										value={formValues.untilDate}
-										onChange={(e) =>
-											setFormValues({
-												...formValues,
-												untilDate: e.target.value,
-											})
-										}
-									/>
-									<ModalInputGap />
-									<ModalInput
-										type="time"
-										value={formValues.untilTime}
-										onChange={(e) =>
-											setFormValues({
-												...formValues,
-												untilTime: e.target.value,
-											})
-										}
-									/>
-								</ModalDateColumn>
-							</ModalDateRow>
-						</div>
-					)}
-				</Col>
-			</Row>
-			<hr />
+			<Form.Label>일정 투표 종료일</Form.Label>
+			<ModalDateColumn>
+				<ModalInput
+					type="date"
+					min={formValues.startDate || today}
+					value={formValues.voteEndDate}
+					onChange={(e) =>
+						setFormValues({ ...formValues, voteEndDate: e.target.value })
+					}
+				/>
+				<ModalInputGap />
+				<ModalInput
+					type="time"
+					value={formValues.voteEndTime}
+					onChange={(e) =>
+						setFormValues({ ...formValues, voteEndTime: e.target.value })
+					}
+				/>
+			</ModalDateColumn>
 		</>
 	);
 };

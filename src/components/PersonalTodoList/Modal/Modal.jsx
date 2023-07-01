@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Dialog, DialogTitle, DialogContent, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import { toast } from "react-toastify";
-import Offcanvas from "react-bootstrap/Offcanvas";
 import { handleMenuToggle } from "../../../features/user/user-slice.js";
-import { saveSchedule } from "@/features/schedule/schedule-slice.js";
-import ModalHeader from "./ModalHeader";
-import ModalBody from "./ModalBody";
-import ModalFooter from "./ModalFooter";
+import ModalHeader from "./ModalHeader.jsx";
+import ModalBody from "./ModalBody.jsx";
+import ModalFooter from "./ModalFooter.jsx";
 import {
 	createSchedule,
 	updateSchedule,
 } from "@/features/schedule/schedule-service.js";
 
-const ModalWindow = () => {
+const ModalWindow = ({ personalModal, setPersonalModal }) => {
 	const { edit } = useSelector((state) => state.user);
 	const { id } = useSelector((state) => state.schedule);
 	const [formValues, setFormValues] = useState({
@@ -50,15 +50,20 @@ const ModalWindow = () => {
 		return true;
 	};
 
+	const handleClose = () => {
+		dispatch(handleMenuToggle());
+		if (window.location.pathname === "/share") {
+			setPersonalModal(false);
+		}
+	};
+
 	const checkFieldsFilled = () =>
 		formValues.title &&
 		formValues.details &&
 		formValues.startDate &&
 		formValues.startTime &&
 		formValues.endDate &&
-		formValues.endTime &&
-		formValues.untilDate &&
-		formValues.untilTime;
+		formValues.endTime;
 
 	const handleSubmit = () => {
 		// 시간 유효성 검사
@@ -90,23 +95,35 @@ const ModalWindow = () => {
 
 		// 메뉴 닫기
 		dispatch(handleMenuToggle());
+		setPersonalModal(false);
 	};
 
 	return (
-		<Offcanvas
-			as="form"
-			show={menuOpen}
-			onHide={() => dispatch(handleMenuToggle())}
-			placement="end"
-			className="bg-light text-dark"
-			style={{ width: "37%" }}
+		<Dialog
+			open={personalModal || menuOpen}
+			onClose={handleClose}
+			fullWidth
+			maxWidth="md"
 		>
-			<Offcanvas.Header closeButton className="bg-primary text-white">
-				<Offcanvas.Title>
-					<ModalHeader currentDate={currentDate} />
-				</Offcanvas.Title>
-			</Offcanvas.Header>
-			<Offcanvas.Body className="p-4">
+			<DialogTitle
+				className="bg-primary text-white"
+				style={{
+					display: "flex",
+					flexDirection: "row",
+					justifyContent: "space-between",
+				}}
+			>
+				<ModalHeader currentDate={currentDate} />
+				<IconButton
+					edge="end"
+					color="inherit"
+					onClick={handleClose}
+					aria-label="close"
+				>
+					<CloseIcon />
+				</IconButton>
+			</DialogTitle>
+			<DialogContent className="p-4">
 				<ModalBody
 					formValues={formValues}
 					setFormValues={setFormValues}
@@ -117,8 +134,8 @@ const ModalWindow = () => {
 					checkFieldsFilled={checkFieldsFilled}
 					edit={edit}
 				/>
-			</Offcanvas.Body>
-		</Offcanvas>
+			</DialogContent>
+		</Dialog>
 	);
 };
 

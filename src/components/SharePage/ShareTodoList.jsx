@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { handleMenuToggle, setEdit } from "../../features/user/user-slice.js";
-import ModalWindow from "./Modal/Modal.jsx";
+import PersonalModal from "../PersonalTodoList/Modal/Modal.jsx";
+import ShareModal from "./Modal/Modal.jsx";
 import {
 	TodoContainer,
 	TodoHeader,
@@ -18,13 +19,21 @@ import { getSchedule } from "@/features/schedule/schedule-service.js";
 
 const ShareTodoList = () => {
 	const [selectedTab, setSelectedTab] = useState(true);
-	const { menuOpen } = useSelector((state) => state.user);
+	const [personalModal, setPersonalModal] = useState(false);
+	const [shareModal, setShareModal] = useState(false);
 	const { month, year, totalSchedule } = useSelector((state) => state.schedule);
 	const dispatch = useDispatch();
 
-	const handleMenuOpen = () => {
+	const handlePersonalModalOpen = () => {
 		dispatch(setEdit(false));
 		dispatch(handleMenuToggle());
+		setPersonalModal(true);
+	};
+
+	const handleShareModalOpen = () => {
+		dispatch(setEdit(false));
+		dispatch(handleMenuToggle());
+		setShareModal(true);
 	};
 
 	useEffect(() => {
@@ -56,7 +65,7 @@ const ShareTodoList = () => {
 						<>
 							<TodoTitle>
 								일정 후보{" "}
-								<AddEventButton onClick={handleMenuOpen}>
+								<AddEventButton onClick={handleShareModalOpen}>
 									<img src="/todo_add.svg" alt="Add-icon" />
 									일정 후보 추가
 								</AddEventButton>
@@ -70,7 +79,7 @@ const ShareTodoList = () => {
 						<>
 							<TodoTitle>
 								오늘의 할 일
-								<AddEventButton onClick={handleMenuOpen}>
+								<AddEventButton onClick={handlePersonalModalOpen}>
 									<img src="/todo_add.svg" alt="Add-icon" />
 									일정 추가
 								</AddEventButton>
@@ -90,7 +99,15 @@ const ShareTodoList = () => {
 					)}
 				</TodoBody>
 			</TodoContainer>
-			{menuOpen && <ModalWindow />}
+			{personalModal && (
+				<PersonalModal
+					personalModal={personalModal}
+					setPersonalModal={setPersonalModal}
+				/>
+			)}
+			{shareModal && (
+				<ShareModal shareModal={shareModal} setShareModal={setShareModal} />
+			)}
 		</>
 	);
 };

@@ -123,7 +123,6 @@ const ModalBody = ({ formValues, setFormValues, today }) => {
 					)}
 				</Col>
 			</Row>
-			<hr />
 		</>
 	);
 };
