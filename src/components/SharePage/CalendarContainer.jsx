@@ -1,17 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Box, Button, TextField, Autocomplete } from "@mui/material";
-import FullCalendar from "@fullcalendar/react";
-import timeGridPlugin from "@fullcalendar/timegrid";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin from "@fullcalendar/interaction";
-import { Wrapper } from "./CalendarContainer.styles";
 import {
 	currentMonthFn,
 	currentYearFn,
 } from "@/features/schedule/schedule-slice";
 import { getGroupList } from "@/features/group/group-service";
 import { getRandomColor } from "@/utils/color";
+import InviteUser from "./InviteUser";
+import CustomCalendar from "./CustomCalendar";
 
 const CalendarContainer = () => {
 	const colors = [
@@ -36,12 +32,16 @@ const CalendarContainer = () => {
 		"#022f40",
 		"#6b0504",
 	];
-	const groupList = useSelector((state) => state.group);
+	const [selectedGroup, setSelectedGroup] = useState(null);
+	const [anchorEl, setAnchorEl] = useState(null);
+	const [inviteInput, setInviteInput] = useState("");
+	const [invitationLink, setInvitationLink] = useState("");
 	const { schedule, recSchedules } = useSelector((state) => state.schedule);
 	const [events, setEvents] = useState([]);
-	const [currentWeekStart, setCurrentWeekStart] = useState(new Date());
+	const [currentWeekStart] = useState(new Date());
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
 	const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+
 	const calendarRef = useRef(null);
 	const dispatch = useDispatch();
 
@@ -65,6 +65,20 @@ const CalendarContainer = () => {
 			eventColorMap.current[eventId] = getRandomColor();
 		}
 		return eventColorMap.current[eventId];
+	};
+
+	const handleInviteButtonClick = (event) => {
+		setAnchorEl(event.currentTarget);
+	};
+
+	const handleCloseMenu = () => {
+		setAnchorEl(null);
+		setInviteInput("");
+	};
+
+	const handleSendInvite = () => {
+		setAnchorEl(null);
+		setInviteInput("");
 	};
 
 	useEffect(() => {
@@ -136,69 +150,25 @@ const CalendarContainer = () => {
 				width: "100%",
 			}}
 		>
-			<Box
-				display="flex"
-				alignItems="center"
-				justifyContent="space-between"
-				marginBottom="2rem"
-			>
-				<Button variant="contained">사용자 초대</Button>
-				<Autocomplete
-					id="size-small-standard-multi"
-					size="small"
-					options={groupList.groupList}
-					getOptionLabel={(option) => option.name}
-					style={{ width: 150, marginLeft: "1rem" }}
-					renderInput={(params) => <TextField {...params} label="그룹 선택" />}
-				/>
-			</Box>
-			<Wrapper data-testid="calendar-container">
-				<div className="calendar">
-					<div className="date-selector">
-						<select
-							className="date-dropdown"
-							value={`${currentYear}-${currentMonth}`}
-							onChange={(e) => {
-								const [year, month] = e.target.value.split("-");
-								handleDateChange(year, parseInt(month, 10) - 1);
-							}}
-						>
-							{Array.from(
-								{ length: 5 },
-								(_, i) => new Date().getFullYear() + i,
-							).map((year) =>
-								Array.from({ length: 12 }, (_, j) => j + 1).map((month) => (
-									<option key={`${year}-${month}`} value={`${year}-${month}`}>
-										{year}년 {month}월
-									</option>
-								)),
-							)}
-						</select>
-					</div>
-					<FullCalendar
-						ref={calendarRef}
-						plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-						initialView="dayGridMonth"
-						events={fullCalendarEvents}
-						headerToolbar={{
-							left: "",
-							center: "title",
-							right: "dayGridMonth,timeGridWeek",
-						}}
-						selectable={true}
-						weekends={true}
-						allDaySlot={false}
-						locale="ko"
-						dayCellContent={(renderInfo) =>
-							renderInfo.dayNumberText.replace("일", "")
-						}
-						height={750}
-						eventClick={(info) => {
-							console.log(info);
-						}}
-					/>
-				</div>
-			</Wrapper>
+			<InviteUser
+				selectedGroup={selectedGroup}
+				setSelectedGroup={setSelectedGroup}
+				handleInviteButtonClick={handleInviteButtonClick}
+				anchorEl={anchorEl}
+				handleCloseMenu={handleCloseMenu}
+				inviteInput={inviteInput}
+				setInviteInput={setInviteInput}
+				handleSendInvite={handleSendInvite}
+				invitationLink={invitationLink}
+				setInvitationLink={setInvitationLink}
+			/>
+			<CustomCalendar
+				calendarRef={calendarRef}
+				fullCalendarEvents={fullCalendarEvents}
+				currentYear={currentYear}
+				currentMonth={currentMonth}
+				handleDateChange={handleDateChange}
+			/>
 		</div>
 	);
 };

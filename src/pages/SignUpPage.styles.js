@@ -64,7 +64,6 @@ export const LogoForm = styled.form`
 export const LogoContainer = styled.div`
 	display: flex;
 	align-items: center;
-	margin-top: -500px;
 	gap: 5px;
 	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 
@@ -115,7 +114,6 @@ export const RightSide = styled.div`
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
-	margin-top: -12rem;
 	margin-bottom: 2rem;
 
 	@media (max-width: 798px) {

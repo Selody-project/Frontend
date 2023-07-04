@@ -19,15 +19,17 @@
 	},
 	"plugins": ["react", "prettier", "react-hooks", "import", "jsx-a11y"],
 	"rules": {
-		"react/function-component-definition": 0,
 		"import/prefer-default-export": "off",
 		"import/no-extraneous-dependencies": "off",
 		"import/extensions": "off",
 		"import/no-unresolved": "off",
+		"react/function-component-definition": 0,
 		"react/jsx-boolean-value": "off",
+		"react/prop-types": "off",
+		"react/react-in-jsx-scope": "off",
+		"react/jsx-props-no-spreading": "off",
 		"arrow-body-style": "off",
 		"no-param-reassign": "off",
-		"react/prop-types": "off",
 		"prettier/prettier": "error"
 	}
 }
