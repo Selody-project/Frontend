@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Dialog, DialogTitle, DialogContent, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import { toast } from "react-toastify";
-import Offcanvas from "react-bootstrap/Offcanvas";
 import { handleMenuToggle } from "../../../features/user/user-slice.js";
-import { saveSchedule } from "@/features/schedule/schedule-slice.js";
 import ModalHeader from "./ModalHeader";
 import ModalBody from "./ModalBody";
 import ModalFooter from "./ModalFooter";
@@ -12,7 +12,8 @@ import {
 	updateSchedule,
 } from "@/features/schedule/schedule-service.js";
 
-const ModalWindow = () => {
+const ModalWindow = ({ shareModal, setShareModal }) => {
+	const dispatch = useDispatch();
 	const { edit } = useSelector((state) => state.user);
 	const { id } = useSelector((state) => state.schedule);
 	const [formValues, setFormValues] = useState({
@@ -22,10 +23,8 @@ const ModalWindow = () => {
 		startTime: "",
 		endDate: "",
 		endTime: "",
-		untilDate: "",
-		untilTime: "",
-		repeat: "none",
-		notification: "none",
+		voteEndDate: "",
+		voteEndTime: "",
 	});
 
 	const today = new Date().toISOString().slice(0, 10);
@@ -34,9 +33,6 @@ const ModalWindow = () => {
 		5,
 		7,
 	)}월 ${currentDate.slice(8, 10)}일`;
-
-	const menuOpen = useSelector((state) => state.user.menuOpen);
-	const dispatch = useDispatch();
 
 	const isTimeValid = () => {
 		if (formValues.startDate === formValues.endDate) {
@@ -50,6 +46,11 @@ const ModalWindow = () => {
 		return true;
 	};
 
+	const handleClose = () => {
+		dispatch(handleMenuToggle());
+		setShareModal(false);
+	};
+
 	const checkFieldsFilled = () =>
 		formValues.title &&
 		formValues.details &&
@@ -57,8 +58,8 @@ const ModalWindow = () => {
 		formValues.startTime &&
 		formValues.endDate &&
 		formValues.endTime &&
-		formValues.untilDate &&
-		formValues.untilTime;
+		formValues.voteEndDate &&
+		formValues.voteEndTime;
 
 	const handleSubmit = () => {
 		// 시간 유효성 검사
@@ -82,31 +83,35 @@ const ModalWindow = () => {
 			startTime: "",
 			endDate: "",
 			endTime: "",
-			untilDate: "",
-			untilTime: "",
-			repeat: "none",
-			notification: "none",
+			voteEndDate: "",
+			voteEndTime: "",
 		});
 
 		// 메뉴 닫기
-		dispatch(handleMenuToggle());
+		setShareModal(false);
 	};
 
 	return (
-		<Offcanvas
-			as="form"
-			show={menuOpen}
-			onHide={() => dispatch(handleMenuToggle())}
-			placement="end"
-			className="bg-light text-dark"
-			style={{ width: "37%" }}
-		>
-			<Offcanvas.Header closeButton className="bg-primary text-white">
-				<Offcanvas.Title>
-					<ModalHeader currentDate={currentDate} />
-				</Offcanvas.Title>
-			</Offcanvas.Header>
-			<Offcanvas.Body className="p-4">
+		<Dialog open={shareModal} onClose={handleClose} fullWidth maxWidth="md">
+			<DialogTitle
+				className="bg-primary text-white"
+				style={{
+					display: "flex",
+					flexDirection: "row",
+					justifyContent: "space-between",
+				}}
+			>
+				<ModalHeader currentDate={currentDate} />
+				<IconButton
+					edge="end"
+					color="inherit"
+					onClick={handleClose}
+					aria-label="close"
+				>
+					<CloseIcon />
+				</IconButton>
+			</DialogTitle>
+			<DialogContent className="p-4">
 				<ModalBody
 					formValues={formValues}
 					setFormValues={setFormValues}
@@ -117,8 +122,8 @@ const ModalWindow = () => {
 					checkFieldsFilled={checkFieldsFilled}
 					edit={edit}
 				/>
-			</Offcanvas.Body>
-		</Offcanvas>
+			</DialogContent>
+		</Dialog>
 	);
 };
 

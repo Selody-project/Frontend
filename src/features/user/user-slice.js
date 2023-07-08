@@ -17,6 +17,8 @@ const initialState = {
 	isLoading: false,
 	userLoading: true,
 	menuOpen: false,
+	personalModal: false,
+	shareModal: false,
 	token: null,
 	edit: false,
 };
