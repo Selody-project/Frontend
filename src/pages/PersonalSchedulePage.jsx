@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header/Header";
+import GroupHeader from "../components/Header/GroupHeader";
 import PersonalTodoList from "../components/PersonalTodoList/PersonalTodoList";
 import CalendarContainer from "../components/PersonalTodoList/CalendarContainer.jsx";
 import BaseModal from "@/components/Base/BaseModal.jsx";
@@ -30,6 +31,7 @@ const PersonalSchedulePage = () => {
 	return (
 		<>
 			<Header />
+			<GroupHeader />
 			{isModalOpen && (
 				<BaseModal bg="#000">
 					<div className="create-group">

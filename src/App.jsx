@@ -11,6 +11,7 @@ import {
 	PersonalSchedulePage,
 	GroupSchedulePage,
 	MyPage,
+	FeedPage,
 } from "@/pages";
 import { getCurrentUser } from "./features/user/user-service.js";
 import "react-toastify/dist/ReactToastify.css";
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
 		children: [
 			{ index: true, element: <PersonalSchedulePage /> },
 			{ path: "share", element: <GroupSchedulePage /> },
+			{ path: "community", element: <FeedPage /> },
 			{ path: "mypage", element: <MyPage /> },
 		],
 	},
