@@ -1,144 +1,76 @@
 import styled from "styled-components";
-import { NavLink as RouterNavLink } from "react-router-dom";
 
-export const HeaderContainer = styled.header`
+export const Wrapper = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 20px 20px;
-	margin: 2%;
-	border-radius: 100px;
-	background-color: white;
-	box-shadow: 0px 5px 50px 4px rgba(0, 0, 0, 0.15);
-
-	@media (max-width: 900px) {
-		flex-wrap: wrap;
-		padding: 0px 15px 0px 15px;
-		border-radius: 10px;
-	}
-`;
-
-export const Logo = styled.div`
-	display: flex;
-	align-items: center;
-	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.2));
-`;
-
-export const LogoImage = styled.img`
-	height: 50px;
-`;
-
-export const Title = styled.h1`
-	margin-left: 10px;
-	font-family: "Montserrat";
-	font-style: normal;
-	font-weight: 700;
-	font-size: 30px;
-	line-height: 37px;
-
-	@media (max-width: 900px) {
-		font-size: 24px;
-		line-height: 30px;
-	}
-`;
-
-export const HamburgerMenu = styled.div`
-	display: none;
-
-	@media (max-width: 900px) {
-		display: block;
-		cursor: pointer;
-		font-size: 24px;
-		padding-top: 5px;
-		align-items: center;
-		justify-content: center;
-	}
-`;
-
-export const Navigation = styled.nav`
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 30px;
-
-	@media (max-width: 900px) {
-		display: flex;
-		flex-direction: column;
-		gap: 15px;
-		margin-top: 15px;
-		width: 100%;
-		max-height: ${(props) => (props.open ? "500px" : "0")};
-		overflow: hidden;
-		transition: max-height 0.3s ease-in-out;
-	}
-`;
-
-export const NavLink = styled(RouterNavLink)`
-	margin-right: 20px;
-	text-decoration: none;
-	cursor: pointer;
-	color: #121127;
-	font-family: "Poppins";
-	font-style: normal;
+	font-family: "Inter", sans-serif;
 	font-weight: 600;
-	font-size: 16px;
-	line-height: 180%;
-	opacity: 0.6;
-	transition: color 0.3s ease, text-decoration-color 0.3s ease;
+	padding: 1.5rem;
+	background: #f5f5f8;
+`;
 
-	&:hover {
-		color: #6c55fe;
-		font-weight: 700;
-		opacity: 1;
-		text-decoration: underline;
-		text-underline-offset: 15px;
-		text-decoration-color: #6c55fe;
+export const MenuWrapper = styled.div`
+	display: flex;
+	align-items: center;
+
+	h1 {
+		font-size: 2rem;
+		color: #96a2b0;
+		margin-right: 1rem;
 	}
 
-	&.active {
-		color: #6c55fe;
-		font-weight: 700;
-		opacity: 1;
-		text-decoration: underline;
-		text-underline-offset: 15px;
-		text-decoration-color: #6c55fe;
-	}
+	ul {
+		display: flex;
+		padding-top: 1rem;
+		gap: 3rem;
 
-	@media (max-width: 900px) {
-		font-size: 14px;
-		margin: 0px;
+		a {
+			color: #303030;
+			font-size: 1.15rem;
+			font-weight: 700;
+			text-transform: uppercase;
+			text-decoration: none;
+			transition: all 0.3s;
+			border-bottom: 2px solid transparent;
+			padding: 10px 20px;
+			border-radius: 8px;
+
+			&.active-link {
+				color: #ffffff;
+				background-color: #000000;
+			}
+
+			&:hover {
+				border-color: #ffffff;
+				background-color: #000000;
+				color: #ffffff;
+				transform: scale(1.1);
+			}
+		}
 	}
 `;
 
-export const CreateButton = styled.button`
-	padding: 13px 26px;
-	cursor: pointer;
-	color: white;
-	border-radius: 100px;
-	border-style: none;
-	background: #6c55fe;
-	box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.25);
-	font-family: "Inter";
-	font-style: normal;
-	font-weight: 700;
-	font-size: 12px;
-	line-height: 15px;
-	text-align: center;
-	text-transform: uppercase;
-	transition: background 0.3s ease;
+export const AuthButton = styled.div`
+	a {
+		color: #6a6d75;
+		font-size: 1.25rem;
+		font-weight: 700;
 
-	&:hover {
-		background: #4e3bce;
+		&:hover {
+			color: black;
+		}
 	}
 
-	@media (max-width: 900px) {
-		width: 50%;
-		padding: 10px 20px;
-		margin-top: 5px;
-		margin-bottom: 5px;
-		font-size: 10px;
-		line-height: 12px;
-		border-radius: 10px;
-		box-shadow: none;
+	button {
+		font-size: 1.25rem;
+		font-weight: 700;
+		background: none;
+		border: none;
+		color: #6a6d75;
+		transition: all 0.3s;
+		&:hover {
+			color: black;
+		}
 	}
 `;
