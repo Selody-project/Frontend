@@ -87,17 +87,17 @@ export const HostButton = styled.button`
 `;
 
 export const MemberButton = styled.button`
-	background-color: #4caf50;
+	background-color: #c69ace;
 	color: white;
 	border: none;
 	border-radius: 5px;
-	padding: 5px 10px;
-	font-size: 0.8em;
+	padding: 10px 20px;
+	font-size: 1em;
 	margin-left: 10px;
 	cursor: pointer;
 
 	&:hover {
-		background-color: #3d8b3d;
+		background-color: #b76bb7;
 	}
 `;
 

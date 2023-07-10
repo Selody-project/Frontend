@@ -9,6 +9,7 @@ import {
 	DialogTitle,
 	DialogContent,
 	DialogContentText,
+	DialogActions,
 	Button,
 } from "@mui/material";
 import {
@@ -21,7 +22,11 @@ import {
 	MemberButton,
 	DelegateButton,
 } from "./MyPageDetail.styles";
-import { getGroupList, deleteGroup } from "@/features/group/group-service";
+import {
+	getGroupList,
+	deleteGroup,
+	leaveGroup,
+} from "@/features/group/group-service";
 
 const SharedSettings = () => {
 	const dispatch = useDispatch();
@@ -30,6 +35,8 @@ const SharedSettings = () => {
 	const [currentGroup, setCurrentGroup] = useState(null);
 	const [openDelegate, setOpenDelegate] = useState(false);
 	const [openDelete, setOpenDelete] = useState(false);
+	const [confirmLeaveDialogOpen, setConfirmLeaveDialogOpen] = useState(false);
+	const [groupToLeave, setGroupToLeave] = useState(null);
 
 	useEffect(() => {
 		dispatch(getGroupList());
@@ -56,6 +63,21 @@ const SharedSettings = () => {
 			dispatch(getGroupList());
 		});
 		handleClose();
+	};
+
+	const handleLeaveGroup = (groupId) => {
+		setGroupToLeave(groupId);
+		setConfirmLeaveDialogOpen(true);
+	};
+
+	const confirmLeaveGroup = () => {
+		if (groupToLeave) {
+			dispatch(leaveGroup(groupToLeave)).then(() => {
+				dispatch(getGroupList());
+				setConfirmLeaveDialogOpen(false);
+				setGroupToLeave(null);
+			});
+		}
 	};
 
 	return (
@@ -98,7 +120,12 @@ const SharedSettings = () => {
 											</HostButton>
 										</>
 									) : (
-										<MemberButton type="button">그룹 탈퇴</MemberButton>
+										<MemberButton
+											type="button"
+											onClick={() => handleLeaveGroup(group.groupId)}
+										>
+											그룹 탈퇴
+										</MemberButton>
 									)}
 								</div>
 							</InfoWrapper>
@@ -209,6 +236,28 @@ const SharedSettings = () => {
 							>
 								다른 사람에게 위임하기
 							</Button>
+						</Dialog>
+						<Dialog
+							open={confirmLeaveDialogOpen}
+							onClose={() => setConfirmLeaveDialogOpen(false)}
+						>
+							<DialogTitle>그룹 탈퇴 확인</DialogTitle>
+							<DialogContent>
+								<DialogContentText>
+									정말로 이 그룹에서 탈퇴하시겠습니까?
+								</DialogContentText>
+							</DialogContent>
+							<DialogActions>
+								<Button
+									onClick={() => setConfirmLeaveDialogOpen(false)}
+									color="primary"
+								>
+									취소
+								</Button>
+								<Button onClick={confirmLeaveGroup} color="primary">
+									확인
+								</Button>
+							</DialogActions>
 						</Dialog>
 					</>
 				);

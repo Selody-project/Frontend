@@ -76,3 +76,21 @@ export const updateGroup = createAsyncThunk(
 		}
 	},
 );
+
+export const leaveGroup = createAsyncThunk(
+	"group/leaveGroup",
+	async (groupId, thunkAPI) => {
+		try {
+			const response = await customFetch.delete(`/api/user/group/${groupId}`);
+			if (response.status !== 204) {
+				throw response.data;
+			}
+			return response.data;
+		} catch (error) {
+			if (error.response) {
+				return thunkAPI.rejectWithValue(error.response.data);
+			}
+			return thunkAPI.rejectWithValue(error.message);
+		}
+	},
+);
