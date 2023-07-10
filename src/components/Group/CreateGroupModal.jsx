@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { MdClose } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import BaseModal from "../Base/BaseModal.jsx";
-import { createGroup } from "@/features/group/group-service.js";
+import { getGroupList, createGroup } from "@/features/group/group-service.js";
 import { closeModal } from "@/features/ui/ui-slice.js";
 
 const CreateGroupModal = () => {
@@ -11,8 +11,10 @@ const CreateGroupModal = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(shareInput);
-		dispatch(createGroup(shareInput));
+		dispatch(createGroup(shareInput)).then(() => {
+			dispatch(closeModal());
+			dispatch(getGroupList());
+		});
 	};
 
 	const handleChange = (e) => {
