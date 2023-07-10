@@ -1,18 +1,30 @@
 import React, { useState } from "react";
 import { MdClose } from "react-icons/md";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import BaseModal from "../Base/BaseModal.jsx";
 import { createGroup } from "@/features/group/group-service.js";
 import { closeModal } from "@/features/ui/ui-slice.js";
 
 const CreateGroupModal = () => {
 	const [shareInput, setShareInput] = useState("");
+	const { groupList } = useSelector((state) => state.group);
 	const dispatch = useDispatch();
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(shareInput);
+
+		const existingGroupName = groupList.find(
+			(group) => group.name === shareInput,
+		);
+		if (existingGroupName) {
+			toast.error("이미 존재하는 그룹명입니다.");
+			return;
+		}
+
 		dispatch(createGroup(shareInput));
+
+		dispatch(closeModal());
 	};
 
 	const handleChange = (e) => {
@@ -39,7 +51,7 @@ const CreateGroupModal = () => {
 				<div className="invite">
 					<input
 						type="text"
-						placeholder="초대할 사용자 이메일 또는 코드 입력"
+						placeholder="초대코드로 초대하기"
 						id="invite"
 						name="invite"
 					/>
