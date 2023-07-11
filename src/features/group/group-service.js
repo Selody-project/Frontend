@@ -43,7 +43,7 @@ export const deleteGroup = createAsyncThunk(
 	"group/deleteGroup",
 	async (groupId, thunkAPI) => {
 		try {
-			const response = await customFetch.get(`/api/group/${groupId}`);
+			const response = await customFetch.delete(`/api/group/${groupId}`);
 			if (response.status !== 204) {
 				throw response.data;
 			}
@@ -59,12 +59,30 @@ export const deleteGroup = createAsyncThunk(
 
 export const updateGroup = createAsyncThunk(
 	"group/updateGroup",
-	async (groupLeader, thunkAPI) => {
+	async (groupId, groupLeader, thunkAPI) => {
 		try {
 			const response = await customFetch.patch(`/api/group/${groupId}`, {
 				newLeaderId: groupLeader,
 			});
 			if (response.status !== 200) {
+				throw response.data;
+			}
+			return response.data;
+		} catch (error) {
+			if (error.response) {
+				return thunkAPI.rejectWithValue(error.response.data);
+			}
+			return thunkAPI.rejectWithValue(error.message);
+		}
+	},
+);
+
+export const leaveGroup = createAsyncThunk(
+	"group/leaveGroup",
+	async (groupId, thunkAPI) => {
+		try {
+			const response = await customFetch.delete(`/api/user/group/${groupId}`);
+			if (response.status !== 204) {
 				throw response.data;
 			}
 			return response.data;
