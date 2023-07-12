@@ -6,6 +6,7 @@ import SignUpPage from "./SignUpPage";
 import PersonalSchedulePage from "./PersonalSchedulePage";
 import GroupSchedulePage from "./GroupSchedulePage";
 import MyPage from "./MyPage";
+import FeedPage from "./FeedPage";
 
 export {
 	ErrorPage,
@@ -16,4 +17,5 @@ export {
 	PersonalSchedulePage,
 	GroupSchedulePage,
 	MyPage,
+	FeedPage,
 };

@@ -5,6 +5,7 @@ import {
 	deleteGroup,
 	getGroupList,
 	updateGroup,
+	leaveGroup,
 } from "./group-service.js";
 
 const initialState = {
@@ -61,6 +62,16 @@ const groupSlice = createSlice({
 				toast.success("그룹리더 변경에 성공하였습니다.");
 			})
 			.addCase(updateGroup.rejected, (state) => {
+				state.isLoading = false;
+			})
+			.addCase(leaveGroup.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(leaveGroup.fulfilled, (state) => {
+				state.isLoading = false;
+				toast.success("그룹을 탈퇴하였습니다.");
+			})
+			.addCase(leaveGroup.rejected, (state) => {
 				state.isLoading = false;
 			});
 	},

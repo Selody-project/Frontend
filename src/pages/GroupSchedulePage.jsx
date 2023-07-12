@@ -2,6 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Header from "../components/Header/Header";
+import GroupHeader from "../components/Header/GroupHeader";
 import ShareTodoList from "../components/SharePage/ShareTodoList";
 import CalendarContainer from "../components/SharePage/CalendarContainer.jsx";
 import { getGroupList } from "@/features/group/group-service.js";
@@ -26,6 +27,7 @@ const GroupSchedulePage = () => {
 	return (
 		<>
 			<Header />
+			<GroupHeader />
 			<MainContainer>
 				<CalendarContainer />
 				<ShareTodoList />
