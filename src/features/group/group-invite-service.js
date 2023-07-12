@@ -46,7 +46,7 @@ export const groupJoin = createAsyncThunk(
 	"groupInvite/groupJoin",
 	async (inviteCode, thunkAPI) => {
 		try {
-			const response = await customFetch.get(`/api/group/join/${inviteCode}`);
+			const response = await customFetch.post(`/api/group/join/${inviteCode}`);
 			if (response.status !== 200) {
 				throw response.data;
 			}

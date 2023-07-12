@@ -7,6 +7,7 @@ import {
 } from "./group-invite-service.js";
 
 const initialState = {
+	searchGroup: null,
 	inviteCode: "",
 	inviteExp: null,
 };
@@ -34,7 +35,8 @@ const groupSlice = createSlice({
 			})
 			.addCase(getInvitation.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
-				console.log(payload);
+				console.log(payload.group);
+				state.searchGroup = payload.group;
 			})
 			.addCase(getInvitation.rejected, (state, { payload }) => {
 				state.isLoading = false;

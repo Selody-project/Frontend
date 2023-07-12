@@ -13,15 +13,19 @@ import {
 	TodoTitle,
 	TodoSubtitle,
 	TodoList,
+	Wrapper,
 } from "./ShareTodoList.styles.js";
 import PersonalTodoItem from "../PersonalTodoList/PersonalTodoItem.jsx";
 import { getSchedule } from "@/features/schedule/schedule-service.js";
+import { createInviteLink } from "@/features/group/group-invite-service.js";
 
 const ShareTodoList = () => {
 	const [selectedTab, setSelectedTab] = useState(true);
 	const [personalModal, setPersonalModal] = useState(false);
 	const [shareModal, setShareModal] = useState(false);
 	const { month, year, totalSchedule } = useSelector((state) => state.schedule);
+	const { group } = useSelector((state) => state.group);
+	const { inviteCode } = useSelector((state) => state.groupInvite);
 	const dispatch = useDispatch();
 
 	const handlePersonalModalOpen = () => {
@@ -36,12 +40,16 @@ const ShareTodoList = () => {
 		setShareModal(true);
 	};
 
+	const createInviteCodeHandler = () => {
+		dispatch(createInviteLink(group.groupId));
+	};
+
 	useEffect(() => {
 		dispatch(getSchedule());
 	}, [month, year]);
 
 	return (
-		<>
+		<Wrapper>
 			<TodoContainer data-testid="personal-todo-list">
 				<TodoHeader>
 					<TodoTabs>
@@ -108,7 +116,16 @@ const ShareTodoList = () => {
 			{shareModal && (
 				<ShareModal shareModal={shareModal} setShareModal={setShareModal} />
 			)}
-		</>
+			<div className="invite">
+				<h2>초대코드 생성</h2>
+				<div className="container">
+					<div className="box">{inviteCode || ""}</div>
+					<button type="button" onClick={createInviteCodeHandler}>
+						생성
+					</button>
+				</div>
+			</div>
+		</Wrapper>
 	);
 };
 

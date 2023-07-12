@@ -16,7 +16,11 @@ const initialState = {
 const groupSlice = createSlice({
 	name: "group",
 	initialState,
-	reducers: {},
+	reducers: {
+		selectGroup: (state, { payload }) => {
+			state.group = payload;
+		},
+	},
 	extraReducers: (bulider) => {
 		bulider
 			.addCase(createGroup.pending, (state) => {
@@ -61,5 +65,7 @@ const groupSlice = createSlice({
 			});
 	},
 });
+
+export const { selectGroup } = groupSlice.actions;
 
 export default groupSlice.reducer;
