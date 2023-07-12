@@ -6,7 +6,7 @@ import GroupHeader from "../components/Header/GroupHeader";
 import ShareTodoList from "../components/SharePage/ShareTodoList";
 import CalendarContainer from "../components/SharePage/CalendarContainer.jsx";
 import { getGroupList } from "@/features/group/group-service.js";
-import CreateGroupModal from "@/components/Group/CreateGroupModal.jsx";
+import CreateGroupModal from "@/components/SharePage/CreateGroupModal.jsx";
 
 const MainContainer = styled.main`
 	display: flex;

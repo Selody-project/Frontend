@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import {
 	createInviteLink,
 	getInvitation,
@@ -6,6 +7,7 @@ import {
 } from "./group-invite-service.js";
 
 const initialState = {
+	searchGroup: null,
 	inviteCode: "",
 	inviteExp: null,
 };
@@ -23,7 +25,6 @@ const groupSlice = createSlice({
 				state.isLoading = false;
 				state.inviteCode = payload.inviteCode;
 				state.inviteExp = payload.exp;
-				toast.success("그룹초대 코드 생성에 성공하셨습니다!");
 			})
 			.addCase(createInviteLink.rejected, (state, { payload }) => {
 				state.isLoading = false;
@@ -34,7 +35,8 @@ const groupSlice = createSlice({
 			})
 			.addCase(getInvitation.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
-				// state.group = payload
+				console.log(payload.group);
+				state.searchGroup = payload.group;
 			})
 			.addCase(getInvitation.rejected, (state, { payload }) => {
 				state.isLoading = false;
@@ -43,7 +45,7 @@ const groupSlice = createSlice({
 			.addCase(groupJoin.pending, (state) => {
 				state.isLoading = true;
 			})
-			.addCase(groupJoin.fulfilled, (state, { payload }) => {
+			.addCase(groupJoin.fulfilled, (state) => {
 				state.isLoading = false;
 				toast.success("그룹에 참여하는데 성공하였습니다.");
 			})

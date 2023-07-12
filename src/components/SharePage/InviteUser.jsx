@@ -9,7 +9,8 @@ import {
 	ListItemText,
 	InputAdornment,
 } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { selectGroup } from "@/features/group/group-slice.js";
 
 const InviteUser = ({
 	selectedGroup,
@@ -24,6 +25,12 @@ const InviteUser = ({
 	setInvitationLink,
 }) => {
 	const groupList = useSelector((state) => state.group);
+	const dispatch = useDispatch();
+
+	const selectGroupHandler = (e, value) => {
+		setSelectedGroup(value);
+		dispatch(selectGroup(value));
+	};
 
 	return (
 		<div>
@@ -46,7 +53,7 @@ const InviteUser = ({
 					options={groupList.groupList}
 					getOptionLabel={(option) => option.name}
 					style={{ width: 150, marginLeft: "1rem" }}
-					onChange={(event, value) => setSelectedGroup(value)}
+					onChange={selectGroupHandler}
 					renderInput={(params) => <TextField {...params} label="그룹 선택" />}
 				/>
 			</Box>

@@ -1,5 +1,22 @@
 import styled from "styled-components";
 
+export const Wrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	.invite {
+		margin: 1rem 0;
+		width: 100%;
+		.container {
+			display: flex;
+			.box {
+				height: 2rem;
+				width: 80%;
+				border: 2px solid #000;
+			}
+		}
+	}
+`;
+
 export const TodoContainer = styled.div`
 	width: 100%;
 	display: flex;

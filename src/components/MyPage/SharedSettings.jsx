@@ -27,6 +27,10 @@ import {
 	deleteGroup,
 	leaveGroup,
 } from "@/features/group/group-service";
+import {
+	getInvitation,
+	groupJoin,
+} from "@/features/group/group-invite-service.js";
 
 const SharedSettings = () => {
 	const dispatch = useDispatch();
@@ -37,6 +41,12 @@ const SharedSettings = () => {
 	const [openDelete, setOpenDelete] = useState(false);
 	const [confirmLeaveDialogOpen, setConfirmLeaveDialogOpen] = useState(false);
 	const [groupToLeave, setGroupToLeave] = useState(null);
+	const { searchGroup } = useSelector((state) => state.groupInvite);
+	const [inviteCode, setInviteCode] = useState("");
+
+	const inviteCodeHandler = (e) => {
+		setInviteCode(e.target.value);
+	};
 
 	useEffect(() => {
 		dispatch(getGroupList());
@@ -262,6 +272,30 @@ const SharedSettings = () => {
 					</>
 				);
 			})}
+			<div>
+				<h2>초대코드 입력</h2>
+				<input
+					type="text"
+					name="inviteCode"
+					id="inviteCode"
+					value={inviteCode}
+					onChange={inviteCodeHandler}
+				/>
+				<button
+					type="button"
+					onClick={() => dispatch(getInvitation(inviteCode))}
+				>
+					검색
+				</button>
+			</div>
+			{searchGroup && (
+				<div>
+					<h2>{searchGroup?.name || ""}</h2>
+					<button type="button" onClick={() => dispatch(groupJoin(inviteCode))}>
+						그룹 들어가기
+					</button>
+				</div>
+			)}
 		</UserInfoContainer>
 	);
 };
