@@ -28,7 +28,7 @@ const FeedMain = () => {
 	};
 
 	if (selectedGroup !== null) {
-		return <FeedDetail group={selectedGroup} />;
+		return <FeedDetail groupInfo={selectedGroup} />;
 	}
 
 	return (

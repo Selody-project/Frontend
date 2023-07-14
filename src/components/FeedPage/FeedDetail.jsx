@@ -53,7 +53,7 @@ const FeedDetail = ({ groupInfo }) => {
 					maxHeight: "500px",
 				}}
 			>
-				그룹 : {groupInfo.group.name}
+				그룹 : {groupInfo.name}
 			</Card>
 			<Box display="flex" p={2} width="60%" flexDirection="column">
 				<Card sx={{ p: 2, mb: 2 }}>
@@ -144,7 +144,7 @@ const FeedDetail = ({ groupInfo }) => {
 					maxHeight: "650px",
 				}}
 			>
-				그룹 : {groupInfo.group.name}
+				그룹 : {groupInfo.name}
 			</Card>
 		</Box>
 	);
