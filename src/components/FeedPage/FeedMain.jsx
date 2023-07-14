@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Typography, Paper } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import { getGroupList } from "@/features/group/group-service";
+import FeedDetail from "./FeedDetail";
 import {
 	FeedMainContainer,
 	FeedMainHeader,
@@ -16,9 +17,19 @@ const FeedMain = () => {
 	const dispatch = useDispatch();
 	const groupList = useSelector((state) => state.group);
 
+	const [selectedGroup, setSelectedGroup] = useState(null);
+
 	useEffect(() => {
 		dispatch(getGroupList());
 	}, []);
+
+	const handleGroupClick = (group) => {
+		setSelectedGroup(group);
+	};
+
+	if (selectedGroup !== null) {
+		return <FeedDetail group={selectedGroup} />;
+	}
 
 	return (
 		<FeedMainContainer>
@@ -27,7 +38,12 @@ const FeedMain = () => {
 				{groupList.groupList.map((group) => {
 					return (
 						<GroupAvatarContainer key={group.groupId}>
-							<Avatar sx={{ width: 50, height: 50 }}>{group.name[0]}</Avatar>
+							<Avatar
+								sx={{ width: 50, height: 50 }}
+								onClick={() => handleGroupClick(group)}
+							>
+								{group.name[0]}
+							</Avatar>
 							<span>{group.name}</span>
 						</GroupAvatarContainer>
 					);
@@ -37,7 +53,10 @@ const FeedMain = () => {
 			<FeedMainHeader>전체 그룹</FeedMainHeader>
 			<AllGroupListContainer>
 				{groupList.groupList.map((group) => (
-					<GroupPaperContainer key={group.groupId}>
+					<GroupPaperContainer
+						key={group.groupId}
+						onClick={() => handleGroupClick(group)}
+					>
 						<Paper elevation={3} sx={{ padding: "16px", textAlign: "center" }}>
 							<Avatar sx={{ width: 50, height: 50, margin: "auto" }}>
 								{group.name[0]}
