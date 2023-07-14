@@ -88,6 +88,7 @@ const Wrapper = styled.div`
 	.right {
 		flex: 1;
 		padding: 50px;
+		font-family: "Poppins", sans-serif;
 
 		h1 {
 			font-size: 2.5rem;

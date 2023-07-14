@@ -8,8 +8,10 @@ import { Wrapper } from "./CalendarContainer.styles";
 import {
 	currentMonthFn,
 	currentYearFn,
+	setId,
 } from "@/features/schedule/schedule-slice";
 import { getRandomColor } from "@/utils/color";
+import { handleMenuToggle, setEdit } from "@/features/user/user-slice.js";
 
 const CalendarContainer = () => {
 	const colors = [
@@ -62,6 +64,12 @@ const CalendarContainer = () => {
 			eventColorMap.current[eventId] = getRandomColor();
 		}
 		return eventColorMap.current[eventId];
+	};
+
+	const menuHandler = () => {
+		dispatch(setEdit(true));
+		dispatch(handleMenuToggle());
+		dispatch(setId(schedule.id));
 	};
 
 	useEffect(() => {
@@ -157,11 +165,19 @@ const CalendarContainer = () => {
 						plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
 						initialView="dayGridMonth"
 						events={fullCalendarEvents}
-						headerToolbar={{
-							left: "",
-							center: "title",
-							right: "dayGridMonth,timeGridWeek",
-						}}
+						headerToolbar={
+							dayGridPlugin
+								? {
+										left: "prev,next",
+										center: "title",
+										right: "dayGridMonth,timeGridWeek",
+								  }
+								: {
+										left: "",
+										center: "title",
+										right: "dayGridMonth,timeGridWeek",
+								  }
+						}
 						selectable={true}
 						weekends={true}
 						allDaySlot={false}
@@ -170,9 +186,7 @@ const CalendarContainer = () => {
 							renderInfo.dayNumberText.replace("일", "")
 						}
 						height={750}
-						eventClick={(info) => {
-							console.log(info);
-						}}
+						eventClick={() => menuHandler}
 					/>
 				</div>
 			</Wrapper>

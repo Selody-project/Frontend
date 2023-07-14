@@ -1,8 +1,8 @@
 import React from "react";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
+import { useDispatch } from "react-redux";
 import BaseCard from "../Base/BaseCard.jsx";
 import { Wrapper } from "./PersonalTodoItem.styles.js";
-import { useDispatch } from "react-redux";
 import { deleteSchedule } from "@/features/schedule/schedule-service.js";
 import { handleMenuToggle, setEdit } from "@/features/user/user-slice.js";
 import { setId } from "@/features/schedule/schedule-slice.js";
@@ -10,7 +10,12 @@ import { setId } from "@/features/schedule/schedule-slice.js";
 const PersonalTodoItem = ({ schedule }) => {
 	const dispatch = useDispatch();
 
-	let sDate, sTime, eDate, eTime, uDate, uTime;
+	let sDate;
+	let sTime;
+	let eDate;
+	let eTime;
+	let uDate;
+	let uTime;
 	let recDay;
 
 	if (schedule.recurrence === 0) {
@@ -26,7 +31,6 @@ const PersonalTodoItem = ({ schedule }) => {
 		} else if (schedule.freq === "YEARLY") {
 			recDay = "매년";
 		}
-		console.log(recDay);
 		[uDate, uTime] = schedule.until.split("T");
 	}
 
