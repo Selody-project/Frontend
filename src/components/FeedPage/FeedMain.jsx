@@ -16,8 +16,6 @@ const FeedMain = () => {
 	const dispatch = useDispatch();
 	const groupList = useSelector((state) => state.group);
 
-	console.log(groupList);
-
 	useEffect(() => {
 		dispatch(getGroupList());
 	}, []);

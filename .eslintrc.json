@@ -19,6 +19,15 @@
 	},
 	"plugins": ["react", "prettier", "react-hooks", "import", "jsx-a11y"],
 	"rules": {
+		"jsx-a11y/label-has-associated-control": [
+			2,
+			{
+				"labelComponents": ["CustomInputLabel"],
+				"labelAttributes": ["inputLabel"],
+				"controlComponents": ["CustomInput"],
+				"depth": 3
+			}
+		],
 		"import/prefer-default-export": "off",
 		"import/no-extraneous-dependencies": "off",
 		"import/extensions": "off",
