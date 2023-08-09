@@ -1,4 +1,4 @@
-export const lightTheme = {
+const lightTheme = {
 	colors: {
 		background: "#F6F9FC",
 		backgroundInverse: "#7A8997",
@@ -44,3 +44,5 @@ export const lightTheme = {
 		},
 	},
 };
+
+export default lightTheme;

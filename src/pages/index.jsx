@@ -1,11 +1,11 @@
-import ErrorPage from "./ErrorPage";
+import ErrorPage from "./ErrorPage/ErrorPage";
 import LandingPage from "./LandingPage";
-import LoginPage from "./LoginPage";
+import LoginPage from "./LoginPage/LoginPage";
 import Root from "./Root";
-import SignUpPage from "./SignUpPage";
+import SignUpPage from "./SignUpPage/SignUpPage";
 import PersonalSchedulePage from "./PersonalSchedulePage";
 import GroupSchedulePage from "./GroupSchedulePage";
-import MyPage from "./MyPage";
+import MyPage from "./MyPage/MyPage";
 import FeedPage from "./FeedPage";
 
 export {

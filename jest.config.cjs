@@ -2,6 +2,7 @@ module.exports = {
 	testEnvironment: "jsdom",
 	transform: {
 		"^.+\\.jsx?$": "babel-jest",
+		"^.+\\.svg$": "jest-transformer-svg",
 	},
 	transformIgnorePatterns: [
 		"/node_modules/(?!@emotion/react|@emotion/styled|@react-oauth/google|react-icons|react-modal|react-toastify|styled-components)",

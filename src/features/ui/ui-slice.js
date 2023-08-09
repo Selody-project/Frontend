@@ -1,18 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-	isModalOpen: false,
+	openedModal: "",
 };
 
 const uiSlice = createSlice({
 	name: "ui",
 	initialState,
 	reducers: {
-		openModal: (state) => {
-			state.isModalOpen = true;
+		openModal: (state, action) => {
+			state.openedModal = action.payload.type;
 		},
 		closeModal: (state) => {
-			state.isModalOpen = false;
+			state.openedModal = "";
 		},
 	},
 });
