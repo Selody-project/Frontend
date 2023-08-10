@@ -15,8 +15,8 @@ import {
 	SignUpButton,
 	BtnWrapper,
 } from "./LoginPage.styles";
-import Google from "../../components/Sign/Google";
-import Naver from "../../components/Sign/Naver";
+import Google from "../../components/sign/Google";
+import Naver from "../../components/sign/Naver";
 import { login, naverLogin } from "../../features/user/user-service.js";
 import useNaver from "../../hooks/useNaver.jsx";
 

@@ -11,12 +11,9 @@ const Google = () => {
 	};
 
 	return (
-		<>
+		<div id="google-login" data-testid="google-login">
 			<GoogleLogin onSuccess={responseGoogle} onFailure={responseGoogle} />
-
-			{/* 테스트 코드 작성을 위한 div */}
-			<div id="google-login" data-testid="google-login"></div>
-		</>
+		</div>
 	);
 };
 
