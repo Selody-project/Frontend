@@ -172,7 +172,7 @@ const CalendarContainer = ({ type }) => {
 				/>
 			)}
 			<CustomCalendar
-				calendarRef={calendarRef}
+				ref={calendarRef}
 				fullCalendarEvents={fullCalendarEvents}
 				currentYear={currentYear}
 				currentMonth={currentMonth}

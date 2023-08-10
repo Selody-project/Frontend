@@ -1,19 +1,21 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { Wrapper } from "./CustomCalendar.styles";
 
-const CustomCalendar = ({
-	calendarRef,
-	fullCalendarEvents,
-	currentYear,
-	currentMonth,
-	handleDateChange,
-	menuHandler = null,
-}) => {
-	return (
+const CustomCalendar = forwardRef(
+	(
+		{
+			fullCalendarEvents,
+			currentYear,
+			currentMonth,
+			handleDateChange,
+			menuHandler = null,
+		},
+		calendarRef,
+	) => (
 		<Wrapper data-testid="calendar-container">
 			<div className="calendar">
 				<div className="date-selector">
@@ -58,7 +60,7 @@ const CustomCalendar = ({
 				/>
 			</div>
 		</Wrapper>
-	);
-};
+	),
+);
 
 export default CustomCalendar;
