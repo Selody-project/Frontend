@@ -14,6 +14,17 @@ jest.mock("@fullcalendar/timegrid", () => ({}));
 jest.mock("@fullcalendar/daygrid", () => ({}));
 jest.mock("@fullcalendar/interaction", () => ({}));
 
+jest.mock(
+	"../../src/components/Common/CustomCalendar/CustomCalendar.jsx",
+	() => {
+		const { forwardRef } = jest.requireActual("react");
+		return {
+			__esModule: true,
+			default: forwardRef(() => <div data-testid="calendar-container"></div>),
+		};
+	},
+);
+
 describe("PersonalSchedulePage", () => {
 	it("renders Header, CalendarContainer, and PersonalTodoList", () => {
 		render(<PersonalSchedulePage />);
