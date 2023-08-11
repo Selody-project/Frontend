@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Wrapper as BaseCardWrapper } from "./BaseCard.styles.js";
 
 const BaseCard = ({ children, className }) => {

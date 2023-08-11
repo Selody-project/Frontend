@@ -1,5 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
+
+import { createSlice } from "@reduxjs/toolkit";
+
 import {
 	createGroup,
 	deleteGroup,

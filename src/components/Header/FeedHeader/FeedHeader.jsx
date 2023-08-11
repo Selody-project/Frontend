@@ -1,20 +1,20 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
+
+import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
+import SearchIcon from "@mui/icons-material/Search";
+import Badge from "@mui/material/Badge";
+import Divider from "@mui/material/Divider";
 import Fade from "@mui/material/Fade";
 import IconButton from "@mui/material/IconButton";
-import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
-import Badge from "@mui/material/Badge";
-
-import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
-import Divider from "@mui/material/Divider";
-import SearchIcon from "@mui/icons-material/Search";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Paper from "@mui/material/Paper";
 
-import { openModal } from "@/features/ui/ui-slice.js";
 import { Wrapper, MenuWrapper, GroupCreateBtn } from "./FeedHeader.styles";
+import { openModal } from "@/features/ui/ui-slice.js";
 
 const FeedHeader = () => {
 	const dispatch = useDispatch();

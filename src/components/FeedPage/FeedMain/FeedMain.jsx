@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import { Typography, Paper } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
-import { getGroupList } from "@/features/group/group-service";
-import FeedDetail from "../FeedDetail";
+
 import {
 	FeedMainContainer,
 	FeedMainHeader,
@@ -12,6 +12,8 @@ import {
 	AllGroupListContainer,
 	GroupPaperContainer,
 } from "./FeedMain.styles";
+import FeedDetail from "../FeedDetail";
+import { getGroupList } from "@/features/group/group-service";
 
 const FeedMain = () => {
 	const dispatch = useDispatch();

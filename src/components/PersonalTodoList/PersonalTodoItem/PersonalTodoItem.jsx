@@ -1,14 +1,14 @@
 import React from "react";
-import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 
-import BaseCard from "@/components/Base/BaseCard/BaseCard.jsx";
-import { deleteSchedule } from "@/features/schedule/schedule-service.js";
-import { setEdit } from "@/features/user/user-slice.js";
-import { setId } from "@/features/schedule/schedule-slice.js";
+import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 
 import { Wrapper } from "./PersonalTodoItem.styles.js";
+import BaseCard from "@/components/Base/BaseCard/BaseCard.jsx";
+import { deleteSchedule } from "@/features/schedule/schedule-service.js";
+import { setId } from "@/features/schedule/schedule-slice.js";
 import { openModal } from "@/features/ui/ui-slice.js";
+import { setEdit } from "@/features/user/user-slice.js";
 
 const PersonalTodoItem = ({ schedule }) => {
 	const dispatch = useDispatch();

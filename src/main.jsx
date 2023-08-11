@@ -1,11 +1,13 @@
-import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Provider } from "react-redux";
-import { ThemeProvider } from "styled-components";
+
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import ReactDOM from "react-dom/client";
-import lightTheme from "@/styles/theme";
-import GlobalStyles from "@/styles/GlobalStyles";
+import { ThemeProvider } from "styled-components";
+
 import App from "@/App";
 import { store } from "@/store";
+import GlobalStyles from "@/styles/GlobalStyles";
+import lightTheme from "@/styles/theme";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
 	<Provider store={store}>

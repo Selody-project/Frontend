@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+
+import CustomCalendar from "./CustomCalendar/CustomCalendar";
+import InviteUser from "../SharePage/InviteUser";
 import {
 	currentMonthFn,
 	currentYearFn,
 	setId,
 } from "@/features/schedule/schedule-slice";
-import { setEdit } from "@/features/user/user-slice";
 import { openModal } from "@/features/ui/ui-slice";
+import { setEdit } from "@/features/user/user-slice";
 import { getRandomColor } from "@/utils/color";
-import InviteUser from "../SharePage/InviteUser";
-import CustomCalendar from "./CustomCalendar/CustomCalendar";
 
 const CalendarContainer = ({ type }) => {
 	const colors = [

@@ -1,6 +1,8 @@
 import React from "react";
-import { GoogleLogin } from "@react-oauth/google";
 import { useDispatch } from "react-redux";
+
+import { GoogleLogin } from "@react-oauth/google";
+
 import { googleLogin } from "@/features/user/user-service";
 
 const Google = () => {

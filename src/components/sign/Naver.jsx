@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
 
 const Naver = () => {
 	const { naver } = window;
@@ -21,7 +20,7 @@ const Naver = () => {
 		naverSignin();
 	}, []);
 
-	return <div id="naverIdLogin" data-testid="naver-login"></div>;
+	return <div id="naverIdLogin" data-testid="naver-login" />;
 };
 
 export default Naver;

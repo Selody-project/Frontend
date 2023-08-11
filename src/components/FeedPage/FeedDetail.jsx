@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import {
 	Card,
 	Typography,
@@ -9,7 +11,6 @@ import {
 	Menu,
 	MenuItem,
 } from "@mui/material";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const FeedDetail = ({ groupInfo }) => {
 	const feedItems = [

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import { Box, Tab, Tabs, Container } from "@mui/material";
-import { getCurrentUser } from "../../features/user/user-service";
+
 import Header from "../../components/Header/Header/Header";
+import PasswordUpdate from "../../components/MyPage/PasswordUpdate";
 import ProfileSettings from "../../components/MyPage/ProfileSettings";
 import SharedSettings from "../../components/MyPage/SharedSettings";
-import PasswordUpdate from "../../components/MyPage/PasswordUpdate";
+import { getCurrentUser } from "../../features/user/user-service";
 
 const MyPage = () => {
 	const [selectedTab, setSelectedTab] = useState(0);

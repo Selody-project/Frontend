@@ -1,8 +1,9 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { NavLink, useLocation } from "react-router-dom";
-import { openModal } from "@/features/ui/ui-slice.js";
+
 import { Wrapper, MenuWrapper, GroupCreateBtn } from "./GroupHeader.styles";
+import { openModal } from "@/features/ui/ui-slice.js";
 
 const GroupHeader = () => {
 	const dispatch = useDispatch();

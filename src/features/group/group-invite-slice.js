@@ -1,5 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
+
+import { createSlice } from "@reduxjs/toolkit";
+
 import {
 	createInviteLink,
 	getInvitation,
@@ -26,21 +28,18 @@ const groupSlice = createSlice({
 				state.inviteCode = payload.inviteCode;
 				state.inviteExp = payload.exp;
 			})
-			.addCase(createInviteLink.rejected, (state, { payload }) => {
+			.addCase(createInviteLink.rejected, (state) => {
 				state.isLoading = false;
-				console.log(payload);
 			})
 			.addCase(getInvitation.pending, (state) => {
 				state.isLoading = true;
 			})
 			.addCase(getInvitation.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
-				console.log(payload.group);
 				state.searchGroup = payload.group;
 			})
-			.addCase(getInvitation.rejected, (state, { payload }) => {
+			.addCase(getInvitation.rejected, (state) => {
 				state.isLoading = false;
-				console.log(payload);
 			})
 			.addCase(groupJoin.pending, (state) => {
 				state.isLoading = true;
@@ -49,9 +48,8 @@ const groupSlice = createSlice({
 				state.isLoading = false;
 				toast.success("그룹에 참여하는데 성공하였습니다.");
 			})
-			.addCase(groupJoin.rejected, (state, { payload }) => {
+			.addCase(groupJoin.rejected, (state) => {
 				state.isLoading = false;
-				console.log(payload);
 			});
 	},
 });

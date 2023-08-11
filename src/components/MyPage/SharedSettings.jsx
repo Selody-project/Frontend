@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 import CloseIcon from "@mui/icons-material/Close";
 import {
@@ -12,6 +13,7 @@ import {
 	DialogActions,
 	Button,
 } from "@mui/material";
+
 import {
 	UserInfoContainer,
 	LeaderLabel,
@@ -23,14 +25,14 @@ import {
 	DelegateButton,
 } from "./MyPageDetail.styles";
 import {
+	getInvitation,
+	groupJoin,
+} from "@/features/group/group-invite-service.js";
+import {
 	getGroupList,
 	deleteGroup,
 	leaveGroup,
 } from "@/features/group/group-service";
-import {
-	getInvitation,
-	groupJoin,
-} from "@/features/group/group-invite-service.js";
 
 const SharedSettings = () => {
 	const dispatch = useDispatch();

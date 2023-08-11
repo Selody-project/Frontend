@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import ScheduleModal from "@/components/Common/ScheduleModal/ScheduleModal.jsx";
-import { getSchedule } from "@/features/schedule/schedule-service.js";
-import { setEdit } from "@/features/user/user-slice.js";
-import { openModal } from "@/features/ui/ui-slice";
-
 import {
 	TodoContainer,
 	TodoHeader,
@@ -19,6 +14,10 @@ import {
 	TodoList,
 } from "./PersonalTodoList.styles";
 import PersonalTodoItem from "../PersonalTodoItem/PersonalTodoItem";
+import ScheduleModal from "@/components/Common/ScheduleModal/ScheduleModal.jsx";
+import { getSchedule } from "@/features/schedule/schedule-service.js";
+import { openModal } from "@/features/ui/ui-slice";
+import { setEdit } from "@/features/user/user-slice.js";
 
 const PersonalTodoList = () => {
 	const dispatch = useDispatch();
