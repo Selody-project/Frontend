@@ -1,3 +1,5 @@
+import { useDispatch, useSelector } from "react-redux";
+
 import {
 	Box,
 	Button,
@@ -9,7 +11,7 @@ import {
 	ListItemText,
 	InputAdornment,
 } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+
 import { selectGroup } from "@/features/group/group-slice.js";
 
 const InviteUser = ({

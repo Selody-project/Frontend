@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+
 import customFetch from "@/components/Base/BaseAxios.js";
 
 export const createInviteLink = createAsyncThunk(
@@ -13,7 +14,7 @@ export const createInviteLink = createAsyncThunk(
 			}
 			return response.data;
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 			if (error.response) {
 				return thunkAPI.rejectWithValue(error.response.data);
 			}

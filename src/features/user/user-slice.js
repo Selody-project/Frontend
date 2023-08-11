@@ -16,9 +16,6 @@ const initialState = {
 	user: null,
 	isLoading: false,
 	userLoading: true,
-	menuOpen: false,
-	personalModal: false,
-	shareModal: false,
 	token: null,
 	edit: false,
 };
@@ -33,9 +30,6 @@ const userSlice = createSlice({
 		},
 		setEdit: (state, { payload }) => {
 			state.edit = payload;
-		},
-		handleMenuToggle: (state) => {
-			state.menuOpen = !state.menuOpen;
 		},
 	},
 	extraReducers: (builder) => {
@@ -146,6 +140,6 @@ const userSlice = createSlice({
 	},
 });
 
-export const { handleMenuToggle, logoutHandler, setEdit } = userSlice.actions;
+export const { logoutHandler, setEdit } = userSlice.actions;
 
 export default userSlice.reducer;

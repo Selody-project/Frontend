@@ -5,7 +5,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { BrowserRouter } from "react-router-dom";
-import ErrorPage from "../../src/pages/ErrorPage";
+import ErrorPage from "../../src/pages/ErrorPage/ErrorPage";
 
 // 에러 페이지 랜더링 테스트
 test("renders ErrorPage component", () => {

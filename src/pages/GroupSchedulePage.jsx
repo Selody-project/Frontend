@@ -1,12 +1,14 @@
-import React, { Fragment, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import styled from "styled-components";
-import Header from "../components/Header/Header";
-import GroupHeader from "../components/Header/GroupHeader";
-import ShareTodoList from "../components/SharePage/ShareTodoList";
-import CalendarContainer from "../components/SharePage/CalendarContainer.jsx";
-import { getGroupList } from "@/features/group/group-service.js";
+
+import CalendarContainer from "../components/Common/CalendarContainer.jsx";
+import GroupHeader from "../components/Header/GroupHeader/GroupHeader";
+import Header from "../components/Header/Header/Header";
+import ShareTodoList from "../components/SharePage/ShareTodoList/ShareTodoList";
 import CreateGroupModal from "@/components/SharePage/CreateGroupModal.jsx";
+import { getGroupList } from "@/features/group/group-service.js";
 
 const MainContainer = styled.main`
 	display: flex;
@@ -16,7 +18,7 @@ const MainContainer = styled.main`
 `;
 
 const GroupSchedulePage = () => {
-	const { isModalOpen } = useSelector((state) => state.ui);
+	const { openedModal } = useSelector((state) => state.ui);
 
 	const dispatch = useDispatch();
 
@@ -29,10 +31,10 @@ const GroupSchedulePage = () => {
 			<Header />
 			<GroupHeader />
 			<MainContainer>
-				<CalendarContainer />
+				<CalendarContainer type="SHARE" />
 				<ShareTodoList />
 			</MainContainer>
-			{isModalOpen && <CreateGroupModal />}
+			{openedModal === "SHARE_PAGE_CREATE" && <CreateGroupModal />}
 		</>
 	);
 };

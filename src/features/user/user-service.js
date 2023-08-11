@@ -1,13 +1,12 @@
 /* eslint-disable */
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 import customFetch from "@/components/Base/BaseAxios";
 
 export const signup = createAsyncThunk(
 	"user/signup",
 	async ({ email, nickname, password, navigate }, thunkAPI) => {
 		try {
-			const response = await axios.post(`/back/api/auth/join`, {
+			const response = await customFetch.post(`/api/auth/join`, {
 				email,
 				nickname,
 				password,
@@ -15,7 +14,7 @@ export const signup = createAsyncThunk(
 			if (response.statusText !== "OK") {
 				throw response.data;
 			}
-			
+
 			// navigate("/");
 
 			return response.data;

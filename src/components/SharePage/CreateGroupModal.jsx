@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { MdClose } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import BaseModal from "../Base/BaseModal.jsx";
+
+import BaseModal from "../Base/BaseModal/BaseModal.jsx";
 import { createGroup } from "@/features/group/group-service.js";
 import { closeModal } from "@/features/ui/ui-slice.js";
 
@@ -32,11 +32,7 @@ const CreateGroupModal = () => {
 	};
 
 	return (
-		<BaseModal bg="#fff">
-			<div className="header">
-				<h2>공유 페이지 생성</h2>
-				<MdClose onClick={() => dispatch(closeModal())} />
-			</div>
+		<BaseModal title="공유 페이지 생성" bg="#fff">
 			<div className="content">
 				<div className="input">
 					<input

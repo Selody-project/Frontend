@@ -1,13 +1,14 @@
 import React from "react";
+
+// import { useDispatch, useSelector } from "react-redux";
+// import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import Header from "../components/Header/Header";
-import GroupHeader from "../components/Header/GroupHeader";
-import PersonalTodoList from "../components/PersonalTodoList/PersonalTodoList";
-import CalendarContainer from "../components/PersonalTodoList/CalendarContainer.jsx";
-import BaseModal from "@/components/Base/BaseModal.jsx";
-import { closeModal, openModal } from "@/features/ui/ui-slice.js";
+
+// import { closeModal, openModal } from "@/features/ui/ui-slice.js";
+import GroupHeader from "../components/Header/GroupHeader/GroupHeader";
+import Header from "../components/Header/Header/Header";
+import PersonalTodoList from "../components/PersonalTodoList/PersonalTodoList/PersonalTodoList";
+import CalendarContainer from "@/components/Common/CalendarContainer";
 
 const MainContainer = styled.main`
 	display: flex;
@@ -17,22 +18,20 @@ const MainContainer = styled.main`
 `;
 
 const PersonalSchedulePage = () => {
-	const { isModalOpen } = useSelector((state) => state.ui);
+	// const dispatch = useDispatch();
+	// const navigate = useNavigate();
 
-	const dispatch = useDispatch();
-	const navigate = useNavigate();
-
-	const createGroupHandler = () => {
-		dispatch(closeModal());
-		navigate("/share");
-		dispatch(openModal());
-	};
+	// const createGroupHandler = () => {
+	// 	dispatch(closeModal());
+	// 	navigate("/share");
+	// 	dispatch(openModal({ type: "SHARE_PAGE_CREATE" }));
+	// };
 
 	return (
 		<>
 			<Header />
 			<GroupHeader />
-			{isModalOpen && (
+			{/* {isModalOpen && (
 				<BaseModal bg="#000">
 					<div className="create-group">
 						<h2>공유 페이지를 생성해서</h2>
@@ -47,9 +46,9 @@ const PersonalSchedulePage = () => {
 						공유 페이지 생성하기
 					</button>
 				</BaseModal>
-			)}
+			)} */}
 			<MainContainer>
-				<CalendarContainer />
+				<CalendarContainer type="PERSONAL" />
 				<PersonalTodoList />
 			</MainContainer>
 		</>

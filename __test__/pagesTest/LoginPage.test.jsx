@@ -5,7 +5,7 @@ import React from "react";
 import { screen } from "@testing-library/react";
 import { render } from "../../jest.setup.js";
 import "@testing-library/jest-dom/extend-expect";
-import LoginPage from "../../src/pages/LoginPage";
+import LoginPage from "../../src/pages/LoginPage/LoginPage.jsx";
 
 describe("LoginPage", () => {
 	// 로그인 페이지 랜더링 테스트

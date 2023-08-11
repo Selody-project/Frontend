@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
 import { Button, TextField, Box, Typography, Grid } from "@mui/material";
-import { updateUserProfile } from "@/features/user/user-service";
+
 import { UserInfoContainer } from "./MyPageDetail.styles";
+import { updateUserProfile } from "@/features/user/user-service";
 
 const ProfileSettings = () => {
 	const navigate = useNavigate();

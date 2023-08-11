@@ -1,13 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import convertToUTC, {
-	generateEndDateTime,
-	generateStartDateTime,
-} from "@/utils/convertToUTC.js";
+
 import customFetch from "@/components/Base/BaseAxios.js";
 import {
 	convertToLocalTimezone,
 	convertRecurrenceToLocalTimezone,
 } from "@/utils/convertToLocalTimeZone.js";
+import convertToUTC, {
+	generateEndDateTime,
+	generateStartDateTime,
+} from "@/utils/convertToUTC.js";
 
 export const getSchedule = createAsyncThunk(
 	"schedule/getSchedule",

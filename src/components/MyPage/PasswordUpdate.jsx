@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
 import { Typography, Button, TextField, Box, Grid, Alert } from "@mui/material";
-import { updateUserPassword } from "@/features/user/user-service";
+
 import { UserInfoContainer } from "./MyPageDetail.styles";
+import { updateUserPassword } from "@/features/user/user-service";
 
 const PasswordUpdate = () => {
 	const navigate = useNavigate();

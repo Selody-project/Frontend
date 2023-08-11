@@ -39,6 +39,30 @@
 		"react/jsx-props-no-spreading": "off",
 		"arrow-body-style": "off",
 		"no-param-reassign": "off",
-		"prettier/prettier": "error"
+		"prettier/prettier": "error",
+		"import/order": [
+			"error",
+			{
+				"groups": [
+					"builtin",
+					"external",
+					"internal",
+					["sibling", "parent", "index", "unknown"]
+				],
+				"pathGroups": [
+					{
+						"pattern": "{react*, react*/**}",
+						"group": "builtin",
+						"position": "before"
+					}
+				],
+				"pathGroupsExcludedImportTypes": ["react", "unknown"],
+				"alphabetize": {
+					"order": "asc",
+					"caseInsensitive": true
+				},
+				"newlines-between": "always"
+			}
+		]
 	}
 }
