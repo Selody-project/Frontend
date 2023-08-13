@@ -8,8 +8,8 @@
 		"build": "vite build",
 		"preview": "vite preview",
 		"test": "jest",
-		"lint": "eslint ./src/**/*.{ts,tsx,js,jsx}",
-		"lint:fix": "eslint ./src/**/*.{ts,tsx,js,jsx} --fix",
+		"lint": "eslint src/**/*.{ts,tsx,js,jsx}",
+		"lint:fix": "eslint src/**/*.{ts,tsx,js,jsx} --fix",
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build",
 		"prepare": "husky install"
