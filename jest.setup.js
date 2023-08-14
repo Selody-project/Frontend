@@ -1,16 +1,17 @@
+import React from "react";
+import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
+
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import "@testing-library/jest-dom/extend-expect";
+import { render as rtlRender } from "@testing-library/react";
+
 import { server } from "./__test__/__mocks__/msw/server.js";
+import { store } from "./src/store/index.js";
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
-
-import React from "react";
-import { render as rtlRender } from "@testing-library/react";
-import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
-import { GoogleOAuthProvider } from "@react-oauth/google";
-import { store } from "./src/store/index.js";
 
 const render = (ui, { ...options } = {}) => {
 	const Wrapper = ({ children }) => (
