@@ -2,6 +2,13 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
+import BaseModal from "@/components/Base/BaseModal/BaseModal.jsx";
+import {
+	createSchedule,
+	updateSchedule,
+} from "@/features/schedule/schedule-service.js";
+import { closeModal } from "@/features/ui/ui-slice";
+
 import {
 	TitleInput,
 	DateInput,
@@ -14,12 +21,6 @@ import {
 	FooterDiv,
 	SubmitButton,
 } from "./ScheduleModal.styles";
-import BaseModal from "@/components/Base/BaseModal/BaseModal.jsx";
-import {
-	createSchedule,
-	updateSchedule,
-} from "@/features/schedule/schedule-service.js";
-import { closeModal } from "@/features/ui/ui-slice";
 
 const ScheduleModal = ({ type, initFormValues }) => {
 	const dispatch = useDispatch();

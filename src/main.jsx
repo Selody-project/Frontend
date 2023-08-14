@@ -1,7 +1,7 @@
+import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import ReactDOM from "react-dom/client";
 import { ThemeProvider } from "styled-components";
 
 import App from "@/App";

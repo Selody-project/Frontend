@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 import { Button, TextField, Box, Typography, Grid } from "@mui/material";
 
-import { UserInfoContainer } from "./MyPageDetail.styles";
 import { updateUserProfile } from "@/features/user/user-service";
+
+import { UserInfoContainer } from "./MyPageDetail.styles";
 
 const ProfileSettings = () => {
 	const navigate = useNavigate();

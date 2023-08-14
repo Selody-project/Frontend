@@ -13,8 +13,9 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Paper from "@mui/material/Paper";
 
-import { Wrapper, MenuWrapper, GroupCreateBtn } from "./FeedHeader.styles";
 import { openModal } from "@/features/ui/ui-slice.js";
+
+import { Wrapper, MenuWrapper, GroupCreateBtn } from "./FeedHeader.styles";
 
 const FeedHeader = () => {
 	const dispatch = useDispatch();
