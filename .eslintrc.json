@@ -46,17 +46,17 @@
 				"groups": [
 					"builtin",
 					"external",
-					"internal",
-					["sibling", "parent", "index", "unknown"]
+					"unknown",
+					["sibling", "parent" ]
 				],
 				"pathGroups": [
 					{
-						"pattern": "{react*, react*/**}",
-						"group": "builtin",
+						"pattern": "{react*,react*/*}",
+						"group": "external",
 						"position": "before"
 					}
 				],
-				"pathGroupsExcludedImportTypes": ["react", "unknown"],
+				"pathGroupsExcludedImportTypes": [],
 				"alphabetize": {
 					"order": "asc",
 					"caseInsensitive": true

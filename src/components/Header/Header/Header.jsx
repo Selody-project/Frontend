@@ -2,8 +2,9 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, NavLink } from "react-router-dom";
 
-import { Wrapper, MenuWrapper, AuthButton } from "./Header.styles";
 import { logout } from "@/features/user/user-service.js";
+
+import { Wrapper, MenuWrapper, AuthButton } from "./Header.styles";
 
 const Header = () => {
 	const dispatch = useDispatch();

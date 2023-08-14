@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
-import { getCurrentUser } from "./features/user/user-service.js";
 import {
 	Root,
 	ErrorPage,
@@ -15,6 +14,9 @@ import {
 	MyPage,
 	FeedPage,
 } from "@/pages";
+
+import { getCurrentUser } from "./features/user/user-service.js";
+
 import "react-toastify/dist/ReactToastify.css";
 
 const router = createBrowserRouter([

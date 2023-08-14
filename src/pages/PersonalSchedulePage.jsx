@@ -4,11 +4,13 @@ import React from "react";
 // import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
+import CalendarContainer from "@/components/Common/CalendarContainer";
+
 // import { closeModal, openModal } from "@/features/ui/ui-slice.js";
+
 import GroupHeader from "../components/Header/GroupHeader/GroupHeader";
 import Header from "../components/Header/Header/Header";
 import PersonalTodoList from "../components/PersonalTodoList/PersonalTodoList/PersonalTodoList";
-import CalendarContainer from "@/components/Common/CalendarContainer";
 
 const MainContainer = styled.main`
 	display: flex;

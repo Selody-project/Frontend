@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-import BaseModal from "../Base/BaseModal/BaseModal.jsx";
 import { createGroup } from "@/features/group/group-service.js";
 import { closeModal } from "@/features/ui/ui-slice.js";
+
+import BaseModal from "../Base/BaseModal/BaseModal.jsx";
 
 const CreateGroupModal = () => {
 	const [shareInput, setShareInput] = useState("");

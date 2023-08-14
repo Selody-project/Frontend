@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Typography, Paper } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 
+import { getGroupList } from "@/features/group/group-service";
+
 import {
 	FeedMainContainer,
 	FeedMainHeader,
@@ -13,7 +15,6 @@ import {
 	GroupPaperContainer,
 } from "./FeedMain.styles";
 import FeedDetail from "../FeedDetail";
-import { getGroupList } from "@/features/group/group-service";
 
 const FeedMain = () => {
 	const dispatch = useDispatch();

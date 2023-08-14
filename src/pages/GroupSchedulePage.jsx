@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 
 import styled from "styled-components";
 
+import CreateGroupModal from "@/components/SharePage/CreateGroupModal.jsx";
+import { getGroupList } from "@/features/group/group-service.js";
+
 import CalendarContainer from "../components/Common/CalendarContainer.jsx";
 import GroupHeader from "../components/Header/GroupHeader/GroupHeader";
 import Header from "../components/Header/Header/Header";
 import ShareTodoList from "../components/SharePage/ShareTodoList/ShareTodoList";
-import CreateGroupModal from "@/components/SharePage/CreateGroupModal.jsx";
-import { getGroupList } from "@/features/group/group-service.js";
 
 const MainContainer = styled.main`
 	display: flex;

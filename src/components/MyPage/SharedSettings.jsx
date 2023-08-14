@@ -15,6 +15,16 @@ import {
 } from "@mui/material";
 
 import {
+	getInvitation,
+	groupJoin,
+} from "@/features/group/group-invite-service.js";
+import {
+	getGroupList,
+	deleteGroup,
+	leaveGroup,
+} from "@/features/group/group-service";
+
+import {
 	UserInfoContainer,
 	LeaderLabel,
 	Wrapper,
@@ -24,15 +34,6 @@ import {
 	MemberButton,
 	DelegateButton,
 } from "./MyPageDetail.styles";
-import {
-	getInvitation,
-	groupJoin,
-} from "@/features/group/group-invite-service.js";
-import {
-	getGroupList,
-	deleteGroup,
-	leaveGroup,
-} from "@/features/group/group-service";
 
 const SharedSettings = () => {
 	const dispatch = useDispatch();

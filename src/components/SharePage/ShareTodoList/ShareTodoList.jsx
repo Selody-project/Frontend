@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import ScheduleModal from "@/components/Common/ScheduleModal/ScheduleModal.jsx";
+import PersonalTodoItem from "@/components/PersonalTodoList/PersonalTodoItem/PersonalTodoItem.jsx";
+import { createInviteLink } from "@/features/group/group-invite-service.js";
+import { getSchedule } from "@/features/schedule/schedule-service.js";
+import { openModal } from "@/features/ui/ui-slice.js";
+import { setEdit } from "@/features/user/user-slice.js";
+
 import {
 	TodoContainer,
 	TodoHeader,
@@ -13,12 +20,6 @@ import {
 	TodoList,
 	Wrapper,
 } from "./ShareTodoList.styles.js";
-import ScheduleModal from "@/components/Common/ScheduleModal/ScheduleModal.jsx";
-import PersonalTodoItem from "@/components/PersonalTodoList/PersonalTodoItem/PersonalTodoItem.jsx";
-import { createInviteLink } from "@/features/group/group-invite-service.js";
-import { getSchedule } from "@/features/schedule/schedule-service.js";
-import { openModal } from "@/features/ui/ui-slice.js";
-import { setEdit } from "@/features/user/user-slice.js";
 
 const ShareTodoList = () => {
 	const dispatch = useDispatch();
