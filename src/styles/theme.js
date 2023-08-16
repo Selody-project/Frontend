@@ -1,13 +1,18 @@
 const lightTheme = {
 	colors: {
-		background: "#F6F9FC",
-		backgroundInverse: "#7A8997",
-		positive: "#E1FFD4",
-		negative: "#FEDED2",
 		primary: "#6C55FE",
-		secondary: "#1EA7FD",
-		tertiary: "#DDDDDD",
-		text: "#222222",
+		primary_variant: "#A495FF",
+		primary_light: "#F0F0FA",
+		disabled_01: "#C9CCD7",
+		disabled_02: "#A3B2C3",
+		gray_01: "#595959",
+		gray_02: "#434343",
+		gray_03: "#262626",
+		gray_04: "#1F1F1F",
+		bg_01: "#FCFDFF",
+		bg_02: "#F5F6F7",
+		bg_03: "#F4F6FC",
+		error: "#BA1A1A",
 	},
 	spacing: {
 		padding: {
