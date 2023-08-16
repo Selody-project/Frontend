@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { ReactComponent as Logo } from "@/assets/icon/ic-selody-logo.svg";
+import Logo from "@/assets/img/img-selody-logo/1x.png";
 import SignUpForm from "@/components/SignUp/SignUpForm/SignUpForm";
 
 import {
@@ -28,7 +28,7 @@ const SignUpPage = () => {
 	return (
 		<ContainerDiv>
 			<LogoContainerDiv>
-				<Logo />
+				<img src={Logo} alt="logo" />
 				<h1>
 					Selody<span>.</span>
 				</h1>
