@@ -1,6 +1,7 @@
-import { defineConfig, loadEnv } from "vite";
-import react from "@vitejs/plugin-react";
 import * as path from "path";
+
+import react from "@vitejs/plugin-react";
+import { defineConfig, loadEnv } from "vite";
 import svgr from "vite-plugin-svgr";
 
 // https://vitejs.dev/config/
@@ -14,12 +15,12 @@ export default ({ mode }) => {
 				"/naver01": {
 					target: "https://openapi.naver.com/v1/nid/me",
 					changeOrigin: true,
-					rewrite: (path) => path.replace(/^\/naver01/, ""),
+					rewrite: (_path) => _path.replace(/^\/naver01/, ""),
 				},
 				"/back": {
 					target: env.VITE_API_URL,
 					changeOrigin: true,
-					rewrite: (path) => path.replace(/^\/back/, ""),
+					rewrite: (_path) => _path.replace(/^\/back/, ""),
 				},
 			},
 		},

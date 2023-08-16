@@ -25,10 +25,11 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 body {
-	margin: 0;
+	margin: 0 auto;
 	padding: 0;
 	box-sizing: border-box;
 	line-height: 1;
+	max-width: 1440px;
 }
 a {
 	text-decoration: none;

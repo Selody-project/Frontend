@@ -1,10 +1,27 @@
-/* eslint-disable */
 import { createAsyncThunk } from "@reduxjs/toolkit";
+
 import customFetch from "@/components/Base/BaseAxios";
+
+export const validateDuplication = createAsyncThunk(
+	"user/validateDuplication",
+	async ({ type, targetValue }, thunkAPI) => {
+		try {
+			const response = await customFetch.post("/api/auth/join", {
+				[type]: targetValue,
+			});
+			if (response.status === 409) {
+				throw response.data;
+			}
+			return response.status;
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error.message);
+		}
+	},
+);
 
 export const signup = createAsyncThunk(
 	"user/signup",
-	async ({ email, nickname, password, navigate }, thunkAPI) => {
+	async ({ email, nickname, password }, thunkAPI) => {
 		try {
 			const response = await customFetch.post(`/api/auth/join`, {
 				email,
@@ -15,11 +32,8 @@ export const signup = createAsyncThunk(
 				throw response.data;
 			}
 
-			// navigate("/");
-
 			return response.data;
 		} catch (error) {
-			console.log(error);
 			return thunkAPI.rejectWithValue(error.message);
 		}
 	},
@@ -27,7 +41,7 @@ export const signup = createAsyncThunk(
 
 export const login = createAsyncThunk(
 	"user/login",
-	async ({ email, password, navigate }, thunkAPI) => {
+	async ({ email, password }, thunkAPI) => {
 		try {
 			const response = await customFetch.post(`/api/auth/login`, {
 				email,
@@ -48,10 +62,10 @@ export const login = createAsyncThunk(
 export const naverLogin = createAsyncThunk(
 	"user/naverLogin",
 	// eslint-disable-next-line no-unused-vars
-	async ({ access_Token, navigate }, thunkAPI) => {
+	async ({ accessToken, navigate }, thunkAPI) => {
 		try {
 			const response = await customFetch.post("/api/auth/naver", {
-				accessToken: access_Token,
+				accessToken,
 			});
 
 			if (response.statusText !== "OK") {
@@ -79,7 +93,7 @@ export const googleLogin = createAsyncThunk(
 
 			return response.data;
 		} catch (error) {
-			console.log(error.message);
+			return thunkAPI.rejectWithValue(error.message);
 		}
 	},
 );
@@ -97,7 +111,7 @@ export const logout = createAsyncThunk(
 
 			return response.data;
 		} catch (error) {
-			console.log(error.message);
+			return thunkAPI.rejectWithValue(error.message);
 		}
 	},
 );
@@ -114,7 +128,7 @@ export const getCurrentUser = createAsyncThunk(
 
 			return response.data;
 		} catch (error) {
-			console.log(error.message);
+			return thunkAPI.rejectWithValue(error.message);
 		}
 	},
 );
