@@ -6,12 +6,12 @@ import React from "react";
 import "@testing-library/jest-dom";
 
 import { fireEvent, render, screen } from "../../jest.setup.js";
-import SignUpForm from "../../src/components/SignUp/SignUpForm/SignUpForm.jsx";
+import SignUpPage from "../../src/pages/SignUpPage/SignUpPage.jsx";
 
 describe("SignUpPage Component", () => {
 	// 4개의 인풋과 3개의 버튼이 모두 존재하는지 테스트
 	it("renders SignUpPage without crashing", () => {
-		render(<SignUpForm />);
+		render(<SignUpPage />);
 
 		expect(screen.getByTestId("email-input")).toBeInTheDocument();
 		expect(screen.getByTestId("nickname-input")).toBeInTheDocument();
@@ -28,7 +28,7 @@ describe("SignUpPage Component", () => {
 
 	// 4개의 인풋에 입력 이벤트가 잘 동작하는지, 특히 이메일과 닉네임은 입력 시 중복 체크 버튼이 활성화되는지 테스트
 	it("handles form interactions correctly", () => {
-		render(<SignUpForm />);
+		render(<SignUpPage />);
 
 		expect(screen.getByTestId("email-duplicate-check-button")).toBeDisabled();
 		fireEvent.change(screen.getByTestId("email-input"), {
@@ -61,7 +61,7 @@ describe("SignUpPage Component", () => {
 
 	// 이메일 및 닉네임 중복 체크 함수가 정상적으로 호출되는지 테스트
 	it("validates duplication", () => {
-		render(<SignUpForm />);
+		render(<SignUpPage />);
 
 		const mockValidateDuplication = jest
 			.fn()
@@ -85,7 +85,7 @@ describe("SignUpPage Component", () => {
 
 	// 회원가입 함수가 정상적으로 호출되는지 테스트
 	it("dispatches signup action on form submission", () => {
-		render(<SignUpForm />);
+		render(<SignUpPage />);
 
 		const mockSignup = jest.fn().mockName("mockSignup");
 

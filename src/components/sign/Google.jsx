@@ -1,21 +1,17 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 
-import { GoogleLogin } from "@react-oauth/google";
-
-import { googleLogin } from "@/features/user/user-service";
+import GoogleLogo from "@/assets/icon/ic-google-logo.svg";
 
 const Google = () => {
-	const dispatchFn = useDispatch();
-
-	const responseGoogle = (response) => {
-		dispatchFn(googleLogin(response));
-	};
+	// const responseGoogle = (response) => {
+	// 	dispatchFn(googleLogin(response));
+	// };
 
 	return (
-		<div id="google-login" data-testid="google-login">
-			<GoogleLogin onSuccess={responseGoogle} onFailure={responseGoogle} />
-		</div>
+		<button type="button" id="google-login" data-testid="google-login">
+			<GoogleLogo />
+			{/* <GoogleLogin onSuccess={responseGoogle} onFailure={responseGoogle} /> */}
+		</button>
 	);
 };
 

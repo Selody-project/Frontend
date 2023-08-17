@@ -1,26 +1,32 @@
-import React, { useEffect } from "react";
+import React from "react";
+
+import NaverLogo from "@/assets/icon/ic-naver-logo.svg";
 
 const Naver = () => {
-	const { naver } = window;
+	// const { naver } = window;
 
-	const naverSignin = () => {
-		if (naver) {
-			const naverLogin = new naver.LoginWithNaverId({
-				clientId: "r6F2Dw1s6vUkQEJeB2eS",
-				callbackUrl: "http://localhost:3000/login",
-				isPopup: false,
-				loginButton: { color: "white", type: 2, height: "40" },
-				callbackHandle: true,
-			});
-			naverLogin.init();
-		}
-	};
+	// const naverSignin = () => {
+	// 	if (naver) {
+	// 		const naverLogin = new naver.LoginWithNaverId({
+	// 			clientId: "r6F2Dw1s6vUkQEJeB2eS",
+	// 			callbackUrl: "http://localhost:3000/login",
+	// 			isPopup: false,
+	// 			loginButton: { color: "white", type: 2, height: "40" },
+	// 			callbackHandle: true,
+	// 		});
+	// 		naverLogin.init();
+	// 	}
+	// };
 
-	useEffect(() => {
-		naverSignin();
-	}, []);
+	// useEffect(() => {
+	// 	naverSignin();
+	// }, []);
 
-	return <div id="naverIdLogin" data-testid="naver-login" />;
+	return (
+		<button type="button" id="naverIdLogin" data-testid="naver-login">
+			<NaverLogo />
+		</button>
+	);
 };
 
 export default Naver;

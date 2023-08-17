@@ -2,7 +2,9 @@
  * @jest-environment jsdom
  */
 import React from "react";
+
 import { screen } from "@testing-library/react";
+
 import { render } from "../../jest.setup.js";
 import "@testing-library/jest-dom";
 import PersonalSchedulePage from "../../src/pages/PersonalSchedulePage";
@@ -20,7 +22,7 @@ jest.mock(
 		const { forwardRef } = jest.requireActual("react");
 		return {
 			__esModule: true,
-			default: forwardRef(() => <div data-testid="calendar-container"></div>),
+			default: forwardRef(() => <div data-testid="calendar-container" />),
 		};
 	},
 );
