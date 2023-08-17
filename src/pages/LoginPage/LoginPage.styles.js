@@ -192,7 +192,7 @@ export const SocialLoginBtnContainerDiv = styled.div`
 
 	& > span {
 		font-size: 12px;
-		color: #a1a1a1;
+		color: ${({ theme }) => theme.colors.disabled_02};
 		opacity: 0.7;
 	}
 `;

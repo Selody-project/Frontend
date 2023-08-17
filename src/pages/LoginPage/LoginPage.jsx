@@ -129,15 +129,11 @@ function LoginPage() {
 					<p>간편 로그인</p>
 					<div>
 						<SocialLoginBtnContainerDiv>
-							<button type="button">
-								<Google />
-							</button>
+							<Google />
 							<span>구글</span>
 						</SocialLoginBtnContainerDiv>
 						<SocialLoginBtnContainerDiv>
-							<button type="button" data-testid="naver-login">
-								<Naver />
-							</button>
+							<Naver />
 							<span>네이버</span>
 						</SocialLoginBtnContainerDiv>
 					</div>

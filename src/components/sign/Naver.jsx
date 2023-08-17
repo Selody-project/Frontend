@@ -22,7 +22,11 @@ const Naver = () => {
 	// 	naverSignin();
 	// }, []);
 
-	return <NaverLogo id="naverIdLogin" />;
+	return (
+		<button type="button" id="naverIdLogin" data-testid="naver-login">
+			<NaverLogo />
+		</button>
+	);
 };
 
 export default Naver;
