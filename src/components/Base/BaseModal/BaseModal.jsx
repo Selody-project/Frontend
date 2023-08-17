@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 
 import PropTypes from "prop-types";
 
-import { ReactComponent as CloseIcon } from "@/assets/icon/ic-close.svg";
+import CloseIcon from "@/assets/icon/ic-close.svg";
 import { closeModal } from "@/features/ui/ui-slice.js";
 
 import {

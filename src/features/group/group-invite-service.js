@@ -14,7 +14,6 @@ export const createInviteLink = createAsyncThunk(
 			}
 			return response.data;
 		} catch (error) {
-			console.error(error);
 			if (error.response) {
 				return thunkAPI.rejectWithValue(error.response.data);
 			}

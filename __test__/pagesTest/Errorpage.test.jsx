@@ -2,9 +2,12 @@
  * @jest-environment jsdom
  */
 import React from "react";
-import { render, screen } from "@testing-library/react";
-import "@testing-library/jest-dom/extend-expect";
 import { BrowserRouter } from "react-router-dom";
+
+import { render, screen } from "@testing-library/react";
+
+import "@testing-library/jest-dom/extend-expect";
+
 import ErrorPage from "../../src/pages/ErrorPage/ErrorPage";
 
 // 에러 페이지 랜더링 테스트

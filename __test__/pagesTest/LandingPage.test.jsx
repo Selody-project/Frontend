@@ -1,9 +1,12 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
-import "@testing-library/jest-dom/extend-expect";
 import { BrowserRouter } from "react-router-dom";
-import Landing from "../../src/components/Home/Landing";
+
+import { render, screen } from "@testing-library/react";
+
+import "@testing-library/jest-dom/extend-expect";
+
 import LandingHeader from "../../src/components/Header/LandingHeader";
+import Landing from "../../src/components/Home/Landing";
 
 jest.mock("../../src/utils/links.js", () => ({
 	links: [

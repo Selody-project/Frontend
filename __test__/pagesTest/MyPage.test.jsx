@@ -1,8 +1,10 @@
 import React from "react";
-import { render } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
+
+import { render } from "@testing-library/react";
 import configureStore from "redux-mock-store";
+
 import MyPage from "../../src/pages/MyPage/MyPage";
 
 const mockStore = configureStore([]);

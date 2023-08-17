@@ -1,7 +1,8 @@
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
-import { server } from "../__mocks__/msw/server.js";
+
 import { createSchedule } from "../../src/features/schedule/schedule-service.js";
+import { server } from "../__mocks__/msw/server.js";
 
 const mockStore = configureMockStore([thunk]);
 
@@ -54,9 +55,7 @@ describe("schedule slice", () => {
 			message: "Successfully create user schedule",
 		});
 
-		const fetchResponse = await store
-			.dispatch(createSchedule(mockPayload.schedule))
-			.unwrap();
+		await store.dispatch(createSchedule(mockPayload.schedule)).unwrap();
 
 		const actions = store.getActions();
 		expect(actions[0].type).toEqual("schedule/createSchedule/pending");
@@ -85,9 +84,7 @@ describe("schedule slice", () => {
 		expect(createResponse).toEqual({
 			message: "Successfully create user schedule",
 		});
-		const fetchResponse = await store
-			.dispatch(createSchedule(mockPayload.schedule))
-			.unwrap();
+		await store.dispatch(createSchedule(mockPayload.schedule)).unwrap();
 
 		const actions = store.getActions();
 		expect(actions[0].type).toEqual("schedule/createSchedule/pending");
