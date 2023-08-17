@@ -3,6 +3,8 @@ module.exports = {
 	transform: {
 		"^.+\\.jsx?$": "babel-jest",
 		"^.+\\.svg$": "jest-transformer-svg",
+		".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$":
+			"jest-transform-stub",
 	},
 	transformIgnorePatterns: [
 		"/node_modules/(?!@emotion/react|@emotion/styled|@react-oauth/google|react-icons|react-modal|react-toastify|styled-components)",
