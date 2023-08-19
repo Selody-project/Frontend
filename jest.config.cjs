@@ -3,7 +3,7 @@ module.exports = {
 	transform: {
 		"^.+\\.jsx?$": "babel-jest",
 		"^.+\\.svg$": "jest-transformer-svg",
-		".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$":
+		".+\\.(css|styl|less|sass|scss|png|jpg|jpeg|ttf|woff|woff2)$":
 			"jest-transform-stub",
 	},
 	transformIgnorePatterns: [
