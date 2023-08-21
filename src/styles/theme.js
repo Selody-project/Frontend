@@ -33,6 +33,7 @@ const lightTheme = {
 		},
 		weight: {
 			regular: "400",
+			semibold: "600",
 			bold: "700",
 			extrabold: "800",
 			black: "900",
