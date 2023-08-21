@@ -1,21 +1,25 @@
 import React from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import { GroupHeaderNav, GroupHeaderUl } from "./GroupHeader.styles";
 
 const GroupHeader = () => {
-	const location = useLocation();
-	const isPersonal = location.pathname === "/";
 	return (
 		<GroupHeaderNav>
 			<GroupHeaderUl>
 				<li>
-					<NavLink to="/" className={`${isPersonal ? "activated" : ""}`}>
+					<NavLink
+						to="/"
+						className={({ isActive }) => (isActive ? "activated" : "")}
+					>
 						개인 일정
 					</NavLink>
 				</li>
 				<li>
-					<NavLink to="/share" className={`${!isPersonal ? "activated" : ""}`}>
+					<NavLink
+						to="/share"
+						className={({ isActive }) => (isActive ? "activated" : "")}
+					>
 						그룹 일정
 					</NavLink>
 				</li>
