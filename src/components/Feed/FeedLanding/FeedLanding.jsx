@@ -12,10 +12,8 @@ import {
 	CircleAddDiv,
 	CircleDiv,
 	FeedDiv,
-	TabDiv,
-	TabButton,
+	Button,
 } from "./FeedLanding.styles";
-// import GroupFeed from "../GroupFeed/GroupFeed";
 import GroupFeed from "../GroupFeed/GroupFeed";
 import GroupSearch from "../GroupSearch/GroupSearch";
 
@@ -31,39 +29,43 @@ const FeedLanding = () => {
 						<CircleAddDiv>
 							<Icon />
 						</CircleAddDiv>
-						<h3>그룹 추가</h3>
+						<h4>그룹 추가</h4>
 					</ItemDiv>
 					<ItemDiv>
 						<CircleDiv>
 							<img src={SampleImg} alt="sampleimg" />
 						</CircleDiv>
-						<h3>디자인 스터디</h3>
+						<h4>디자인 스터디</h4>
 					</ItemDiv>
 					<ItemDiv>
 						<CircleDiv>
 							<img src={SampleImg2} alt="sampleimg2" />
 						</CircleDiv>
-						<h3>음악 동아리</h3>
+						<h4>음악 동아리</h4>
 					</ItemDiv>
 				</ListDiv>
 			</GroupDiv>
 			<FeedDiv>
-				<TabDiv>
-					<TabButton
-						type="button"
-						onClick={() => setTab("feed")}
-						disabled={tab === "feed"}
-					>
-						내 그룹 피드
-					</TabButton>
-					<TabButton
-						type="button"
-						onClick={() => setTab("group")}
-						disabled={tab === "group"}
-					>
-						그룹 검색
-					</TabButton>
-				</TabDiv>
+				<ul>
+					<li>
+						<Button
+							type="button"
+							onClick={() => setTab("feed")}
+							disabled={tab === "feed"}
+						>
+							내 그룹 피드
+						</Button>
+					</li>
+					<li>
+						<Button
+							type="button"
+							onClick={() => setTab("group")}
+							disabled={tab === "group"}
+						>
+							그룹 검색
+						</Button>
+					</li>
+				</ul>
 				{tab === "feed" ? <GroupFeed /> : <GroupSearch />}
 			</FeedDiv>
 		</ContainerDiv>

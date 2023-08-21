@@ -23,18 +23,14 @@ export const ListDiv = styled.div`
 	display: flex;
 	flex-direction: row;
 	margin-top: 30px;
+	gap: 34px;
 `;
 
 export const ItemDiv = styled.div`
 	display: flex;
 	flex-direction: column;
-	margin-left: 34px;
 
-	&:first-of-type {
-		margin-left: 0;
-	}
-
-	& > h3 {
+	& > h4 {
 		color: #2f2f2f;
 		font-family: Inter;
 		font-size: 12px;
@@ -69,13 +65,14 @@ export const CircleAddDiv = styled(CircleDiv)`
 
 export const FeedDiv = styled.div`
 	margin-top: 50px;
+
+	& > ul {
+		display: flex;
+		gap: 24px;
+	}
 `;
 
-export const TabDiv = styled.div`
-	display: flex;
-`;
-
-export const TabButton = styled.button`
+export const Button = styled.button`
 	border: none;
 	outline: none;
 	background-color: transparent;
@@ -83,10 +80,6 @@ export const TabButton = styled.button`
 	font-family: Inter;
 	font-size: 18px;
 	font-weight: 600;
-	margin: 0 0 52px 24px;
+	cursor: pointer;
 	padding: 0;
-
-	&:first-of-type {
-		margin-left: 0;
-	}
 `;

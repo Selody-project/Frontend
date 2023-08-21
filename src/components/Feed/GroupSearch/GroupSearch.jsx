@@ -2,15 +2,13 @@ import React from "react";
 
 import SampleImg from "@/assets/img/feed/img-group-sample-01.jpeg";
 
-import { ContainerDiv, GroupDiv, ProfileDiv } from "./GroupSearch.styles";
+import { ContainerDiv, GroupDiv } from "./GroupSearch.styles";
 
 const GroupSearch = () => {
 	return (
 		<ContainerDiv>
 			<GroupDiv>
-				<ProfileDiv>
-					<img src={SampleImg} alt="sampleimg" />
-				</ProfileDiv>
+				<img src={SampleImg} alt="sampleimg" />
 				<h3>CodeCrafters</h3>
 				<p>
 					당신의 개발 열정을 키우고

@@ -1,18 +1,19 @@
 import styled from "styled-components";
 
-export const ContainerDiv = styled.div``;
+export const ContainerDiv = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	margin-top: 52px;
+`;
 
 export const FeedDiv = styled.div`
 	display: flex;
 	border-radius: 10px;
 	border: 1px solid #c9ccd7;
-	width: 1276px;
+	width: 100%;
 	height: 100%;
-	margin-top: 14px;
-
-	&:first-of-type {
-		margin-top: 0;
-	}
+	padding: 24px 0 0 18px;
 `;
 
 export const ProfileDiv = styled.div`
@@ -20,7 +21,6 @@ export const ProfileDiv = styled.div`
 	height: 58px;
 	border-radius: 50%;
 	background-color: #eff0f4;
-	margin: 24px 0 0 18px;
 `;
 
 export const TextDiv = styled.div`
@@ -33,7 +33,7 @@ export const TextDiv = styled.div`
 		font-family: Inter;
 		font-size: 14px;
 		font-weight: 500;
-		margin: 34px 0 0;
+		margin: 10px 0 0;
 
 		> span {
 			margin-left: 4px;
