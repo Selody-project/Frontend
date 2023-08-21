@@ -9,6 +9,7 @@ export const ContainerDiv = styled.div`
 export const GroupDiv = styled.div`
 	display: flex;
 	flex-direction: column;
+	margin-top: 30px;
 
 	& > h3 {
 		color: #000;
@@ -21,7 +22,7 @@ export const GroupDiv = styled.div`
 export const ListDiv = styled.div`
 	display: flex;
 	flex-direction: row;
-	margin-top: 12px;
+	margin-top: 30px;
 `;
 
 export const ItemDiv = styled.div`
@@ -67,7 +68,7 @@ export const CircleAddDiv = styled(CircleDiv)`
 `;
 
 export const FeedDiv = styled.div`
-	margin-top: 20px;
+	margin-top: 50px;
 `;
 
 export const TabDiv = styled.div`
@@ -82,7 +83,7 @@ export const TabButton = styled.button`
 	font-family: Inter;
 	font-size: 18px;
 	font-weight: 600;
-	margin: 18px 0 52px 24px;
+	margin: 0 0 52px 24px;
 	padding: 0;
 
 	&:first-of-type {
