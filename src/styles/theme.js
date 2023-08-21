@@ -12,6 +12,7 @@ const lightTheme = {
 		bg_01: "#FCFDFF",
 		bg_02: "#F5F6F7",
 		bg_03: "#F4F6FC",
+		text_01: "#121127",
 		error: "#BA1A1A",
 	},
 	spacing: {
