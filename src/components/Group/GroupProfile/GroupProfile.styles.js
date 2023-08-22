@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const ContainerDiv = styled.div`
-	max-width: 380px;
+	min-width: 380px;
+	max-height: 546px;
 	border-radius: 10px;
 	border: 1px solid #c9ccd7;
 	background-color: #fff;
@@ -22,7 +23,6 @@ export const TopDiv = styled.div`
 	}
 
 	& > h3 {
-		color: #000;
 		font-family: Inter;
 		font-size: 24px;
 		font-weight: 600;
@@ -69,14 +69,12 @@ export const MiddleInnerDiv = styled.div`
 	}
 
 	& > h3 {
-		color: #000;
 		font-family: Inter;
 		font-size: 22px;
 		font-weight: 600;
 	}
 
 	& > h4 {
-		color: #000;
 		font-family: Inter;
 		font-size: 16px;
 		font-weight: 500;
