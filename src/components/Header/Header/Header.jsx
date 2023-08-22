@@ -28,6 +28,7 @@ const Header = () => {
 	const dropdownRef = useRef();
 
 	const isSchedule = path === "/" || path === "/share";
+	const isFeed = path === "/community" || path === "mypage";
 
 	const { openedModal } = useSelector((state) => state.ui);
 
@@ -71,7 +72,7 @@ const Header = () => {
 						<SubHeader tab="schedule" />
 					</li>
 					<li>
-						<TabButton isActive={!isSchedule} type="button">
+						<TabButton isActive={isFeed} type="button">
 							FEED IN SELODY
 						</TabButton>
 						<SubHeader tab="feed" />
