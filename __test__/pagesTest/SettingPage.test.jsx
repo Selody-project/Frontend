@@ -5,11 +5,11 @@ import { MemoryRouter } from "react-router-dom";
 import { render } from "@testing-library/react";
 import configureStore from "redux-mock-store";
 
-import MyPage from "../../src/pages/MyPage/MyPage";
+import SettingPage from "../../src/pages/SettingPage/SettingPage";
 
 const mockStore = configureStore([]);
 
-describe("MyPage Component", () => {
+describe("SettingPage Component", () => {
 	let store;
 
 	beforeEach(() => {
@@ -28,7 +28,7 @@ describe("MyPage Component", () => {
 		render(
 			<Provider store={store}>
 				<MemoryRouter>
-					<MyPage />
+					<SettingPage />
 				</MemoryRouter>
 			</Provider>,
 		);
@@ -38,7 +38,7 @@ describe("MyPage Component", () => {
 		const { getByText } = render(
 			<Provider store={store}>
 				<MemoryRouter>
-					<MyPage />
+					<SettingPage />
 				</MemoryRouter>
 			</Provider>,
 		);

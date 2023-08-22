@@ -6,7 +6,7 @@ import { Typography, Button, TextField, Box, Grid, Alert } from "@mui/material";
 
 import { updateUserPassword } from "@/features/user/user-service";
 
-import { UserInfoContainer } from "./MyPageDetail.styles";
+import { UserInfoContainer } from "./SettingPageDetail.styles";
 
 const PasswordUpdate = () => {
 	const navigate = useNavigate();

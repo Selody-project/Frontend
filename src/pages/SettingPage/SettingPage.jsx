@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, Tab, Tabs, Container } from "@mui/material";
 
 import Header from "../../components/Header/Header/Header";
-import PasswordUpdate from "../../components/MyPage/PasswordUpdate";
-import ProfileSettings from "../../components/MyPage/ProfileSettings";
-import SharedSettings from "../../components/MyPage/SharedSettings";
+import PasswordUpdate from "../../components/Setting/PasswordUpdate";
+import ProfileSettings from "../../components/Setting/ProfileSettings";
+import SharedSettings from "../../components/Setting/SharedSettings";
 import { getCurrentUser } from "../../features/user/user-service";
 
-const MyPage = () => {
+const SettingPage = () => {
 	const [selectedTab, setSelectedTab] = useState(0);
 	const { user } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
@@ -50,4 +50,4 @@ const MyPage = () => {
 	);
 };
 
-export default MyPage;
+export default SettingPage;

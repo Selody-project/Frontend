@@ -7,8 +7,6 @@ import styled from "styled-components";
 import CalendarContainer from "@/components/Common/CalendarContainer";
 
 // import { closeModal, openModal } from "@/features/ui/ui-slice.js";
-
-import GroupHeader from "../components/Header/GroupHeader/GroupHeader";
 import Header from "../components/Header/Header/Header";
 import PersonalTodoList from "../components/PersonalTodoList/PersonalTodoList/PersonalTodoList";
 
@@ -32,7 +30,6 @@ const PersonalSchedulePage = () => {
 	return (
 		<>
 			<Header />
-			<GroupHeader />
 			{/* {isModalOpen && (
 				<BaseModal bg="#000">
 					<div className="create-group">

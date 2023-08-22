@@ -100,7 +100,7 @@ export const googleLogin = createAsyncThunk(
 
 export const logout = createAsyncThunk(
 	"user/logout",
-	async ({ navigate }, thunkAPI) => {
+	async (navigate, thunkAPI) => {
 		try {
 			const response = await customFetch.delete("/api/auth/logout");
 

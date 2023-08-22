@@ -6,7 +6,7 @@ import { Button, TextField, Box, Typography, Grid } from "@mui/material";
 
 import { updateUserProfile } from "@/features/user/user-service";
 
-import { UserInfoContainer } from "./MyPageDetail.styles";
+import { UserInfoContainer } from "./SettingPageDetail.styles";
 
 const ProfileSettings = () => {
 	const navigate = useNavigate();

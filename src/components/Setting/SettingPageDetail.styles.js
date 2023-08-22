@@ -56,10 +56,11 @@ export const InfoWrapper = styled.div`
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		
-		& > svg {
-			margin-left: 0.5rem;
-			cursor: pointer;
+	}
+
+	& > svg {
+		margin-left: 0.5rem;
+		cursor: pointer;
 	}
 `;
 

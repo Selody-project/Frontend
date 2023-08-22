@@ -11,7 +11,7 @@ import {
 	SignUpPage,
 	PersonalSchedulePage,
 	GroupSchedulePage,
-	MyPage,
+	SettingPage,
 	FeedPage,
 } from "@/pages";
 
@@ -28,7 +28,7 @@ const router = createBrowserRouter([
 			{ index: true, element: <PersonalSchedulePage /> },
 			{ path: "share", element: <GroupSchedulePage /> },
 			{ path: "community", element: <FeedPage /> },
-			{ path: "mypage", element: <MyPage /> },
+			{ path: "setting", element: <SettingPage /> },
 		],
 	},
 	{ path: "/landing", element: <LandingPage /> },

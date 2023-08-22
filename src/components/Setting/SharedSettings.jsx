@@ -33,7 +33,7 @@ import {
 	HostButton,
 	MemberButton,
 	DelegateButton,
-} from "./MyPageDetail.styles";
+} from "./SettingPageDetail.styles";
 
 const SharedSettings = () => {
 	const dispatch = useDispatch();
