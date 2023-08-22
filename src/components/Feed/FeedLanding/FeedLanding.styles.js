@@ -12,7 +12,6 @@ export const GroupDiv = styled.div`
 	margin-top: 30px;
 
 	& > h3 {
-		color: #000;
 		font-family: Inter;
 		font-size: 18px;
 		font-weight: 600;

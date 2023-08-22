@@ -14,8 +14,8 @@ import {
 	FeedDiv,
 	Button,
 } from "./FeedLanding.styles";
-import GroupFeed from "../GroupFeed/GroupFeed";
 import GroupSearch from "../GroupSearch/GroupSearch";
+import GroupFeed from "../MyGroupFeed/MyGroupFeed";
 
 const FeedLanding = () => {
 	const [tab, setTab] = useState("feed");

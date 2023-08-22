@@ -17,15 +17,16 @@ export const FeedDiv = styled.div`
 `;
 
 export const ProfileDiv = styled.div`
-	width: 58px;
+	min-width: 58px;
 	height: 58px;
 	border-radius: 50%;
 	background-color: #eff0f4;
 `;
 
-export const TextDiv = styled.div`
+export const InfoDiv = styled.div`
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
 	margin-left: 14px;
 
 	& > h3 {

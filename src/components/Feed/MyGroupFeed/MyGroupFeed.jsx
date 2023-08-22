@@ -2,14 +2,19 @@ import React from "react";
 
 import Crown from "@/assets/icon/ic-crown.svg";
 
-import { ContainerDiv, FeedDiv, ProfileDiv, TextDiv } from "./GroupFeed.styles";
+import {
+	ContainerDiv,
+	FeedDiv,
+	ProfileDiv,
+	InfoDiv,
+} from "./MyGroupFeed.styles";
 
-const GroupFeed = () => {
+const MyGroupFeed = () => {
 	return (
 		<ContainerDiv>
 			<FeedDiv>
 				<ProfileDiv />
-				<TextDiv>
+				<InfoDiv>
 					<h3>
 						그룹리더
 						<span>
@@ -22,11 +27,11 @@ const GroupFeed = () => {
 						서로 도움을 주고 받으며 즐거운 시간을 보냈어. 성장하는 모습을 느낄
 						수 있어 뿌듯해
 					</p>
-				</TextDiv>
+				</InfoDiv>
 			</FeedDiv>
 			<FeedDiv>
 				<ProfileDiv />
-				<TextDiv>
+				<InfoDiv>
 					<h3>
 						그룹리더
 						<span>
@@ -39,10 +44,10 @@ const GroupFeed = () => {
 						서로 도움을 주고 받으며 즐거운 시간을 보냈어. 성장하는 모습을 느낄
 						수 있어 뿌듯해
 					</p>
-				</TextDiv>
+				</InfoDiv>
 			</FeedDiv>
 		</ContainerDiv>
 	);
 };
 
-export default GroupFeed;
+export default MyGroupFeed;
