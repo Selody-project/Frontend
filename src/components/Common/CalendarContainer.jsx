@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
+import scheduleType from "@/constants/scheduleType";
 import {
 	currentMonthFn,
 	currentYearFn,
@@ -81,7 +82,7 @@ const CalendarContainer = ({ type }) => {
 
 	const menuHandler = () => {
 		dispatch(setEdit(true));
-		dispatch(openModal({ type: "PERSONAL_SCHEDULE" }));
+		dispatch(openModal({ type: scheduleType.personal }));
 		// console.log(schedule[0].id);
 		dispatch(setId(schedule.id));
 	};
@@ -159,7 +160,7 @@ const CalendarContainer = ({ type }) => {
 				width: "100%",
 			}}
 		>
-			{type === "SHARE" && (
+			{type === scheduleType.shared && (
 				<InviteUser
 					selectedGroup={selectedGroup}
 					setSelectedGroup={setSelectedGroup}
@@ -179,7 +180,7 @@ const CalendarContainer = ({ type }) => {
 				currentYear={currentYear}
 				currentMonth={currentMonth}
 				handleDateChange={handleDateChange}
-				menuHandler={type === "PERSONAL" && menuHandler}
+				menuHandler={type === scheduleType.personal && menuHandler}
 			/>
 		</div>
 	);
