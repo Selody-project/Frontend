@@ -7,7 +7,7 @@ import { screen } from "@testing-library/react";
 
 import { render } from "../../jest.setup.js";
 import "@testing-library/jest-dom";
-import PersonalSchedulePage from "../../src/pages/PersonalSchedulePage";
+import PersonalSchedulePage from "../../src/pages/PersonalSchedulePage/PersonalSchedulePage";
 
 jest.mock("@fullcalendar/react", () => () => (
 	<div data-testid="mock-fullcalendar" />
