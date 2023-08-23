@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 
 import CalendarContainer from "@/components/Common/CalendarContainer";
-import scheduleType from "@/constants/scheduleType";
+import SCHEDULE_TYPE from "@/constants/calendar/scheduleType";
 
 // import { closeModal, openModal } from "@/features/ui/ui-slice.js";
 import PersonalTodoList from "../components/PersonalTodoList/PersonalTodoList/PersonalTodoList";
@@ -35,7 +35,7 @@ const PersonalSchedulePage = () => {
 				</BaseModal>
 			)} */}
 			<MainContainer>
-				<CalendarContainer type={scheduleType.personal} />
+				<CalendarContainer type={SCHEDULE_TYPE.personal} />
 				<PersonalTodoList />
 			</MainContainer>
 		</>
