@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 
 import CalendarContainer from "@/components/Common/CalendarContainer";
-import scheduleType from "@/constants/scheduleType";
+import scheduleType from "@/constants/calendar/scheduleType";
 
 import Header from "../components/Header/Header/Header";
 import PersonalTodoList from "../components/PersonalTodoList/PersonalTodoList/PersonalTodoList";
