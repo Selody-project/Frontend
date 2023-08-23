@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 
 import styled from "styled-components";
 
+import SCHEDULE_TYPE from "@/constants/calendar/scheduleType.js";
 import { getGroupList } from "@/features/group/group-service.js";
 
 import CalendarContainer from "../components/Common/CalendarContainer.jsx";
@@ -24,7 +25,7 @@ const GroupSchedulePage = () => {
 
 	return (
 		<MainContainer>
-			<CalendarContainer type="SHARE" />
+			<CalendarContainer type={SCHEDULE_TYPE.SHARED} />
 			<ShareTodoList />
 		</MainContainer>
 	);
