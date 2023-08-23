@@ -4,7 +4,7 @@ import GroupSchedulePage from "./GroupSchedulePage";
 import LandingPage from "./LandingPage";
 import LoginPage from "./LoginPage/LoginPage";
 import MyPage from "./MyPage/MyPage";
-import PersonalSchedulePage from "./PersonalSchedulePage";
+import PersonalSchedulePage from "./PersonalSchedulePage/PersonalSchedulePage";
 import Root from "./Root";
 import SignUpPage from "./SignUpPage/SignUpPage";
 
