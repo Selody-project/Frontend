@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import scheduleType from "@/constants/scheduleType";
+import CALENDAR_COLORS from "@/constants/calendar/calendarColors";
+import SCHEDULE_TYPE from "@/constants/calendar/scheduleType";
 import { setEdit } from "@/features/auth/auth-slice";
 import {
 	currentMonthFn,
@@ -15,28 +16,6 @@ import CustomCalendar from "./CustomCalendar/CustomCalendar";
 import InviteUser from "../SharePage/InviteUser";
 
 const CalendarContainer = ({ type }) => {
-	const colors = [
-		"#f44336",
-		"#e91e63",
-		"#9c27b0",
-		"#673ab7",
-		"#3f51b5",
-		"#2196f3",
-		"#03a9f4",
-		"#00bcd4",
-		"#009688",
-		"#4caf50",
-		"#8bc34a",
-		"#cddc39",
-		"#ffeb3b",
-		"#ffc107",
-		"#ff9800",
-		"#ff5722",
-		"#795548",
-		"#607d8b",
-		"#022f40",
-		"#6b0504",
-	];
 	const currentWeekStart = new Date();
 	const dispatch = useDispatch();
 	const calendarRef = useRef(null);
@@ -57,7 +36,7 @@ const CalendarContainer = ({ type }) => {
 		color:
 			event.colors !== ""
 				? event.colors
-				: colors[events.indexOf(event) % colors.length],
+				: CALENDAR_COLORS[events.indexOf(event) % CALENDAR_COLORS.length],
 	}));
 
 	const updateCurrentMonth = () => {
@@ -82,7 +61,7 @@ const CalendarContainer = ({ type }) => {
 
 	const menuHandler = () => {
 		dispatch(setEdit(true));
-		dispatch(openModal({ type: scheduleType.personal }));
+		dispatch(openModal({ type: SCHEDULE_TYPE.PERSONAL }));
 		// console.log(schedule[0].id);
 		dispatch(setId(schedule.id));
 	};
@@ -160,7 +139,7 @@ const CalendarContainer = ({ type }) => {
 				width: "100%",
 			}}
 		>
-			{type === scheduleType.shared && (
+			{type === SCHEDULE_TYPE.SHARED && (
 				<InviteUser
 					selectedGroup={selectedGroup}
 					setSelectedGroup={setSelectedGroup}
@@ -180,7 +159,7 @@ const CalendarContainer = ({ type }) => {
 				currentYear={currentYear}
 				currentMonth={currentMonth}
 				handleDateChange={handleDateChange}
-				menuHandler={type === scheduleType.personal && menuHandler}
+				menuHandler={type === SCHEDULE_TYPE.PERSONAL && menuHandler}
 			/>
 		</div>
 	);
