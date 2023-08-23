@@ -23,7 +23,7 @@ const GroupSchedulePage = () => {
 
 	return (
 		<MainContainer>
-			<CalendarContainer type="SHARE" />
+			<CalendarContainer type={SCHEDULE_TYPE.SHARED} />
 			<ShareTodoList />
 		</MainContainer>
 	);
