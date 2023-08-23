@@ -1,7 +1,5 @@
 import React from "react";
 
-// import { useDispatch, useSelector } from "react-redux";
-// import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import CalendarContainer from "@/components/Common/CalendarContainer";
@@ -17,15 +15,6 @@ const MainContainer = styled.main`
 `;
 
 const PersonalSchedulePage = () => {
-	// const dispatch = useDispatch();
-	// const navigate = useNavigate();
-
-	// const createGroupHandler = () => {
-	// 	dispatch(closeModal());
-	// 	navigate("/share");
-	// 	dispatch(openModal({ type: "SHARE_PAGE_CREATE" }));
-	// };
-
 	return (
 		<>
 			{/* {isModalOpen && (
