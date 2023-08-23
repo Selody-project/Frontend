@@ -15,7 +15,7 @@ import {
 	Button,
 } from "./FeedLanding.styles";
 import GroupSearch from "../GroupSearch/GroupSearch";
-import GroupFeed from "../MyGroupFeed/MyGroupFeed";
+import MyGroupFeed from "../MyGroupFeed/MyGroupFeed";
 
 const FeedLanding = () => {
 	const [tab, setTab] = useState("feed");
@@ -66,7 +66,7 @@ const FeedLanding = () => {
 						</Button>
 					</li>
 				</ul>
-				{tab === "feed" ? <GroupFeed /> : <GroupSearch />}
+				{tab === "feed" ? <MyGroupFeed /> : <GroupSearch />}
 			</FeedDiv>
 		</ContainerDiv>
 	);
