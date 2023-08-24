@@ -37,7 +37,6 @@ export const CustomCalendarDiv = styled.div`
 			}
 		}
 	}
-
 	/* .calendar {
 		width: 100%;
 		margin: 0 auto;
