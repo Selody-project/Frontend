@@ -18,9 +18,25 @@ export const Wrapper = styled.div`
 			margin: 0;
 			display: flex;
 			flex-direction: column;
+			align-items: start;
+			gap: 14px;
 			width: 100%;
-			/* & > .fc-toolbar-chunk {
-			} */
+			margin-bottom: 50px;
+		}
+		.fc-button-group {
+			display: flex;
+			gap: 20px;
+			& > .fc-button {
+				all: unset;
+				&:focus {
+					all: unset;
+				}
+				cursor: pointer;
+				color: #9ca0ab; // disabled text
+				&.fc-button-active {
+					color: #121127; // text
+				}
+			}
 		}
 		/* .fc-daygrid-day {
 			border-color: black;
