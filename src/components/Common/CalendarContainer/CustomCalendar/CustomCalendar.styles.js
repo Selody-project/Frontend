@@ -17,11 +17,13 @@ export const CustomCalendarDiv = styled.div`
 			flex-direction: column;
 			align-items: start;
 			width: 100%;
-			margin-bottom: 93px;
+			margin-bottom: 92px;
 		}
 		.fc-button-group {
 			display: flex;
 			gap: 20px;
+			font-size: 17px;
+			line-height: 21px;
 			& > .fc-button {
 				all: unset;
 				&:focus {
