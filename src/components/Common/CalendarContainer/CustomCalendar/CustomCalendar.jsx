@@ -51,6 +51,10 @@ const CustomCalendar = forwardRef(
 						center: "dayGridMonth,dayGridWeek",
 						end: "title",
 					}}
+					buttonText={{
+						month: "월별",
+						week: "리스트",
+					}}
 					selectable={true}
 					allDaySlot={false}
 					locale="ko"
