@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
-export const ContainerDiv = styled.div`
-	display: ${({ isOpen }) => (isOpen ? "block" : "none")};
-`;
+export const ContainerDiv = styled.div``;
 
 export const MenuWrapDiv = styled.div`
 	position: absolute;
@@ -17,6 +15,7 @@ export const MenuUl = styled.ul`
 	top: 15px;
 	width: 100%;
 	height: calc(100% - 15px);
+	color: ${({ theme }) => theme.colors.text_01};
 
 	& > li {
 		height: 50%;
@@ -26,12 +25,11 @@ export const MenuUl = styled.ul`
 		border: 0;
 		margin: 0 12px;
 		height: 1px;
-		background-color: rgba(0, 0, 0, 0.3);
+		background-color: ${({ theme }) => theme.colors.disabled_text};
 	}
 `;
 
 export const ItemButton = styled.button`
-	all: unset;
 	width: 100%;
 	height: 100%;
 	display: flex;
@@ -44,14 +42,4 @@ export const ItemButton = styled.button`
 	font-weight: 400;
 	line-height: 150%;
 	letter-spacing: 0.28px;
-`;
-
-export const BackdropDiv = styled.div`
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100vw;
-	height: 100vh;
-	z-index: 10;
-	background: rgba(0, 0, 0, 0.4);
 `;

@@ -5,14 +5,14 @@ export const GroupNameInput = styled.input`
 	width: 590px;
 	padding: 12px 0;
 	outline: none;
-	border-bottom: 1px solid black;
+	border-bottom: 1px solid ${({ theme: { colors } }) => colors.text_01};
 	color: ${({ theme: { colors } }) => colors.text_03};
 	font-family: Inter;
-	font-size: 18px;
+	font-size: 16px;
 	font-weight: 500;
 
 	&::placeholder {
-		color: ${({ theme: { colors } }) => colors.disabled_01};
+		color: ${({ theme: { colors } }) => colors.disabled_text};
 	}
 `;
 
@@ -21,7 +21,7 @@ export const GroupIntroduceTextarea = styled.textarea`
 	padding: 8px;
 	outline: none;
 	border: 0;
-	background-color: ${({ theme: { colors } }) => colors.bg_03};
+	background-color: ${({ theme: { colors } }) => colors.bg_01};
 	height: 134px;
 	resize: none;
 	color: ${({ theme: { colors } }) => colors.text_03};
@@ -30,7 +30,7 @@ export const GroupIntroduceTextarea = styled.textarea`
 	font-weight: 500;
 
 	&::placeholder {
-		color: ${({ theme: { colors } }) => colors.modal_disabled_text};
+		color: ${({ theme: { colors } }) => colors.disabled_text};
 	}
 `;
 
@@ -41,12 +41,11 @@ export const ButtonWrapDiv = styled.div`
 `;
 
 export const GroupCreateButton = styled.button`
-	all: unset;
 	cursor: pointer;
 	padding: 12px 40px;
 	border-radius: 5px;
 	background-color: ${({ theme: { colors } }) => colors.primary};
-	color: white;
+	color: ${({ theme: { colors } }) => colors.white};
 	font-family: Inter;
 	font-size: 14px;
 	font-weight: 600;
@@ -54,7 +53,6 @@ export const GroupCreateButton = styled.button`
 
 	&:disabled {
 		cursor: not-allowed;
-		background-color: ${({ theme: { colors } }) =>
-			colors.modal_disabled_button};
+		background-color: ${({ theme: { colors } }) => colors.btn_02};
 	}
 `;

@@ -1,13 +1,11 @@
 import styled from "styled-components";
 
-export const ContainerDiv = styled.div`
-	display: ${({ isOpen }) => (isOpen ? "block" : "none")};
-`;
+export const ContainerDiv = styled.div``;
 
 export const MenuWrapDiv = styled.div`
 	position: absolute;
 	top: calc(100% + 90px);
-	left: 20px;
+	left: 36px;
 	z-index: 99;
 `;
 
@@ -31,7 +29,7 @@ export const HeaderDiv = styled.div`
 	background-color: white;
 	width: 224px;
 	padding: 8px 12px;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+	border-bottom: 1px solid black;
 
 	& > h3 {
 		font-family: Inter;
@@ -44,14 +42,4 @@ export const HeaderDiv = styled.div`
 
 export const BodyDiv = styled.div`
 	margin-top: 68px;
-`;
-
-export const BackdropDiv = styled.div`
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100vw;
-	height: 100vh;
-	z-index: 10;
-	background: rgba(0, 0, 0, 0.4);
 `;

@@ -3,7 +3,6 @@ import React, { forwardRef } from "react";
 import DropdownBubble from "@/assets/icon/ic-notification-dropdown.svg";
 
 import {
-	BackdropDiv,
 	ContainerDiv,
 	DropdownWrapDiv,
 	MenuWrapDiv,
@@ -12,7 +11,7 @@ import {
 } from "./NotificationDropdown.style";
 import NotificationItem from "../NotificationItem/NotificationItem";
 
-const NotificationDropdown = forwardRef(({ isOpen }, dropdownRef) => {
+const NotificationDropdown = forwardRef((_, dropdownRef) => {
 	const mockItems = [
 		{
 			id: 1,
@@ -53,8 +52,7 @@ const NotificationDropdown = forwardRef(({ isOpen }, dropdownRef) => {
 	];
 
 	return (
-		<ContainerDiv isOpen={isOpen}>
-			<BackdropDiv />
+		<ContainerDiv>
 			<MenuWrapDiv ref={dropdownRef}>
 				<DropdownBubble />
 				<DropdownWrapDiv>

@@ -21,7 +21,7 @@ export const BackdropWrapper = styled.div`
 	left: 0;
 	width: 100vw;
 	height: 100vh;
-	z-index: 10;
+	z-index: 100;
 	background: rgba(0, 0, 0, 0.4);
 `;
 
@@ -35,10 +35,10 @@ export const ModalHeaderDiv = styled.div`
 	position: relative;
 	width: 100%;
 	margin-bottom: 24px;
+	color: ${({ theme }) => theme.colors.text_01};
 `;
 
 export const IconButton = styled.button`
-	all: unset;
 	cursor: pointer;
 	position: absolute;
 	top: 0;

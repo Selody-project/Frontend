@@ -6,7 +6,6 @@ import styled from "styled-components";
 import { getGroupList } from "@/features/group/group-service.js";
 
 import CalendarContainer from "../components/Common/CalendarContainer.jsx";
-import Header from "../components/Header/Header/Header";
 import ShareTodoList from "../components/SharePage/ShareTodoList/ShareTodoList";
 
 const MainContainer = styled.main`
@@ -24,13 +23,10 @@ const GroupSchedulePage = () => {
 	}, []);
 
 	return (
-		<>
-			<Header />
-			<MainContainer>
-				<CalendarContainer type="SHARE" />
-				<ShareTodoList />
-			</MainContainer>
-		</>
+		<MainContainer>
+			<CalendarContainer type="SHARE" />
+			<ShareTodoList />
+		</MainContainer>
 	);
 };
 

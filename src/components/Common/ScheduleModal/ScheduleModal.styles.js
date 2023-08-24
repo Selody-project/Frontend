@@ -87,7 +87,6 @@ export const FooterDiv = styled.div`
 `;
 
 export const SubmitButton = styled.button`
-	all: unset;
 	cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
 	background-color: ${(props) =>
 		props.disabled ? "#C9CEDA" : props.theme.colors.primary};

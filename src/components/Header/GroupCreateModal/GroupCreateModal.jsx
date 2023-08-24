@@ -26,7 +26,7 @@ const GroupCreateModal = () => {
 				// onChange={(e) => setIntroduction(e.target.value)}
 			/>
 			<ButtonWrapDiv>
-				<GroupCreateButton disabled={name === ""} onClick={handleClick}>
+				<GroupCreateButton disabled={name.trim() === ""} onClick={handleClick}>
 					생성하기
 				</GroupCreateButton>
 			</ButtonWrapDiv>

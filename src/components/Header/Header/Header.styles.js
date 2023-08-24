@@ -3,14 +3,20 @@ import styled from "styled-components";
 import { SubHeaderDiv } from "../SubHeader/SubHeader.style";
 
 export const ContainerHeader = styled.header`
+	position: sticky;
+	top: 0px;
+	z-index: 90;
+	background-color: white;
+	padding-top: 60px;
+`;
+
+export const WrapDiv = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	font-weight: 600;
-	margin-top: 60px;
 	padding: 28px 32px;
 	border-radius: 100px;
-	background: white;
 	box-shadow: 0px 5px 50px 4px rgba(0, 0, 0, 0.1);
 `;
 
@@ -32,6 +38,7 @@ export const LogoDiv = styled.div`
 	}
 
 	& > h1 {
+		color: ${({ theme }) => theme.colors.text_01};
 		font-family: Montserrat;
 		font-size: 30px;
 		font-weight: 700;
@@ -46,7 +53,6 @@ export const TabUl = styled.ul`
 	margin-left: 48px;
 	display: flex;
 	align-items: center;
-	color: ${({ theme }) => theme.colors.text_02};
 	gap: 48px;
 	font-size: 16px;
 	font-family: Poppins;
@@ -54,20 +60,23 @@ export const TabUl = styled.ul`
 	line-height: 180%;
 	position: relative;
 
+	& > li {
+		height: 48px;
+	}
+
 	& > li:hover ${SubHeaderDiv} {
 		display: block;
 	}
 `;
 
 export const TabButton = styled.button`
-	all: unset;
 	cursor: pointer;
 	color: ${({ isActive, theme: { colors } }) =>
 		isActive ? colors.primary : colors.text_02};
 	font-weight: ${({ isActive }) => (isActive ? "600" : "500")};
 	border-bottom: ${({ isActive, theme: { colors } }) =>
 		isActive ? `2px solid ${colors.primary}` : 0};
-	padding: ${({ isActive }) => (isActive ? "10px 0 8px" : "8px 0")};
+	padding: 10px 8px 8px;
 
 	&:hover {
 		color: ${({ theme }) => theme.colors.primary};

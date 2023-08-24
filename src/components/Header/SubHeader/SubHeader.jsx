@@ -10,7 +10,7 @@ const SubHeader = ({ tab }) => {
 
 	const [isNotiTabOpen, setIsNotiTabOpen] = useState(false);
 
-	const getListItems = () =>
+	const listItems =
 		tab === "schedule"
 			? [
 					{ path: "/", title: "개인일정" },
@@ -43,11 +43,10 @@ const SubHeader = ({ tab }) => {
 
 	return (
 		<>
-			<SubHeaderDiv>
+			<SubHeaderDiv isNotiTabOpen={isNotiTabOpen}>
 				<SubTabUl>
-					{getListItems().map(({ path, title }, idx) => (
-						// eslint-disable-next-line react/no-array-index-key
-						<li key={idx}>
+					{listItems.map(({ path, title }) => (
+						<li key={title}>
 							{path === null ? (
 								<NotificationButton
 									ref={buttonRef}
@@ -67,7 +66,7 @@ const SubHeader = ({ tab }) => {
 					))}
 				</SubTabUl>
 			</SubHeaderDiv>
-			<NotificationDropdown ref={dropdownRef} isOpen={isNotiTabOpen} />
+			{isNotiTabOpen && <NotificationDropdown ref={dropdownRef} />}
 		</>
 	);
 };

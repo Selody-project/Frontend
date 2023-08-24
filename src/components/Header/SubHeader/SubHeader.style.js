@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const SubHeaderDiv = styled.div`
-	display: none;
+	display: ${({ isNotiTabOpen }) => (isNotiTabOpen ? "block" : "none")};
 	position: absolute;
 	top: 100%;
 	z-index: 2;
@@ -14,7 +14,7 @@ export const SubHeaderDiv = styled.div`
 export const SubTabUl = styled.ul`
 	display: flex;
 	align-items: center;
-	color: ${({ theme }) => theme.colors.text_02};
+	color: ${({ theme }) => theme.colors.text_01};
 	font-family: Inter;
 	font-size: 16px;
 	font-weight: 500;
@@ -34,6 +34,5 @@ export const SubTabUl = styled.ul`
 `;
 
 export const NotificationButton = styled.button`
-	all: unset;
 	cursor: pointer;
 `;

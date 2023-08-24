@@ -6,20 +6,18 @@ import DropdownBubble from "@/assets/icon/ic-profile-dropdown.svg";
 import { logout } from "@/features/user/user-service";
 
 import {
-	BackdropDiv,
 	ContainerDiv,
 	ItemButton,
 	MenuUl,
 	MenuWrapDiv,
 } from "./ProfileDropdown.style";
 
-const ProfileDropdown = forwardRef(({ isOpen }, dropdownRef) => {
+const ProfileDropdown = forwardRef((_, dropdownRef) => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
 	return (
-		<ContainerDiv isOpen={isOpen}>
-			<BackdropDiv />
+		<ContainerDiv>
 			<MenuWrapDiv ref={dropdownRef}>
 				<DropdownBubble />
 				<MenuUl>

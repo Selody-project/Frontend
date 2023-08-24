@@ -2,6 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
 
+import Header from "@/components/Header/Header/Header";
+
 const Root = () => {
 	const { userLoading, user } = useSelector((state) => state.user);
 
@@ -13,9 +15,10 @@ const Root = () => {
 	}
 
 	return (
-		<div>
+		<>
+			<Header />
 			<Outlet />
-		</div>
+		</>
 	);
 };
 
