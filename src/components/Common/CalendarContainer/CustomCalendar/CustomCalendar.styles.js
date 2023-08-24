@@ -16,9 +16,8 @@ export const CustomCalendarDiv = styled.div`
 			display: flex;
 			flex-direction: column;
 			align-items: start;
-			gap: 14px;
 			width: 100%;
-			margin-bottom: 50px;
+			margin-bottom: 93px;
 		}
 		.fc-button-group {
 			display: flex;
@@ -36,6 +35,7 @@ export const CustomCalendarDiv = styled.div`
 			}
 		}
 	}
+
 	/* .calendar {
 		width: 100%;
 		margin: 0 auto;
@@ -104,18 +104,24 @@ export const CustomCalendarDiv = styled.div`
 		.fc-daygrid-day {
 			border-color: black;
 		} */
+`;
 
-	.date-selector {
-		position: absolute;
-		top: 0px;
-		left: 0px;
-		z-index: 5;
-	}
-
-	.date-dropdown {
-		padding: 0.7rem 1rem;
-		background-color: white;
-		border: 1px solid black;
-		border-radius: 14px;
+export const TitleSelect = styled.select`
+	position: absolute;
+	top: 35px;
+	left: 0;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	border: none;
+	font-size: 23px;
+	font-family: Inter;
+	padding-right: 12px;
+	background-image: url("data:image/svg+xml,%3Csvg width='12' height='6' viewBox='0 0 14 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L7 7L13 1' stroke='%23121127' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
+	background-size: 12px 6px;
+	background-position: right;
+	background-repeat: no-repeat;
+	&:focus {
+		outline: none;
 	}
 `;
