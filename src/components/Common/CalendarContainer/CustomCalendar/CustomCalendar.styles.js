@@ -1,19 +1,16 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
+export const CustomCalendarDiv = styled.div`
 	position: relative;
 	display: flex;
-	width: 100%;
 	justify-content: center;
 	align-items: flex-start;
 	flex-direction: column;
 	margin: 0;
-
-	.calendar {
+	width: 100%;
+	.fc.fc-media-screen.fc-direction-ltr.fc-theme-standard {
 		width: 100%;
-		margin: 0 auto;
 		margin-bottom: 2rem;
-		// 툴바 레이아웃
 		.fc-header-toolbar.fc-toolbar {
 			margin: 0;
 			display: flex;
@@ -38,7 +35,13 @@ export const Wrapper = styled.div`
 				}
 			}
 		}
-		/* .fc-daygrid-day {
+	}
+	/* .calendar {
+		width: 100%;
+		margin: 0 auto;
+		margin-bottom: 2rem; */
+	// 툴바 레이아웃
+	/* .fc-daygrid-day {
 			border-color: black;
 		}
 		.fc-header-toolbar {
@@ -101,7 +104,6 @@ export const Wrapper = styled.div`
 		.fc-daygrid-day {
 			border-color: black;
 		} */
-	}
 
 	.date-selector {
 		position: absolute;
