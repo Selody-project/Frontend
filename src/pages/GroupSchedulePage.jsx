@@ -7,7 +7,7 @@ import CreateGroupModal from "@/components/SharePage/CreateGroupModal.jsx";
 import SCHEDULE_TYPE from "@/constants/calendar/scheduleType.js";
 import { getGroupList } from "@/features/group/group-service.js";
 
-import CalendarContainer from "../components/Common/CalendarContainer.jsx";
+import CalendarContainer from "../components/Common/CalendarContainer/CalendarContainer";
 import GroupHeader from "../components/Header/GroupHeader/GroupHeader";
 import Header from "../components/Header/Header/Header";
 import ShareTodoList from "../components/SharePage/ShareTodoList/ShareTodoList";
@@ -31,7 +31,7 @@ const GroupSchedulePage = () => {
 	return (
 		<>
 			<Header />
-			<GroupHeader />
+			<GroupHeader />치
 			<MainContainer>
 				<CalendarContainer type={SCHEDULE_TYPE.SHARED} />
 				<ShareTodoList />

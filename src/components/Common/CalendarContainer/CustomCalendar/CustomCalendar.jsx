@@ -11,16 +11,16 @@ const CustomCalendar = forwardRef(
 	(
 		{
 			fullCalendarEvents,
-			currentYear,
-			currentMonth,
-			handleDateChange,
+			// currentYear,
+			// currentMonth,
+			// handleDateChange,
 			menuHandler = null,
 		},
 		calendarRef,
 	) => (
 		<Wrapper data-testid="calendar-container">
 			<div className="calendar">
-				<div className="date-selector">
+				{/* <div className="date-selector">
 					<select
 						className="date-dropdown"
 						value={`${currentYear}-${currentMonth}`}
@@ -40,16 +40,16 @@ const CustomCalendar = forwardRef(
 							)),
 						)}
 					</select>
-				</div>
+				</div> */}
 				<FullCalendar
 					ref={calendarRef}
 					plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
 					initialView="dayGridMonth"
 					events={fullCalendarEvents}
 					headerToolbar={{
-						left: dayGridPlugin ? "        prev,next" : "",
-						center: "title",
-						right: "dayGridMonth,timeGridWeek",
+						start: "",
+						center: "dayGridMonth,dayGridWeek",
+						end: "title",
 					}}
 					selectable={true}
 					allDaySlot={false}
