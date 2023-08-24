@@ -6,7 +6,7 @@ import styled from "styled-components";
 import SCHEDULE_TYPE from "@/constants/calendar/scheduleType.js";
 import { getGroupList } from "@/features/group/group-service.js";
 
-import CalendarContainer from "../components/Common/CalendarContainer.jsx";
+import CalendarContainer from "../components/Common/CalendarContainer/CalendarContainer";
 import ShareTodoList from "../components/SharePage/ShareTodoList/ShareTodoList";
 
 const MainContainer = styled.main`
