@@ -7,7 +7,7 @@ import { screen } from "@testing-library/react";
 
 import { render } from "../../jest.setup.js";
 import "@testing-library/jest-dom";
-import PersonalSchedulePage from "../../src/pages/PersonalSchedulePage/PersonalSchedulePage";
+import PersonalSchedulePage from "../../src/pages/PersonalSchedulePage/PersonalSchedulePage.jsx";
 
 jest.mock("@fullcalendar/react", () => () => (
 	<div data-testid="mock-fullcalendar" />
@@ -17,7 +17,7 @@ jest.mock("@fullcalendar/daygrid", () => ({}));
 jest.mock("@fullcalendar/interaction", () => ({}));
 
 jest.mock(
-	"../../src/components/Common/CustomCalendar/CustomCalendar.jsx",
+	"../../src/components/Common/CalendarContainer/CustomCalendar/CustomCalendar.jsx",
 	() => {
 		const { forwardRef } = jest.requireActual("react");
 		return {

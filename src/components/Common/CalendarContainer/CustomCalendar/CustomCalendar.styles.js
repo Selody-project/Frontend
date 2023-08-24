@@ -13,8 +13,16 @@ export const Wrapper = styled.div`
 		width: 100%;
 		margin: 0 auto;
 		margin-bottom: 2rem;
-
-		.fc-daygrid-day {
+		// 툴바 레이아웃
+		.fc-header-toolbar.fc-toolbar {
+			margin: 0;
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			/* & > .fc-toolbar-chunk {
+			} */
+		}
+		/* .fc-daygrid-day {
 			border-color: black;
 		}
 		.fc-header-toolbar {
@@ -76,7 +84,7 @@ export const Wrapper = styled.div`
 
 		.fc-daygrid-day {
 			border-color: black;
-		}
+		} */
 	}
 
 	.date-selector {

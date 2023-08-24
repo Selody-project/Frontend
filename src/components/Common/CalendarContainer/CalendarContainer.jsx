@@ -12,8 +12,9 @@ import { openModal } from "@/features/ui/ui-slice";
 import { setEdit } from "@/features/user/user-slice";
 import { getRandomColor } from "@/utils/color";
 
+import { CalendarContainerDiv } from "./CalendarContainer.styles";
 import CustomCalendar from "./CustomCalendar/CustomCalendar";
-import InviteUser from "../SharePage/InviteUser";
+import InviteUser from "../../SharePage/InviteUser";
 
 const CalendarContainer = ({ type }) => {
 	const currentWeekStart = new Date();
@@ -130,15 +131,7 @@ const CalendarContainer = ({ type }) => {
 	}, [schedule, recSchedules]);
 
 	return (
-		<div
-			style={{
-				display: "flex",
-				flexDirection: "column",
-				alignItems: "end",
-				marginRight: "2rem",
-				width: "100%",
-			}}
-		>
+		<CalendarContainerDiv>
 			{type === SCHEDULE_TYPE.SHARED && (
 				<InviteUser
 					selectedGroup={selectedGroup}
@@ -161,7 +154,7 @@ const CalendarContainer = ({ type }) => {
 				handleDateChange={handleDateChange}
 				menuHandler={type === SCHEDULE_TYPE.PERSONAL && menuHandler}
 			/>
-		</div>
+		</CalendarContainerDiv>
 	);
 };
 
