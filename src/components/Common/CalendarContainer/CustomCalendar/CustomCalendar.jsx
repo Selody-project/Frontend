@@ -5,41 +5,36 @@ import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 
-import { CustomCalendarDiv } from "./CustomCalendar.styles";
+import { CustomCalendarDiv, TitleSelect } from "./CustomCalendar.styles";
 
 const CustomCalendar = forwardRef(
 	(
 		{
 			fullCalendarEvents,
-			// currentYear,
-			// currentMonth,
-			// handleDateChange,
+			currentYear,
+			currentMonth,
+			handleDateChange,
 			menuHandler = null,
 		},
 		calendarRef,
 	) => (
 		<CustomCalendarDiv data-testid="calendar-container">
-			{/* <div className="date-selector">
-					<select
-						className="date-dropdown"
-						value={`${currentYear}-${currentMonth}`}
-						onChange={(e) => {
-							const [year, month] = e.target.value.split("-");
-							handleDateChange(year, parseInt(month, 10) - 1);
-						}}
-					>
-						{Array.from(
-							{ length: 5 },
-							(_, i) => new Date().getFullYear() + i,
-						).map((year) =>
-							Array.from({ length: 12 }, (_, j) => j + 1).map((month) => (
-								<option key={`${year}-${month}`} value={`${year}-${month}`}>
-									{year}년 {month}월
-								</option>
-							)),
-						)}
-					</select>
-				</div> */}
+			<TitleSelect
+				value={`${currentYear}-${currentMonth}`}
+				onChange={(e) => {
+					const [year, month] = e.target.value.split("-");
+					handleDateChange(year, parseInt(month, 10) - 1);
+				}}
+			>
+				{Array.from({ length: 5 }, (_, i) => new Date().getFullYear() + i).map(
+					(year) =>
+						Array.from({ length: 12 }, (_, j) => j + 1).map((month) => (
+							<option key={`${year}-${month}`} value={`${year}-${month}`}>
+								{year}년 {month}월
+							</option>
+						)),
+				)}
+			</TitleSelect>
 			<FullCalendar
 				ref={calendarRef}
 				plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -48,7 +43,7 @@ const CustomCalendar = forwardRef(
 				headerToolbar={{
 					start: "",
 					center: "dayGridMonth,dayGridWeek",
-					end: "title",
+					end: "",
 				}}
 				buttonText={{
 					month: "월별",
