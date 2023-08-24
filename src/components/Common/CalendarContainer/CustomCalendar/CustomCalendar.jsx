@@ -5,7 +5,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 
-import { Wrapper } from "./CustomCalendar.styles";
+import { CustomCalendarDiv } from "./CustomCalendar.styles";
 
 const CustomCalendar = forwardRef(
 	(
@@ -18,9 +18,8 @@ const CustomCalendar = forwardRef(
 		},
 		calendarRef,
 	) => (
-		<Wrapper data-testid="calendar-container">
-			<div className="calendar">
-				{/* <div className="date-selector">
+		<CustomCalendarDiv data-testid="calendar-container">
+			{/* <div className="date-selector">
 					<select
 						className="date-dropdown"
 						value={`${currentYear}-${currentMonth}`}
@@ -41,30 +40,30 @@ const CustomCalendar = forwardRef(
 						)}
 					</select>
 				</div> */}
-				<FullCalendar
-					ref={calendarRef}
-					plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-					initialView="dayGridMonth"
-					events={fullCalendarEvents}
-					headerToolbar={{
-						start: "",
-						center: "dayGridMonth,dayGridWeek",
-						end: "title",
-					}}
-					buttonText={{
-						month: "월별",
-						week: "리스트",
-					}}
-					selectable={true}
-					allDaySlot={false}
-					locale="ko"
-					dayCellContent={(renderInfo) =>
-						renderInfo.dayNumberText.replace("일", "")
-					}
-					eventClick={menuHandler}
-				/>
-			</div>
-		</Wrapper>
+			<FullCalendar
+				ref={calendarRef}
+				plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+				initialView="dayGridMonth"
+				events={fullCalendarEvents}
+				headerToolbar={{
+					start: "",
+					center: "dayGridMonth,dayGridWeek",
+					end: "title",
+				}}
+				buttonText={{
+					month: "월별",
+					week: "리스트",
+				}}
+				selectable={true}
+				allDaySlot={false}
+				locale="ko"
+				dayCellContent={(renderInfo) =>
+					renderInfo.dayNumberText.replace("일", "")
+				}
+				height={750}
+				eventClick={menuHandler}
+			/>
+		</CustomCalendarDiv>
 	),
 );
 
