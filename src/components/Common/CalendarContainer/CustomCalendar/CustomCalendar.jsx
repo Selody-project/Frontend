@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useState } from "react";
 
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -7,59 +7,105 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 
 import { CustomCalendarDiv, TitleSelect } from "./CustomCalendar.styles";
 
+const VIEW_TYPE = {
+	DAY_GRID_WEEK: "dayGridWeek",
+	DAY_GRID_MONTH: "dayGridMonth",
+};
+
+// 월이 포함한 주차 갯수 계산하기
+const countWeek = (year, month) => {
+	const firstOfMonth = new Date(year, month - 1, 1);
+	const lastOfMonth = new Date(year, month, 0);
+
+	const used = firstOfMonth.getDay() + lastOfMonth.getDate();
+
+	return Math.ceil(used / 7);
+};
+
+const getSelectValue = (currentView, currentYear, currentMonth, currentWeek) =>
+	currentView === VIEW_TYPE.DAY_GRID_MONTH
+		? `${currentYear}-${currentMonth}`
+		: `${currentYear}-${currentMonth}-${currentWeek}`;
+
 const CustomCalendar = forwardRef(
 	(
 		{
 			fullCalendarEvents,
 			currentYear,
 			currentMonth,
+			currentWeek,
 			handleDateChange,
 			menuHandler = null,
 		},
 		calendarRef,
-	) => (
-		<CustomCalendarDiv data-testid="calendar-container">
-			<TitleSelect
-				value={`${currentYear}-${currentMonth}`}
-				onChange={(e) => {
-					const [year, month] = e.target.value.split("-");
-					handleDateChange(year, parseInt(month, 10) - 1);
-				}}
-			>
-				{Array.from({ length: 5 }, (_, i) => new Date().getFullYear() + i).map(
-					(year) =>
-						Array.from({ length: 12 }, (_, j) => j + 1).map((month) => (
-							<option key={`${year}-${month}`} value={`${year}-${month}`}>
-								{year}년 {month}월
-							</option>
-						)),
-				)}
-			</TitleSelect>
-			<FullCalendar
-				ref={calendarRef}
-				plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-				initialView="dayGridMonth"
-				events={fullCalendarEvents}
-				headerToolbar={{
-					start: "",
-					center: "dayGridMonth,dayGridWeek",
-					end: "",
-				}}
-				buttonText={{
-					month: "월별",
-					week: "리스트",
-				}}
-				selectable={true}
-				allDaySlot={false}
-				locale="ko"
-				dayCellContent={(renderInfo) =>
-					renderInfo.dayNumberText.replace("일", "")
-				}
-				height={750}
-				eventClick={menuHandler}
-			/>
-		</CustomCalendarDiv>
-	),
+	) => {
+		const [currentView, setCurrentView] = useState(VIEW_TYPE.DAY_GRID_MONTH);
+		return (
+			<CustomCalendarDiv data-testid="calendar-container">
+				<TitleSelect
+					value={getSelectValue(
+						currentView,
+						currentYear,
+						currentMonth,
+						currentWeek,
+					)}
+					onChange={(e) => {
+						const [year, month, week] = e.target.value.split("-");
+						handleDateChange(year, month, week);
+					}}
+				>
+					{Array.from(
+						{ length: 3 },
+						(_, i) => new Date().getFullYear() + i,
+					).map((year) =>
+						Array.from({ length: 12 }, (_, j) => j + 1).map((month) =>
+							currentView === VIEW_TYPE.DAY_GRID_MONTH ? (
+								<option key={`${year}-${month}`} value={`${year}-${month}`}>
+									{year}년 {month}월
+								</option>
+							) : (
+								Array.from(
+									{ length: countWeek(year, month) },
+									(_, k) => k + 1,
+								).map((week) => (
+									<option
+										key={`${year}-${month}-${week}`}
+										value={`${year}-${month}-${week}`}
+									>
+										{year}년 {month}월 {week}주차
+									</option>
+								))
+							),
+						),
+					)}
+				</TitleSelect>
+				<FullCalendar
+					ref={calendarRef}
+					plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+					initialView="dayGridMonth"
+					events={fullCalendarEvents}
+					headerToolbar={{
+						start: "",
+						center: "dayGridMonth,dayGridWeek",
+						end: "",
+					}}
+					buttonText={{
+						month: "월별",
+						week: "리스트",
+					}}
+					selectable={true}
+					allDaySlot={false}
+					locale="ko"
+					dayCellContent={(renderInfo) =>
+						renderInfo.dayNumberText.replace("일", "")
+					}
+					height={750}
+					eventClick={menuHandler}
+					datesSet={({ view: { type } }) => setCurrentView(type)}
+				/>
+			</CustomCalendarDiv>
+		);
+	},
 );
 
 export default CustomCalendar;
