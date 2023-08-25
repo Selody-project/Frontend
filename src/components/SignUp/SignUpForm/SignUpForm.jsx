@@ -8,6 +8,7 @@ import {
 	DuplicateCheckButton,
 	Input,
 	InputContainerDiv,
+	InputInnerDiv,
 	SignUpButton,
 	StyledSignUpForm,
 } from "./SignUpForm.style";
@@ -96,70 +97,78 @@ const SignUpForm = () => {
 
 	return (
 		<StyledSignUpForm onSubmit={handleSubmit}>
-			<label htmlFor="email">아이디 (이메일)</label>
 			<InputContainerDiv>
-				<Input
-					data-testid="email-input"
-					type="email"
-					id="email"
-					name="email"
-					value={email}
-					onChange={handleFormValue}
-					placeholder="이메일을 입력해주세요."
-				/>
-				<DuplicateCheckButton
-					data-testid="email-duplicate-check-button"
-					type="button"
-					disabled={email === ""}
-					isActive={email !== ""}
-					onClick={() => checkDuplication("email")}
-				>
-					중복확인
-				</DuplicateCheckButton>
+				<label htmlFor="email">아이디 (이메일)</label>
+				<InputInnerDiv>
+					<Input
+						data-testid="email-input"
+						type="email"
+						id="email"
+						name="email"
+						value={email}
+						onChange={handleFormValue}
+						placeholder="이메일을 입력해주세요."
+					/>
+					<DuplicateCheckButton
+						data-testid="email-duplicate-check-button"
+						type="button"
+						disabled={email === ""}
+						isActive={email !== ""}
+						onClick={() => checkDuplication("email")}
+					>
+						중복확인
+					</DuplicateCheckButton>
+				</InputInnerDiv>
 			</InputContainerDiv>
-			<label htmlFor="nickname">어떤 이름을 사용하시겠어요?</label>
 			<InputContainerDiv>
-				<Input
-					data-testid="nickname-input"
-					id="nickname"
-					name="nickname"
-					value={nickname}
-					onChange={handleFormValue}
-					placeholder="닉네임을 설정해주세요."
-				/>
-				<DuplicateCheckButton
-					data-testid="nickname-duplicate-check-button"
-					type="button"
-					disabled={nickname === ""}
-					isActive={nickname !== ""}
-					onClick={() => checkDuplication("nickname")}
-				>
-					중복확인
-				</DuplicateCheckButton>
+				<label htmlFor="nickname">어떤 이름을 사용하시겠어요?</label>
+				<InputInnerDiv>
+					<Input
+						data-testid="nickname-input"
+						id="nickname"
+						name="nickname"
+						value={nickname}
+						onChange={handleFormValue}
+						placeholder="닉네임을 설정해주세요."
+					/>
+					<DuplicateCheckButton
+						data-testid="nickname-duplicate-check-button"
+						type="button"
+						disabled={nickname === ""}
+						isActive={nickname !== ""}
+						onClick={() => checkDuplication("nickname")}
+					>
+						중복확인
+					</DuplicateCheckButton>
+				</InputInnerDiv>
 			</InputContainerDiv>
-			<label htmlFor="password">비밀번호</label>
 			<InputContainerDiv>
-				<Input
-					data-testid="password-input"
-					type="password"
-					id="password"
-					name="password"
-					value={password}
-					onChange={handleFormValue}
-					placeholder="비밀번호를 설정해주세요."
-				/>
+				<label htmlFor="password">비밀번호</label>
+				<InputInnerDiv>
+					<Input
+						data-testid="password-input"
+						type="password"
+						id="password"
+						name="password"
+						value={password}
+						onChange={handleFormValue}
+						placeholder="비밀번호를 설정해주세요."
+					/>
+				</InputInnerDiv>
 			</InputContainerDiv>
-			<label htmlFor="passwordCheck">비밀번호 확인</label>
 			<InputContainerDiv>
-				<Input
-					data-testid="password-check-input"
-					type="password"
-					id="passwordCheck"
-					name="passwordCheck"
-					value={passwordCheck}
-					onChange={handleFormValue}
-					placeholder="비밀번호를 다시 입력해주세요."
-				/>
+				<label htmlFor="passwordCheck">비밀번호 확인</label>
+				<InputInnerDiv>
+					<Input
+						data-testid="password-check-input"
+						type="password"
+						id="passwordCheck"
+						name="passwordCheck"
+						value={passwordCheck}
+						onChange={handleFormValue}
+						placeholder="비밀번호를 다시 입력해주세요."
+					/>
+				</InputInnerDiv>
 			</InputContainerDiv>
 			<SignUpButton
 				type="submit"

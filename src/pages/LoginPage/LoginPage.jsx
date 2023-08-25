@@ -22,6 +22,8 @@ import {
 	EmailSaveLabel,
 	FindPasswordDiv,
 	SocialLoginBtnContainerDiv,
+	LoginAssistanceDiv,
+	InputContainerDiv,
 } from "./LoginPage.styles";
 
 function LoginPage() {
@@ -97,28 +99,32 @@ function LoginPage() {
 			<RightSideDiv>
 				<LoginForm onSubmit={handleSubmit}>
 					<h1>LOGIN.</h1>
-					<Input
-						data-testid="email-input"
-						type="text"
-						name="email"
-						placeholder="이메일을 입력해주세요."
-						onChange={handleFormValue}
-					/>
-					<Input
-						data-testid="password-input"
-						type="password"
-						name="password"
-						placeholder="비밀번호를 입력해주세요."
-						onChange={handleFormValue}
-					/>
-					<EmailSaveLabel>
-						<input type="checkbox" id="hidden-checkbox" />
-						<div id="shown-checkbox" />
-						<span>이메일 저장</span>
-					</EmailSaveLabel>
-					<FindPasswordDiv>
-						<span>비밀번호를 잊으셨나요?</span>
-					</FindPasswordDiv>
+					<InputContainerDiv>
+						<Input
+							data-testid="email-input"
+							type="text"
+							name="email"
+							placeholder="이메일을 입력해주세요."
+							onChange={handleFormValue}
+						/>
+						<Input
+							data-testid="password-input"
+							type="password"
+							name="password"
+							placeholder="비밀번호를 입력해주세요."
+							onChange={handleFormValue}
+						/>
+					</InputContainerDiv>
+					<LoginAssistanceDiv>
+						<EmailSaveLabel>
+							<input type="checkbox" id="hidden-checkbox" />
+							<div id="shown-checkbox" />
+							<span>이메일 저장</span>
+						</EmailSaveLabel>
+						<FindPasswordDiv>
+							<span>비밀번호를 잊으셨나요?</span>
+						</FindPasswordDiv>
+					</LoginAssistanceDiv>
 					<LoginButton type="submit">로그인</LoginButton>
 					<SignUpButton type="button" onClick={() => navigate("/signup")}>
 						회원가입

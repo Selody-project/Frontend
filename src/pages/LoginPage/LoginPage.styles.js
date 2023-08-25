@@ -12,7 +12,7 @@ export const ContainerDiv = styled.div`
 
 export const LeftSideDiv = styled.div`
 	flex: 1;
-	margin-bottom: 60px;
+	margin-bottom: 120px;
 
 	& > img {
 		width: 196px;
@@ -24,8 +24,9 @@ export const LeftSideDiv = styled.div`
 		padding: 0;
 		font-family: "Montserrat";
 		font-size: 50px;
-		font-weight: 700;
-		color: #000000;
+		font-weight: ${({ theme }) => theme.typography.weight.bold};
+		color: ${({ theme: { colors } }) => colors.text_01};
+		line-height: normal;
 		filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 
 		& > span {
@@ -37,9 +38,10 @@ export const LeftSideDiv = styled.div`
 		font-family: "Spoqa Han Sans Neo";
 		font-style: normal;
 		font-size: 28px;
-		font-weight: 500;
-		line-height: 34px;
-		color: #000000;
+		font-weight: ${({ theme }) => theme.typography.weight.semibold};
+		line-height: normal;
+
+		color: ${({ theme: { colors } }) => colors.text_01};
 		filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 	}
 `;
@@ -61,30 +63,47 @@ export const LoginForm = styled.form`
 	& > h1 {
 		font-family: "Montserrat";
 		font-style: normal;
-		font-weight: 800;
+		font-weight: ${({ theme }) => theme.typography.weight.extrabold};
 		font-size: 36px;
 		line-height: 44px;
-		color: #6c55fe;
+		color: ${({ theme: { colors } }) => colors.primary};
 	}
+`;
+
+export const InputContainerDiv = styled.div`
+	margin-top: 34px;
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
 `;
 
 export const Input = styled.input`
 	padding: 16px;
-	background-color: ${({ theme: { colors } }) => colors.primary_light};
+	background-color: ${({ theme: { colors } }) => colors.bg_01};
 	border: 1px solid transparent;
 	border-radius: 4px;
-	font-size: 14px;
-	font-weight: 700;
-	color: ${({ theme: { colors } }) => colors.primary};
+	font-size: 16px;
+	font-weight: ${({ theme }) => theme.typography.weight.regular};
+	font-family: Inter;
+	line-height: 24px;
+	letter-spacing: 0.5px;
+	color: ${({ theme: { colors } }) => colors.text_01};
 	outline: none;
 
 	&:focus {
 		border-color: ${({ theme: { colors } }) => colors.primary};
+		background-color: ${({ theme: { colors } }) => colors.white};
 	}
 
 	&::placeholder {
-		color: ${({ theme: { colors } }) => colors.disabled_02};
+		color: ${({ theme: { colors } }) => colors.disabled_text};
 	}
+`;
+
+export const LoginAssistanceDiv = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 `;
 
 export const EmailSaveLabel = styled.label`
@@ -98,9 +117,10 @@ export const EmailSaveLabel = styled.label`
 	}
 
 	#shown-checkbox {
-		background-color: ${({ theme: { colors } }) => colors.primary_light};
-		width: 20px;
-		height: 20px;
+		background-color: ${({ theme: { colors } }) => colors.white};
+		width: 15px;
+		height: 15px;
+		border: 1px solid black;
 		border-radius: 4px;
 	}
 
@@ -110,23 +130,25 @@ export const EmailSaveLabel = styled.label`
 	}
 
 	& > span {
-		margin-left: 10px;
-		color: black;
+		margin-left: 8px;
+		font-family: Inter;
 		font-size: 14px;
-		font-weight: 500;
+		font-weight: ${({ theme }) => theme.typography.weight.regular};
+		line-height: normal;
 	}
 `;
 
 export const FindPasswordDiv = styled.div`
 	text-align: right;
+	margin: 10px 0;
 
 	& > span {
-		color: #5c5e67;
+		color: ${({ theme: { colors } }) => colors.text_02};
 		cursor: pointer;
-		padding: 10px 0;
 		font-size: 14px;
-		font-weight: 500;
-		font-family: "Montserrat";
+		font-weight: ${({ theme }) => theme.typography.weight.semibold};
+		font-family: Spoqa Han Sans Neo;
+		line-height: normal;
 		text-decoration: underline;
 	}
 `;
@@ -134,32 +156,25 @@ export const FindPasswordDiv = styled.div`
 export const LoginButton = styled.button`
 	padding: 16px 32px;
 	background-color: ${({ theme: { colors } }) => colors.primary};
-	color: white;
+	color: ${({ theme: { colors } }) => colors.white};
 	border: none;
 	border-radius: 4px;
 	cursor: pointer;
-	font-weight: 700;
+	font-weight: ${({ theme }) => theme.typography.weight.bold};
 	font-size: 16px;
-
-	&:hover {
-		background-color: #5b46e0;
-	}
+	letter-spacing: 0.32px;
 `;
 
 export const SignUpButton = styled(LoginButton)`
-	background-color: white;
+	background-color: ${({ theme: { colors } }) => colors.white};
 	color: ${({ theme: { colors } }) => colors.primary};
 	border: 1.5px solid ${({ theme: { colors } }) => colors.primary};
-
-	&:hover {
-		background-color: #f2f2f2;
-	}
 `;
 
 export const DividerHr = styled.hr`
 	width: 100%;
 	height: 1px;
-	background-color: #d9d9d9;
+	background-color: ${({ theme: { colors } }) => colors.disabled_text};
 	border: none;
 	margin: 18px 0;
 `;
@@ -167,6 +182,7 @@ export const DividerHr = styled.hr`
 export const SocialLoginContainerDiv = styled.div`
 	text-align: center;
 	& > p {
+		color: ${({ theme: { colors } }) => colors.text_02};
 		margin: 10px;
 	}
 	& > div {
@@ -181,17 +197,17 @@ export const SocialLoginContainerDiv = styled.div`
 export const SocialLoginBtnContainerDiv = styled.div`
 	display: flex;
 	flex-direction: column;
+	cursor: pointer;
 
 	& > button {
 		width: 52px;
 		height: 52px;
 		margin-bottom: 8px;
-		cursor: pointer;
 	}
 
 	& > span {
 		font-size: 12px;
-		color: ${({ theme }) => theme.colors.disabled_02};
+		color: ${({ theme }) => theme.colors.disabled_text};
 		opacity: 0.7;
 	}
 `;
