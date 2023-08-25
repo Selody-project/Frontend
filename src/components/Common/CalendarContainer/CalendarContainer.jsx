@@ -16,6 +16,26 @@ import { CalendarContainerDiv } from "./CalendarContainer.styles";
 import CustomCalendar from "./CustomCalendar/CustomCalendar";
 import InviteUser from "../../SharePage/InviteUser";
 
+// 리스트(주마다 보기)로 진행했을 떄 보여줄 첫 일요일을 계산합니다.
+const getFirstDayOfWeek = (year, month, week) => {
+	const firstDateOfWeek = new Date(year, month - 1);
+	const firstSundayOfMonth = firstDateOfWeek.getDay();
+	firstDateOfWeek.setDate(
+		firstDateOfWeek.getDate() - firstSundayOfMonth + 7 * (week - 1),
+	);
+	return firstDateOfWeek.getDate();
+};
+
+// currentWeek 초기화를 위해 현재 몇 주차인지 계산합니다.
+const getCurrentWeek = () => {
+	const today = new Date();
+	const date = today.getDate();
+	const DayOfWeek = today.getDay(); // 0~6;
+	const weekStart = date - DayOfWeek;
+	const currentWeekNum = Math.ceil((weekStart - 1) / 7) + 1;
+	return currentWeekNum;
+};
+
 const CalendarContainer = ({ type }) => {
 	const currentWeekStart = new Date();
 	const dispatch = useDispatch();
@@ -27,6 +47,7 @@ const CalendarContainer = ({ type }) => {
 	const [inviteInput, setInviteInput] = useState("");
 	const [invitationLink, setInvitationLink] = useState("");
 	const [events, setEvents] = useState([]);
+	const [currentWeek, setCurrentWeek] = useState(getCurrentWeek());
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
 	const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
 
@@ -40,17 +61,28 @@ const CalendarContainer = ({ type }) => {
 				: CALENDAR_COLORS[events.indexOf(event) % CALENDAR_COLORS.length],
 	}));
 
-	const updateCurrentMonth = () => {
-		const calendarApi = calendarRef.current.getApi();
-		const calendarDate = calendarApi.getDate();
-		setCurrentMonth(calendarDate.getMonth() + 1);
-		setCurrentYear(calendarDate.getFullYear());
+	const updateDateState = (year, month, week) => {
+		setCurrentMonth(month);
+		setCurrentYear(year);
+		setCurrentWeek(week);
 	};
 
-	const handleDateChange = (year, month) => {
+	const handleDateChange = (year, month, week = null) => {
 		const calendarApi = calendarRef.current.getApi();
-		calendarApi.gotoDate(new Date(year, month));
-		updateCurrentMonth();
+		const weekNum = Number(week);
+		if (!week) {
+			calendarApi.gotoDate(new Date(year, month - 1));
+		} else {
+			const startDay = getFirstDayOfWeek(year, month, week);
+			calendarApi.gotoDate(
+				new Date(
+					year,
+					(startDay > 20 && weekNum === 1 ? month - 1 : month) - 1,
+					startDay,
+				),
+			);
+		}
+		updateDateState(year, month, week);
 	};
 
 	const getColorForEvent = (eventId) => {
@@ -151,6 +183,7 @@ const CalendarContainer = ({ type }) => {
 				fullCalendarEvents={fullCalendarEvents}
 				currentYear={currentYear}
 				currentMonth={currentMonth}
+				currentWeek={currentWeek}
 				handleDateChange={handleDateChange}
 				menuHandler={type === SCHEDULE_TYPE.PERSONAL && menuHandler}
 			/>
