@@ -9,11 +9,14 @@ export const ContainerDiv = styled.div`
 
 export const FeedDiv = styled.div`
 	display: flex;
+	flex-direction: column;
 	border-radius: 10px;
 	border: 1px solid #c9ccd7;
-	width: 100%;
-	height: 100%;
-	padding: 24px 0 0 18px;
+	padding: 24px 18px 30px;
+`;
+
+export const TopDiv = styled.div`
+	display: flex;
 `;
 
 export const ProfileDiv = styled.div`
@@ -33,8 +36,6 @@ export const InfoDiv = styled.div`
 		color: #000;
 		font-family: Inter;
 		font-size: 14px;
-		font-weight: 500;
-		margin: 10px 0 0;
 
 		> span {
 			margin-left: 4px;
@@ -47,12 +48,15 @@ export const InfoDiv = styled.div`
 		font-size: 12px;
 		margin: 5px 0 0 0;
 	}
+`;
 
+export const BottomDiv = styled.div`
+	margin-top: 6px;
 	& > p {
 		color: #2f2f2f;
 		font-family: Inter;
 		font-size: 15px;
 		font-weight: 400;
-		margin: 18px 0 32px 0;
+		margin-left: 72px;
 	}
 `;
