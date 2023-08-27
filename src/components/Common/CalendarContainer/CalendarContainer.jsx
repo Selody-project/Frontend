@@ -64,23 +64,42 @@ const CalendarContainer = ({ type }) => {
 	const updateDateState = (year, month, week) => {
 		setCurrentMonth(month);
 		setCurrentYear(year);
-		setCurrentWeek(week);
+		// 리스트 보기여서 select에서 제공된 주차의 경우
+		if (week) return setCurrentWeek(week);
+		// 월별 보기인데 현재 날짜에 해당하는 년월인 경우
+		if (
+			new Date().getMonth() + 1 === Number(month) &&
+			new Date().getFullYear() === Number(year)
+		) {
+			return setCurrentWeek(getCurrentWeek());
+		}
+		// 그 외 모든 월별 보기의 경우
+		return setCurrentWeek(1);
 	};
 
 	const handleDateChange = (year, month, week = null) => {
 		const calendarApi = calendarRef.current.getApi();
-		const weekNum = Number(week);
-		if (!week) {
-			calendarApi.gotoDate(new Date(year, month - 1));
-		} else {
+		if (week) {
+			// 리스트(주별) 보기인 경우
 			const startDay = getFirstDayOfWeek(year, month, week);
 			calendarApi.gotoDate(
 				new Date(
 					year,
-					(startDay > 20 && weekNum === 1 ? month - 1 : month) - 1,
+					(startDay > 20 && Number(week) === 1 ? month - 1 : month) - 1,
 					startDay,
 				),
 			);
+		} else if (
+			!week &&
+			new Date().getMonth() + 1 === Number(month) &&
+			new Date().getFullYear() === Number(year)
+		) {
+			// 월별 보기인데, 현재 날짜를 포함한 년월인 경우
+			const startDayForToday = getFirstDayOfWeek(year, month, getCurrentWeek());
+			calendarApi.gotoDate(new Date(year, month - 1, startDayForToday));
+		} else {
+			// 월별 보기에서 그 외 년월인 경우
+			calendarApi.gotoDate(new Date(year, month - 1));
 		}
 		updateDateState(year, month, week);
 	};
