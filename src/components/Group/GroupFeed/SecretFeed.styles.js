@@ -6,8 +6,9 @@ export const ContainerDiv = styled.div`
 	width: 100%;
 	justify-content: center;
 	align-items: center;
-	background-color: #fff;
 	margin-right: 76px;
+	border: 1px solid #c9ccd7;
+	border-radius: 10px;
 
 	& > h3 {
 		font-family: Inter;
