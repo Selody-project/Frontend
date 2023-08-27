@@ -51,7 +51,7 @@ const CustomCalendar = forwardRef(
 					)}
 					onChange={(e) => {
 						const [year, month, week] = e.target.value.split("-");
-						handleDateChange(year, month, week);
+						handleDateChange(year, month, week || null);
 					}}
 				>
 					{Array.from(
