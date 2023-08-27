@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
-export const ContainerDiv = styled.div`
-	padding-right: 310px;
-`;
+export const ContainerDiv = styled.div``;
 
 export const TitleDiv = styled.div`
 	display: flex;

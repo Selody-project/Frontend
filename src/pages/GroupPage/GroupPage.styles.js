@@ -7,4 +7,6 @@ export const ContainerDiv = styled.div`
 	height: 100vh;
 `;
 
-export const MiddleDiv = styled.div``;
+export const MiddleDiv = styled.div`
+	max-width: 643px;
+`;
