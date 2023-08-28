@@ -114,7 +114,7 @@ const CustomCalendar = forwardRef(
 					events={fullCalendarEvents}
 					headerToolbar={{
 						start: "",
-						center: "dayGridMonth,dayGridWeek",
+						center: "dayGridMonth,timeGridWeek",
 						end: "",
 					}}
 					buttonText={{
