@@ -77,4 +77,12 @@ export const SignUpButton = styled(Button)`
 	letter-spacing: 0.32px;
 	border: none;
 	border-radius: 5px;
+
+	&:not(:disabled):hover {
+		background-color: #4c2fff;
+	}
+
+	&:not(:disabled):active {
+		background-color: #3515fa;
+	}
 `;

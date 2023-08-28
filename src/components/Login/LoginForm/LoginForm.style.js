@@ -100,10 +100,8 @@ export const FindPasswordDiv = styled.div`
 	}
 `;
 
-export const LoginButton = styled.button`
+export const Button = styled.button`
 	padding: 16px 32px;
-	background-color: ${({ theme: { colors } }) => colors.primary};
-	color: ${({ theme: { colors } }) => colors.white};
 	border: none;
 	border-radius: 4px;
 	cursor: pointer;
@@ -112,7 +110,20 @@ export const LoginButton = styled.button`
 	letter-spacing: 0.32px;
 `;
 
-export const SignUpButton = styled(LoginButton)`
+export const LoginButton = styled(Button)`
+	background-color: ${({ theme: { colors } }) => colors.primary};
+	color: ${({ theme: { colors } }) => colors.white};
+
+	&:hover {
+		background-color: #4c2fff;
+	}
+
+	&:active {
+		background-color: #3515fa;
+	}
+`;
+
+export const SignUpButton = styled(Button)`
 	background-color: ${({ theme: { colors } }) => colors.white};
 	color: ${({ theme: { colors } }) => colors.primary};
 	border: 1.5px solid ${({ theme: { colors } }) => colors.primary};
