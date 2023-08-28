@@ -96,7 +96,10 @@ const CustomCalendar = forwardRef(
 		const dispatch = useDispatch();
 
 		return (
-			<CustomCalendarDiv data-testid="calendar-container">
+			<CustomCalendarDiv
+				data-testid="calendar-container"
+				// isMonthly={currentView === VIEW_TYPE.DAY_GRID_MONTH}
+			>
 				<TitleSelect
 					value={getSelectValue(currentView, year, month, week)}
 					onChange={(e) => {
@@ -117,6 +120,11 @@ const CustomCalendar = forwardRef(
 						center: "dayGridMonth,timeGridWeek",
 						end: "",
 					}}
+					// views={{
+					// 	timeGridWeek: {
+					// 		dayHeaderContent: getDayHeaderContentInTimeGridWeek,
+					// 	},
+					// }}
 					buttonText={{
 						month: "월별",
 						week: "리스트",
