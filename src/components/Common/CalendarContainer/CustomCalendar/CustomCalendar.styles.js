@@ -44,76 +44,61 @@ export const CustomCalendarDiv = styled.div`
 				}
 			}
 		}
-	}
-
-	/* .calendar {
-		width: 100%;
-		margin: 0 auto;
-		margin-bottom: 2rem; */
-	// 툴바 레이아웃
-	/* .fc-daygrid-day {
-			border-color: black;
+		.fc-daygrid-day-header {
+			border: none;
 		}
-		.fc-header-toolbar {
-			margin-left: 5rem;
-		}
-		.fc-header-toolbar .fc-button-group {
-			background-color: rgba(0, 0, 0, 0.1);
-			border-radius: 20px;
-			padding: 5px;
-			overflow: hidden;
-		}
-		.fc-header-toolbar .fc-button {
+		.fc-daygrid-day-header {
 			background-color: transparent;
 			border: none;
-			color: rgba(0, 0, 0, 0.5);
-			margin: 0;
-			border-radius: 15px;
-			box-shadow: none;
 		}
-		.fc-header-toolbar .fc-button.fc-button-active {
-			background-color: white;
-			color: black;
-			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	}
+	// border 초기화
+	.fc-scrollgrid.fc-scrollgrid-liquid,
+	.fc-theme-standard td,
+	.fc-theme-standard th {
+		border: none;
+	}
+	.fc-col-header-cell.fc-day {
+		color: ${({ theme }) => theme.colors.disabled_text};
+		&.fc-day-sun {
+			color: ${({ theme }) => theme.colors.sunday};
 		}
-		.fc-day-sun .fc-col-header-cell-cushion {
-			color: red;
+		&.fc-day-sat {
+			color: ${({ theme }) => theme.colors.saturday};
 		}
-
-		.fc-col-header-cell-cushion {
-			color: black;
-		}
-		.fc-daygrid-day-number {
-			color: #000;
-			padding: 10px;
-		}
-		.fc-day-today {
-			background-color: transparent;
-		}
-		.fc-day-today .fc-daygrid-day-number {
-			position: relative;
-		}
-		.fc-day-today .fc-daygrid-day-number::before {
-			position: absolute;
-			content: "";
-			z-index: -1;
-			top: 3px;
-			right: 3px;
-			background-color: #85a0ff;
+		padding-bottom: ${({ isMonthly }) => (isMonthly ? "33px" : "10px")};
+		font-size: 17px;
+		line-height: 21px;
+		& .dateNum {
+			color: ${({ theme: { colors } }) => colors.text_01};
+			margin-top: 10px;
 			width: 30px;
 			height: 30px;
-			border-radius: 50%;
+			line-height: 30px;
+			&.activated {
+				color: ${({ theme: { colors } }) => colors.white};
+				border-radius: 50%;
+				background-color: ${({ theme: { colors } }) => colors.primary};
+			}
 		}
-
-		.fc-daygrid-day-frame {
-			border-bottom: 1px solid lightgrey;
-			margin-bottom: 5px;
-			padding-bottom: 5px;
+	}
+	// 날짜를 왼쪽 상단에 위치
+	.fc .fc-daygrid-day-top {
+		flex-direction: row;
+		& > a {
+			padding: 9px 0 0 9px;
 		}
-
-		.fc-daygrid-day {
-			border-color: black;
-		} */
+	}
+	// border
+	.fc-day.fc-daygrid-day {
+		border: 1px solid ${({ theme }) => theme.colors.disabled_text};
+	}
+	.fc-theme-standard .fc-timegrid-slots tr > td {
+		border: 1px solid ${({ theme }) => theme.colors.disabled_text};
+	}
+	.fc .fc-scrollgrid-section-body table {
+		border-style: solid;
+	}
 `;
 
 export const TitleSelect = styled.select`

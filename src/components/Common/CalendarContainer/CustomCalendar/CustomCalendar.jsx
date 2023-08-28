@@ -27,6 +27,22 @@ const getSelectValue = (currentView, currentYear, currentMonth, currentWeek) =>
 		? `${currentYear}-${currentMonth}`
 		: `${currentYear}-${currentMonth}-${currentWeek}`;
 
+const getDayHeaderContentInTimeGridWeek = ({ date, text }) => {
+	const week = text.slice(text.length - 2, text.length - 1);
+	return (
+		<div>
+			<div>{week}</div>
+			<div className="dateNum">{date.getDate()}</div>
+		</div>
+	);
+};
+
+// const getTimeFormat = ({ date: { hour } }) => {
+// 	if (hour === 1) return "오전  01";
+// 	if (hour === 13) return "오후  01";
+// 	return `${hour % 12 < 10 ? `0${hour % 12}` : hour % 12}`;
+// };
+
 const CustomCalendar = forwardRef(
 	(
 		{
@@ -41,7 +57,10 @@ const CustomCalendar = forwardRef(
 	) => {
 		const [currentView, setCurrentView] = useState(VIEW_TYPE.DAY_GRID_MONTH);
 		return (
-			<CustomCalendarDiv data-testid="calendar-container">
+			<CustomCalendarDiv
+				data-testid="calendar-container"
+				// isMonthly={currentView === VIEW_TYPE.DAY_GRID_MONTH}
+			>
 				<TitleSelect
 					value={getSelectValue(
 						currentView,
@@ -89,6 +108,11 @@ const CustomCalendar = forwardRef(
 						center: "dayGridMonth,timeGridWeek",
 						end: "",
 					}}
+					views={{
+						timeGridWeek: {
+							dayHeaderContent: getDayHeaderContentInTimeGridWeek,
+						},
+					}}
 					buttonText={{
 						month: "월별",
 						week: "리스트",
@@ -102,6 +126,7 @@ const CustomCalendar = forwardRef(
 					height={750}
 					eventClick={menuHandler}
 					datesSet={({ view: { type } }) => setCurrentView(type)}
+					// slotLabelFormat={getTimeFormat}
 				/>
 			</CustomCalendarDiv>
 		);
