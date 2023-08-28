@@ -8,7 +8,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import { CustomCalendarDiv, TitleSelect } from "./CustomCalendar.styles";
 
 const VIEW_TYPE = {
-	DAY_GRID_WEEK: "dayGridWeek",
+	DAY_GRID_WEEK: "timeGridWeek",
 	DAY_GRID_MONTH: "dayGridMonth",
 };
 
@@ -86,7 +86,7 @@ const CustomCalendar = forwardRef(
 					events={fullCalendarEvents}
 					headerToolbar={{
 						start: "",
-						center: "dayGridMonth,dayGridWeek",
+						center: "dayGridMonth,timeGridWeek",
 						end: "",
 					}}
 					buttonText={{
