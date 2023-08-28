@@ -30,14 +30,14 @@ export const MemberUl = styled.ul`
 		align-items: center;
 		gap: 160px 0;
 
-		& > img {
+		> img {
 			width: 42px;
 			height: 42px;
 			border-radius: 50%;
 			object-fit: cover;
 		}
 
-		& > h4 {
+		> h4 {
 			color: ${({ theme: { colors } }) => colors.text_03};
 			font-family: Inter;
 			font-size: 15px;

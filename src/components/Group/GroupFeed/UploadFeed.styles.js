@@ -10,14 +10,13 @@ export const ContainerDiv = styled.div`
 
 export const TopDiv = styled.div`
 	display: flex;
-`;
 
-export const ProfileDiv = styled.div`
-	min-width: 58px;
-	width: 58px;
-	height: 58px;
-	border-radius: 50%;
-	background-color: #eff0f4;
+	& > img {
+		width: 58px;
+		height: 58px;
+		border-radius: 50%;
+		object-fit: cover;
+	}
 `;
 
 export const UploadTextarea = styled.textarea`
@@ -47,10 +46,7 @@ export const UploadButton = styled.button`
 	border-radius: 5px;
 	background-color: ${({ theme: { colors } }) => colors.btn_02};
 	color: ${({ theme: { colors } }) => colors.white};
-	/* text-align: center; */
 	font-family: Inter;
 	font-size: 14px;
-	/* font-style: normal; */
 	font-weight: 500;
-	/* line-height: normal; */
 `;

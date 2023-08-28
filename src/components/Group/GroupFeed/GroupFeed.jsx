@@ -1,6 +1,7 @@
 import React from "react";
 
 import Crown from "@/assets/icon/ic-crown.svg";
+import SampleImg from "@/assets/img/feed/img-group-sample-01.jpeg";
 
 import {
 	ContainerDiv,
@@ -8,7 +9,6 @@ import {
 	SortDiv,
 	FeedDiv,
 	TopDiv,
-	ProfileDiv,
 	InfoDiv,
 	BottomDiv,
 } from "./GroupFeed.styles";
@@ -27,13 +27,11 @@ const GroupFeed = () => {
 			{/* 추후 Feed Landing에서 컴포넌트 가져와서 변경 */}
 			<FeedDiv>
 				<TopDiv>
-					<ProfileDiv />
+					<img src={SampleImg} alt="sampleimg" />
 					<InfoDiv>
 						<h3>
 							그룹리더
-							<span>
-								<Crown />
-							</span>
+							<Crown />
 						</h3>
 						<h4>15분 전</h4>
 					</InfoDiv>

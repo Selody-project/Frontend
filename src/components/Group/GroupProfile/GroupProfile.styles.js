@@ -4,8 +4,7 @@ export const ContainerDiv = styled.div`
 	min-width: 380px;
 	max-height: 546px;
 	border-radius: 10px;
-	border: 1px solid #c9ccd7;
-	background-color: #fff;
+	border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
 `;
 
 export const TopDiv = styled.div`
@@ -13,7 +12,7 @@ export const TopDiv = styled.div`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	margin: 60px 0;
+	padding: 60px 0;
 
 	& > img {
 		width: 110px;
@@ -41,8 +40,8 @@ export const TopDiv = styled.div`
 `;
 
 export const MiddleDiv = styled.div`
-	border-top: 1px solid #c9ccd7;
-	border-bottom: 1px solid #c9ccd7;
+	border-top: 1px solid ${({ theme: { colors } }) => colors.btn_02};
+	border-bottom: 1px solid ${({ theme: { colors } }) => colors.btn_02};
 	display: flex;
 	padding: 34px 0;
 `;
@@ -59,7 +58,7 @@ export const MiddleInnerDiv = styled.div`
 		content: "";
 		width: 1px;
 		height: 70px;
-		background-color: #c9ccd7;
+		background-color: ${({ theme: { colors } }) => colors.btn_02};
 		position: absolute;
 		right: 0;
 	}
@@ -77,22 +76,20 @@ export const MiddleInnerDiv = styled.div`
 	& > h4 {
 		font-family: Inter;
 		font-size: 16px;
-		font-weight: 500;
 		margin-top: 8px;
 	}
 `;
 
 export const GroupReqButton = styled.button`
-	border: 1px solid #6c55fe;
+	border: 1px solid ${({ theme: { colors } }) => colors.primary};
 	background-color: transparent;
 	padding: 12px 74px;
 	margin: 26px 48px;
-	color: #6c55fe;
+	color: ${({ theme: { colors } }) => colors.primary};
 	font-family: Inter;
 	font-size: 18px;
-	font-weight: 500;
 
-	& > span {
+	& > svg {
 		vertical-align: middle;
 	}
 `;

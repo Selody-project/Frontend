@@ -11,7 +11,6 @@ export const TitleDiv = styled.div`
 	& > h2 {
 		font-family: Inter;
 		font-size: 20px;
-		font-weight: 500;
 	}
 `;
 
@@ -22,7 +21,6 @@ export const SortDiv = styled.div`
 	& > h3 {
 		font-family: Inter;
 		font-size: 14px;
-		font-weight: 500;
 	}
 `;
 
@@ -36,13 +34,13 @@ export const FeedDiv = styled.div`
 
 export const TopDiv = styled.div`
 	display: flex;
-`;
 
-export const ProfileDiv = styled.div`
-	min-width: 58px;
-	height: 58px;
-	border-radius: 50%;
-	background-color: #eff0f4;
+	& > img {
+		width: 58px;
+		height: 58px;
+		border-radius: 50%;
+		object-fit: cover;
+	}
 `;
 
 export const InfoDiv = styled.div`
@@ -56,7 +54,7 @@ export const InfoDiv = styled.div`
 		font-family: Inter;
 		font-size: 14px;
 
-		> span {
+		> svg {
 			margin-left: 4px;
 		}
 	}
@@ -71,6 +69,7 @@ export const InfoDiv = styled.div`
 
 export const BottomDiv = styled.div`
 	margin-top: 6px;
+
 	& > p {
 		color: #2f2f2f;
 		font-family: Inter;

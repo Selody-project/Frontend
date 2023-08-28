@@ -34,9 +34,7 @@ const GroupProfile = () => {
 				</MiddleInnerDiv>
 			</MiddleDiv>
 			<GroupReqButton>
-				<span>
-					<AddIcon />
-				</span>
+				<AddIcon />
 				그룹 참여 요청
 			</GroupReqButton>
 		</ContainerDiv>
