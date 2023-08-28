@@ -114,6 +114,31 @@ export const CustomCalendarDiv = styled.div`
 		}
 		height: ${({ isMonthly }) => (!isMonthly ? "60px" : "93px")};
 	}
+
+	.fc-scroller-harness > .fc-scroller {
+		&::-webkit-scrollbar {
+			display: none;
+		}
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
+	.fc-scroller-harness-liquid > .fc-scroller {
+		&.fc-scroller-liquid-absolute {
+			&::-webkit-scrollbar {
+				display: block;
+				background-color: ${({ theme: { colors } }) => colors.disabled_text};
+				width: 8px;
+			}
+			&::-webkit-scrollbar-thumb {
+				background-color: ${({ theme: { colors } }) => colors.text_02};
+			}
+			&::-webkit-scrollbar-track {
+				height: fit-content;
+			}
+			-ms-overflow-style: block;
+			scrollbar-width: block;
+		}
+	}
 `;
 
 export const TitleSelect = styled.select`
