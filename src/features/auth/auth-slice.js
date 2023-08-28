@@ -10,7 +10,7 @@ import {
 	googleLogin,
 	updateUserProfile,
 	updateUserPassword,
-} from "./user-service.js";
+} from "./auth-service.js";
 
 const initialState = {
 	user: null,
@@ -20,8 +20,8 @@ const initialState = {
 	edit: false,
 };
 
-const userSlice = createSlice({
-	name: "user",
+const authSlice = createSlice({
+	name: "auth",
 	initialState,
 	reducers: {
 		logoutHandler: (state) => {
@@ -140,6 +140,6 @@ const userSlice = createSlice({
 	},
 });
 
-export const { logoutHandler, setEdit } = userSlice.actions;
+export const { logoutHandler, setEdit } = authSlice.actions;
 
-export default userSlice.reducer;
+export default authSlice.reducer;

@@ -38,7 +38,7 @@ import {
 const SharedSettings = () => {
 	const dispatch = useDispatch();
 	const groupList = useSelector((state) => state.group);
-	const { user } = useSelector((state) => state.user);
+	const { user } = useSelector((state) => state.auth);
 	const [currentGroup, setCurrentGroup] = useState(null);
 	const [openDelegate, setOpenDelegate] = useState(false);
 	const [openDelete, setOpenDelete] = useState(false);

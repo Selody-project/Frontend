@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 import DropdownBubble from "@/assets/icon/ic-profile-dropdown.svg";
-import { logout } from "@/features/user/user-service";
+import { logout } from "@/features/auth/auth-service";
 
 import {
 	ContainerDiv,

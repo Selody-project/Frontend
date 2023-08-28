@@ -28,13 +28,13 @@ export const LeftDiv = styled.div`
 export const LogoDiv = styled.div`
 	display: flex;
 	align-items: center;
+	gap: 4px;
 	cursor: pointer;
 	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 
 	& > img {
 		width: 48px;
 		height: 48px;
-		margin-right: 4px;
 	}
 
 	& > h1 {

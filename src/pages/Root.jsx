@@ -5,7 +5,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import Header from "@/components/Header/Header/Header";
 
 const Root = () => {
-	const { userLoading, user } = useSelector((state) => state.user);
+	const { userLoading, user } = useSelector((state) => state.auth);
 
 	if (userLoading) {
 		return <p>Loading,,,</p>;

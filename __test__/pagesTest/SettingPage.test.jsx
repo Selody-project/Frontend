@@ -13,7 +13,7 @@ describe("SettingPage Component", () => {
 
 	beforeEach(() => {
 		store = mockStore({
-			user: {
+			auth: {
 				user: {
 					nickname: "test",
 					email: "test@test.com",

@@ -6,11 +6,11 @@ import { Box, Tab, Tabs, Container } from "@mui/material";
 import PasswordUpdate from "../../components/Setting/PasswordUpdate";
 import ProfileSettings from "../../components/Setting/ProfileSettings";
 import SharedSettings from "../../components/Setting/SharedSettings";
-import { getCurrentUser } from "../../features/user/user-service";
+import { getCurrentUser } from "../../features/auth/auth-service";
 
 const SettingPage = () => {
 	const [selectedTab, setSelectedTab] = useState(0);
-	const { user } = useSelector((state) => state.user);
+	const { user } = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
 
 	useEffect(() => {

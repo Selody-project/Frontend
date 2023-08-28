@@ -3,10 +3,10 @@ import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 
 import BaseCard from "@/components/Base/BaseCard/BaseCard.jsx";
+import { setEdit } from "@/features/auth/auth-slice.js";
 import { deleteSchedule } from "@/features/schedule/schedule-service.js";
 import { setId } from "@/features/schedule/schedule-slice.js";
 import { openModal } from "@/features/ui/ui-slice.js";
-import { setEdit } from "@/features/user/user-slice.js";
 
 import { Wrapper } from "./PersonalTodoItem.styles.js";
 

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Button, TextField, Box, Typography, Grid } from "@mui/material";
 
-import { updateUserProfile } from "@/features/user/user-service";
+import { updateUserProfile } from "@/features/auth/auth-service";
 
 import { UserInfoContainer } from "./SettingPageDetail.styles";
 
@@ -12,7 +12,7 @@ const ProfileSettings = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
-	const { nickname, email, provider } = useSelector((state) => state.user.user);
+	const { nickname, email, provider } = useSelector((state) => state.auth.user);
 	const [newNickname, setNewNickname] = useState(nickname);
 
 	useEffect(() => {

@@ -15,7 +15,7 @@ import {
 	FeedPage,
 } from "@/pages";
 
-import { getCurrentUser } from "./features/user/user-service.js";
+import { getCurrentUser } from "./features/auth/auth-service.js";
 
 import "react-toastify/dist/ReactToastify.css";
 
