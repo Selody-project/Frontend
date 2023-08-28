@@ -37,11 +37,11 @@ const getDayHeaderContentInTimeGridWeek = ({ date, text }) => {
 	);
 };
 
-// const getTimeFormat = ({ date: { hour } }) => {
-// 	if (hour === 1) return "오전  01";
-// 	if (hour === 13) return "오후  01";
-// 	return `${hour % 12 < 10 ? `0${hour % 12}` : hour % 12}`;
-// };
+const getTimeFormat = ({ date: { hour } }) => {
+	if (hour === 1) return "오전  01";
+	if (hour === 13) return "오후  01";
+	return `${hour % 12 < 10 ? `0${hour % 12}` : hour % 12}`;
+};
 
 const CustomCalendar = forwardRef(
 	(
@@ -59,7 +59,7 @@ const CustomCalendar = forwardRef(
 		return (
 			<CustomCalendarDiv
 				data-testid="calendar-container"
-				// isMonthly={currentView === VIEW_TYPE.DAY_GRID_MONTH}
+				isMonthly={currentView === VIEW_TYPE.DAY_GRID_MONTH}
 			>
 				<TitleSelect
 					value={getSelectValue(
@@ -126,7 +126,7 @@ const CustomCalendar = forwardRef(
 					height={750}
 					eventClick={menuHandler}
 					datesSet={({ view: { type } }) => setCurrentView(type)}
-					// slotLabelFormat={getTimeFormat}
+					slotLabelFormat={getTimeFormat}
 				/>
 			</CustomCalendarDiv>
 		);
