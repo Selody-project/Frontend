@@ -98,7 +98,7 @@ const CustomCalendar = forwardRef(
 		return (
 			<CustomCalendarDiv
 				data-testid="calendar-container"
-				// isMonthly={currentView === VIEW_TYPE.DAY_GRID_MONTH}
+				isMonthly={currentView === VIEW_TYPE.DAY_GRID_MONTH}
 			>
 				<TitleSelect
 					value={getSelectValue(currentView, year, month, week)}
@@ -138,6 +138,7 @@ const CustomCalendar = forwardRef(
 					height={750}
 					eventClick={menuHandler}
 					datesSet={({ view: { type } }) => dispatch(setCurrentView(type))}
+					// slotLabelFormat={getTimeFormat}
 				/>
 			</CustomCalendarDiv>
 		);
