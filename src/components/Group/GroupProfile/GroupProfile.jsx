@@ -8,10 +8,12 @@ import {
 	TopDiv,
 	MiddleDiv,
 	MiddleInnerDiv,
-	GroupReqButton,
+	BottomDiv,
 } from "./GroupProfile.styles";
 
 const GroupProfile = () => {
+	const inGroup = false;
+
 	return (
 		<ContainerDiv>
 			<TopDiv>
@@ -33,10 +35,18 @@ const GroupProfile = () => {
 					<h4>작성된 피드</h4>
 				</MiddleInnerDiv>
 			</MiddleDiv>
-			<GroupReqButton>
-				<AddIcon />
-				그룹 참여 요청
-			</GroupReqButton>
+			<BottomDiv>
+				<button type="button">
+					{inGroup ? (
+						"그룹 나가기"
+					) : (
+						<>
+							<AddIcon />
+							그룹 참여 요청
+						</>
+					)}
+				</button>
+			</BottomDiv>
 		</ContainerDiv>
 	);
 };

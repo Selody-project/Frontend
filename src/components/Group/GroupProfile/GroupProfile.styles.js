@@ -80,16 +80,19 @@ export const MiddleInnerDiv = styled.div`
 	}
 `;
 
-export const GroupReqButton = styled.button`
-	border: 1px solid ${({ theme: { colors } }) => colors.primary};
-	background-color: transparent;
-	padding: 12px 74px;
-	margin: 26px 48px;
-	color: ${({ theme: { colors } }) => colors.primary};
-	font-family: Inter;
-	font-size: 18px;
+export const BottomDiv = styled.div`
+	padding: 26px 48px;
 
-	& > svg {
-		vertical-align: middle;
+	& > button {
+		border: 1px solid ${({ theme: { colors } }) => colors.primary};
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: transparent;
+		width: 282px;
+		height: 48px;
+		color: ${({ theme: { colors } }) => colors.primary};
+		font-family: Inter;
+		font-size: 18px;
 	}
 `;
