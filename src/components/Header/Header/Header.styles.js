@@ -1,76 +1,121 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
+import { SubHeaderDiv } from "../SubHeader/SubHeader.style";
+
+export const ContainerHeader = styled.header`
+	position: sticky;
+	top: 0px;
+	z-index: 90;
+	background-color: white;
+	padding-top: 60px;
+`;
+
+export const WrapDiv = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	font-family: "Inter", sans-serif;
 	font-weight: 600;
-	padding: 1.5rem;
-	background: #f5f5f8;
+	padding: 28px 32px;
+	border-radius: 100px;
+	box-shadow: 0px 5px 50px 4px rgba(0, 0, 0, 0.1);
 `;
 
-export const MenuWrapper = styled.div`
+export const LeftDiv = styled.div`
 	display: flex;
 	align-items: center;
+`;
 
-	h1 {
-		font-size: 2rem;
-		color: #96a2b0;
-		margin-right: 1rem;
+export const LogoDiv = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	cursor: pointer;
+	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+
+	& > img {
+		width: 48px;
+		height: 48px;
 	}
 
-	ul {
-		display: flex;
-		padding-top: 1rem;
-		gap: 3rem;
-
-		a {
-			color: #303030;
-			font-size: 1.15rem;
-			font-weight: 700;
-			text-transform: uppercase;
-			text-decoration: none;
-			transition: all 0.3s;
-			border-bottom: 2px solid transparent;
-			padding: 10px 20px;
-			border-radius: 8px;
-
-			&.active-link {
-				color: #ffffff;
-				background-color: #000000;
-			}
-
-			&:hover {
-				border-color: #ffffff;
-				background-color: #000000;
-				color: #ffffff;
-				transform: scale(1.1);
-			}
+	& > h1 {
+		color: ${({ theme }) => theme.colors.text_01};
+		font-family: Montserrat;
+		font-size: 30px;
+		font-weight: 700;
+		line-height: normal;
+		& > span {
+			color: ${({ theme }) => theme.colors.primary};
 		}
 	}
 `;
 
-export const AuthButton = styled.div`
-	a {
-		color: #6a6d75;
-		font-size: 1.25rem;
-		font-weight: 700;
+export const TabUl = styled.ul`
+	margin-left: 48px;
+	display: flex;
+	align-items: center;
+	gap: 48px;
+	font-size: 16px;
+	font-family: Poppins;
+	font-weight: 500;
+	line-height: 180%;
+	position: relative;
 
-		&:hover {
-			color: black;
-		}
+	& > li {
+		height: 48px;
 	}
 
-	button {
-		font-size: 1.25rem;
-		font-weight: 700;
-		background: none;
-		border: none;
-		color: #6a6d75;
-		transition: all 0.3s;
-		&:hover {
-			color: black;
-		}
+	& > li:hover ${SubHeaderDiv} {
+		display: block;
 	}
+`;
+
+export const TabButton = styled.button`
+	cursor: pointer;
+	color: ${({ isActive, theme: { colors } }) =>
+		isActive ? colors.primary : colors.text_02};
+	font-weight: ${({ isActive }) => (isActive ? "600" : "500")};
+	border-bottom: ${({ isActive, theme: { colors } }) =>
+		isActive ? `2px solid ${colors.primary}` : 0};
+	padding: 10px 8px 8px;
+
+	&:hover {
+		color: ${({ theme }) => theme.colors.primary};
+	}
+`;
+
+export const RightDiv = styled(LeftDiv)``;
+
+export const GroupCreateButton = styled.button`
+	cursor: pointer;
+	border: 1px solid ${({ theme }) => theme.colors.primary};
+	border-radius: 100px;
+	padding: 12px 36px;
+	background-color: white;
+	color: ${({ theme }) => theme.colors.primary};
+	font-size: 13px;
+	font-family: Inter;
+	font-weight: 700;
+	box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+	&:hover {
+		box-shadow: 0px 4px 2px 0px rgba(0, 0, 0, 0.25);
+	}
+
+	&:active {
+		box-shadow: 0px 4px 2px 0px rgba(0, 0, 0, 0.25);
+		background-color: #ccc4ff;
+	}
+`;
+
+export const ProfileDiv = styled.div`
+	position: relative;
+	margin-left: 28px;
+`;
+
+export const ProfileImg = styled.img`
+	cursor: pointer;
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	object-fit: contain;
 `;

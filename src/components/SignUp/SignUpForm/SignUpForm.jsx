@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
-import { signup, validateDuplication } from "@/features/user/user-service";
+import { signup, validateDuplication } from "@/features/auth/auth-service";
 
 import {
 	DuplicateCheckButton,

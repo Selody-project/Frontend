@@ -1,49 +1,107 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate, NavLink } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, useLocation } from "react-router-dom";
 
-import { logout } from "@/features/user/user-service.js";
+import Logo from "@/assets/img/img-selody-logo/1x.png";
+import { openModal } from "@/features/ui/ui-slice";
 
-import { Wrapper, MenuWrapper, AuthButton } from "./Header.styles";
+import {
+	LogoDiv,
+	TabUl,
+	LeftDiv,
+	RightDiv,
+	GroupCreateButton,
+	ProfileImg,
+	ProfileDiv,
+	TabButton,
+	ContainerHeader,
+	WrapDiv,
+} from "./Header.styles";
+import GroupCreateModal from "../GroupCreateModal/GroupCreateModal";
+import ProfileDropdown from "../ProfileDropdown/ProfileDropdown";
+import SubHeader from "../SubHeader/SubHeader";
 
 const Header = () => {
+	const path = useLocation().pathname;
 	const dispatch = useDispatch();
-	const navigate = useNavigate();
+
+	const profileRef = useRef();
+	const dropdownRef = useRef();
+
+	const isSchedule = path === "/" || path === "/share";
+	const isFeed = path === "/community" || path === "mypage";
+
+	const { openedModal } = useSelector((state) => state.ui);
+
+	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+	const closeDropdown = (e) => {
+		if (
+			!profileRef.current.contains(e.target) &&
+			!dropdownRef.current.contains(e.target)
+		) {
+			setIsDropdownOpen(false);
+		}
+	};
+
+	useEffect(() => {
+		if (isDropdownOpen) {
+			window.addEventListener("click", closeDropdown);
+		}
+
+		return () => {
+			window.removeEventListener("click", closeDropdown);
+		};
+	});
 
 	return (
-		<Wrapper>
-			<MenuWrapper>
-				<h1>SELODY</h1>
-				<ul>
-					<NavLink
-						to="/share"
-						className={({ isActive }) => (isActive ? "active-link" : "")}
-					>
-						공유 일정
+		<ContainerHeader>
+			<WrapDiv>
+				<LeftDiv>
+					<NavLink to="/">
+						<LogoDiv>
+							<img src={Logo} alt="logo" />
+							<h1>
+								Selody<span>.</span>
+							</h1>
+						</LogoDiv>
 					</NavLink>
-					<NavLink
-						to="/community"
-						className={({ isActive }) => (isActive ? "active-link" : "")}
+					<TabUl>
+						<li>
+							<TabButton isActive={isSchedule} type="button">
+								일정
+							</TabButton>
+							<SubHeader tab="schedule" />
+						</li>
+						<li>
+							<TabButton isActive={isFeed} type="button">
+								FEED IN SELODY
+							</TabButton>
+							<SubHeader tab="feed" />
+						</li>
+					</TabUl>
+				</LeftDiv>
+				<RightDiv>
+					<GroupCreateButton
+						onClick={() => {
+							dispatch(openModal({ type: "CREATE_GROUP" }));
+						}}
 					>
-						FEED IN SELODY
-					</NavLink>
-				</ul>
-			</MenuWrapper>
-			<AuthButton>
-				<button type="submit">
-					<NavLink
-						to="/mypage"
-						className={({ isActive }) => (isActive ? "active-link" : "")}
-					>
-						마이페이지
-					</NavLink>
-				</button>
-				<span style={{ color: "gray" }}>|</span>
-				<button type="submit" onClick={() => dispatch(logout(navigate))}>
-					로그아웃
-				</button>
-			</AuthButton>
-		</Wrapper>
+						그룹 만들기
+					</GroupCreateButton>
+					<ProfileDiv>
+						<ProfileImg
+							ref={profileRef}
+							onClick={() => setIsDropdownOpen(true)}
+							src="https://yt3.ggpht.com/ytc/AOPolaSlb8-cH_rN_lZDD1phXr7aHFpoOqMVoepaGuTm=s48-c-k-c0x00ffffff-no-rj"
+							alt="user-profile"
+						/>
+						{isDropdownOpen && <ProfileDropdown ref={dropdownRef} />}
+					</ProfileDiv>
+				</RightDiv>
+				{openedModal === "CREATE_GROUP" && <GroupCreateModal />}
+			</WrapDiv>
+		</ContainerHeader>
 	);
 };
 

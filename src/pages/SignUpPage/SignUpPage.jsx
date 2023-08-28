@@ -17,7 +17,7 @@ import {
 const SignUpPage = () => {
 	const navigate = useNavigate();
 
-	const { user } = useSelector((state) => state.user);
+	const { user } = useSelector((state) => state.auth);
 
 	useEffect(() => {
 		if (user) {

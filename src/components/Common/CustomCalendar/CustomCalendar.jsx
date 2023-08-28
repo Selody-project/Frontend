@@ -57,7 +57,6 @@ const CustomCalendar = forwardRef(
 					dayCellContent={(renderInfo) =>
 						renderInfo.dayNumberText.replace("일", "")
 					}
-					height={750}
 					eventClick={menuHandler}
 				/>
 			</div>

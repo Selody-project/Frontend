@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 
 import CloseIcon from "@/assets/icon/ic-close.svg";
 import { closeModal } from "@/features/ui/ui-slice.js";
+import useScrollLock from "@/hooks/useScrollLock.jsx";
 
 import {
 	BackdropWrapper,
@@ -46,6 +47,8 @@ const Modal = ({ title, children, bg }) => {
 };
 
 const BaseModal = ({ title = null, children, bg }) => {
+	useScrollLock();
+
 	return (
 		<>
 			{ReactDOM.createPortal(<Backdrop />, document.getElementById("backdrop"))}

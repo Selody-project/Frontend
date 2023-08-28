@@ -183,7 +183,6 @@ export const SocialLoginBtnContainerDiv = styled.div`
 	flex-direction: column;
 
 	& > button {
-		all: unset;
 		width: 52px;
 		height: 52px;
 		margin-bottom: 8px;

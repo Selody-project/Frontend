@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 import { Typography, Button, TextField, Box, Grid, Alert } from "@mui/material";
 
-import { updateUserPassword } from "@/features/user/user-service";
+import { updateUserPassword } from "@/features/auth/auth-service";
 
-import { UserInfoContainer } from "./MyPageDetail.styles";
+import { UserInfoContainer } from "./SettingPageDetail.styles";
 
 const PasswordUpdate = () => {
 	const navigate = useNavigate();

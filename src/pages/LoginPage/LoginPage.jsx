@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import Logo from "@/assets/img/img-selody-logo/3x.png";
 import Google from "@/components/sign/Google";
 import Naver from "@/components/sign/Naver";
-import { login, naverLogin } from "@/features/user/user-service.js";
+import { login, naverLogin } from "@/features/auth/auth-service.js";
 import useNaver from "@/hooks/useNaver.jsx";
 
 import {
@@ -30,7 +30,7 @@ function LoginPage() {
 
 	const naverInfo = useNaver();
 
-	const { user } = useSelector((state) => state.user);
+	const { user } = useSelector((state) => state.auth);
 
 	const [formValue, setFormValue] = useState({ email: "", password: "" });
 

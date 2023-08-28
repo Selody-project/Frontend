@@ -24,7 +24,7 @@ import {
 
 const ScheduleModal = ({ type, initFormValues }) => {
 	const dispatch = useDispatch();
-	const { edit } = useSelector((state) => state.user);
+	const { edit } = useSelector((state) => state.auth);
 	const { id } = useSelector((state) => state.schedule);
 	const [formValues, setFormValues] = useState(initFormValues);
 
