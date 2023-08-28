@@ -37,7 +37,7 @@ export const InfoDiv = styled.div`
 		font-family: Inter;
 		font-size: 14px;
 
-		> span {
+		> svg {
 			margin-left: 4px;
 		}
 	}

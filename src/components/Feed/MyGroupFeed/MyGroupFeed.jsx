@@ -20,9 +20,7 @@ const MyGroupFeed = () => {
 					<InfoDiv>
 						<h3>
 							그룹리더
-							<span>
-								<Crown />
-							</span>
+							<Crown />
 						</h3>
 						<h4>15분 전</h4>
 					</InfoDiv>
