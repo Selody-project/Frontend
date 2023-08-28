@@ -95,7 +95,16 @@ export const GroupCreateButton = styled.button`
 	font-size: 13px;
 	font-family: Inter;
 	font-weight: 700;
-	box-shadow: 0px 4px 2px 0px rgba(0, 0, 0, 0.25);
+	box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+	&:hover {
+		box-shadow: 0px 4px 2px 0px rgba(0, 0, 0, 0.25);
+	}
+
+	&:active {
+		box-shadow: 0px 4px 2px 0px rgba(0, 0, 0, 0.25);
+		background-color: #ccc4ff;
+	}
 `;
 
 export const ProfileDiv = styled.div`
