@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Crown from "@/assets/icon/ic-crown.svg";
 import SampleImg from "@/assets/img/feed/img-group-sample-01.jpeg";
@@ -6,7 +6,7 @@ import SampleImg from "@/assets/img/feed/img-group-sample-01.jpeg";
 import {
 	ContainerDiv,
 	TitleDiv,
-	SortDiv,
+	Button,
 	FeedDiv,
 	TopDiv,
 	InfoDiv,
@@ -14,14 +14,32 @@ import {
 } from "./GroupFeed.styles";
 
 const GroupFeed = () => {
+	const [sort, setSort] = useState("latest");
+
 	return (
 		<ContainerDiv>
 			<TitleDiv>
 				<h2>그룹 피드</h2>
-				<SortDiv>
-					<h3>최신순</h3>
-					<h3>좋아요 순</h3>
-				</SortDiv>
+				<ul>
+					<li>
+						<Button
+							type="button"
+							onClick={() => setSort("latest")}
+							disabled={sort === "latest"}
+						>
+							최신순
+						</Button>
+					</li>
+					<li>
+						<Button
+							type="button"
+							onClick={() => setSort("like")}
+							disabled={sort === "like"}
+						>
+							좋아요순
+						</Button>
+					</li>
+				</ul>
 			</TitleDiv>
 
 			{/* 추후 Feed Landing에서 컴포넌트 가져와서 변경 */}

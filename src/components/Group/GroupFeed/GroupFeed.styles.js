@@ -12,23 +12,25 @@ export const TitleDiv = styled.div`
 		font-family: Inter;
 		font-size: 20px;
 	}
+
+	& > ul {
+		display: flex;
+		gap: 18px;
+	}
 `;
 
-export const SortDiv = styled.div`
-	display: flex;
-	gap: 18px;
-
-	& > h3 {
-		font-family: Inter;
-		font-size: 14px;
-	}
+export const Button = styled.button`
+	color: ${(props) => (props.disabled ? "#121127" : "#9ca0ab")};
+	font-family: Inter;
+	font-size: 14px;
+	cursor: pointer;
 `;
 
 export const FeedDiv = styled.div`
 	display: flex;
 	flex-direction: column;
 	border-radius: 10px;
-	border: 1px solid #c9ccd7;
+	border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
 	padding: 24px 18px 30px;
 `;
 

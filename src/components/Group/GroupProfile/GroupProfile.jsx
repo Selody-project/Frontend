@@ -14,7 +14,7 @@ import {
 } from "./GroupProfile.styles";
 
 const GroupProfile = () => {
-	const inGroup = false;
+	const inGroup = true;
 	const dispatchFn = useDispatch();
 	const group = useSelector((state) => state.group.group);
 
