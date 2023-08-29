@@ -56,6 +56,7 @@ const CustomCalendar = forwardRef(
 		calendarRef,
 	) => {
 		const [currentView, setCurrentView] = useState(VIEW_TYPE.DAY_GRID_MONTH);
+
 		return (
 			<CustomCalendarDiv
 				data-testid="calendar-container"

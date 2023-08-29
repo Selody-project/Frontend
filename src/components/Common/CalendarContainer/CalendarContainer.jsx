@@ -17,22 +17,22 @@ import CustomCalendar from "./CustomCalendar/CustomCalendar";
 import InviteUser from "../../SharePage/InviteUser";
 
 // 리스트(주마다 보기)로 진행했을 떄 보여줄 첫 일요일을 계산합니다.
-const getFirstDayOfWeek = (year, month, week) => {
-	const firstDateOfWeek = new Date(year, month - 1);
-	const firstSundayOfMonth = firstDateOfWeek.getDay();
-	firstDateOfWeek.setDate(
-		firstDateOfWeek.getDate() - firstSundayOfMonth + 7 * (week - 1),
+const getFirstDateOfWeek = (year, month, week) => {
+	const firstDateOfMonth = new Date(year, month - 1);
+	const firstDayOfMonth = firstDateOfMonth.getDay();
+	firstDateOfMonth.setDate(
+		firstDateOfMonth.getDate() - firstDayOfMonth + 7 * (week - 1),
 	);
-	return firstDateOfWeek.getDate();
+	return firstDateOfMonth.getDate();
 };
 
 // currentWeek 초기화를 위해 현재 몇 주차인지 계산합니다.
 const getCurrentWeek = () => {
 	const today = new Date();
 	const date = today.getDate();
-	const DayOfWeek = today.getDay(); // 0~6;
-	const weekStart = date - DayOfWeek;
-	const currentWeekNum = Math.ceil((weekStart - 1) / 7) + 1;
+	const day = today.getDay(); // 0~6;
+	const firstDateOfWeek = date - day;
+	const currentWeekNum = Math.ceil((firstDateOfWeek - 1) / 7) + 1;
 	return currentWeekNum;
 };
 
@@ -85,12 +85,12 @@ const CalendarContainer = ({ type }) => {
 		const calendarApi = calendarRef.current.getApi();
 		if (week) {
 			// 리스트(주별) 보기인 경우
-			const startDay = getFirstDayOfWeek(year, month, week);
+			const startDate = getFirstDateOfWeek(year, month, week);
 			calendarApi.gotoDate(
 				new Date(
 					year,
-					(startDay > 20 && Number(week) === 1 ? month - 1 : month) - 1,
-					startDay,
+					(startDate > 20 && Number(week) === 1 ? month - 1 : month) - 1,
+					startDate,
 				),
 			);
 		} else if (
@@ -99,8 +99,12 @@ const CalendarContainer = ({ type }) => {
 			new Date().getFullYear() === Number(year)
 		) {
 			// 월별 보기인데, 현재 날짜를 포함한 년월인 경우
-			const startDayForToday = getFirstDayOfWeek(year, month, getCurrentWeek());
-			calendarApi.gotoDate(new Date(year, month - 1, startDayForToday));
+			const startDateForToday = getFirstDateOfWeek(
+				year,
+				month,
+				getCurrentWeek(),
+			);
+			calendarApi.gotoDate(new Date(year, month - 1, startDateForToday));
 		} else {
 			// 월별 보기에서 그 외 년월인 경우
 			calendarApi.gotoDate(new Date(year, month - 1));
