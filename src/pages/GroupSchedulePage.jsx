@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import CreateGroupModal from "@/components/SharePage/CreateGroupModal.jsx";
-import SCHEDULE_TYPE from "@/constants/calendar/scheduleType.js";
+import { SCHEDULE_TYPE } from "@/constants/calendarConstants";
 import { getGroupList } from "@/features/group/group-service.js";
 
 import CalendarContainer from "../components/Common/CalendarContainer/CalendarContainer";

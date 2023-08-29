@@ -1,6 +1,6 @@
 import React from "react";
 
-import scheduleType from "@/constants/calendar/scheduleType";
+import { SCHEDULE_TYPE } from "@/constants/calendarConstants";
 
 import { LayoutMain } from "./PersonalSchedulePage.styles";
 import CalendarContainer from "../../components/Common/CalendarContainer/CalendarContainer";
@@ -12,7 +12,7 @@ const PersonalSchedulePage = () => {
 		<>
 			<Header />
 			<LayoutMain>
-				<CalendarContainer type={scheduleType.personal} />
+				<CalendarContainer type={SCHEDULE_TYPE.PERSONAL} />
 				<PersonalTodoList />
 			</LayoutMain>
 		</>
