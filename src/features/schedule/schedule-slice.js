@@ -2,6 +2,8 @@ import { toast } from "react-toastify";
 
 import { createSlice } from "@reduxjs/toolkit";
 
+import { VIEW_TYPE } from "@/constants/calendarConstants.js";
+
 import { createSchedule, getSchedule } from "./schedule-service.js";
 
 const initialState = {
@@ -12,6 +14,7 @@ const initialState = {
 	year: 0,
 	isLoading: false,
 	id: null,
+	currentCalendarView: VIEW_TYPE.DAY_GRID_MONTH,
 };
 
 const scheduleSlice = createSlice({
@@ -29,6 +32,14 @@ const scheduleSlice = createSlice({
 		},
 		setId: (state, { payload }) => {
 			state.id = payload;
+		},
+		setCurrentCalenderView: (state, { payload }) => {
+			if (
+				payload === VIEW_TYPE.DAY_GRID_MONTH ||
+				payload === VIEW_TYPE.DAY_GRID_WEEK
+			) {
+				state.currentCalendarView = payload;
+			}
 		},
 	},
 	extraReducers: (builder) => {
@@ -61,7 +72,12 @@ const scheduleSlice = createSlice({
 	},
 });
 
-export const { saveSchedule, currentMonthFn, currentYearFn, setId } =
-	scheduleSlice.actions;
+export const {
+	saveSchedule,
+	currentMonthFn,
+	currentYearFn,
+	setId,
+	setCurrentCalenderView,
+} = scheduleSlice.actions;
 
 export default scheduleSlice.reducer;

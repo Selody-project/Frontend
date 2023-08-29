@@ -5,6 +5,7 @@ export const LayoutMain = styled.main`
 	display: flex;
 	justify-content: center;
 	gap: 13px;
-	padding: 50px 60px 0;
+	padding: 50px 95px 0;
+	padding-left: ${({ isMonthly }) => (!isMonthly ? "50px" : undefined)};
 	font-family: "Inter", sans-serif;
 `;

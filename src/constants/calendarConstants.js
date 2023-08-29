@@ -3,6 +3,11 @@ export const SCHEDULE_TYPE = {
 	PERSONAL: "PERSONAL_SCHEDULE",
 };
 
+export const VIEW_TYPE = {
+	DAY_GRID_WEEK: "timeGridWeek",
+	DAY_GRID_MONTH: "dayGridMonth",
+};
+
 export const CALENDAR_COLORS = [
 	"#f44336",
 	"#e91e63",

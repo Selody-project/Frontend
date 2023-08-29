@@ -1,16 +1,15 @@
-import React, { forwardRef, useState } from "react";
+import React, { forwardRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 
-import { CustomCalendarDiv, TitleSelect } from "./CustomCalendar.styles";
+import { VIEW_TYPE } from "@/constants/calendarConstants";
+import { setCurrentCalenderView } from "@/features/schedule/schedule-slice";
 
-const VIEW_TYPE = {
-	DAY_GRID_WEEK: "timeGridWeek",
-	DAY_GRID_MONTH: "dayGridMonth",
-};
+import { CustomCalendarDiv, TitleSelect } from "./CustomCalendar.styles";
 
 // 월이 포함한 주차 갯수 계산하기
 const countWeek = (year, month) => {
@@ -55,16 +54,20 @@ const CustomCalendar = forwardRef(
 		},
 		calendarRef,
 	) => {
-		const [currentView, setCurrentView] = useState(VIEW_TYPE.DAY_GRID_MONTH);
+		const currentCalendarView = useSelector(
+			({ schedule }) => schedule.currentCalendarView,
+		);
+		const dispatch = useDispatch();
 
 		return (
 			<CustomCalendarDiv
 				data-testid="calendar-container"
-				isMonthly={currentView === VIEW_TYPE.DAY_GRID_MONTH}
+				isMonthly={currentCalendarView === VIEW_TYPE.DAY_GRID_MONTH}
 			>
 				<TitleSelect
+					isMonthly={currentCalendarView === VIEW_TYPE.DAY_GRID_MONTH}
 					value={getSelectValue(
-						currentView,
+						currentCalendarView,
 						currentYear,
 						currentMonth,
 						currentWeek,
@@ -79,7 +82,7 @@ const CustomCalendar = forwardRef(
 						(_, i) => new Date().getFullYear() + i,
 					).map((year) =>
 						Array.from({ length: 12 }, (_, j) => j + 1).map((month) =>
-							currentView === VIEW_TYPE.DAY_GRID_MONTH ? (
+							currentCalendarView === VIEW_TYPE.DAY_GRID_MONTH ? (
 								<option key={`${year}-${month}`} value={`${year}-${month}`}>
 									{year}년 {month}월
 								</option>
@@ -126,7 +129,9 @@ const CustomCalendar = forwardRef(
 					}
 					height={750}
 					eventClick={menuHandler}
-					datesSet={({ view: { type } }) => setCurrentView(type)}
+					datesSet={({ view: { type } }) =>
+						dispatch(setCurrentCalenderView(type))
+					}
 					slotLabelFormat={getTimeFormat}
 				/>
 			</CustomCalendarDiv>
