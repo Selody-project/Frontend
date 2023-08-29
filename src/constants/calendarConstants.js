@@ -4,7 +4,8 @@ export const SCHEDULE_TYPE = {
 };
 
 export const VIEW_TYPE = {
-	DAY_GRID_WEEK: "dayGridWeek",
+	// DAY_GRID_WEEK: "dayGridWeek",
+	DAY_GRID_WEEK: "timeGridWeek",
 	DAY_GRID_MONTH: "dayGridMonth",
 };
 
