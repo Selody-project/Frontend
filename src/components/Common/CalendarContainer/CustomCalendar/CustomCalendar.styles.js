@@ -1,5 +1,3 @@
-import Scrollbars from "react-custom-scrollbars";
-
 import styled from "styled-components";
 
 export const CustomCalendarDiv = styled.div`
@@ -160,9 +158,4 @@ export const TitleSelect = styled.select`
 	&:focus {
 		outline: none;
 	}
-`;
-
-export const StyledScrollbars = styled(Scrollbars)`
-	width: 8px;
-	height: 1000px;
 `;
