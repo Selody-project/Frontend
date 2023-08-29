@@ -131,6 +131,7 @@ export const TitleSelect = styled.select`
 	background-size: 12px 6px;
 	background-position: right;
 	background-repeat: no-repeat;
+	cursor: pointer;
 	&:focus {
 		outline: none;
 	}
