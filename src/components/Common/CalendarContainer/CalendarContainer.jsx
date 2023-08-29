@@ -38,10 +38,14 @@ const getCurrentWeek = () => {
 
 const CalendarContainer = ({ type }) => {
 	const currentWeekStart = new Date();
+
 	const dispatch = useDispatch();
+
 	const calendarRef = useRef(null);
 	const eventColorMap = useRef({});
+
 	const { schedule, recSchedules } = useSelector((state) => state.schedule);
+
 	const [selectedGroup, setSelectedGroup] = useState(null);
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [inviteInput, setInviteInput] = useState("");
