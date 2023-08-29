@@ -13,7 +13,7 @@ import { openScheduleEditModal } from "@/features/ui/ui-slice";
 import { getCurrentWeek, getFirstDateOfWeek } from "@/utils/calendarUtils";
 
 import { CalendarContainerDiv } from "./CalendarContainer.styles";
-import CustomCalendar from "./CustomCalendar/CustomCalendar";
+import CustomCalendar from "./CustomCalendar";
 import InviteUser from "../../SharePage/InviteUser";
 
 const CalendarContainer = ({ type }) => {
