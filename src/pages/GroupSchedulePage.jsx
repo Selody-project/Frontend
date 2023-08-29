@@ -31,7 +31,7 @@ const GroupSchedulePage = () => {
 	return (
 		<>
 			<Header />
-			<GroupHeader />치
+			<GroupHeader />
 			<MainContainer>
 				<CalendarContainer type={SCHEDULE_TYPE.SHARED} />
 				<ShareTodoList />
