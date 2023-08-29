@@ -1,3 +1,5 @@
+import Scrollbars from "react-custom-scrollbars";
+
 import styled from "styled-components";
 
 export const CustomCalendarDiv = styled.div`
@@ -117,19 +119,18 @@ export const CustomCalendarDiv = styled.div`
 	.fc-scroller-harness-liquid > .fc-scroller {
 		&.fc-scroller-liquid-absolute {
 			&::-webkit-scrollbar {
-				display: block;
-				background-color: ${({ theme: { colors } }) => colors.disabled_text};
-				width: 8px;
+				display: none;
 			}
-			&::-webkit-scrollbar-thumb {
-				background-color: ${({ theme: { colors } }) => colors.text_02};
-			}
-			&::-webkit-scrollbar-track {
-				height: fit-content;
-			}
-			-ms-overflow-style: block;
-			scrollbar-width: block;
+			-ms-overflow-style: none;
+			scrollbar-width: none;
 		}
+	}
+	.fc .fc-scrollgrid-section-body table,
+	.fc .fc-timegrid-body {
+		width: 100% !important;
+	}
+	.fc-col-header {
+		width: 100% !important;
 	}
 `;
 
@@ -153,4 +154,9 @@ export const TitleSelect = styled.select`
 	&:focus {
 		outline: none;
 	}
+`;
+
+export const StyledScrollbars = styled(Scrollbars)`
+	width: 8px;
+	height: 1000px;
 `;
