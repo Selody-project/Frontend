@@ -7,7 +7,7 @@ import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 
 import { VIEW_TYPE } from "@/constants/calendarConstants";
-import { setCurrentView } from "@/features/schedule/schedule-slice";
+import { setCurrentCalenderView } from "@/features/schedule/schedule-slice";
 
 import { CustomCalendarDiv, TitleSelect } from "./CustomCalendar.styles";
 
@@ -85,12 +85,16 @@ const getDateOptions = (currentView) => {
 	);
 };
 
+const getTimeFormat = ({ date: { hour } }) => {
+	return `${hour < 10 ? `0${hour}` : hour}`;
+};
+
 const CustomCalendar = forwardRef(
 	(
 		{ fullCalendarEvents, handleDateChange, menuHandler = null },
 		calendarRef,
 	) => {
-		const { year, month, week, currentView } = useSelector(
+		const { year, month, week, currentCalendarView } = useSelector(
 			(state) => state.schedule,
 		);
 		const dispatch = useDispatch();
@@ -98,17 +102,18 @@ const CustomCalendar = forwardRef(
 		return (
 			<CustomCalendarDiv
 				data-testid="calendar-container"
-				isMonthly={currentView === VIEW_TYPE.DAY_GRID_MONTH}
+				isMonthly={currentCalendarView === VIEW_TYPE.DAY_GRID_MONTH}
 			>
 				<TitleSelect
-					value={getSelectValue(currentView, year, month, week)}
+					value={getSelectValue(currentCalendarView, year, month, week)}
+					isMonthly={currentCalendarView === VIEW_TYPE.DAY_GRID_MONTH}
 					onChange={(e) => {
 						const [yearValue, monthValue, weekValue] =
 							e.target.value.split("-");
 						handleDateChange(yearValue, monthValue, weekValue || null);
 					}}
 				>
-					{getDateOptions(currentView)}
+					{getDateOptions(currentCalendarView)}
 				</TitleSelect>
 				<FullCalendar
 					ref={calendarRef}
@@ -137,8 +142,10 @@ const CustomCalendar = forwardRef(
 					}
 					height={750}
 					eventClick={menuHandler}
-					datesSet={({ view: { type } }) => dispatch(setCurrentView(type))}
-					// slotLabelFormat={getTimeFormat}
+					datesSet={({ view: { type } }) =>
+						dispatch(setCurrentCalenderView(type))
+					}
+					slotLabelFormat={getTimeFormat}
 				/>
 			</CustomCalendarDiv>
 		);

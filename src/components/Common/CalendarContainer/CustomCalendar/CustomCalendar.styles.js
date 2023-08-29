@@ -13,6 +13,7 @@ export const CustomCalendarDiv = styled.div`
 		margin-bottom: 2rem;
 		.fc-header-toolbar.fc-toolbar {
 			margin: 0;
+			padding-left: ${({ isMonthly }) => (!isMonthly ? "45px" : 0)};
 			display: flex;
 			flex-direction: column;
 			align-items: start;
@@ -123,19 +124,19 @@ export const CustomCalendarDiv = styled.div`
 			scrollbar-width: none;
 		}
 	}
-	.fc .fc-scrollgrid-section-body table,
+	/* .fc .fc-scrollgrid-section-body table,
 	.fc .fc-timegrid-body {
 		width: 100% !important;
 	}
 	.fc-col-header {
 		width: 100% !important;
-	}
+	} */
 `;
 
 export const TitleSelect = styled.select`
 	position: absolute;
 	top: 35px;
-	left: 0;
+	left: ${({ isMonthly }) => (!isMonthly ? "45px" : 0)};
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
