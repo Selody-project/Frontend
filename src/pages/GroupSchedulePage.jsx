@@ -2,7 +2,7 @@ import React from "react";
 
 import styled from "styled-components";
 
-// import { getGroupList } from "@/features/group/group-service.js";
+import { SCHEDULE_TYPE } from "@/constants/calendarConstants";
 
 import CalendarContainer from "../components/Common/CalendarContainer/CalendarContainer";
 import ShareTodoList from "../components/SharePage/ShareTodoList/ShareTodoList";
