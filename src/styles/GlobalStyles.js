@@ -132,6 +132,7 @@ const GlobalStyles = createGlobalStyle`${css`
 		box-sizing: border-box;
 		line-height: 1;
 		max-width: 1440px;
+		overflow-y: scroll;
 	}
 	a {
 		text-decoration: none;
