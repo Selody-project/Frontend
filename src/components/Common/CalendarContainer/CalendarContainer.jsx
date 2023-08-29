@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import CALENDAR_COLORS from "@/constants/calendar/calendarColors";
-import SCHEDULE_TYPE from "@/constants/calendar/scheduleType";
+import { CALENDAR_COLORS, SCHEDULE_TYPE } from "@/constants/calendarConstants";
 import {
 	currentMonthFn,
 	currentYearFn,
