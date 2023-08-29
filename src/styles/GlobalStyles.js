@@ -127,15 +127,23 @@ const GlobalStyles = createGlobalStyle`${css`
 	}
 
 	body {
-		margin: 0 auto;
 		padding: 0;
 		box-sizing: border-box;
 		line-height: 1;
-		max-width: 1440px;
+
+		#root {
+			max-width: 1440px;
+			margin: 0 auto;
+		}
 	}
+
 	a {
 		text-decoration: none;
 		color: inherit;
+	}
+
+	button {
+		all: unset;
 	}
 `}
 `;
