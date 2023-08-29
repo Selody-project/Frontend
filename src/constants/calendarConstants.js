@@ -1,4 +1,9 @@
-const CALENDAR_COLORS = [
+export const SCHEDULE_TYPE = {
+	SHARED: "SHARE_SCHEDULE",
+	PERSONAL: "PERSONAL_SCHEDULE",
+};
+
+export const CALENDAR_COLORS = [
 	"#f44336",
 	"#e91e63",
 	"#9c27b0",
@@ -20,5 +25,3 @@ const CALENDAR_COLORS = [
 	"#022f40",
 	"#6b0504",
 ];
-
-export default CALENDAR_COLORS;
