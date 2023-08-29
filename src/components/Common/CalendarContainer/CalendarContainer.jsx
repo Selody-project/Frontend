@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import CALENDAR_COLORS from "@/constants/calendar/calendarColors";
-import SCHEDULE_TYPE from "@/constants/calendar/scheduleType";
-import { setEdit } from "@/features/auth/auth-slice";
+import { CALENDAR_COLORS, SCHEDULE_TYPE } from "@/constants/calendarConstants";
 import {
 	currentMonthFn,
 	currentYearFn,
@@ -120,7 +118,7 @@ const CalendarContainer = ({ type }) => {
 	};
 
 	const menuHandler = () => {
-		dispatch(setEdit(true));
+		// dispatch(setEdit(true));
 		dispatch(openModal({ type: SCHEDULE_TYPE.PERSONAL }));
 		// console.log(schedule[0].id);
 		dispatch(setId(schedule.id));

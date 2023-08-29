@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 
 import styled from "styled-components";
 
-import SCHEDULE_TYPE from "@/constants/calendar/scheduleType.js";
+import { SCHEDULE_TYPE } from "@/constants/calendarConstants";
 import { getGroupList } from "@/features/group/group-service.js";
 
 import CalendarContainer from "../components/Common/CalendarContainer/CalendarContainer";
