@@ -67,7 +67,9 @@ const CalendarContainer = ({ type }) => {
 		setCurrentMonth(month);
 		setCurrentYear(year);
 		// 리스트 보기여서 select에서 제공된 주차의 경우
-		if (week) return setCurrentWeek(week);
+		if (week) {
+			return setCurrentWeek(week);
+		}
 		// 월별 보기인데 현재 날짜에 해당하는 년월인 경우
 		if (
 			new Date().getMonth() + 1 === Number(month) &&
