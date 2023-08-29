@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import AddIcon from "@/assets/icon/ic-group-add.svg";
 import SampleImg from "@/assets/img/feed/img-group-sample-01.jpeg";
-import { getGroupInfoDetail } from "@/features/group/group-service";
+import { getGroupInfo } from "@/features/group/group-service";
 
 import {
 	ContainerDiv,
@@ -17,7 +17,7 @@ const GroupProfile = () => {
 	const inGroup = true;
 	const dispatchFn = useDispatch();
 
-	const group = useSelector((state) => state.group.group);
+	const groupInfo = useSelector((state) => state.group.groupInfo);
 	// const groupList = useSelector((state) => state.group.groupList);
 
 	useEffect(() => {
@@ -28,17 +28,18 @@ const GroupProfile = () => {
 		// 	}),
 		// );
 		// dispatchFn(getGroupList(2));
-		dispatchFn(getGroupInfoDetail(2));
+
+		// 추후 유저 그룹 조회 api를 통해 group id를 받아오고 해당 group id로 파라미터 수정
+		dispatchFn(getGroupInfo(2));
 	}, []);
 
-	// console.log(groupList);
-	// console.log(group);
+	// console.log(groupInfo);
 
 	return (
 		<ContainerDiv>
 			<TopDiv>
 				<img src={SampleImg} alt="sampleimg" />
-				<h3>{group?.name}</h3>
+				<h3>{groupInfo?.name}</h3>
 				<p>
 					당신의 개발 열정을 키우고 함께
 					<br />
@@ -47,11 +48,11 @@ const GroupProfile = () => {
 			</TopDiv>
 			<MiddleDiv>
 				<MiddleInnerDiv>
-					<h3>{group?.member}</h3>
+					<h3>{groupInfo?.member}</h3>
 					<h4>그룹원</h4>
 				</MiddleInnerDiv>
 				<MiddleInnerDiv>
-					<h3>{group?.feed}</h3>
+					<h3>{groupInfo?.feed}</h3>
 					<h4>작성된 피드</h4>
 				</MiddleInnerDiv>
 			</MiddleDiv>
