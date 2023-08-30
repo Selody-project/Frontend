@@ -131,6 +131,7 @@ const CustomCalendar = forwardRef(
 						dispatch(setCurrentCalenderView(type))
 					}
 					slotLabelFormat={getTimeFormat}
+					slotDuration="1:00:00"
 				/>
 			</CustomCalendarDiv>
 		);
