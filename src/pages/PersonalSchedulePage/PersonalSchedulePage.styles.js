@@ -6,6 +6,6 @@ export const LayoutMain = styled.main`
 	justify-content: center;
 	gap: 13px;
 	padding: 50px 95px 0;
-	padding-left: ${({ isMonthly }) => (!isMonthly ? "50px" : undefined)};
+	padding-left: ${({ isMonthly }) => (!isMonthly ? "23px" : undefined)};
 	font-family: "Inter", sans-serif;
 `;
