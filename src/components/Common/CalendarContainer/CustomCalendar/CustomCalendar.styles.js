@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+const TIME_COLUMN_WIDTH = "73px";
+
 export const CustomCalendarDiv = styled.div`
 	position: relative;
 	display: flex;
@@ -13,7 +15,7 @@ export const CustomCalendarDiv = styled.div`
 		margin-bottom: 2rem;
 		.fc-header-toolbar.fc-toolbar {
 			margin: 0;
-			padding-left: ${({ isMonthly }) => (!isMonthly ? "45px" : 0)};
+			margin-left: ${({ isMonthly }) => (!isMonthly ? TIME_COLUMN_WIDTH : 0)};
 			display: flex;
 			flex-direction: column;
 			align-items: start;
@@ -102,11 +104,16 @@ export const CustomCalendarDiv = styled.div`
 	}
 	.fc-theme-standard .fc-timegrid-slots tr > td {
 		&:first-child {
-			display: ${({ isMonthly }) => (!isMonthly ? "inline-block" : undefined)};
+			display: ${({ isMonthly }) => (!isMonthly ? "flex" : undefined)};
+			justify-content: ${({ isMonthly }) => (!isMonthly ? "end" : undefined)};
 			border: ${({ isMonthly }) => (!isMonthly ? "none" : undefined)};
 			font-size: ${({ isMonthly }) => (!isMonthly ? "12px" : "inherit")};
 			font-weight: ${({ isMonthly }) => (!isMonthly ? 500 : "inherit")};
-			padding-right: ${({ isMonthly }) => (!isMonthly ? "13px" : 0)};
+			padding-right: ${({ isMonthly }) => (!isMonthly ? "17px" : 0)};
+			width: ${({ isMonthly }) => (!isMonthly ? TIME_COLUMN_WIDTH : undefined)};
+			& > div > div {
+				padding: 0;
+			}
 		}
 		height: ${({ isMonthly }) => (!isMonthly ? "60px" : "93px")};
 	}
@@ -128,7 +135,7 @@ export const CustomCalendarDiv = styled.div`
 		}
 	}
 
-	// reset right margin-right in calendar
+	// remove right margin in calendar
 	.fc-col-header,
 	.fc .fc-timegrid-body {
 		width: 100% !important;
@@ -138,7 +145,7 @@ export const CustomCalendarDiv = styled.div`
 export const TitleSelect = styled.select`
 	position: absolute;
 	top: 35px;
-	left: ${({ isMonthly }) => (!isMonthly ? "45px" : 0)};
+	left: ${({ isMonthly }) => (!isMonthly ? TIME_COLUMN_WIDTH : 0)};
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
