@@ -27,6 +27,65 @@ const getSelectValue = (currentView, currentYear, currentMonth, currentWeek) =>
 		? `${currentYear}-${currentMonth}`
 		: `${currentYear}-${currentMonth}-${currentWeek}`;
 
+const getDateOptions = (currentView) => {
+	const currentDate = new Date();
+	const selectStartDate = new Date(
+		currentDate.setMonth(currentDate.getMonth() - 3),
+	);
+	const yearRange = selectStartDate.getMonth() > currentDate.getMonth() ? 4 : 3;
+
+	const getMonthRangeForEachYear = (year) => {
+		return year === selectStartDate.getFullYear()
+			? 12 - selectStartDate.getMonth()
+			: 12;
+	};
+
+	const getMonthForEachYear = (year, index) => {
+		return year === selectStartDate.getFullYear()
+			? selectStartDate.getMonth() + 1 + index
+			: index + 1;
+	};
+
+	const getMonthlyOption = (year, month) => {
+		return (
+			<option key={`${year}-${month}`} value={`${year}-${month}`}>
+				{year}년 {month}월
+			</option>
+		);
+	};
+
+	const getWeeklyOptionsForEachMonth = (year, month) => {
+		return Array.from({ length: countWeek(year, month) }, (_, k) => k + 1).map(
+			(week) => (
+				<option
+					key={`${year}-${month}-${week}`}
+					value={`${year}-${month}-${week}`}
+				>
+					{year}년 {month}월 {week}주차
+				</option>
+			),
+		);
+	};
+
+	return Array.from(
+		{
+			length: yearRange,
+		},
+		(_, i) => selectStartDate.getFullYear() + i,
+	).map((year) =>
+		Array.from(
+			{
+				length: getMonthRangeForEachYear(year),
+			},
+			(_, j) => getMonthForEachYear(year, j),
+		).map((month) =>
+			currentView === VIEW_TYPE.DAY_GRID_MONTH
+				? getMonthlyOption(year, month)
+				: getWeeklyOptionsForEachMonth(year, month),
+		),
+	);
+};
+
 const CustomCalendar = forwardRef(
 	(
 		{
@@ -40,10 +99,7 @@ const CustomCalendar = forwardRef(
 		calendarRef,
 	) => {
 		const [currentView, setCurrentView] = useState(VIEW_TYPE.DAY_GRID_MONTH);
-		const currentDate = new Date();
-		const selectStartDate = new Date(
-			currentDate.setMonth(currentDate.getMonth() - 3),
-		);
+
 		return (
 			<CustomCalendarDiv data-testid="calendar-container">
 				<TitleSelect
@@ -58,44 +114,7 @@ const CustomCalendar = forwardRef(
 						handleDateChange(year, month, week || null);
 					}}
 				>
-					{Array.from(
-						{
-							length:
-								selectStartDate.getMonth() > currentDate.getMonth() ? 4 : 3,
-						},
-						(_, i) => selectStartDate.getFullYear() + i,
-					).map((year) =>
-						Array.from(
-							{
-								length:
-									year === selectStartDate.getFullYear()
-										? 12 - selectStartDate.getMonth()
-										: 12,
-							},
-							(_, j) =>
-								year === selectStartDate.getFullYear()
-									? selectStartDate.getMonth() + 1 + j
-									: j + 1,
-						).map((month) =>
-							currentView === VIEW_TYPE.DAY_GRID_MONTH ? (
-								<option key={`${year}-${month}`} value={`${year}-${month}`}>
-									{year}년 {month}월
-								</option>
-							) : (
-								Array.from(
-									{ length: countWeek(year, month) },
-									(_, k) => k + 1,
-								).map((week) => (
-									<option
-										key={`${year}-${month}-${week}`}
-										value={`${year}-${month}-${week}`}
-									>
-										{year}년 {month}월 {week}주차
-									</option>
-								))
-							),
-						),
-					)}
+					{getDateOptions(currentView)}
 				</TitleSelect>
 				<FullCalendar
 					ref={calendarRef}
