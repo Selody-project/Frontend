@@ -94,16 +94,11 @@ export const CustomCalendarDiv = styled.div`
 	}
 	.fc-theme-standard .fc-timegrid-slots tr > td {
 		&:first-child {
-			position: ${({ isMonthly }) => (!isMonthly ? "relative" : undefined)};
-			& > div {
-				position: ${({ isMonthly }) => (!isMonthly ? "absolute" : undefined)};
-				top: ${({ isMonthly }) => (!isMonthly ? 0 : undefined)};
-				right: ${({ isMonthly }) => (!isMonthly ? "14px" : undefined)};
-			}
+			display: ${({ isMonthly }) => (!isMonthly ? "inline-block" : undefined)};
 			border: ${({ isMonthly }) => (!isMonthly ? "none" : undefined)};
 			font-size: ${({ isMonthly }) => (!isMonthly ? "12px" : "inherit")};
 			font-weight: ${({ isMonthly }) => (!isMonthly ? 500 : "inherit")};
-			padding-right: ${({ isMonthly }) => (!isMonthly ? "14px" : 0)};
+			padding-right: ${({ isMonthly }) => (!isMonthly ? "13px" : 0)};
 		}
 		height: ${({ isMonthly }) => (!isMonthly ? "60px" : "93px")};
 	}
@@ -124,13 +119,6 @@ export const CustomCalendarDiv = styled.div`
 			scrollbar-width: none;
 		}
 	}
-	/* .fc .fc-scrollgrid-section-body table,
-	.fc .fc-timegrid-body {
-		width: 100% !important;
-	}
-	.fc-col-header {
-		width: 100% !important;
-	} */
 `;
 
 export const TitleSelect = styled.select`
