@@ -119,6 +119,12 @@ export const CustomCalendarDiv = styled.div`
 			scrollbar-width: none;
 		}
 	}
+
+	// reset right margin-right in calendar
+	.fc-col-header,
+	.fc .fc-timegrid-body {
+		width: 100% !important;
+	}
 `;
 
 export const TitleSelect = styled.select`
