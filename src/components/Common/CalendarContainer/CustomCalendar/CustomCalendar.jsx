@@ -37,9 +37,7 @@ const getDayHeaderContentInTimeGridWeek = ({ date, text }) => {
 };
 
 const getTimeFormat = ({ date: { hour } }) => {
-	if (hour === 1) return "오전  01";
-	if (hour === 13) return "오후  01";
-	return `${hour % 12 < 10 ? `0${hour % 12}` : hour % 12}`;
+	return `${hour < 10 ? `0${hour}` : hour}`;
 };
 
 const CustomCalendar = forwardRef(
