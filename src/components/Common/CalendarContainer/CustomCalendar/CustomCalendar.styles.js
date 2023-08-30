@@ -78,19 +78,37 @@ export const CustomCalendarDiv = styled.div`
 			width: 30px;
 			height: 30px;
 			line-height: 30px;
-			&.activated {
-				color: ${({ theme: { colors } }) => colors.white};
-				border-radius: 50%;
-				background-color: ${({ theme: { colors } }) => colors.primary};
-			}
 		}
 	}
 	// 날짜를 왼쪽 상단에 위치
 	.fc .fc-daygrid-day-top {
 		flex-direction: row;
 		& > a {
-			padding: 9px 0 0 9px;
+			margin-top: 3px;
+			margin-left: 2px;
+			padding: 0;
+			width: 30px;
+			height: 30px;
+			text-align: center;
+			line-height: 30px;
 		}
+	}
+	// highlights today
+	.fc-daygrid-day.fc-day-today,
+	.fc-timegrid-col.fc-day-today {
+		background-color: transparent;
+	}
+
+	.fc-daygrid-day.fc-day-today .fc-daygrid-day-top > a,
+	.fc-col-header-cell.fc-day .dateNum.today {
+		color: white;
+		border-radius: 50%;
+	}
+	.fc-daygrid-day.fc-day-today .fc-daygrid-day-top > a {
+		background-color: ${({ theme: { colors } }) => colors.text_01};
+	}
+	th .dateNum.today {
+		background-color: ${({ theme: { colors } }) => colors.primary};
 	}
 	// border
 	.fc-day.fc-daygrid-day {

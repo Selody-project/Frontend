@@ -28,10 +28,12 @@ const getSelectValue = (currentView, currentYear, currentMonth, currentWeek) =>
 
 const getDayHeaderContentInTimeGridWeek = ({ date, text }) => {
 	const week = text.slice(text.length - 2, text.length - 1);
+	const isItToday = !(date - new Date(new Date().setHours(0, 0, 0, 0)));
+
 	return (
 		<div>
 			<div>{week}</div>
-			<div className="dateNum">{date.getDate()}</div>
+			<div className={`dateNum ${isItToday && "today"}`}>{date.getDate()}</div>
 		</div>
 	);
 };
