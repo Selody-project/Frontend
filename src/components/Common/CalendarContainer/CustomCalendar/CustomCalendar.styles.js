@@ -129,7 +129,8 @@ export const CustomCalendarDiv = styled.div`
 
 	// remove right margin in calendar
 	.fc-col-header,
-	.fc .fc-timegrid-body {
+	.fc .fc-timegrid-body,
+	.fc .fc-scrollgrid-section-body table {
 		width: 100% !important;
 	}
 `;
