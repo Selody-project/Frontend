@@ -40,7 +40,10 @@ const CustomCalendar = forwardRef(
 		calendarRef,
 	) => {
 		const [currentView, setCurrentView] = useState(VIEW_TYPE.DAY_GRID_MONTH);
-
+		const currentDate = new Date();
+		const selectStartDate = new Date(
+			currentDate.setMonth(currentDate.getMonth() - 3),
+		);
 		return (
 			<CustomCalendarDiv data-testid="calendar-container">
 				<TitleSelect
@@ -56,10 +59,24 @@ const CustomCalendar = forwardRef(
 					}}
 				>
 					{Array.from(
-						{ length: 3 },
-						(_, i) => new Date().getFullYear() + i,
+						{
+							length:
+								selectStartDate.getMonth() > currentDate.getMonth() ? 4 : 3,
+						},
+						(_, i) => selectStartDate.getFullYear() + i,
 					).map((year) =>
-						Array.from({ length: 12 }, (_, j) => j + 1).map((month) =>
+						Array.from(
+							{
+								length:
+									year === selectStartDate.getFullYear()
+										? 12 - selectStartDate.getMonth()
+										: 12,
+							},
+							(_, j) =>
+								year === selectStartDate.getFullYear()
+									? selectStartDate.getMonth() + 1 + j
+									: j + 1,
+						).map((month) =>
 							currentView === VIEW_TYPE.DAY_GRID_MONTH ? (
 								<option key={`${year}-${month}`} value={`${year}-${month}`}>
 									{year}년 {month}월
