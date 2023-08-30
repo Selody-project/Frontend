@@ -109,6 +109,10 @@ export const CustomCalendarDiv = styled.div`
 		}
 		height: ${({ isMonthly }) => (!isMonthly ? "60px" : "93px")};
 	}
+	// timeGridWeek 내부 border
+	tr > .fc-timegrid-col:not(:first-child) > .fc-timegrid-col-frame {
+		border-right: 1px solid ${({ theme: { colors } }) => colors.disabled_text};
+	}
 
 	.fc-scroller-harness > .fc-scroller {
 		&::-webkit-scrollbar {
