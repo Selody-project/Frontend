@@ -6,7 +6,7 @@ import React from "react";
 import "@testing-library/jest-dom/extend-expect";
 
 import { render, screen } from "../../jest.setup.js";
-import CommunityPage from "../../src/pages/CommunityPage.jsx";
+import CommunityPage from "../../src/pages/CommunityPage/CommunityPage.jsx";
 
 describe("CommunityPage", () => {
 	// 커뮤니티 페이지 렌더링 테스트

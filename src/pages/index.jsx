@@ -1,4 +1,4 @@
-import CommunityPage from "./CommunityPage";
+import CommunityPage from "./CommunityPage/CommunityPage";
 import ErrorPage from "./ErrorPage/ErrorPage";
 import GroupSchedulePage from "./GroupSchedulePage";
 import LandingPage from "./LandingPage";

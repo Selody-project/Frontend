@@ -13,6 +13,7 @@ export const FeedDiv = styled.div`
 	border-radius: 10px;
 	border: 1px solid #c9ccd7;
 	padding: 24px 18px 30px;
+	cursor: pointer;
 `;
 
 export const TopDiv = styled.div`

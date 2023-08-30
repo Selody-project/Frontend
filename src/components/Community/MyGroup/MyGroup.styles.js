@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const GroupDiv = styled.div`
 	display: flex;
 	flex-direction: column;
-	margin-top: 30px;
 
 	& > h3 {
 		font-family: Inter;
@@ -17,11 +16,13 @@ export const ListDiv = styled.div`
 	flex-direction: row;
 	margin-top: 30px;
 	gap: 34px;
+	cursor: pointer;
 `;
 
 export const ItemDiv = styled.div`
 	display: flex;
 	flex-direction: column;
+	gap: 8px;
 
 	& > h4 {
 		color: #2f2f2f;
@@ -29,7 +30,6 @@ export const ItemDiv = styled.div`
 		font-size: 12px;
 		font-weight: 400;
 		text-align: center;
-		margin-top: 8px;
 	}
 `;
 

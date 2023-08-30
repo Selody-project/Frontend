@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const ContainerDiv = styled.div`
 	display: flex;
 	flex-direction: column;
-	margin: 0 82px;
+	margin: 90px 82px 0;
 `;
 
 export const FeedDiv = styled.div`

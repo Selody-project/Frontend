@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 
-import { ContainerDiv, FeedDiv, Button } from "./CommunityLanding.styles";
-import GroupSearch from "../GroupSearch/GroupSearch";
-import MyGroup from "../MyGroup/MyGroup";
-import MyGroupFeed from "../MyGroupFeed/MyGroupFeed";
+import GroupSearch from "@/components/Community/GroupSearch/GroupSearch";
+import MyGroup from "@/components/Community/MyGroup/MyGroup";
+import MyGroupFeed from "@/components/Community/MyGroupFeed/MyGroupFeed";
 
-const CommunityLanding = () => {
+import { ContainerDiv, FeedDiv, Button } from "./CommunityPage.styles";
+
+const CommunityPage = () => {
 	const [tab, setTab] = useState("feed");
 
 	return (
@@ -38,4 +39,4 @@ const CommunityLanding = () => {
 	);
 };
 
-export default CommunityLanding;
+export default CommunityPage;
