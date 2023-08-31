@@ -30,7 +30,7 @@ const getSelectValue = (currentView, currentYear, currentMonth, currentWeek) =>
 const getDateOptions = (currentView) => {
 	const currentDate = new Date();
 	const selectStartDate = new Date(
-		currentDate.setMonth(currentDate.getMonth() - 3),
+		currentDate.setMonth(currentDate.getMonth() - 6),
 	);
 	const yearRange = selectStartDate.getMonth() > currentDate.getMonth() ? 4 : 3;
 
