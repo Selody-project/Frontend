@@ -140,7 +140,7 @@ const CustomCalendar = forwardRef(
 					dayCellContent={(renderInfo) =>
 						renderInfo.dayNumberText.replace("일", "")
 					}
-					height={750}
+					height={635}
 					eventClick={menuHandler}
 					datesSet={({ view: { type } }) =>
 						dispatch(setCurrentCalenderView(type))

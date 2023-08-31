@@ -12,7 +12,7 @@ export const CustomCalendarDiv = styled.div`
 	width: 100%;
 	.fc.fc-media-screen.fc-direction-ltr.fc-theme-standard {
 		width: 100%;
-		margin-bottom: 2rem;
+		margin-bottom: 133px;
 		.fc-header-toolbar.fc-toolbar {
 			margin: 0;
 			margin-left: ${({ isMonthly }) => (!isMonthly ? TIME_COLUMN_WIDTH : 0)};
