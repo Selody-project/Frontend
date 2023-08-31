@@ -108,6 +108,8 @@ export const Button = styled.button`
 	font-weight: ${({ theme }) => theme.typography.weight.bold};
 	font-size: 16px;
 	letter-spacing: 0.32px;
+	line-height: normal;
+	text-align: center;
 `;
 
 export const LoginButton = styled(Button)`
@@ -115,11 +117,11 @@ export const LoginButton = styled(Button)`
 	color: ${({ theme: { colors } }) => colors.white};
 
 	&:hover {
-		background-color: #4c2fff;
+		background-color: ${({ theme: { colors } }) => colors.btn_04};
 	}
 
 	&:active {
-		background-color: #3515fa;
+		background-color: ${({ theme: { colors } }) => colors.btn_05};
 	}
 `;
 
