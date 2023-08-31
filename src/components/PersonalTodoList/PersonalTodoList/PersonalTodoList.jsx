@@ -23,12 +23,14 @@ import PersonalTodoItem from "../PersonalTodoItem/PersonalTodoItem";
 const PersonalTodoList = () => {
 	const dispatch = useDispatch();
 	const { openedModal } = useSelector((state) => state.ui);
-	const { month, year, totalSchedule } = useSelector((state) => state.schedule);
+	const { currentYear, currentMonth, totalSchedule } = useSelector(
+		(state) => state.schedule,
+	);
 	const [selectedTab, setSelectedTab] = useState(false);
 
 	useEffect(() => {
 		dispatch(getSchedule());
-	}, [month, year]);
+	}, [currentYear, currentMonth]);
 
 	const handleMenuOpen = () => {
 		dispatch(setEdit(false));

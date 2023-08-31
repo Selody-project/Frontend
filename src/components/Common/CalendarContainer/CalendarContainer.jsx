@@ -3,8 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { CALENDAR_COLORS, SCHEDULE_TYPE } from "@/constants/calendarConstants";
 import {
-	currentMonthFn,
-	currentYearFn,
+	getCurrentWeek,
+	resetCurrentDate,
+	setCurrentMonth,
+	setCurrentWeek,
+	setCurrentYear,
 	setId,
 } from "@/features/schedule/schedule-slice";
 import { openModal } from "@/features/ui/ui-slice";
@@ -25,16 +28,6 @@ const getFirstDateOfWeek = (year, month, week) => {
 	return firstDateOfMonth.getDate();
 };
 
-// currentWeek 초기화를 위해 현재 몇 주차인지 계산합니다.
-const getCurrentWeek = () => {
-	const today = new Date();
-	const date = today.getDate();
-	const day = today.getDay(); // 0~6;
-	const firstDateOfWeek = date - day;
-	const currentWeekNum = Math.ceil((firstDateOfWeek - 1) / 7) + 1;
-	return currentWeekNum;
-};
-
 const CalendarContainer = ({ type }) => {
 	const currentWeekStart = new Date();
 
@@ -43,16 +36,14 @@ const CalendarContainer = ({ type }) => {
 	const calendarRef = useRef(null);
 	const eventColorMap = useRef({});
 
-	const { schedule, recSchedules } = useSelector((state) => state.schedule);
+	const { schedule, recSchedules, currentYear, currentMonth, currentWeek } =
+		useSelector((state) => state.schedule);
 
 	const [selectedGroup, setSelectedGroup] = useState(null);
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [inviteInput, setInviteInput] = useState("");
 	const [invitationLink, setInvitationLink] = useState("");
 	const [events, setEvents] = useState([]);
-	const [currentWeek, setCurrentWeek] = useState(getCurrentWeek());
-	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
-	const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
 
 	const fullCalendarEvents = events.map((event) => ({
 		title: event.text,
@@ -65,21 +56,21 @@ const CalendarContainer = ({ type }) => {
 	}));
 
 	const updateDateState = (year, month, week) => {
-		setCurrentMonth(month);
-		setCurrentYear(year);
+		dispatch(setCurrentMonth(month));
+		dispatch(setCurrentYear(year));
 		// 리스트 보기여서 select에서 제공된 주차의 경우
 		if (week) {
-			return setCurrentWeek(week);
+			return dispatch(setCurrentWeek(week));
 		}
 		// 월별 보기인데 현재 날짜에 해당하는 년월인 경우
 		if (
 			new Date().getMonth() + 1 === Number(month) &&
 			new Date().getFullYear() === Number(year)
 		) {
-			return setCurrentWeek(getCurrentWeek());
+			return dispatch(setCurrentWeek(getCurrentWeek()));
 		}
 		// 그 외 모든 월별 보기의 경우
-		return setCurrentWeek(1);
+		return dispatch(setCurrentWeek(1));
 	};
 
 	const handleDateChange = (year, month, week = null) => {
@@ -146,9 +137,10 @@ const CalendarContainer = ({ type }) => {
 	// }, [dispatch]);
 
 	useEffect(() => {
-		dispatch(currentMonthFn(currentMonth));
-		dispatch(currentYearFn(currentYear));
-	}, [currentMonth]);
+		return () => {
+			dispatch(resetCurrentDate());
+		};
+	}, []);
 
 	useEffect(() => {
 		currentWeekStart.setDate(

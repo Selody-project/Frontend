@@ -6,12 +6,23 @@ import { VIEW_TYPE } from "@/constants/calendarConstants.js";
 
 import { createSchedule, getSchedule } from "./schedule-service.js";
 
+// currentWeek 초기화를 위해 현재 몇 주차인지 계산합니다.
+export const getCurrentWeek = () => {
+	const today = new Date();
+	const date = today.getDate();
+	const day = today.getDay(); // 0~6;
+	const firstDateOfWeek = date - day;
+	const currentWeekNum = Math.ceil((firstDateOfWeek - 1) / 7) + 1;
+	return currentWeekNum;
+};
+
 const initialState = {
 	totalSchedule: [],
 	schedule: [],
 	recSchedules: [],
-	month: 0,
-	year: 0,
+	currentYear: new Date().getFullYear(),
+	currentMonth: new Date().getMonth() + 1,
+	currentWeek: getCurrentWeek(),
 	isLoading: false,
 	id: null,
 	currentCalendarView: VIEW_TYPE.DAY_GRID_MONTH,
@@ -24,11 +35,19 @@ const scheduleSlice = createSlice({
 		saveSchedule: (state, { payload }) => {
 			state.schedule = [...state.schedule, payload];
 		},
-		currentMonthFn: (state, { payload }) => {
-			state.month = payload;
+		setCurrentYear: (state, { payload }) => {
+			state.currentWeek = payload;
 		},
-		currentYearFn: (state, { payload }) => {
-			state.year = payload;
+		setCurrentMonth: (state, { payload }) => {
+			state.currentMonth = payload;
+		},
+		setCurrentWeek: (state, { payload }) => {
+			state.currentWeek = payload;
+		},
+		resetCurrentDate: (state) => {
+			state.currentYear = new Date().getFullYear();
+			state.currentMonth = new Date().getMonth() + 1;
+			state.currentWeek = getCurrentWeek();
 		},
 		setId: (state, { payload }) => {
 			state.id = payload;
@@ -74,8 +93,10 @@ const scheduleSlice = createSlice({
 
 export const {
 	saveSchedule,
-	currentMonthFn,
-	currentYearFn,
+	setCurrentYear,
+	setCurrentMonth,
+	setCurrentWeek,
+	resetCurrentDate,
 	setId,
 	setCurrentCalenderView,
 } = scheduleSlice.actions;

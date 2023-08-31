@@ -24,7 +24,9 @@ import {
 const ShareTodoList = () => {
 	const dispatch = useDispatch();
 	const { openedModal } = useSelector((state) => state.ui);
-	const { month, year, totalSchedule } = useSelector((state) => state.schedule);
+	const { currentYear, currentMonth, totalSchedule } = useSelector(
+		(state) => state.schedule,
+	);
 	const { group } = useSelector((state) => state.group);
 	const { inviteCode } = useSelector((state) => state.groupInvite);
 	const [selectedTab, setSelectedTab] = useState(true);
@@ -40,7 +42,7 @@ const ShareTodoList = () => {
 
 	useEffect(() => {
 		dispatch(getSchedule());
-	}, [month, year]);
+	}, [currentYear, currentMonth]);
 
 	return (
 		<Wrapper>

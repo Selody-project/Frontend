@@ -14,11 +14,11 @@ export const getSchedule = createAsyncThunk(
 	"schedule/getSchedule",
 	async (_, thunkAPI) => {
 		const state = thunkAPI.getState();
-		const { month } = state.schedule;
-		const { year } = state.schedule;
+		const { currentYear } = state.schedule;
+		const { currentMonth } = state.schedule;
 
-		const startDateTime = generateStartDateTime(year, month);
-		const endDateTime = generateEndDateTime(year, month);
+		const startDateTime = generateStartDateTime(currentYear, currentMonth);
+		const endDateTime = generateEndDateTime(currentYear, currentMonth);
 
 		try {
 			const response = await customFetch.get(
