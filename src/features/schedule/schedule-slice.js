@@ -18,9 +18,9 @@ const initialState = {
 	calendarSchedules: [],
 	todaySchedules: [],
 	schedulesForTheWeek: [],
-	month: new Date().getMonth() + 1,
-	year: new Date().getFullYear(),
-	week: getCurrentWeek(),
+	currentYear: new Date().getFullYear(),
+	currentMonth: new Date().getMonth() + 1,
+	currentWeek: getCurrentWeek(),
 	isLoading: false,
 	currentCalendarView: VIEW_TYPE.DAY_GRID_MONTH,
 };
@@ -29,22 +29,19 @@ const scheduleSlice = createSlice({
 	name: "schedule",
 	initialState,
 	reducers: {
-		resetDate: (state) => {
-			state.year = new Date().getFullYear();
-			state.month = new Date().getMonth() + 1;
-			state.week = getCurrentWeek();
+		setCurrentYear: (state, { payload }) => {
+			state.currentWeek = payload;
 		},
-		setYear: (state, { payload }) => {
-			state.year = payload;
+		setCurrentMonth: (state, { payload }) => {
+			state.currentMonth = payload;
 		},
-		setMonth: (state, { payload }) => {
-			state.month = payload;
+		setCurrentWeek: (state, { payload }) => {
+			state.currentWeek = payload;
 		},
-		setWeek: (state, { payload }) => {
-			state.week = payload;
-		},
-		resetWeek: (state) => {
-			state.week = getCurrentWeek();
+		resetCurrentDate: (state) => {
+			state.currentYear = new Date().getFullYear();
+			state.currentMonth = new Date().getMonth() + 1;
+			state.currentWeek = getCurrentWeek();
 		},
 		setCurrentCalenderView: (state, { payload }) => {
 			if (
@@ -201,11 +198,10 @@ const scheduleSlice = createSlice({
 });
 
 export const {
-	resetDate,
-	setYear,
-	setMonth,
-	setWeek,
-	resetWeek,
+	setCurrentYear,
+	setCurrentMonth,
+	setCurrentWeek,
+	resetCurrentDate,
 	setCurrentCalenderView,
 } = scheduleSlice.actions;
 
