@@ -106,7 +106,6 @@ export const Button = styled.button`
 	border-radius: 4px;
 	cursor: pointer;
 	font-weight: ${({ theme }) => theme.typography.weight.bold};
-	font-size: 16px;
 	letter-spacing: 0.32px;
 	line-height: normal;
 	text-align: center;

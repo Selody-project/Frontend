@@ -73,7 +73,6 @@ export const SignUpButton = styled(Button)`
 	margin-top: 40px;
 	padding: 20px 0;
 	text-align: center;
-	font-size: 16px;
 	line-height: normal;
 	letter-spacing: 0.32px;
 	border: none;
