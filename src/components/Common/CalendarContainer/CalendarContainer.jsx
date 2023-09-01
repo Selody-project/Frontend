@@ -1,22 +1,57 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { CALENDAR_COLORS, SCHEDULE_TYPE } from "@/constants/calendarConstants";
+import { SCHEDULE_TYPE } from "@/constants/calendarConstants";
 import {
 	getCurrentWeek,
 	resetCurrentDate,
 	setCurrentMonth,
 	setCurrentWeek,
 	setCurrentYear,
-	setId,
 } from "@/features/schedule/schedule-slice";
 import { openModal } from "@/features/ui/ui-slice";
 import { setEdit } from "@/features/user/user-slice";
-import { getRandomColor } from "@/utils/color";
+// import { getRandomColor } from "@/utils/color";
 
 import { CalendarContainerDiv } from "./CalendarContainer.styles";
 import CustomCalendar from "./CustomCalendar/CustomCalendar";
 import InviteUser from "../../SharePage/InviteUser";
+
+const DUMMY_SCHEDUELS = [
+	{
+		groupId: "work",
+		title: "운동하기",
+		start: "18:00:00",
+		end: "20:00:00",
+		// daysOfWeek: [2, 4, 6], // 월, 수, 금에 반복
+		startRecur: new Date(2023, 8),
+		endRecur: new Date(2023, 9), // 1달 뒤까지 반복
+	},
+	{
+		id: 0,
+		title: "저녁 맛있는 거 먹기",
+		start: new Date(2023, 7, 31, 18),
+		end: new Date(2023, 7, 31, 19),
+	},
+	{
+		id: 1,
+		title: "출퇴근 걸어가기",
+		start: new Date(2023, 7, 31),
+		end: new Date(2023, 8, 1),
+	},
+	{
+		id: 2,
+		title: "출퇴근 걸어가기",
+		start: new Date(2023, 7, 31),
+		end: new Date(2023, 8, 1),
+	},
+	{
+		id: 3,
+		title: "출퇴근 걸어가기",
+		start: new Date(2023, 7, 31),
+		end: new Date(2023, 8, 1),
+	},
+];
 
 // 리스트(주마다 보기)로 진행했을 떄 보여줄 첫 일요일을 계산합니다.
 const getFirstDateOfWeek = (year, month, week) => {
@@ -34,26 +69,26 @@ const CalendarContainer = ({ type }) => {
 	const dispatch = useDispatch();
 
 	const calendarRef = useRef(null);
-	const eventColorMap = useRef({});
+	// const eventColorMap = useRef({});
 
-	const { schedule, recSchedules, currentYear, currentMonth, currentWeek } =
-		useSelector((state) => state.schedule);
+	const { currentYear, currentMonth, currentWeek } = useSelector(
+		(state) => state.schedule,
+	);
 
 	const [selectedGroup, setSelectedGroup] = useState(null);
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [inviteInput, setInviteInput] = useState("");
 	const [invitationLink, setInvitationLink] = useState("");
-	const [events, setEvents] = useState([]);
 
-	const fullCalendarEvents = events.map((event) => ({
-		title: event.text,
-		start: event.start.toISOString().replace(".000Z", ""),
-		end: event.end.toISOString().replace(".000Z", ""),
-		color:
-			event.colors !== ""
-				? event.colors
-				: CALENDAR_COLORS[events.indexOf(event) % CALENDAR_COLORS.length],
-	}));
+	// const fullCalendarEvents = events.map((event) => ({
+	// 	title: event.text,
+	// 	start: event.start.toISOString().replace(".000Z", ""),
+	// 	end: event.end.toISOString().replace(".000Z", ""),
+	// 	color:
+	// 		event.colors !== ""
+	// 			? event.colors
+	// 			: CALENDAR_COLORS[events.indexOf(event) % CALENDAR_COLORS.length],
+	// }));
 
 	const updateDateState = (year, month, week) => {
 		dispatch(setCurrentMonth(month));
@@ -104,18 +139,19 @@ const CalendarContainer = ({ type }) => {
 		updateDateState(year, month, week);
 	};
 
-	const getColorForEvent = (eventId) => {
-		if (!eventColorMap.current[eventId]) {
-			eventColorMap.current[eventId] = getRandomColor();
-		}
-		return eventColorMap.current[eventId];
-	};
+	// const getColorForEvent = (eventId) => {
+	// 	if (!eventColorMap.current[eventId]) {
+	// 		eventColorMap.current[eventId] = getRandomColor();
+	// 	}
+	// 	return eventColorMap.current[eventId];
+	// };
 
+	// const menuHandler = () => {
 	const menuHandler = () => {
 		dispatch(setEdit(true));
 		dispatch(openModal({ type: SCHEDULE_TYPE.PERSONAL }));
 		// console.log(schedule[0].id);
-		dispatch(setId(schedule.id));
+		// dispatch(setId(schedule.id));
 	};
 
 	const handleInviteButtonClick = (event) => {
@@ -148,39 +184,39 @@ const CalendarContainer = ({ type }) => {
 		);
 	}, [currentWeekStart]);
 
-	useEffect(() => {
-		const scheduleEvents = schedule.map((event) => {
-			const startDate = new Date(event.startDateTime);
-			const endDate = new Date(event.endDateTime);
+	// useEffect(() => {
+	// 	const scheduleEvents = schedule.map((event) => {
+	// 		const startDate = new Date(event.startDateTime);
+	// 		const endDate = new Date(event.endDateTime);
 
-			return {
-				start: startDate,
-				end: endDate,
-				text: event.title,
-				colors: getColorForEvent(event.id),
-			};
-		});
+	// 		return {
+	// 			start: startDate,
+	// 			end: endDate,
+	// 			text: event.title,
+	// 			colors: getColorForEvent(event.id),
+	// 		};
+	// 	});
 
-		const recSchedule = recSchedules
-			.map((rec) => {
-				const color = getColorForEvent(rec.id);
+	// 	const recSchedule = recSchedules
+	// 		.map((rec) => {
+	// 			const color = getColorForEvent(rec.id);
 
-				return rec.recurrenceDateList.map((event) => {
-					const startDate = new Date(event.startDateTime);
-					const endDate = new Date(event.endDateTime);
+	// 			return rec.recurrenceDateList.map((event) => {
+	// 				const startDate = new Date(event.startDateTime);
+	// 				const endDate = new Date(event.endDateTime);
 
-					return {
-						start: startDate,
-						end: endDate,
-						text: rec.title,
-						colors: color,
-					};
-				});
-			})
-			.flat();
+	// 				return {
+	// 					start: startDate,
+	// 					end: endDate,
+	// 					text: rec.title,
+	// 					colors: color,
+	// 				};
+	// 			});
+	// 		})
+	// 		.flat();
 
-		setEvents([...scheduleEvents, ...recSchedule]);
-	}, [schedule, recSchedules]);
+	// 	setEvents([...scheduleEvents, ...recSchedule]);
+	// }, [schedule, recSchedules]);
 
 	return (
 		<CalendarContainerDiv>
@@ -200,7 +236,7 @@ const CalendarContainer = ({ type }) => {
 			)}
 			<CustomCalendar
 				ref={calendarRef}
-				fullCalendarEvents={fullCalendarEvents}
+				fullCalendarEvents={DUMMY_SCHEDUELS}
 				currentYear={currentYear}
 				currentMonth={currentMonth}
 				currentWeek={currentWeek}
