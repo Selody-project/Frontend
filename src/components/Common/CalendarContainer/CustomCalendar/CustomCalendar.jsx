@@ -5,6 +5,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
+import { useTheme } from "styled-components";
 
 import { VIEW_TYPE } from "@/constants/calendarConstants";
 import { setCurrentCalenderView } from "@/features/schedule/schedule-slice";
@@ -99,6 +100,8 @@ const CustomCalendar = forwardRef(
 		);
 		const dispatch = useDispatch();
 
+		const theme = useTheme();
+
 		return (
 			<CustomCalendarDiv
 				data-testid="calendar-container"
@@ -147,6 +150,12 @@ const CustomCalendar = forwardRef(
 					}
 					slotLabelFormat={getTimeFormat}
 					slotDuration="1:00:00"
+					eventBackgroundColor={theme.colors.btn_02}
+					slotEventOverlap={false}
+					eventTextColor={theme.colors.btn_02}
+					displayEventTime={false}
+					eventDisplay="block"
+					eventBorderColor="transparent"
 				/>
 			</CustomCalendarDiv>
 		);

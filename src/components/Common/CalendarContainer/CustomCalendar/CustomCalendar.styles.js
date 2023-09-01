@@ -155,6 +155,23 @@ export const CustomCalendarDiv = styled.div`
 	.fc .fc-scrollgrid-section-body table {
 		width: 100% !important;
 	}
+
+	// reset event style
+	.fc-direction-ltr .fc-timegrid-col-events,
+	.fc-timegrid-event-harness-inset .fc-timegrid-event,
+	.fc-daygrid-event.fc-event-start,
+	.fc-daygrid-event.fc-event-end {
+		margin: 0;
+		border-radius: 0;
+		opacity: 0.5;
+		cursor: pointer;
+	}
+	.fc-timegrid-event-harness-inset .fc-timegrid-event {
+		box-shadow: none;
+	}
+	.fc-timegrid-col-events > div:not(:last-child) {
+		margin-right: 2.5px;
+	}
 `;
 
 export const TitleSelect = styled.select`
