@@ -1,12 +1,15 @@
 import styled from "styled-components";
 
-export const ContainerDiv = styled.div``;
+export const ContainerDiv = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+`;
 
 export const TitleDiv = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	margin-bottom: 15px;
 
 	& > h2 {
 		font-family: Inter;
@@ -32,6 +35,39 @@ export const FeedDiv = styled.div`
 	border-radius: 10px;
 	border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
 	padding: 24px 18px 30px;
+	position: relative;
+
+	& > svg {
+		position: absolute;
+		right: 12px;
+		top: 12px;
+		cursor: pointer;
+	}
+`;
+
+export const OptionMenuDiv = styled.div`
+	position: absolute;
+	right: -30px;
+	top: 32px;
+	z-index: 2;
+
+	& > ul > li {
+		width: 60px;
+		height: 30px;
+		border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: ${({ theme: { colors } }) => colors.white};
+		color: ${({ theme: { colors } }) => colors.sunday};
+		font-family: Inter;
+		font-size: 12px;
+
+		&:first-of-type {
+			border-bottom: none;
+			color: ${({ theme: { colors } }) => colors.text_01};
+		}
+	}
 `;
 
 export const TopDiv = styled.div`

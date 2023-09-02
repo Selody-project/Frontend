@@ -18,6 +18,7 @@ const GroupProfile = () => {
 	const dispatchFn = useDispatch();
 
 	const groupInfo = useSelector((state) => state.group.groupInfo);
+
 	// const groupList = useSelector((state) => state.group.groupList);
 
 	useEffect(() => {
@@ -33,18 +34,12 @@ const GroupProfile = () => {
 		dispatchFn(getGroupInfo(2));
 	}, []);
 
-	// console.log(groupInfo);
-
 	return (
 		<ContainerDiv>
 			<TopDiv>
 				<img src={SampleImg} alt="sampleimg" />
 				<h3>{groupInfo?.name}</h3>
-				<p>
-					당신의 개발 열정을 키우고 함께
-					<br />
-					성장할 수 있는 공간, CodeCrafters
-				</p>
+				<p>{groupInfo?.description}</p>
 			</TopDiv>
 			<MiddleDiv>
 				<MiddleInnerDiv>
