@@ -4,28 +4,24 @@ import { inqueryUserGroup } from "./user-service";
 
 const initialState = {
 	userGroupList: [],
-	isLoading: false,
+	isUserGroupFetching: false,
 };
 
 const userSlice = createSlice({
 	name: "user",
 	initialState,
-	reducers: {
-		inqueryGroup: (state, { payload }) => {
-			state.userGroupList = payload;
-		},
-	},
+	reducers: {},
 	extraReducers: (builder) => {
 		builder
 			.addCase(inqueryUserGroup.pending, (state) => {
-				state.isLoading = true;
+				state.isUserGroupFetching = true;
 			})
 			.addCase(inqueryUserGroup.fulfilled, (state, { payload }) => {
-				state.isLoading = false;
+				state.isUserGroupFetching = false;
 				state.userGroupList = payload;
 			})
 			.addCase(inqueryUserGroup.rejected, (state) => {
-				state.isLoading = false;
+				state.isUserGroupFetching = false;
 			});
 	},
 });
