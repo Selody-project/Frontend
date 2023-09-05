@@ -177,8 +177,8 @@ export const CustomCalendarDiv = styled.div`
 	.fc-timegrid-event-harness-inset .fc-timegrid-event {
 		box-shadow: none;
 	}
-	.fc-timegrid-col-events > div:not(:last-child) {
-		margin-right: 2.5px;
+	.fc-timegrid-col-events > div:not(:first-child) {
+		margin-left: 2.5px;
 	}
 `;
 
