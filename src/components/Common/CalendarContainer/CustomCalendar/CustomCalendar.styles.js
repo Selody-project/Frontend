@@ -166,6 +166,9 @@ export const CustomCalendarDiv = styled.div`
 		opacity: 0.5;
 		cursor: pointer;
 	}
+	.fc-daygrid-event.fc-event-start {
+		margin-bottom: 2.5px;
+	}
 	.fc-timegrid-event-harness-inset .fc-timegrid-event {
 		box-shadow: none;
 	}
