@@ -17,9 +17,9 @@ const countWeek = (year, month) => {
 	const firstOfMonth = new Date(year, month - 1, 1);
 	const lastOfMonth = new Date(year, month, 0);
 
-	const used = firstOfMonth.getDay() + lastOfMonth.getDate();
+	const datesForCountingWeekNum = firstOfMonth.getDay() + lastOfMonth.getDate();
 
-	return Math.ceil(used / 7);
+	return Math.ceil(datesForCountingWeekNum / 7);
 };
 
 const getSelectValue = (currentView, currentYear, currentMonth, currentWeek) =>
