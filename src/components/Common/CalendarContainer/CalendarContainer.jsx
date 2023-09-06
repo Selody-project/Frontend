@@ -18,15 +18,15 @@ import CustomCalendar from "./CustomCalendar/CustomCalendar";
 import InviteUser from "../../SharePage/InviteUser";
 
 const DUMMY_SCHEDUELS = [
-	{
-		groupId: "work",
-		title: "운동하기",
-		start: "18:00:00",
-		end: "20:00:00",
-		// daysOfWeek: [2, 4, 6], // 월, 수, 금에 반복
-		startRecur: new Date(2023, 8),
-		endRecur: new Date(2023, 9), // 1달 뒤까지 반복
-	},
+	// {
+	// 	groupId: "work",
+	// 	title: "운동하기",
+	// 	start: "18:00:00",
+	// 	end: "20:00:00",
+	// 	// daysOfWeek: [2, 4, 6], // 월, 수, 금에 반복
+	// 	startRecur: new Date(2023, 8),
+	// 	endRecur: new Date(2023, 9), // 1달 뒤까지 반복
+	// },
 	{
 		id: 0,
 		title: "저녁 맛있는 거 먹기",
@@ -41,20 +41,20 @@ const DUMMY_SCHEDUELS = [
 	},
 	{
 		id: 2,
-		title: "출퇴근 걸어가기",
-		start: new Date(2023, 7, 31),
-		end: new Date(2023, 8, 1),
+		title: "출근 걸어가기",
+		start: new Date(2023, 8, 4, 8, 30),
+		end: new Date(2023, 8, 4, 9),
 	},
 	{
 		id: 3,
-		title: "출퇴근 걸어가기",
-		start: new Date(2023, 7, 31),
-		end: new Date(2023, 8, 1),
+		title: "퇴근 걸어가기",
+		start: new Date(2023, 8, 4, 18, 0),
+		end: new Date(2023, 8, 4, 18, 30),
 	},
 ];
 
 // 리스트(주마다 보기)로 진행했을 떄 보여줄 첫 일요일을 계산합니다.
-const getFirstDateOfWeek = (year, month, week) => {
+export const getFirstDateOfWeek = (year, month, week) => {
 	const firstDateOfMonth = new Date(year, month - 1);
 	const firstDayOfMonth = firstDateOfMonth.getDay();
 	firstDateOfMonth.setDate(
@@ -217,7 +217,6 @@ const CalendarContainer = ({ type }) => {
 
 	// 	setEvents([...scheduleEvents, ...recSchedule]);
 	// }, [schedule, recSchedules]);
-
 	return (
 		<CalendarContainerDiv>
 			{type === SCHEDULE_TYPE.SHARED && (
