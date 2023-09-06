@@ -41,10 +41,10 @@ const getDateOptions = (currentView) => {
 	};
 
 	const generateOptionTag = (year, month, week) => {
-		const [key, label] = [
-			week ? `${year}-${month}-${week}` : `${year}-${month}`,
-			week ? `${year}년 ${month}월 ${week}주차` : `${year}년 ${month}월`,
-		];
+		const [key, label] = week
+			? [`${year}-${month}-${week}`, `${year}년 ${month}월 ${week}주차`]
+			: [`${year}-${month}`, `${year}년 ${month}월`];
+
 		return (
 			<option key={key} value={key}>
 				{label}
@@ -53,8 +53,9 @@ const getDateOptions = (currentView) => {
 	};
 
 	const generateOptionTags = (year, month) => {
-		if (currentView === VIEW_TYPE.DAY_GRID_MONTH)
+		if (currentView === VIEW_TYPE.DAY_GRID_MONTH) {
 			return generateOptionTag(year, month);
+		}
 
 		return Array.from(
 			{ length: countWeek(year, month) },
@@ -62,12 +63,14 @@ const getDateOptions = (currentView) => {
 		).map((week) => generateOptionTag(year, month, week));
 	};
 
-	return Array.from(
+	const years = Array.from(
 		{
 			length: yearRange,
 		},
 		(_, yearIndex) => selectStartDate.getFullYear() + yearIndex,
-	).map((year) =>
+	);
+
+	const getMonthsForEachYear = (year) =>
 		Array.from(
 			{
 				length: getMonthRange(year),
@@ -76,7 +79,10 @@ const getDateOptions = (currentView) => {
 				year === selectStartDate.getFullYear()
 					? selectStartDate.getMonth() + 1 + monthIndex
 					: monthIndex + 1,
-		).map((month) => generateOptionTags(year, month)),
+		);
+
+	return years.map((year) =>
+		getMonthsForEachYear(year).map((month) => generateOptionTags(year, month)),
 	);
 };
 
