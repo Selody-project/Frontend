@@ -30,17 +30,9 @@ export const CustomCalendarDiv = styled.div`
 					all: unset;
 				}
 				cursor: pointer;
-				color: ${({
-					theme: {
-						colors: { disabled_text: disabledText },
-					},
-				}) => disabledText};
+				color: ${({ theme: { colors } }) => colors.disabled_text};
 				&.fc-button-active {
-					color: ${({
-						theme: {
-							colors: { text_01: text01 },
-						},
-					}) => text01};
+					color: ${({ theme: { colors } }) => colors.text_01};
 				}
 			}
 		}
