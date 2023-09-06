@@ -13,6 +13,7 @@ import {
 	getGroupInfo,
 	getGroupInfoDetail,
 	getGroupMemberList,
+	getGroupRequestMemberList,
 } from "./group-service.js";
 
 const initialState = {
@@ -21,6 +22,7 @@ const initialState = {
 	groupInfoDetail: null,
 	groupList: [],
 	groupMemberList: [],
+	groupRequestMemberList: [],
 	isLoading: false,
 	isUserGroupRefetching: true,
 };
@@ -55,6 +57,16 @@ const groupSlice = createSlice({
 				toast.success("그룹 생성에 성공하셨습니다!");
 			})
 			.addCase(createGroup.rejected, (state) => {
+				state.isLoading = false;
+			})
+			.addCase(getGroupRequestMemberList.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(getGroupRequestMemberList.fulfilled, (state, { payload }) => {
+				state.isLoading = false;
+				state.groupRequestMemberList = payload;
+			})
+			.addCase(getGroupRequestMemberList.rejected, (state) => {
 				state.isLoading = false;
 			})
 			.addCase(getGroupMemberList.pending, (state) => {

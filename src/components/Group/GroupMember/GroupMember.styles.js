@@ -7,10 +7,19 @@ export const ContainerDiv = styled.div`
 `;
 
 export const MemberDiv = styled.div`
-	width: 168px;
-	padding: 14px 20px;
+	width: 208px;
+	padding: 14px 0;
 	border-radius: 4px;
 	border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
+
+	& > hr {
+		border-top: 1px solid ${({ theme: { colors } }) => colors.btn_02};
+		margin: 18px 0;
+	}
+`;
+
+export const MemberInnerDiv = styled.div`
+	padding: 0 16px;
 `;
 
 export const MemberH3 = styled.h3`
@@ -20,6 +29,7 @@ export const MemberH3 = styled.h3`
 
 export const MemberUl = styled.ul`
 	margin-top: ${(props) => (props.list === "member" ? "30px" : "12px")};
+	margin-top: 12px;
 	display: flex;
 	flex-direction: column;
 	gap: 16px 0;
@@ -27,7 +37,6 @@ export const MemberUl = styled.ul`
 	& > li {
 		display: flex;
 		align-items: center;
-		gap: 160px 0;
 
 		> img {
 			width: 42px;
