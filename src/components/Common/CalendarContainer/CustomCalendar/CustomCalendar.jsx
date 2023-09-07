@@ -130,7 +130,7 @@ const CustomCalendar = forwardRef(
 					dayCellContent={(renderInfo) =>
 						renderInfo.dayNumberText.replace("일", "")
 					}
-					height={635}
+					height={currentCalendarView === VIEW_TYPE.DAY_GRID_MONTH ? 654 : 964}
 					eventClick={menuHandler}
 					datesSet={({ view: { type } }) =>
 						dispatch(setCurrentCalenderView(type))
