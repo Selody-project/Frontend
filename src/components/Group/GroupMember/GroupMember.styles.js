@@ -65,6 +65,21 @@ export const MemberUl = styled.ul`
 	}
 `;
 
+export const OptionMenuDiv = styled.div`
+	width: 60px;
+	height: 30px;
+	z-index: 2;
+	background-color: ${({ theme: { colors } }) => colors.white};
+	border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: ${({ theme: { colors } }) => colors.text_02};
+	font-family: Inter;
+	font-size: 12px;
+	position: absolute;
+`;
+
 export const ButtonDiv = styled.div`
 	display: flex;
 	gap: 12px;
@@ -81,19 +96,4 @@ export const ButtonInnerDiv = styled.div`
 		font-family: Inter;
 		font-size: 10px;
 	}
-`;
-
-export const OptionMenuDiv = styled.div`
-	width: 60px;
-	height: 30px;
-	z-index: 2;
-	background-color: ${({ theme: { colors } }) => colors.white};
-	border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	color: ${({ theme: { colors } }) => colors.text_02};
-	font-family: Inter;
-	font-size: 12px;
-	position: absolute;
 `;
