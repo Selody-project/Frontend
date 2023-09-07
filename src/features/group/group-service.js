@@ -4,6 +4,69 @@ import customFetch from "@/components/Base/BaseAxios";
 
 import commonThunk from "../commonThunk";
 
+export const deleteGroupMember = createAsyncThunk(
+	"group/deleteGroupMember",
+	async ({ groupId, userId }, thunkAPI) => {
+		try {
+			const response = await customFetch.delete(
+				`api/group/${groupId}/members/${userId}`,
+				{ groupId, userId },
+			);
+			if (response.status !== 204) {
+				throw response.data;
+			}
+			return response.data;
+		} catch (error) {
+			if (error.response) {
+				return thunkAPI.rejectWithValue(error.response.data);
+			}
+			return thunkAPI.rejectWithValue(error.message);
+		}
+	},
+);
+
+export const rejectGroupRequest = createAsyncThunk(
+	"group/rejectGroupRequest",
+	async ({ groupId, userId }, thunkAPI) => {
+		try {
+			const response = await customFetch.post(
+				`api/group/${groupId}/members/${userId}/reject`,
+				{ groupId, userId },
+			);
+			if (response.status !== 200) {
+				throw response.data;
+			}
+			return response.data;
+		} catch (error) {
+			if (error.response) {
+				return thunkAPI.rejectWithValue(error.response.data);
+			}
+			return thunkAPI.rejectWithValue(error.message);
+		}
+	},
+);
+
+export const approveGroupRequest = createAsyncThunk(
+	"group/approveGroupRequest",
+	async ({ groupId, userId }, thunkAPI) => {
+		try {
+			const response = await customFetch.post(
+				`api/group/${groupId}/members/${userId}/approve`,
+				{ groupId, userId },
+			);
+			if (response.status !== 200) {
+				throw response.data;
+			}
+			return response.data;
+		} catch (error) {
+			if (error.response) {
+				return thunkAPI.rejectWithValue(error.response.data);
+			}
+			return thunkAPI.rejectWithValue(error.message);
+		}
+	},
+);
+
 export const getGroupRequestMemberList = createAsyncThunk(
 	"group/getGroupRequestMemberList",
 	async (groupId, thunkAPI) => {

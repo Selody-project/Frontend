@@ -8,6 +8,9 @@ import SampleImg from "@/assets/img/feed/img-group-sample-01.jpeg";
 import {
 	getGroupInfoDetail,
 	getGroupRequestMemberList,
+	approveGroupRequest,
+	rejectGroupRequest,
+	deleteGroupMember,
 } from "@/features/group/group-service";
 
 import {
@@ -41,10 +44,22 @@ const GroupMember = () => {
 		setOpen(!open);
 	};
 
+	const approveRequest = (groupId, userId) => {
+		dispatchFn(approveGroupRequest({ groupId, userId }));
+	};
+
+	const rejectRequest = (groupId, userId) => {
+		dispatchFn(rejectGroupRequest({ groupId, userId }));
+	};
+
+	const deleteMember = (groupId, userId) => {
+		dispatchFn(deleteGroupMember({ groupId, userId }));
+	};
+
 	useEffect(() => {
 		// 추후 유저 그룹 조회 api를 통해 group id를 받아오고 해당 group id로 파라미터 수정
-		dispatchFn(getGroupInfoDetail(2));
-		dispatchFn(getGroupRequestMemberList(2));
+		dispatchFn(getGroupInfoDetail(20));
+		dispatchFn(getGroupRequestMemberList(20));
 	}, []);
 
 	return (
@@ -69,13 +84,21 @@ const GroupMember = () => {
 								<img src={SampleImg} alt="sampleImg" />
 								<h4>{info.member.nickname}</h4>
 								<ButtonDiv>
-									<ButtonInnerDiv>
+									<ButtonInnerDiv
+										onClick={() => {
+											approveRequest(20, info.member.userId);
+										}}
+									>
 										<button type="button">
 											<RequestCheck />
 										</button>
 										<h5>수락</h5>
 									</ButtonInnerDiv>
-									<ButtonInnerDiv>
+									<ButtonInnerDiv
+										onClick={() => {
+											rejectRequest(20, info.member.userId);
+										}}
+									>
 										<button type="button">
 											<RequestClose />
 										</button>
@@ -102,6 +125,9 @@ const GroupMember = () => {
 									/>
 									<OptionMenuDiv
 										style={{ display: openArr[info.userId] ? "flex" : "none" }}
+										onClick={() => {
+											deleteMember(20, info.userId);
+										}}
 									>
 										내보내기
 									</OptionMenuDiv>

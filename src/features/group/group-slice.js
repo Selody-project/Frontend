@@ -14,6 +14,9 @@ import {
 	getGroupInfoDetail,
 	getGroupMemberList,
 	getGroupRequestMemberList,
+	approveGroupRequest,
+	rejectGroupRequest,
+	deleteGroupMember,
 } from "./group-service.js";
 
 const initialState = {
@@ -57,6 +60,36 @@ const groupSlice = createSlice({
 				toast.success("그룹 생성에 성공하셨습니다!");
 			})
 			.addCase(createGroup.rejected, (state) => {
+				state.isLoading = false;
+			})
+			.addCase(deleteGroupMember.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(deleteGroupMember.fulfilled, (state) => {
+				state.isLoading = false;
+				toast.success("그룹원 내보내기 완료");
+			})
+			.addCase(deleteGroupMember.rejected, (state) => {
+				state.isLoading = false;
+			})
+			.addCase(approveGroupRequest.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(approveGroupRequest.fulfilled, (state) => {
+				state.isLoading = false;
+				toast.success("그룹 가입 신청 수락 완료");
+			})
+			.addCase(approveGroupRequest.rejected, (state) => {
+				state.isLoading = false;
+			})
+			.addCase(rejectGroupRequest.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(rejectGroupRequest.fulfilled, (state) => {
+				state.isLoading = false;
+				toast.success("그룹 가입 신청 거절 완료");
+			})
+			.addCase(rejectGroupRequest.rejected, (state) => {
 				state.isLoading = false;
 			})
 			.addCase(getGroupRequestMemberList.pending, (state) => {
