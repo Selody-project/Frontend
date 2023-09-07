@@ -28,7 +28,6 @@ export const MemberH3 = styled.h3`
 `;
 
 export const MemberUl = styled.ul`
-	margin-top: ${(props) => (props.list === "member" ? "30px" : "12px")};
 	margin-top: 12px;
 	display: flex;
 	flex-direction: column;
@@ -49,10 +48,52 @@ export const MemberUl = styled.ul`
 			color: ${({ theme: { colors } }) => colors.text_03};
 			font-family: Inter;
 			font-size: 15px;
-			margin-left: 10px;
+			margin: 0 10px;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
+			width: 60px;
+			min-width: 60px;
+			max-width: 100px;
+		}
+
+		> button {
+			margin-left: 32px;
+			cursor: pointer;
+			position: relative;
 		}
 	}
+`;
+
+export const ButtonDiv = styled.div`
+	display: flex;
+	gap: 12px;
+`;
+
+export const ButtonInnerDiv = styled.div`
+	display: flex;
+	flex-direction: column;
+	cursor: pointer;
+	align-items: center;
+
+	& > h5 {
+		color: ${({ theme: { colors } }) => colors.text_02};
+		font-family: Inter;
+		font-size: 10px;
+	}
+`;
+
+export const OptionMenuDiv = styled.div`
+	width: 60px;
+	height: 30px;
+	z-index: 2;
+	background-color: ${({ theme: { colors } }) => colors.white};
+	border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: ${({ theme: { colors } }) => colors.text_02};
+	font-family: Inter;
+	font-size: 12px;
+	position: absolute;
 `;

@@ -38,16 +38,16 @@ const GroupProfile = () => {
 		<ContainerDiv>
 			<TopDiv>
 				<img src={SampleImg} alt="sampleimg" />
-				<h3>{groupInfo?.name}</h3>
-				<p>{groupInfo?.description}</p>
+				<h3>{groupInfo?.information.name}</h3>
+				<p>{groupInfo?.information.description}</p>
 			</TopDiv>
 			<MiddleDiv>
 				<MiddleInnerDiv>
-					<h3>{groupInfo?.member}</h3>
+					<h3>{groupInfo?.information.member}</h3>
 					<h4>그룹원</h4>
 				</MiddleInnerDiv>
 				<MiddleInnerDiv>
-					<h3>{groupInfo?.feed}</h3>
+					<h3>{groupInfo?.information.feed}</h3>
 					<h4>작성된 피드</h4>
 				</MiddleInnerDiv>
 			</MiddleDiv>
