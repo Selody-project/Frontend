@@ -23,9 +23,9 @@ const DUMMY_SCHEDUELS = [
 	// 	title: "운동하기",
 	// 	start: "18:00:00",
 	// 	end: "20:00:00",
-	// 	// daysOfWeek: [2, 4, 6], // 월, 수, 금에 반복
-	// 	startRecur: new Date(2023, 8),
-	// 	endRecur: new Date(2023, 9), // 1달 뒤까지 반복
+	// 	daysOfWeek: [1, 3, 5], // 월, 수, 금에 반복
+	// 	startRecur: new Date(2023, 7, 30),
+	// 	endRecur: new Date(2023, 8, 30), // 1달 뒤까지 반복
 	// },
 	{
 		id: 0,
@@ -34,10 +34,16 @@ const DUMMY_SCHEDUELS = [
 		end: new Date(2023, 7, 31, 19),
 	},
 	{
+		id: 4,
+		title: "간식 뭐 먹을지 생각하기",
+		start: new Date(2023, 7, 31, 18),
+		end: new Date(2023, 7, 31, 19, 30),
+	},
+	{
 		id: 1,
 		title: "출퇴근 걸어가기",
-		start: new Date(2023, 7, 31),
-		end: new Date(2023, 8, 1),
+		start: new Date(2023, 7),
+		end: new Date(2023, 8),
 	},
 	{
 		id: 2,

@@ -166,22 +166,23 @@ export const CustomCalendarDiv = styled.div`
 
 	// reset event style
 	.fc-direction-ltr .fc-timegrid-col-events,
+	.fc-direction-ltr .fc-daygrid-block-event,
 	.fc-timegrid-event-harness-inset .fc-timegrid-event,
 	.fc-daygrid-event.fc-event-start,
-	.fc-daygrid-event.fc-event-end {
+	.fc-daygrid-event.fc-event-end,
+	.fc-timegrid-event .fc-event-main {
 		margin: 0;
 		border-radius: 0;
 		opacity: 0.5;
 		cursor: pointer;
+		width: 100%;
 	}
+	/* .fc-timegrid-event .fc-event-main */
 	.fc-daygrid-event.fc-event-start {
 		margin-bottom: 2.5px;
 	}
 	.fc-timegrid-event-harness-inset .fc-timegrid-event {
 		box-shadow: none;
-	}
-	.fc-timegrid-col-events > div:not(:first-child) {
-		margin-left: 2.5px;
 	}
 `;
 

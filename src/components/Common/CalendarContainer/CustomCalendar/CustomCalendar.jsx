@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -61,6 +61,21 @@ const CustomCalendar = forwardRef(
 		const dispatch = useDispatch();
 
 		const theme = useTheme();
+
+		useEffect(() => {
+			if (currentCalendarView === VIEW_TYPE.DAY_GRID_MONTH) return;
+			const timeGridEventDivs = document.querySelectorAll(
+				".fc-timegrid-col-events",
+			);
+			Array.from(timeGridEventDivs)
+				.filter((eventDiv) => eventDiv.childNodes.length > 0)
+				.forEach((eventDiv) => {
+					eventDiv.childNodes.forEach((absoluteDiv) => {
+						absoluteDiv.style["inset-inline-start"] = 0;
+						absoluteDiv.style["inset-inline-end"] = 0;
+					});
+				});
+		});
 
 		return (
 			<CustomCalendarDiv
@@ -138,7 +153,6 @@ const CustomCalendar = forwardRef(
 					slotLabelFormat={getTimeFormat}
 					slotDuration="1:00:00"
 					eventBackgroundColor={theme.colors.btn_02}
-					slotEventOverlap={false}
 					eventTextColor={theme.colors.btn_02}
 					displayEventTime={false}
 					eventDisplay="block"
