@@ -18,18 +18,18 @@ import {
 } from "./GroupMember.styles";
 
 const MemberRequestList = () => {
-	const dispatchFn = useDispatch();
+	const dispatch = useDispatch();
 
 	const groupRequestMemberList = useSelector(
 		(state) => state.group.groupRequestMemberList,
 	);
 
 	const approveRequest = (groupId, userId) => {
-		dispatchFn(approveGroupRequest({ groupId, userId }));
+		dispatch(approveGroupRequest({ groupId, userId }));
 	};
 
 	const rejectRequest = (groupId, userId) => {
-		dispatchFn(rejectGroupRequest({ groupId, userId }));
+		dispatch(rejectGroupRequest({ groupId, userId }));
 	};
 
 	return (

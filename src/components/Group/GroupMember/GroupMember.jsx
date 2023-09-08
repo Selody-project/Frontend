@@ -19,7 +19,7 @@ import MemberRequestList from "./MemberRequestList";
 
 const GroupMember = () => {
 	const { user } = useSelector((state) => state.auth);
-	const dispatchFn = useDispatch();
+	const dispatch = useDispatch();
 
 	const groupRequestMemberList = useSelector(
 		(state) => state.group.groupRequestMemberList,
@@ -27,8 +27,8 @@ const GroupMember = () => {
 
 	useEffect(() => {
 		// 추후 유저 그룹 조회 api를 통해 group id를 받아오고 해당 group id로 파라미터 수정
-		dispatchFn(getGroupInfoDetail(20));
-		dispatchFn(getGroupRequestMemberList(20));
+		dispatch(getGroupInfoDetail(20));
+		dispatch(getGroupRequestMemberList(20));
 	}, []);
 
 	return (

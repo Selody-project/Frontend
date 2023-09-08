@@ -16,7 +16,7 @@ const MemberList = () => {
 	const [open, setOpen] = useState(false);
 	const [openArr, setOpenArr] = useState([false]);
 
-	const dispatchFn = useDispatch();
+	const dispatch = useDispatch();
 
 	const groupInfoDetail = useSelector((state) => state.group.groupInfoDetail);
 
@@ -28,7 +28,7 @@ const MemberList = () => {
 	};
 
 	const deleteMember = (groupId, userId) => {
-		dispatchFn(deleteGroupMember({ groupId, userId }));
+		dispatch(deleteGroupMember({ groupId, userId }));
 	};
 
 	return (

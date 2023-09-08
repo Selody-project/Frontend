@@ -15,23 +15,23 @@ import {
 
 const GroupProfile = () => {
 	const inGroup = true;
-	const dispatchFn = useDispatch();
+	const dispatch = useDispatch();
 
 	const groupInfo = useSelector((state) => state.group.groupInfo);
 
 	// const groupList = useSelector((state) => state.group.groupList);
 
 	useEffect(() => {
-		// dispatchFn(
+		// dispatch(
 		// 	createGroup({
 		// 		name: "testGroup112131",
 		// 		description: "그룹 description 테스트123123",
 		// 	}),
 		// );
-		// dispatchFn(getGroupList(2));
+		// dispatch(getGroupList(2));
 
 		// 추후 유저 그룹 조회 api를 통해 group id를 받아오고 해당 group id로 파라미터 수정
-		dispatchFn(getGroupInfo(2));
+		dispatch(getGroupInfo(2));
 	}, []);
 
 	return (
