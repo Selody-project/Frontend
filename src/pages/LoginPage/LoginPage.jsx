@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 
 import Logo from "@/assets/img/img-selody-logo/3x.png";
 import LoginForm from "@/components/Login/LoginForm/LoginForm";
@@ -21,18 +19,12 @@ import {
 
 function LoginPage() {
 	const dispatchFn = useDispatch();
-	const navigate = useNavigate();
 
 	const naverInfo = useNaver();
 
 	const { user } = useSelector((state) => state.auth);
 
 	useEffect(() => {
-		if (user) {
-			toast.success(`안녕하세요! ${user}님`);
-			navigate("/");
-		}
-
 		if (naverInfo.accessToken) {
 			dispatchFn(naverLogin(naverInfo));
 		}
