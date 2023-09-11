@@ -1,6 +1,6 @@
 import React from "react";
 
-import CalendarContainer from "@/components/Common/CalendarContainer";
+import CalendarContainer from "@/components/Common/CalendarContainer/CalendarContainer";
 import { SCHEDULE_TYPE } from "@/constants/calendarConstants";
 
 import { LayoutMain } from "./PersonalSchedulePage.styles";
