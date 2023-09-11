@@ -17,7 +17,7 @@ import {
 } from "./LoginForm.style";
 
 const LoginForm = () => {
-	const dispatchFn = useDispatch();
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
 	const [formValue, setFormValue] = useState({ email: "", password: "" });
@@ -47,34 +47,29 @@ const LoginForm = () => {
 		return true;
 	};
 
-	const handleSubmit = async (event) => {
+	const handleSubmit = (event) => {
 		event.preventDefault();
 
 		if (!validate()) return;
 
-		const response = await dispatchFn(login({ email, password }));
-
-		if (response.error) {
-			toast.error("이메일 또는 비밀번호가 잘못되었습니다.");
-		}
+		dispatch(login({ email, password }));
 	};
+
 	return (
 		<StyledLoginForm onSubmit={handleSubmit}>
 			<h1>LOGIN.</h1>
-			<InputContainerDiv>
+			<InputContainerDiv onChange={handleFormValue}>
 				<Input
 					data-testid="email-input"
 					type="text"
 					name="email"
 					placeholder="이메일을 입력해주세요."
-					onChange={handleFormValue}
 				/>
 				<Input
 					data-testid="password-input"
 					type="password"
 					name="password"
 					placeholder="비밀번호를 입력해주세요."
-					onChange={handleFormValue}
 				/>
 			</InputContainerDiv>
 			<LoginAssistanceDiv>
