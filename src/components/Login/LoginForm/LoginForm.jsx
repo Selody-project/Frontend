@@ -32,7 +32,7 @@ const LoginForm = () => {
 		setFormValue(changed);
 	};
 
-	const validate = () => {
+	const validateForm = () => {
 		if (!email.trim() || !password.trim()) {
 			toast.error("이메일과 비밀번호는 반드시 입력되어야 합니다.");
 			return false;
@@ -50,7 +50,7 @@ const LoginForm = () => {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 
-		if (!validate()) return;
+		if (!validateForm()) return;
 
 		dispatch(login({ email, password }));
 	};
