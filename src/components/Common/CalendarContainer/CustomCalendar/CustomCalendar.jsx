@@ -177,7 +177,6 @@ const CustomCalendar = forwardRef(
 					slotLabelFormat={getTimeFormat}
 					slotDuration="1:00:00"
 					eventBackgroundColor={theme.colors.btn_02}
-					eventTextColor={theme.colors.btn_02}
 					displayEventTime={false}
 					eventDisplay="block"
 					eventBorderColor="transparent"
