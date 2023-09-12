@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { login } from "@/features/auth/auth-service";
+import { getCookie, removeCookie, setCookie } from "@/utils/cookie";
 
 import {
 	EmailSaveLabel,
@@ -21,6 +22,7 @@ const LoginForm = () => {
 	const navigate = useNavigate();
 
 	const [formValue, setFormValue] = useState({ email: "", password: "" });
+	const [isRemember, setIsRemember] = useState(!!getCookie("isRememberEmail"));
 
 	const { email, password } = formValue;
 
@@ -52,8 +54,19 @@ const LoginForm = () => {
 
 		if (!validateForm()) return;
 
+		if (isRemember) {
+			setCookie("email", email);
+		}
+
 		dispatch(login({ email, password }));
 	};
+
+	useEffect(() => {
+		if (!isRemember) {
+			removeCookie("email");
+		}
+		setCookie("isRememberEmail", isRemember);
+	}, [isRemember]);
 
 	return (
 		<StyledLoginForm onSubmit={handleSubmit}>
@@ -64,6 +77,7 @@ const LoginForm = () => {
 					type="text"
 					name="email"
 					placeholder="이메일을 입력해주세요."
+					defaultValue={getCookie("email")}
 				/>
 				<Input
 					data-testid="password-input"
@@ -74,7 +88,12 @@ const LoginForm = () => {
 			</InputContainerDiv>
 			<LoginAssistanceDiv>
 				<EmailSaveLabel>
-					<input type="checkbox" id="hidden-checkbox" />
+					<input
+						type="checkbox"
+						id="hidden-checkbox"
+						checked={isRemember}
+						onChange={() => setIsRemember((prev) => !prev)}
+					/>
 					<div id="shown-checkbox" />
 					<span>이메일 저장</span>
 				</EmailSaveLabel>
