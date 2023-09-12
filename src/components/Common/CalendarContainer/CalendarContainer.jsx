@@ -156,7 +156,16 @@ const CalendarContainer = ({ type }) => {
 	// };
 
 	// const menuHandler = () => {
-	const menuHandler = () => {
+	const menuHandler = (clickedInfo) => {
+		const { start, end } = clickedInfo.event; // 클릭한 이벤트
+		// 오버랩된 이벤트
+		const overlappedEvents = DUMMY_SCHEDUELS.filter((event) => {
+			return (
+				event.start <= start && // 시작한 날짜가 클릭 이벤트의 시작 날짜 이후
+				event.end >= end // 시작 날짜가 클릭 이벤트의 끝나는 날짜 이전
+			);
+		});
+		console.log(overlappedEvents);
 		dispatch(setEdit(true));
 		dispatch(openModal({ type: SCHEDULE_TYPE.PERSONAL }));
 		// console.log(schedule[0].id);
