@@ -176,8 +176,8 @@ export const CustomCalendarDiv = styled.div`
 		opacity: 0.5;
 		cursor: pointer;
 		width: 100%;
+		mix-blend-mode: multiply;
 	}
-	/* .fc-timegrid-event .fc-event-main */
 	.fc-daygrid-event.fc-event-start {
 		margin-bottom: 2.5px;
 	}
