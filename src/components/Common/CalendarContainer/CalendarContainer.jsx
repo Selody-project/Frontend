@@ -59,6 +59,9 @@ const DUMMY_SCHEDUELS = [
 	},
 ];
 
+const generateSchedulesWithoutTitle = (schedules) =>
+	schedules.map((scheduleObj) => ({ ...scheduleObj, title: "" }));
+
 // 리스트(주마다 보기)로 진행했을 떄 보여줄 첫 일요일을 계산합니다.
 export const getFirstDateOfWeek = (year, month, week) => {
 	const firstDateOfMonth = new Date(year, month - 1);
@@ -241,7 +244,7 @@ const CalendarContainer = ({ type }) => {
 			)}
 			<CustomCalendar
 				ref={calendarRef}
-				fullCalendarEvents={DUMMY_SCHEDUELS}
+				fullCalendarEvents={generateSchedulesWithoutTitle(DUMMY_SCHEDUELS)}
 				currentYear={currentYear}
 				currentMonth={currentMonth}
 				currentWeek={currentWeek}
