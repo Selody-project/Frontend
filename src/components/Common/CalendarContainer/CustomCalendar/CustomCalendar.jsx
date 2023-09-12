@@ -63,18 +63,29 @@ const CustomCalendar = forwardRef(
 		const theme = useTheme();
 
 		useEffect(() => {
-			if (currentCalendarView === VIEW_TYPE.DAY_GRID_MONTH) return;
-			const timeGridEventDivs = document.querySelectorAll(
-				".fc-timegrid-col-events",
-			);
-			Array.from(timeGridEventDivs)
-				.filter((eventDiv) => eventDiv.childNodes.length > 0)
-				.forEach((eventDiv) => {
-					eventDiv.childNodes.forEach((absoluteDiv) => {
-						absoluteDiv.style["inset-inline-start"] = 0;
-						absoluteDiv.style["inset-inline-end"] = 0;
-					});
+			if (currentCalendarView === VIEW_TYPE.DAY_GRID_MONTH) {
+				const scheduleDivs = document.querySelectorAll(
+					".fc-daygrid-event-harness",
+				);
+				// 하루종일인 이벤트가 함꼐 있는 일자의 맨 위 스케줄의 margin을 더 띄워 줍니다
+				scheduleDivs.forEach((scheduleDiv) => {
+					if (scheduleDiv.style["margin-top"] === "18px") {
+						scheduleDiv.style["margin-top"] = "20px";
+					}
 				});
+			} else {
+				const timeGridEventDivs = document.querySelectorAll(
+					".fc-timegrid-col-events",
+				);
+				Array.from(timeGridEventDivs)
+					.filter((eventDiv) => eventDiv.childNodes.length > 0)
+					.forEach((eventDiv) => {
+						eventDiv.childNodes.forEach((absoluteDiv) => {
+							absoluteDiv.style["inset-inline-start"] = 0;
+							absoluteDiv.style["inset-inline-end"] = 0;
+						});
+					});
+			}
 		});
 
 		return (
