@@ -7,6 +7,7 @@ import HeartIcon from "@/assets/icon/ic-feed-heart.svg";
 import OptionThreeDotIcon from "@/assets/icon/ic-feed-option.svg";
 import ShareIcon from "@/assets/icon/ic-feed-share.svg";
 import SampleImg from "@/assets/img/feed/img-group-sample-01.jpeg";
+import { SORT_OPTION_TYPE } from "@/constants/groupFeedConstants";
 
 import {
 	ContainerDiv,
@@ -42,7 +43,7 @@ const mockItems = [
 ];
 
 const GroupFeed = () => {
-	const [sort, setSort] = useState("latest");
+	const [sortOption, setSortOption] = useState(SORT_OPTION_TYPE.LATEST);
 
 	const [optionMenuOpenedFeedIndex, setOptionMenuOpenedFeedIndex] =
 		useState(null);
@@ -66,8 +67,8 @@ const GroupFeed = () => {
 					<li>
 						<Button
 							type="button"
-							onClick={() => setSort("latest")}
-							disabled={sort === "latest"}
+							onClick={() => setSortOption(SORT_OPTION_TYPE.LATEST)}
+							disabled={sortOption === SORT_OPTION_TYPE.LATEST}
 						>
 							최신순
 						</Button>
@@ -75,8 +76,8 @@ const GroupFeed = () => {
 					<li>
 						<Button
 							type="button"
-							onClick={() => setSort("like")}
-							disabled={sort === "like"}
+							onClick={() => setSortOption(SORT_OPTION_TYPE.BEST)}
+							disabled={sortOption === SORT_OPTION_TYPE.BEST}
 						>
 							좋아요순
 						</Button>
