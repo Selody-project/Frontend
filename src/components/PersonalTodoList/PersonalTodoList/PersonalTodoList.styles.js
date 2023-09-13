@@ -57,16 +57,24 @@ export const TodoTab = styled.button`
 	}
 `;
 
-export const AddEventButton = styled.button`
+export const ScheduleAddButton = styled.button`
 	display: flex;
+	flex-direction: column;
 	align-items: center;
-	background: none;
-	border: none;
-	font-size: 14px;
+	width: 47px;
+	height: 47px;
+	font-size: 12px;
 	cursor: pointer;
 	color: ${({ theme: { colors } }) => colors.primary};
 	transition: opacity 0.3s ease;
-
+	& > span {
+		line-height: 1;
+		font-weight: ${({
+			theme: {
+				typography: { weight },
+			},
+		}) => weight.bold};
+	}
 	&:hover {
 		opacity: 0.7;
 	}
