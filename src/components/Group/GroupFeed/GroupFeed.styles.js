@@ -39,19 +39,17 @@ export const FeedDiv = styled.div`
 	border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
 	padding: 24px 18px 30px;
 	position: relative;
+`;
 
-	& > svg {
-		position: absolute;
-		right: 12px;
-		top: 12px;
-		cursor: pointer;
-	}
+export const OptionDiv = styled.div`
+	position: absolute;
+	right: 12px;
+	top: 12px;
+	cursor: pointer;
 `;
 
 export const OptionMenuDiv = styled.div`
 	position: absolute;
-	right: -30px;
-	top: 32px;
 	z-index: 2;
 
 	& > ul > li {
