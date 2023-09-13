@@ -7,9 +7,7 @@ import { getSchedule } from "@/features/schedule/schedule-service.js";
 import { openModal } from "@/features/ui/ui-slice";
 
 import {
-	TodoContainer,
 	TodoHeader,
-	TodoTabs,
 	TodoTab,
 	AddEventButton,
 	TodoBody,
@@ -17,6 +15,7 @@ import {
 	TodoSubtitle,
 	TodoButton,
 	TodoList,
+	PersonalTodoListLayoutAside,
 } from "./PersonalTodoList.styles";
 import PersonalTodoItem from "../PersonalTodoItem/PersonalTodoItem";
 
@@ -37,22 +36,20 @@ const PersonalTodoList = () => {
 
 	return (
 		<>
-			<TodoContainer data-testid="personal-todo-list">
+			<PersonalTodoListLayoutAside data-testid="personal-todo-list">
 				<TodoHeader>
-					<TodoTabs>
-						<TodoTab
-							selected={selectedTab === false}
-							onClick={() => setSelectedTab(false)}
-						>
-							오늘 할 일
-						</TodoTab>
-						<TodoTab
-							selected={selectedTab === true}
-							onClick={() => setSelectedTab(true)}
-						>
-							예정
-						</TodoTab>
-					</TodoTabs>
+					<TodoTab
+						selected={selectedTab === false}
+						onClick={() => setSelectedTab(false)}
+					>
+						오늘 할 일
+					</TodoTab>
+					<TodoTab
+						selected={selectedTab === true}
+						onClick={() => setSelectedTab(true)}
+					>
+						예정
+					</TodoTab>
 				</TodoHeader>
 				<TodoBody>
 					<TodoTitle>
@@ -81,7 +78,7 @@ const PersonalTodoList = () => {
 						</TodoList>
 					)}
 				</TodoBody>
-			</TodoContainer>
+			</PersonalTodoListLayoutAside>
 			{openedModal === "PERSONAL_SCHEDULE" && (
 				<ScheduleModal
 					type={openedModal}
