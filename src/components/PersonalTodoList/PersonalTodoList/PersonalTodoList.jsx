@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import ScheduleAddIcon from "@/assets/icon/ic-schedule-add.svg";
 import ScheduleModal from "@/components/Common/ScheduleModal/ScheduleModal.jsx";
 import { setEdit } from "@/features/auth/auth-slice.js";
 import { getSchedule } from "@/features/schedule/schedule-service.js";
@@ -9,7 +10,7 @@ import { openModal } from "@/features/ui/ui-slice";
 import {
 	TodoHeader,
 	TodoTab,
-	AddEventButton,
+	ScheduleAddButton,
 	TodoBody,
 	TodoTitle,
 	TodoSubtitle,
@@ -54,10 +55,10 @@ const PersonalTodoList = () => {
 				<TodoBody>
 					<TodoTitle>
 						오늘 일정
-						<AddEventButton onClick={handleMenuOpen}>
-							<img src="/todo_add.svg" alt="Add-icon" />
-							일정 추가
-						</AddEventButton>
+						<ScheduleAddButton onClick={handleMenuOpen}>
+							<ScheduleAddIcon />
+							<span>일정 추가</span>
+						</ScheduleAddButton>
 					</TodoTitle>
 					<TodoSubtitle>하루동안의 할 일을 관리합니다.</TodoSubtitle>
 					{totalSchedule.length === 0 ? (
