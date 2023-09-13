@@ -37,7 +37,7 @@ export const FeedDiv = styled.div`
 	flex-direction: column;
 	border-radius: 10px;
 	border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
-	padding: 24px 18px 30px;
+	padding: 24px 18px;
 	position: relative;
 `;
 
@@ -106,12 +106,30 @@ export const InfoDiv = styled.div`
 `;
 
 export const BottomDiv = styled.div`
-	margin-top: 6px;
+	margin-left: 72px;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
 
 	& > p {
 		color: ${({ theme: { colors } }) => colors.text_03};
 		font-size: ${({ theme: { typography } }) => typography.size.s1};
-		margin-left: 72px;
 		line-height: normal;
+	}
+`;
+
+export const IconDiv = styled.div`
+	display: flex;
+	gap: 26px;
+`;
+
+export const IconItemDiv = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 6px;
+
+	& > span {
+		font-size: 10px;
 	}
 `;
