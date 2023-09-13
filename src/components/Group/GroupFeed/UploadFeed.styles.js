@@ -6,6 +6,7 @@ export const ContainerDiv = styled.div`
 	border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
 	margin-bottom: 36px;
 	padding: 24px 24px 18px 18px;
+	font-family: Inter;
 `;
 
 export const TopDiv = styled.div`
@@ -32,9 +33,7 @@ export const UploadTextarea = styled.textarea`
 
 	&::placeholder {
 		color: ${({ theme: { colors } }) => colors.disabled_text};
-		font-family: Inter;
 		font-size: 15px;
-		font-weight: 400;
 	}
 `;
 
@@ -46,7 +45,6 @@ export const UploadButton = styled.button`
 	border-radius: 5px;
 	background-color: ${({ theme: { colors } }) => colors.btn_02};
 	color: ${({ theme: { colors } }) => colors.white};
-	font-family: Inter;
-	font-size: 14px;
-	font-weight: 500;
+	font-size: ${({ theme: { typography } }) => typography.size.s2};
+	font-weight: ${({ theme: { typography } }) => typography.weight.medium};
 `;

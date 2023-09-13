@@ -27,8 +27,8 @@ const GroupMember = () => {
 
 	useEffect(() => {
 		// 추후 유저 그룹 조회 api를 통해 group id를 받아오고 해당 group id로 파라미터 수정
-		dispatch(getGroupInfoDetail(20));
-		dispatch(getGroupRequestMemberList(20));
+		dispatch(getGroupInfoDetail(24));
+		dispatch(getGroupRequestMemberList(24));
 	}, []);
 
 	return (

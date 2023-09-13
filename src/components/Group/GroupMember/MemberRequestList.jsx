@@ -50,7 +50,7 @@ const MemberRequestList = () => {
 									<button type="button">
 										<RequestCheck />
 									</button>
-									<h5>수락</h5>
+									<span>수락</span>
 								</ButtonInnerDiv>
 								<ButtonInnerDiv
 									onClick={() => {
@@ -60,7 +60,7 @@ const MemberRequestList = () => {
 									<button type="button">
 										<RequestClose />
 									</button>
-									<h5>거절</h5>
+									<span>거절</span>
 								</ButtonInnerDiv>
 							</ButtonDiv>
 						</li>

@@ -2,9 +2,10 @@ import styled from "styled-components";
 
 export const ContainerDiv = styled.div`
 	min-width: 380px;
-	max-height: 546px;
+	height: 546px;
 	border-radius: 10px;
 	border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
+	font-family: Inter;
 `;
 
 export const TopDiv = styled.div`
@@ -22,17 +23,16 @@ export const TopDiv = styled.div`
 	}
 
 	& > h3 {
-		font-family: Inter;
-		font-size: 24px;
-		font-weight: 600;
+		font-size: ${({ theme: { typography } }) => typography.size.m2};
+		font-weight: ${({ theme: { typography } }) => typography.weight.semibold};
 		margin-top: 24px;
+		color: ${({ theme: { colors } }) => colors.text_01};
 	}
 
 	& > p {
-		color: #2f2f2f;
-		font-family: Inter;
+		color: ${({ theme: { colors } }) => colors.text_02};
 		font-size: 14px;
-		font-weight: 400;
+		font-size: ${({ theme: { typography } }) => typography.size.s2};
 		margin-top: 16px;
 		text-align: center;
 		line-height: normal;
@@ -68,14 +68,15 @@ export const MiddleInnerDiv = styled.div`
 	}
 
 	& > h3 {
-		font-family: Inter;
 		font-size: 22px;
-		font-weight: 600;
+		font-weight: ${({ theme: { typography } }) => typography.weight.semibold};
+		color: ${({ theme: { colors } }) => colors.text_01};
 	}
 
 	& > h4 {
-		font-family: Inter;
-		font-size: 16px;
+		font-size: ${({ theme: { typography } }) => typography.size.s3};
+		font-weight: ${({ theme: { typography } }) => typography.weight.medium};
+		color: ${({ theme: { colors } }) => colors.text_02};
 		margin-top: 8px;
 	}
 `;
@@ -92,7 +93,6 @@ export const BottomDiv = styled.div`
 		width: 282px;
 		height: 48px;
 		color: ${({ theme: { colors } }) => colors.primary};
-		font-family: Inter;
 		font-size: 18px;
 	}
 `;

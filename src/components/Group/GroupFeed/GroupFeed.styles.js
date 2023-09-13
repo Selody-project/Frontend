@@ -4,6 +4,7 @@ export const ContainerDiv = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 14px;
+	font-family: Inter;
 `;
 
 export const TitleDiv = styled.div`
@@ -12,8 +13,9 @@ export const TitleDiv = styled.div`
 	align-items: center;
 
 	& > h2 {
-		font-family: Inter;
-		font-size: 20px;
+		font-size: ${({ theme: { typography } }) => typography.size.m1};
+		color: ${({ theme: { colors } }) => colors.text_01};
+		font-weight: ${({ theme: { typography } }) => typography.weight.medium};
 	}
 
 	& > ul {
@@ -23,9 +25,10 @@ export const TitleDiv = styled.div`
 `;
 
 export const Button = styled.button`
-	color: ${(props) => (props.disabled ? "#121127" : "#9ca0ab")};
-	font-family: Inter;
-	font-size: 14px;
+	color: ${({ disabled, theme: { colors } }) =>
+		disabled ? colors.text_01 : colors.disabled_text};
+	font-size: ${({ theme: { typography } }) => typography.size.s2};
+	font-weight: ${({ theme: { typography } }) => typography.weight.medium};
 	cursor: pointer;
 `;
 
@@ -60,8 +63,7 @@ export const OptionMenuDiv = styled.div`
 		align-items: center;
 		background-color: ${({ theme: { colors } }) => colors.white};
 		color: ${({ theme: { colors } }) => colors.sunday};
-		font-family: Inter;
-		font-size: 12px;
+		font-size: ${({ theme: { typography } }) => typography.size.s1};
 
 		&:first-of-type {
 			border-bottom: none;
@@ -88,9 +90,9 @@ export const InfoDiv = styled.div`
 	margin-left: 14px;
 
 	& > h3 {
-		color: #000;
-		font-family: Inter;
-		font-size: 14px;
+		color: ${({ theme: { colors } }) => colors.text_01};
+		font-size: ${({ theme: { typography } }) => typography.size.s2};
+		font-weight: ${({ theme: { typography } }) => typography.weight.medium};
 
 		> svg {
 			margin-left: 4px;
@@ -98,10 +100,10 @@ export const InfoDiv = styled.div`
 	}
 
 	& > h4 {
-		color: #75808d;
-		font-family: Inter;
-		font-size: 12px;
-		margin: 5px 0 0 0;
+		color: ${({ theme: { colors } }) => colors.text_02};
+		font-size: ${({ theme: { typography } }) => typography.size.s1};
+		font-weight: ${({ theme: { typography } }) => typography.weight.medium};
+		margin-top: 5px;
 	}
 `;
 
@@ -109,10 +111,8 @@ export const BottomDiv = styled.div`
 	margin-top: 6px;
 
 	& > p {
-		color: #2f2f2f;
-		font-family: Inter;
-		font-size: 15px;
-		font-weight: 400;
+		color: ${({ theme: { colors } }) => colors.text_03};
+		font-size: ${({ theme: { typography } }) => typography.size.s1};
 		margin-left: 72px;
 		line-height: normal;
 	}

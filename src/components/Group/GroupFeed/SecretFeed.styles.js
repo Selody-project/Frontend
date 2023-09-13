@@ -7,20 +7,20 @@ export const ContainerDiv = styled.div`
 	justify-content: center;
 	align-items: center;
 	margin-right: 76px;
-	border: 1px solid #c9ccd7;
+	border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
 	border-radius: 10px;
+	font-family: Inter;
 
 	& > h3 {
-		font-family: Inter;
-		font-size: 24px;
+		font-size: ${({ theme: { typography } }) => typography.size.m2};
+		font-weight: ${({ theme: { typography } }) => typography.weight.medium};
+		color: ${({ theme: { colors } }) => colors.text_01};
 		margin-top: 20px;
 	}
 
 	& > h4 {
-		color: #2f2f2f;
-		font-family: Inter;
-		font-size: 14px;
-		font-weight: 400;
+		font-size: ${({ theme: { typography } }) => typography.size.s2};
+		color: ${({ theme: { colors } }) => colors.text_02};
 		margin-top: 12px;
 	}
 `;

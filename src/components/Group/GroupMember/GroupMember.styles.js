@@ -4,6 +4,7 @@ export const ContainerDiv = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
+	font-family: Inter;
 `;
 
 export const MemberDiv = styled.div`
@@ -24,7 +25,8 @@ export const MemberInnerDiv = styled.div`
 
 export const MemberH3 = styled.h3`
 	color: ${({ theme: { colors } }) => colors.text_01};
-	font-family: Inter;
+	font-size: 15px;
+	font-weight: ${({ theme: { typography } }) => typography.weight.medium};
 `;
 
 export const MemberUl = styled.ul`
@@ -46,8 +48,8 @@ export const MemberUl = styled.ul`
 
 		> h4 {
 			color: ${({ theme: { colors } }) => colors.text_03};
-			font-family: Inter;
 			font-size: 15px;
+			font-weight: ${({ theme: { typography } }) => typography.weight.medium};
 			margin: 0 10px;
 			overflow: hidden;
 			text-overflow: ellipsis;
@@ -75,8 +77,8 @@ export const OptionMenuDiv = styled.div`
 	justify-content: center;
 	align-items: center;
 	color: ${({ theme: { colors } }) => colors.text_02};
-	font-family: Inter;
-	font-size: 12px;
+	font-size: ${({ theme: { typography } }) => typography.size.s1};
+	font-weight: ${({ theme: { typography } }) => typography.weight.medium};
 	position: absolute;
 `;
 
@@ -91,9 +93,8 @@ export const ButtonInnerDiv = styled.div`
 	cursor: pointer;
 	align-items: center;
 
-	& > h5 {
+	& > span {
 		color: ${({ theme: { colors } }) => colors.text_02};
-		font-family: Inter;
 		font-size: 10px;
 	}
 `;
