@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const ContainerDiv = styled.div`
 	min-width: 380px;
-	height: 546px;
+	height: 100%;
 	border-radius: 10px;
 	border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
 	font-family: Inter;
@@ -12,7 +12,6 @@ export const TopDiv = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
 	padding: 60px 0;
 
 	& > img {
@@ -27,15 +26,25 @@ export const TopDiv = styled.div`
 		font-weight: ${({ theme: { typography } }) => typography.weight.semibold};
 		margin-top: 24px;
 		color: ${({ theme: { colors } }) => colors.text_01};
+		max-width: 214px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 
 	& > p {
 		color: ${({ theme: { colors } }) => colors.text_02};
-		font-size: 14px;
 		font-size: ${({ theme: { typography } }) => typography.size.s2};
 		margin-top: 16px;
 		text-align: center;
 		line-height: normal;
+		max-width: 214px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		word-break: break-word;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
 	}
 `;
 
@@ -43,6 +52,7 @@ export const MiddleDiv = styled.div`
 	border-top: 1px solid ${({ theme: { colors } }) => colors.btn_02};
 	border-bottom: 1px solid ${({ theme: { colors } }) => colors.btn_02};
 	display: flex;
+	width: 100%;
 	padding: 34px 0;
 `;
 
@@ -82,7 +92,11 @@ export const MiddleInnerDiv = styled.div`
 `;
 
 export const BottomDiv = styled.div`
-	padding: 26px 48px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 12px;
+	padding: 26px 0;
 
 	& > button {
 		border: 1px solid ${({ theme: { colors } }) => colors.primary};

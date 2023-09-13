@@ -31,7 +31,7 @@ const GroupProfile = () => {
 		// dispatch(getGroupList(2));
 
 		// 추후 유저 그룹 조회 api를 통해 group id를 받아오고 해당 group id로 파라미터 수정
-		dispatch(getGroupInfo(2));
+		dispatch(getGroupInfo(21));
 	}, []);
 
 	return (
@@ -43,11 +43,11 @@ const GroupProfile = () => {
 			</TopDiv>
 			<MiddleDiv>
 				<MiddleInnerDiv>
-					<h3>{groupInfo?.information.member}</h3>
+					<h3>{groupInfo?.information.member.toLocaleString()}</h3>
 					<h4>그룹원</h4>
 				</MiddleInnerDiv>
 				<MiddleInnerDiv>
-					<h3>{groupInfo?.information.feed}</h3>
+					<h3>{groupInfo?.information.feed.toLocaleString()}</h3>
 					<h4>작성된 피드</h4>
 				</MiddleInnerDiv>
 			</MiddleDiv>

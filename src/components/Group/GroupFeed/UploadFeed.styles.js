@@ -24,8 +24,8 @@ export const UploadTextarea = styled.textarea`
 	all: unset;
 	margin-left: 16px;
 	padding: 14px;
-	width: 527px;
-	height: 100px;
+	width: 100%;
+	min-height: 100px;
 	border-radius: 4px;
 	border: ${({ theme: { colors } }) => colors.bg_01};
 	background-color: ${({ theme: { colors } }) => colors.bg_01};

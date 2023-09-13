@@ -6,7 +6,7 @@ import UploadFeed from "@/components/Group/GroupFeed/UploadFeed";
 import GroupMember from "@/components/Group/GroupMember/GroupMember";
 import GroupProfile from "@/components/Group/GroupProfile/GroupProfile";
 
-import { ContainerDiv, MiddleDiv } from "./GroupPage.styles";
+import { ContainerDiv } from "./GroupPage.styles";
 
 const GroupPage = () => {
 	const secret = false;
@@ -18,10 +18,10 @@ const GroupPage = () => {
 				<SecretFeed />
 			) : (
 				<>
-					<MiddleDiv>
+					<div>
 						<UploadFeed />
 						<GroupFeed />
-					</MiddleDiv>
+					</div>
 					<GroupMember />
 				</>
 			)}
