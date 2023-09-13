@@ -5,8 +5,8 @@ import RequestCheck from "@/assets/icon/ic-request-check.svg";
 import RequestClose from "@/assets/icon/ic-request-close.svg";
 import SampleImg from "@/assets/img/feed/img-group-sample-01.jpeg";
 import {
-	approveGroupRequest,
-	rejectGroupRequest,
+	approveGroupJoin,
+	rejectGroupJoin,
 } from "@/features/group/group-service";
 
 import {
@@ -25,11 +25,11 @@ const MemberRequestList = () => {
 	);
 
 	const approveRequest = (groupId, userId) => {
-		dispatch(approveGroupRequest({ groupId, userId }));
+		dispatch(approveGroupJoin({ groupId, userId }));
 	};
 
 	const rejectRequest = (groupId, userId) => {
-		dispatch(rejectGroupRequest({ groupId, userId }));
+		dispatch(rejectGroupJoin({ groupId, userId }));
 	};
 
 	return (

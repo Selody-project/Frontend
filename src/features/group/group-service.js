@@ -25,8 +25,8 @@ export const deleteGroupMember = createAsyncThunk(
 	},
 );
 
-export const rejectGroupRequest = createAsyncThunk(
-	"group/rejectGroupRequest",
+export const rejectGroupJoin = createAsyncThunk(
+	"group/rejectGroupJoin",
 	async ({ groupId, userId }, thunkAPI) => {
 		try {
 			const response = await customFetch.post(
@@ -46,8 +46,8 @@ export const rejectGroupRequest = createAsyncThunk(
 	},
 );
 
-export const approveGroupRequest = createAsyncThunk(
-	"group/approveGroupRequest",
+export const approveGroupJoin = createAsyncThunk(
+	"group/approveGroupJoin",
 	async ({ groupId, userId }, thunkAPI) => {
 		try {
 			const response = await customFetch.post(
