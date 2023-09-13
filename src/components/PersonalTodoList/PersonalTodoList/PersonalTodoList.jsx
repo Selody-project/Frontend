@@ -42,7 +42,7 @@ const PersonalTodoList = () => {
 						selected={selectedTab === false}
 						onClick={() => setSelectedTab(false)}
 					>
-						오늘 할 일
+						오늘 일정
 					</TodoTab>
 					<TodoTab
 						selected={selectedTab === true}
@@ -53,7 +53,7 @@ const PersonalTodoList = () => {
 				</TodoHeader>
 				<TodoBody>
 					<TodoTitle>
-						오늘의 할 일
+						오늘 일정
 						<AddEventButton onClick={handleMenuOpen}>
 							<img src="/todo_add.svg" alt="Add-icon" />
 							일정 추가
