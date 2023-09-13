@@ -43,7 +43,7 @@ const DUMMY_SCHEDUELS = [
 		id: 1,
 		title: "출퇴근 걸어가기",
 		start: new Date(2023, 7),
-		end: new Date(2023, 8),
+		end: new Date(2023, 7, 31),
 	},
 	{
 		id: 2,
@@ -155,7 +155,28 @@ const CalendarContainer = ({ type }) => {
 	// 	return eventColorMap.current[eventId];
 	// };
 
-	// const menuHandler = () => {
+	const handleDateClick = (info) => {
+		const startDate = info.date;
+		const endDate = new Date(
+			startDate.getFullYear(),
+			startDate.getMonth(),
+			startDate.getDate() + 1,
+		);
+		const schdeulesThisDateContained = DUMMY_SCHEDUELS.filter((schedule) => {
+			return (
+				// 아예 양쪽으로 포암하거나(오버랩)
+				(schedule.start <= startDate && schedule.end >= endDate) ||
+				// 시작이 포함되거나
+				(schedule.start >= startDate && schedule.start <= endDate) ||
+				// 끝이 포함되거나
+				(schedule.end >= startDate && schedule.end <= endDate) ||
+				// 그냥 안에 있거나
+				(schedule.start >= startDate && schedule.end <= endDate)
+			);
+		});
+		console.log(schdeulesThisDateContained);
+	};
+
 	const menuHandler = (clickedInfo) => {
 		const { start, end } = clickedInfo.event; // 클릭한 이벤트
 		// 오버랩된 이벤트
@@ -258,6 +279,7 @@ const CalendarContainer = ({ type }) => {
 				currentMonth={currentMonth}
 				currentWeek={currentWeek}
 				handleDateChange={handleDateChange}
+				handleDateClick={handleDateClick}
 				menuHandler={type === SCHEDULE_TYPE.PERSONAL && menuHandler}
 			/>
 		</CalendarContainerDiv>

@@ -51,6 +51,7 @@ const CustomCalendar = forwardRef(
 			currentMonth,
 			currentWeek,
 			handleDateChange,
+			handleDateClick,
 			menuHandler = null,
 		},
 		calendarRef,
@@ -158,6 +159,7 @@ const CustomCalendar = forwardRef(
 					}
 					height={currentCalendarView === VIEW_TYPE.DAY_GRID_MONTH ? 654 : 964}
 					eventClick={menuHandler}
+					dateClick={handleDateClick}
 					datesSet={({ view: { type } }) =>
 						dispatch(setCurrentCalenderView(type))
 					}
