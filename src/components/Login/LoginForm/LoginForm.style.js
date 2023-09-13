@@ -93,7 +93,7 @@ export const FindPasswordDiv = styled.div`
 		color: ${({ theme: { colors } }) => colors.text_02};
 		cursor: pointer;
 		font-size: 14px;
-		font-weight: ${({ theme }) => theme.typography.weight.semibold};
+		font-weight: ${({ theme }) => theme.typography.weight.medium};
 		font-family: Spoqa Han Sans Neo;
 		line-height: normal;
 		text-decoration: underline;

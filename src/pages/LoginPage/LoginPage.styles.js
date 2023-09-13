@@ -38,7 +38,7 @@ export const LeftSideDiv = styled.div`
 		font-family: "Spoqa Han Sans Neo";
 		font-style: normal;
 		font-size: 28px;
-		font-weight: ${({ theme }) => theme.typography.weight.semibold};
+		font-weight: ${({ theme }) => theme.typography.weight.medium};
 		line-height: normal;
 
 		color: ${({ theme: { colors } }) => colors.text_01};
