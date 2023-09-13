@@ -92,7 +92,12 @@ const getTimeFormat = ({ date: { hour } }) => {
 
 const CustomCalendar = forwardRef(
 	(
-		{ fullCalendarEvents, handleDateChange, menuHandler = null },
+		{
+			fullCalendarEvents,
+			handleDateChange,
+			handleDateClick,
+			menuHandler = null,
+		},
 		calendarRef,
 	) => {
 		const { year, month, week, currentCalendarView } = useSelector(
@@ -171,6 +176,7 @@ const CustomCalendar = forwardRef(
 					}
 					height={currentCalendarView === VIEW_TYPE.DAY_GRID_MONTH ? 654 : 964}
 					eventClick={menuHandler}
+					dateClick={handleDateClick}
 					datesSet={({ view: { type } }) =>
 						dispatch(setCurrentCalenderView(type))
 					}
