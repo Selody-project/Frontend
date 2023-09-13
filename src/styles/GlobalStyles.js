@@ -128,7 +128,6 @@ const GlobalStyles = createGlobalStyle`${css`
 
 	body {
 		padding: 0;
-		box-sizing: border-box;
 		line-height: 1;
 	}
 
@@ -144,6 +143,10 @@ const GlobalStyles = createGlobalStyle`${css`
 
 	button {
 		all: unset;
+	}
+
+	* {
+		box-sizing: border-box;
 	}
 `}
 `;
