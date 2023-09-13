@@ -52,7 +52,7 @@ const CustomCalendar = forwardRef(
 			currentWeek,
 			handleDateChange,
 			handleDateClick,
-			menuHandler = null,
+			handleScheduleClick = null,
 		},
 		calendarRef,
 	) => {
@@ -158,7 +158,7 @@ const CustomCalendar = forwardRef(
 						renderInfo.dayNumberText.replace("일", "")
 					}
 					height={currentCalendarView === VIEW_TYPE.DAY_GRID_MONTH ? 654 : 964}
-					eventClick={menuHandler}
+					eventClick={handleScheduleClick}
 					dateClick={handleDateClick}
 					datesSet={({ view: { type } }) =>
 						dispatch(setCurrentCalenderView(type))

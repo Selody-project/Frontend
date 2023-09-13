@@ -177,16 +177,16 @@ const CalendarContainer = ({ type }) => {
 		console.log(schdeulesThisDateContained);
 	};
 
-	const menuHandler = (clickedInfo) => {
+	const handleScheduleClick = (clickedInfo) => {
 		const { start, end } = clickedInfo.event; // 클릭한 이벤트
 		// 오버랩된 이벤트
-		const overlappedEvents = DUMMY_SCHEDUELS.filter((event) => {
+		const overlappedSchedules = DUMMY_SCHEDUELS.filter((schedule) => {
 			return (
-				event.start <= start && // 시작한 날짜가 클릭 이벤트의 시작 날짜 이후
-				event.end >= end // 시작 날짜가 클릭 이벤트의 끝나는 날짜 이전
+				schedule.start <= start && // 시작한 날짜가 클릭 이벤트의 시작 날짜 이후
+				schedule.end >= end // 시작 날짜가 클릭 이벤트의 끝나는 날짜 이전
 			);
 		});
-		console.log(overlappedEvents);
+		console.log(overlappedSchedules);
 		dispatch(setEdit(true));
 		dispatch(openModal({ type: SCHEDULE_TYPE.PERSONAL }));
 		// console.log(schedule[0].id);
@@ -280,7 +280,9 @@ const CalendarContainer = ({ type }) => {
 				currentWeek={currentWeek}
 				handleDateChange={handleDateChange}
 				handleDateClick={handleDateClick}
-				menuHandler={type === SCHEDULE_TYPE.PERSONAL && menuHandler}
+				handleScheduleClick={
+					type === SCHEDULE_TYPE.PERSONAL && handleScheduleClick
+				}
 			/>
 		</CalendarContainerDiv>
 	);
