@@ -24,9 +24,9 @@ export const signup = createAsyncThunk(
 
 export const login = createAsyncThunk(
 	"user/login",
-	async ({ email, password }, thunkAPI) => {
+	async ({ email, password, customAxios }, thunkAPI) => {
 		try {
-			const response = await customFetch.post(`/api/auth/login`, {
+			const response = await customAxios.post(`/api/auth/login`, {
 				email,
 				password,
 			});
@@ -37,7 +37,7 @@ export const login = createAsyncThunk(
 
 			return response.data;
 		} catch (error) {
-			return thunkAPI.rejectWithValue(error.message);
+			return thunkAPI.rejectWithValue(error);
 		}
 	},
 );

@@ -2,54 +2,40 @@ import { useState } from "react";
 
 import axios from "axios";
 
+const customAxios = axios.create({
+	baseURL: "/back",
+	withCredentials: true,
+});
+
 const useAxios = () => {
 	const [loading, setLoading] = useState(false);
 
-	const customAxios = axios.create({
-		baseURL: "/back",
-		withCredentials: true,
-	});
-
-	const fetchData = async (config) => {
+	const requestHandler = (config) => {
 		setLoading(true);
-
-		try {
-			const response = await customAxios(config);
-			return response;
-		} catch (err) {
-			return err.response;
-		} finally {
-			setLoading(false);
-		}
+		return config;
 	};
 
-	const get = async (url, config = {}) => {
-		const response = await fetchData({ ...config, method: "get", url });
+	const responseHandler = (response) => {
+		setLoading(false);
 		return response;
 	};
 
-	const post = async (url, data = {}, config = {}) => {
-		const response = await fetchData({ ...config, method: "post", url, data });
-		return response;
+	const errorHandler = (error) => {
+		setLoading(false);
+		return error;
 	};
 
-	const put = async (url, data = {}, config = {}) => {
-		const response = await fetchData({ ...config, method: "put", url, data });
-		return response;
-	};
+	customAxios.interceptors.request.use(
+		(config) => requestHandler(config),
+		(error) => errorHandler(error),
+	);
 
-	const del = async (url, config = {}) => {
-		const response = await fetchData({ ...config, method: "delete", url });
-		return response;
-	};
+	customAxios.interceptors.response.use(
+		(response) => responseHandler(response),
+		(error) => errorHandler(error),
+	);
 
-	return {
-		loading,
-		get,
-		post,
-		put,
-		del,
-	};
+	return [customAxios, loading];
 };
 
 export default useAxios;

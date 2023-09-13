@@ -15,7 +15,7 @@ import {
 const initialState = {
 	user: null,
 	isLoading: false,
-	userLoading: true,
+	userLoading: false,
 	token: null,
 	edit: false,
 };
@@ -61,7 +61,7 @@ const authSlice = createSlice({
 					state.user = { email, nickname, userId, provider, snsId };
 				},
 			)
-			.addCase(login.rejected, (state, { payload }) => {
+			.addCase(login.rejected, (state) => {
 				state.isLoading = false;
 				toast.error("이메일 또는 비밀번호가 잘못되었습니다.");
 			})

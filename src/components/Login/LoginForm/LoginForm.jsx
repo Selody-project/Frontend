@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { login } from "@/features/auth/auth-service";
+import useAxios from "@/hooks/useAxios";
 import { getCookie, removeCookie, setCookie } from "@/utils/cookie";
 
 import {
@@ -18,6 +19,7 @@ import {
 } from "./LoginForm.style";
 
 const LoginForm = () => {
+	const [customAxios] = useAxios();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
@@ -58,7 +60,7 @@ const LoginForm = () => {
 			setCookie("email", email);
 		}
 
-		dispatch(login({ email, password }));
+		dispatch(login({ email, password, customAxios }));
 	};
 
 	useEffect(() => {

@@ -73,7 +73,7 @@ const SignUpForm = () => {
 		passwordCheck,
 	} = formValue;
 
-	const { post } = useAxios();
+	const [customAxios] = useAxios();
 
 	const handleFormValue = (event) => {
 		const changed = {
@@ -94,7 +94,9 @@ const SignUpForm = () => {
 			type === "email"
 				? ["checkedEmail", email, 0]
 				: ["checkedNickname", nickname, 1];
-		const response = await post("/api/auth/join", { [type]: targetValue });
+		const response = await customAxios.post("/api/auth/join", {
+			[type]: targetValue,
+		});
 
 		if (response.status === 200) {
 			toast.success(`사용 가능한 ${koreanType}입니다.`);
