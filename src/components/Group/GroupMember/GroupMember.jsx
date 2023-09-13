@@ -8,7 +8,7 @@ import {
 } from "@/features/group/group-service";
 
 import {
-	ContainerDiv,
+	ContainerAside,
 	MemberDiv,
 	MemberInnerDiv,
 	MemberH3,
@@ -27,12 +27,12 @@ const GroupMember = () => {
 
 	useEffect(() => {
 		// 추후 유저 그룹 조회 api를 통해 group id를 받아오고 해당 group id로 파라미터 수정
-		dispatch(getGroupInfoDetail(24));
-		dispatch(getGroupRequestMemberList(24));
+		dispatch(getGroupInfoDetail(21));
+		dispatch(getGroupRequestMemberList(21));
 	}, []);
 
 	return (
-		<ContainerDiv>
+		<ContainerAside>
 			<MemberDiv>
 				<MemberInnerDiv>
 					<MemberH3>내 프로필</MemberH3>
@@ -45,10 +45,10 @@ const GroupMember = () => {
 				</MemberInnerDiv>
 			</MemberDiv>
 			<MemberDiv>
-				{groupRequestMemberList.length === 0 ? null : <MemberRequestList />}
+				{groupRequestMemberList.length === 0 || <MemberRequestList />}
 				<MemberList />
 			</MemberDiv>
-		</ContainerDiv>
+		</ContainerAside>
 	);
 };
 

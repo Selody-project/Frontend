@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ContainerDiv = styled.div`
+export const ContainerAside = styled.aside`
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
