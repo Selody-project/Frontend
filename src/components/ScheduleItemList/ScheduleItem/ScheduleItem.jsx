@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { useTheme } from "styled-components";
 
+import DeleteScheduleWarningModal from "@/components/Common/Modal/DeleteScheduleWarningModal/DeleteScheduleWarningModal";
 import {
 	DeleteScheduleIcon,
 	EditScheduleIcon,
@@ -64,61 +65,63 @@ const getTimeString = (start, end) => {
 const ScheduleItem = ({
 	schedule: { id, isGroup, title, startDateTime, endDateTime, recurrence },
 }) => {
-	const { colors } = useTheme();
 	const dispatch = useDispatch();
-
-	const handleDeleteSchedule = () => {
-		const ok = window.confirm("이 일정을 삭제하겠습니까?");
-		if (ok) {
-			dispatch(deleteSchedule(id));
-		}
-	};
+	const { colors } = useTheme();
+	const [isDeleteWarningModalOn, setIsDeleteWarningModalOn] = useState(false);
 
 	return (
-		<ScheduleItemDiv>
-			<ColoredCircleDiv
-				bgColor={isGroup ? colors.sunday : colors.disabled_text}
-			/>
-			<ScheduleItemContentDiv>
-				<div>
-					<h3>{title}</h3>
-					{recurrence === 1 && (
-						<>
-							&nbsp;
-							<span className="recur" data-testid="recurreningText">
-								반복
-							</span>
-						</>
-					)}
-				</div>
-				<span>{getTimeString(startDateTime, endDateTime)}</span>
-			</ScheduleItemContentDiv>
-			<ScheduleItemRightButtonsDiv>
-				<button
-					type="button"
-					aria-label="editSchedule"
-					onClick={() =>
-						dispatch(
-							openScheduleEditModal({
-								type: isGroup
-									? UI_TYPE.SHARE_SCHEDULE
-									: UI_TYPE.PERSONAL_SCHEDULE,
-								id,
-							}),
-						)
-					}
-				>
-					<EditScheduleIcon />
-				</button>
-				<button
-					type="button"
-					aria-label="deleteSchedule"
-					onClick={handleDeleteSchedule}
-				>
-					<DeleteScheduleIcon />
-				</button>
-			</ScheduleItemRightButtonsDiv>
-		</ScheduleItemDiv>
+		<>
+			<ScheduleItemDiv>
+				<ColoredCircleDiv
+					bgColor={isGroup ? colors.sunday : colors.disabled_text}
+				/>
+				<ScheduleItemContentDiv>
+					<div>
+						<h3>{title}</h3>
+						{recurrence === 1 && (
+							<>
+								&nbsp;
+								<span className="recur" data-testid="recurreningText">
+									반복
+								</span>
+							</>
+						)}
+					</div>
+					<span>{getTimeString(startDateTime, endDateTime)}</span>
+				</ScheduleItemContentDiv>
+				<ScheduleItemRightButtonsDiv>
+					<button
+						type="button"
+						aria-label="editSchedule"
+						onClick={() =>
+							dispatch(
+								openScheduleEditModal({
+									type: isGroup
+										? UI_TYPE.SHARE_SCHEDULE
+										: UI_TYPE.PERSONAL_SCHEDULE,
+									id,
+								}),
+							)
+						}
+					>
+						<EditScheduleIcon />
+					</button>
+					<button
+						type="button"
+						aria-label="deleteSchedule"
+						onClick={() => setIsDeleteWarningModalOn(true)}
+					>
+						<DeleteScheduleIcon />
+					</button>
+				</ScheduleItemRightButtonsDiv>
+			</ScheduleItemDiv>
+			{isDeleteWarningModalOn && (
+				<DeleteScheduleWarningModal
+					onCancel={() => setIsDeleteWarningModalOn(false)}
+					onDelete={() => dispatch(deleteSchedule(id))}
+				/>
+			)}
+		</>
 	);
 };
 

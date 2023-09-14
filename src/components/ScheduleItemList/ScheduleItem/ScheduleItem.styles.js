@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import BaseCard from "@/components/Ui/BaseCard/BaseCard";
+import BaseCard from "@/components/UI/BaseCard/BaseCard";
 
 export const ScheduleItemDiv = styled(BaseCard)`
 	display: flex;
