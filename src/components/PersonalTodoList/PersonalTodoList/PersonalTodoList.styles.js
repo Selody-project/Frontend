@@ -20,7 +20,11 @@ export const TodoHeader = styled.header`
 	width: 100%;
 	height: 33px;
 	padding: 0 17px;
-	font-size: 14px;
+	font-size: ${({
+		theme: {
+			typography: { size },
+		},
+	}) => size.s2};
 	& * {
 		font-weight: ${({
 			theme: {
@@ -57,7 +61,11 @@ export const ScheduleAddButton = styled.button`
 	align-items: center;
 	width: 47px;
 	height: 47px;
-	font-size: 12px;
+	font-size: ${({
+		theme: {
+			typography: { size },
+		},
+	}) => size.s1};
 	cursor: pointer;
 	color: ${({ theme: { colors } }) => colors.primary};
 	transition: opacity 0.3s ease;
@@ -96,7 +104,11 @@ export const TodoTitle = styled.h2`
 	align-items: center;
 	width: 100%;
 	font-weight: ${({ theme: { typography } }) => typography.bold};
-	font-size: 24px;
+	font-size: ${({
+		theme: {
+			typography: { size },
+		},
+	}) => size.m2};
 	line-height: 24px;
 	color: ${({ theme: { colors } }) => colors.text_01};
 	margin-top: 0px;
@@ -109,7 +121,11 @@ export const TodoTitle = styled.h2`
 
 export const TodoSubtitle = styled.h3`
 	font-weight: ${({ theme: { typography } }) => typography.medium};
-	font-size: 14px;
+	font-size: ${({
+		theme: {
+			typography: { size },
+		},
+	}) => size.s2};
 	line-height: 20px;
 	color: ${({ theme: { colors } }) => colors.text_02};
 	margin-bottom: ${({
@@ -128,7 +144,11 @@ export const TodoButton = styled.button`
 	background: white;
 	border-radius: 10px;
 	border: 1px solid ${({ theme: { colors } }) => colors.primary};
-	font-size: 14px;
+	font-size: ${({
+		theme: {
+			typography: { size },
+		},
+	}) => size.s2};
 	font-weight: ${({ theme: { typography } }) => typography.medium};
 	line-height: 16px;
 	cursor: pointer;
