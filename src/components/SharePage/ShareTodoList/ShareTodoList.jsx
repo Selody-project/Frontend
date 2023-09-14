@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import ScheduleModal from "@/components/Common/ScheduleModal/ScheduleModal.jsx";
-import PersonalTodoItem from "@/components/PersonalTodoList/PersonalTodoItem/PersonalTodoItem.jsx";
+import ScheduleItem from "@/components/ScheduleItemList/ScheduleItem/ScheduleItem.jsx";
 import { setEdit } from "@/features/auth/auth-slice.js";
 import { createInviteLink } from "@/features/group/group-invite-service.js";
 import { getSchedule } from "@/features/schedule/schedule-service.js";
@@ -94,10 +94,7 @@ const ShareTodoList = () => {
 							<TodoList>
 								{totalSchedule.map((s) => {
 									return (
-										<PersonalTodoItem
-											key={Math.random().toString()}
-											schedule={s}
-										/>
+										<ScheduleItem key={Math.random().toString()} schedule={s} />
 									);
 								})}
 							</TodoList>

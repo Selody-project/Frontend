@@ -4,7 +4,7 @@ import CalendarContainer from "@/components/Common/CalendarContainer/CalendarCon
 import { SCHEDULE_TYPE } from "@/constants/calendarConstants";
 
 import { LayoutMain } from "./PersonalSchedulePage.styles";
-import PersonalTodoList from "../../components/PersonalTodoList/PersonalTodoList/PersonalTodoList";
+import PersonalTodoList from "../../components/ScheduleItemList/ScheduleItemList";
 
 const PersonalSchedulePage = () => {
 	return (

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import ScheduleAddIcon from "@/assets/icon/ic-schedule-add.svg";
 import ScheduleModal from "@/components/Common/ScheduleModal/ScheduleModal.jsx";
+import ScheduleItem from "@/components/ScheduleItemList/ScheduleItem/ScheduleItem";
 import { setEdit } from "@/features/auth/auth-slice.js";
 import { getSchedule } from "@/features/schedule/schedule-service.js";
 import { openModal } from "@/features/ui/ui-slice";
@@ -14,17 +15,79 @@ import {
 	TodoBody,
 	TodoButton,
 	TodoList,
-	PersonalTodoListLayoutAside,
 	TodoH2,
 	TodoH3,
 	TodoBodyHeader,
-} from "./PersonalTodoList.styles";
-import PersonalTodoItem from "../PersonalTodoItem/PersonalTodoItem";
+	ScheduleItemListLayoutAside,
+} from "./ScheduleItemList.styles";
 
-const PersonalTodoList = () => {
+const DUMMY_PERSONAL_SCHEDULES = [
+	{
+		id: 0,
+		title: "오늘 할일 1",
+		description: "첫 번째로 할 일은 뭘까",
+		start: new Date(
+			new Date().getFullYear(),
+			new Date().getMonth(),
+			new Date().getDate(),
+			8,
+			30,
+		),
+		end: new Date(
+			new Date().getFullYear(),
+			new Date().getMonth(),
+			new Date().getDate(),
+			9,
+			0,
+		),
+		recurrence: 0,
+	},
+	{
+		id: 1,
+		title: "오늘 할일 2",
+		description: "두 번째로 할 일은 뭘까",
+		start: new Date(
+			new Date().getFullYear(),
+			new Date().getMonth(),
+			new Date().getDate(),
+			9,
+			0,
+		),
+		end: new Date(
+			new Date().getFullYear(),
+			new Date().getMonth(),
+			new Date().getDate(),
+			9,
+			30,
+		),
+		recurrence: 0,
+	},
+	{
+		id: 3,
+		title: "오늘 할일 3",
+		description: "세 번째로 할 일은 뭘까",
+		start: new Date(
+			new Date().getFullYear(),
+			new Date().getMonth(),
+			new Date().getDate(),
+			11,
+			30,
+		),
+		end: new Date(
+			new Date().getFullYear(),
+			new Date().getMonth(),
+			new Date().getDate(),
+			12,
+			0,
+		),
+		recurrence: 0,
+	},
+];
+
+const ScheduleItemList = () => {
 	const dispatch = useDispatch();
 	const { openedModal } = useSelector((state) => state.ui);
-	const { month, year, totalSchedule } = useSelector((state) => state.schedule);
+	const { month, year } = useSelector((state) => state.schedule);
 	const [selectedTab, setSelectedTab] = useState(false);
 
 	useEffect(() => {
@@ -38,7 +101,7 @@ const PersonalTodoList = () => {
 
 	return (
 		<>
-			<PersonalTodoListLayoutAside data-testid="personal-todo-list">
+			<ScheduleItemListLayoutAside data-testid="personal-todo-list">
 				<TodoHeader>
 					<TodoTab
 						selected={selectedTab === false}
@@ -64,25 +127,20 @@ const PersonalTodoList = () => {
 							<span>일정 추가</span>
 						</ScheduleAddButton>
 					</TodoBodyHeader>
-					{totalSchedule.length === 0 ? (
+					{DUMMY_PERSONAL_SCHEDULES.length === 0 ? (
 						<TodoButton onClick={handleMenuOpen}>
 							아직 추가된 일정이 없습니다! <br />할 일을 추가하여 하루동안 할
 							일을 관리해보세요.
 						</TodoButton>
 					) : (
 						<TodoList>
-							{totalSchedule.map((s) => {
-								return (
-									<PersonalTodoItem
-										key={Math.random().toString()}
-										schedule={s}
-									/>
-								);
+							{DUMMY_PERSONAL_SCHEDULES.map((schedule) => {
+								return <ScheduleItem key={schedule.id} schedule={schedule} />;
 							})}
 						</TodoList>
 					)}
 				</TodoBody>
-			</PersonalTodoListLayoutAside>
+			</ScheduleItemListLayoutAside>
 			{openedModal === "PERSONAL_SCHEDULE" && (
 				<ScheduleModal
 					type={openedModal}
@@ -104,4 +162,4 @@ const PersonalTodoList = () => {
 	);
 };
 
-export default PersonalTodoList;
+export default ScheduleItemList;

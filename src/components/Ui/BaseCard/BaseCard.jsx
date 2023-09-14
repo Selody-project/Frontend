@@ -1,9 +1,11 @@
 import React from "react";
 
-import { Wrapper as BaseCardWrapper } from "./BaseCard.styles.js";
+import { BaseCardLayoutDiv } from "./BaseCard.styles.js";
 
 const BaseCard = ({ children, className }) => {
-	return <BaseCardWrapper className={className}>{children}</BaseCardWrapper>;
+	return (
+		<BaseCardLayoutDiv className={className}>{children}</BaseCardLayoutDiv>
+	);
 };
 
 export default BaseCard;

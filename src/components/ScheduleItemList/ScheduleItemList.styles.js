@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const PersonalTodoListLayoutAside = styled.aside`
+export const ScheduleItemListLayoutAside = styled.aside`
 	position: sticky;
 	top: 290px;
 	display: flex;
