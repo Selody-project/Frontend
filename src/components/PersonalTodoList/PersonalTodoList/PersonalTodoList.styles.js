@@ -49,12 +49,6 @@ export const TodoTab = styled.button`
 		}) => padding.small}px
 		0;
 	cursor: pointer;
-	&:hover,
-	&[aria-selected="true"] {
-		opacity: 1;
-		background: ${({ theme: { colors } }) => colors.primary};
-		color: white;
-	}
 `;
 
 export const ScheduleAddButton = styled.button`
