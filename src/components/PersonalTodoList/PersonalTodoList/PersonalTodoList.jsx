@@ -12,11 +12,12 @@ import {
 	TodoTab,
 	ScheduleAddButton,
 	TodoBody,
-	TodoTitle,
-	TodoSubtitle,
 	TodoButton,
 	TodoList,
 	PersonalTodoListLayoutAside,
+	TodoH2,
+	TodoH3,
+	TodoBodyHeader,
 } from "./PersonalTodoList.styles";
 import PersonalTodoItem from "../PersonalTodoItem/PersonalTodoItem";
 
@@ -53,14 +54,16 @@ const PersonalTodoList = () => {
 					</TodoTab>
 				</TodoHeader>
 				<TodoBody>
-					<TodoTitle>
-						오늘 일정
+					<TodoBodyHeader>
+						<div>
+							<TodoH2>오늘 일정</TodoH2>
+							<TodoH3>하루동안의 할 일을 관리합니다.</TodoH3>
+						</div>
 						<ScheduleAddButton onClick={handleMenuOpen}>
 							<ScheduleAddIcon />
 							<span>일정 추가</span>
 						</ScheduleAddButton>
-					</TodoTitle>
-					<TodoSubtitle>하루동안의 할 일을 관리합니다.</TodoSubtitle>
+					</TodoBodyHeader>
 					{totalSchedule.length === 0 ? (
 						<TodoButton onClick={handleMenuOpen}>
 							아직 추가된 일정이 없습니다! <br />할 일을 추가하여 하루동안 할
