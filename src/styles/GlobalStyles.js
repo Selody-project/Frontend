@@ -146,7 +146,7 @@ const GlobalStyles = createGlobalStyle`${css`
 	}
 
 	* {
-		box-sizing: border-box;
+		box-sizing: border-box !important;
 	}
 `}
 `;
