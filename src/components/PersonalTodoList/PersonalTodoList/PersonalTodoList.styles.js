@@ -25,13 +25,6 @@ export const TodoHeader = styled.header`
 			typography: { size },
 		},
 	}) => size.s2};
-	& * {
-		font-weight: ${({
-			theme: {
-				typography: { weight },
-			},
-		}) => weight.medium};
-	}
 `;
 
 export const TodoTab = styled.button`
@@ -55,12 +48,71 @@ export const TodoTab = styled.button`
 	cursor: pointer;
 `;
 
+export const TodoBody = styled.div`
+	display: flex;
+	gap: 29px;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	width: 100%;
+	min-height: 549px;
+	padding: 26px 22px 26px 20px;
+	border-radius: ${({
+		theme: {
+			typography: { size },
+		},
+	}) => size.l3};
+	background-color: ${({ theme: { colors } }) => colors.bg_02};
+`;
+
+export const TodoBodyHeader = styled.header`
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	& > div {
+		height: 43px;
+	}
+`;
+
+export const TodoH2 = styled.h2`
+	font-size: ${({
+		theme: {
+			typography: { size },
+		},
+	}) => size.m1};
+	font-weight: ${({
+		theme: {
+			typography: { weight },
+		},
+	}) => weight.bold};
+	line-height: ${({
+		theme: {
+			typography: { size },
+		},
+	}) => size.m2};
+	color: ${({ theme: { colors } }) => colors.text_01};
+	margin-bottom: 4px;
+`;
+export const TodoH3 = styled.h3`
+	color: ${({ theme: { colors } }) => colors.text_02};
+	font-size: ${({
+		theme: {
+			typography: { size },
+		},
+	}) => size.s1};
+	line-height: 15px;
+	color: ${({ theme: { colors } }) => colors.text_02};
+`;
+
 export const ScheduleAddButton = styled.button`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content: center;
 	width: 47px;
 	height: 47px;
+	margin-top: -2px;
+	margin-right: -7px;
 	font-size: ${({
 		theme: {
 			typography: { size },
@@ -82,68 +134,20 @@ export const ScheduleAddButton = styled.button`
 	}
 `;
 
-export const TodoBody = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	width: 100%;
-	height: auto;
-	border-radius: 15px;
-	padding: ${({
-		theme: {
-			spacing: { padding },
-		},
-	}) => padding.medium}px;
-	background-color: ${({ theme: { colors } }) => colors.bg_02};
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-`;
-
-export const TodoTitle = styled.h2`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	width: 100%;
-	font-weight: ${({ theme: { typography } }) => typography.bold};
-	font-size: ${({
-		theme: {
-			typography: { size },
-		},
-	}) => size.m2};
-	line-height: 24px;
-	color: ${({ theme: { colors } }) => colors.text_01};
-	margin-top: 0px;
-	margin-bottom: ${({
-		theme: {
-			spacing: { padding },
-		},
-	}) => padding.small}px;
-`;
-
-export const TodoSubtitle = styled.h3`
-	font-weight: ${({ theme: { typography } }) => typography.medium};
-	font-size: ${({
-		theme: {
-			typography: { size },
-		},
-	}) => size.s2};
-	line-height: 20px;
-	color: ${({ theme: { colors } }) => colors.text_02};
-	margin-bottom: ${({
-		theme: {
-			spacing: { padding },
-		},
-	}) => padding.medium}px;
-`;
-
 export const TodoButton = styled.button`
-	width: 100%;
-	height: 200px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	width: 100%;
+	height: 186px;
 	background: white;
-	border-radius: 10px;
+	border-radius: ${({
+		theme: {
+			spacing: { borderRadius },
+		},
+	}) => borderRadius.default}px;
 	border: 1px solid ${({ theme: { colors } }) => colors.primary};
+	padding: 15px;
 	font-size: ${({
 		theme: {
 			typography: { size },
@@ -151,13 +155,8 @@ export const TodoButton = styled.button`
 	}) => size.s2};
 	font-weight: ${({ theme: { typography } }) => typography.medium};
 	line-height: 16px;
-	cursor: pointer;
 	color: ${({ theme: { colors } }) => colors.disabled_text};
-	margin-top: ${({
-		theme: {
-			spacing: { padding },
-		},
-	}) => padding.medium}px;
+	cursor: pointer;
 	transition: opacity 0.3s ease;
 
 	&:hover {
