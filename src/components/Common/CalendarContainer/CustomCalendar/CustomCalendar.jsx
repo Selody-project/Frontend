@@ -109,16 +109,27 @@ const CustomCalendar = forwardRef(
 
 		useEffect(() => {
 			if (currentCalendarView === VIEW_TYPE.DAY_GRID_MONTH) {
-				const scheduleDivs = document.querySelectorAll(
-					".fc-daygrid-event-harness",
+				const scheduleEventsDivsForEachDate = document.querySelectorAll(
+					".fc-daygrid-day-events",
 				);
-				// 하루종일인 이벤트가 함꼐 있는 일자의 맨 위 스케줄의 margin을 더 띄워 줍니다
-				scheduleDivs.forEach((scheduleDiv) => {
-					if (scheduleDiv.style["margin-top"] === "18px") {
-						scheduleDiv.style["margin-top"] = "20px";
-					} else if (scheduleDiv.style.top) {
-						scheduleDiv.style.top = 0;
-					}
+				scheduleEventsDivsForEachDate.forEach((scheduleEventsDiv) => {
+					const childEventsDiv = scheduleEventsDiv.querySelectorAll(
+						".fc-daygrid-event-harness",
+					);
+					if (childEventsDiv.length === 0) return;
+					childEventsDiv.forEach((scheduleDiv, index) => {
+						const [, continuousClassName] = scheduleDiv.classList;
+						if (continuousClassName) {
+							// 연속 일정인데 여러 개인 경우 겹치기
+							scheduleDiv.style.top = 0;
+						} else if (scheduleDiv.style["margin-top"] === "18px") {
+							// 하루종일인 이벤트가 함꼐 있는 일자의 맨 위 스케줄의 margin을 더 띄워 줍니다
+							scheduleDiv.style["margin-top"] = "20px";
+						} else if (scheduleDiv.style["margin-top"] === "0px" && index > 0) {
+							// 단일 일정이 여러 개 있는 경우 하나로 겹쳐줍니다.
+							scheduleDiv.style["margin-top"] = "-20.1px";
+						}
+					});
 				});
 			} else {
 				const timeGridEventDivs = document.querySelectorAll(
