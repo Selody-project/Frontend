@@ -13,19 +13,17 @@ import {
 } from "./GroupMember.styles";
 
 const MemberList = () => {
-	const [open, setOpen] = useState(false);
-	const [openArr, setOpenArr] = useState([false]);
+	const [optionMenuOpenedMemberIndex, setOptionMenuOpenedMemberIndex] =
+		useState(null);
 
 	const dispatch = useDispatch();
 
 	const groupInfoDetail = useSelector((state) => state.group.groupInfoDetail);
 
-	const handleOption = (num) => {
-		const newOpen = [...openArr];
-		newOpen[num] = !open;
-		setOpenArr(newOpen);
-		setOpen(!open);
-	};
+	const handleOption = (num) =>
+		optionMenuOpenedMemberIndex === num
+			? setOptionMenuOpenedMemberIndex(null)
+			: setOptionMenuOpenedMemberIndex(num);
 
 	const deleteMember = (groupId, userId) => {
 		dispatch(deleteGroupMember({ groupId, userId }));
@@ -45,14 +43,15 @@ const MemberList = () => {
 									handleOption(info.userId);
 								}}
 							/>
-							<OptionMenuDiv
-								style={{ display: openArr[info.userId] ? "flex" : "none" }}
-								onClick={() => {
-									deleteMember(20, info.userId);
-								}}
-							>
-								내보내기
-							</OptionMenuDiv>
+							{optionMenuOpenedMemberIndex === info.userId && (
+								<OptionMenuDiv
+									onClick={() => {
+										deleteMember(20, info.userId);
+									}}
+								>
+									내보내기
+								</OptionMenuDiv>
+							)}
 						</button>
 					</li>
 				))}
