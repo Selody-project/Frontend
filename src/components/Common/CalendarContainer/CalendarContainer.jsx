@@ -43,6 +43,12 @@ const DUMMY_SCHEDUELS = [
 		id: 1,
 		title: "출퇴근 걸어가기",
 		start: new Date(2023, 7),
+		end: new Date(2023, 8, 1),
+	},
+	{
+		id: 5,
+		title: "절약하기",
+		start: new Date(2023, 7, 10),
 		end: new Date(2023, 7, 31),
 	},
 	{

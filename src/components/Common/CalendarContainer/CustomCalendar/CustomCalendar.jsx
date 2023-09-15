@@ -72,6 +72,8 @@ const CustomCalendar = forwardRef(
 				scheduleDivs.forEach((scheduleDiv) => {
 					if (scheduleDiv.style["margin-top"] === "18px") {
 						scheduleDiv.style["margin-top"] = "20px";
+					} else if (scheduleDiv.style.top) {
+						scheduleDiv.style.top = 0;
 					}
 				});
 			} else {
