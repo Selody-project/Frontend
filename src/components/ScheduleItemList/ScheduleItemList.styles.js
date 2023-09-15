@@ -182,18 +182,10 @@ export const TodoList = styled.ul`
 	overflow-y: auto;
 
 	&::-webkit-scrollbar {
-		width: 10px;
+		display: none;
 	}
-
-	&::-webkit-scrollbar-track {
-		background: #f1f1f1;
-	}
-
-	&::-webkit-scrollbar-thumb {
-		background: #888;
-	}
-
-	&::-webkit-scrollbar-thumb:hover {
-		background: #555;
+	& {
+		-ms-overflow-style: none; /* 인터넷 익스플로러 */
+		scrollbar-width: none; /* 파이어폭스 */
 	}
 `;

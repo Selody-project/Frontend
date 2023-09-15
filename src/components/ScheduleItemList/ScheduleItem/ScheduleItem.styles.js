@@ -7,6 +7,7 @@ export const ScheduleItemDiv = styled(BaseCard)`
 	align-items: center;
 	gap: 16px;
 	height: 67px;
+	min-height: 67px;
 `;
 
 export const ToggleButton = styled.button`
