@@ -37,7 +37,7 @@ const ScheduleItem = ({ schedule: { title, start, end } }) => {
 	const toggleIsDone = () => setIsDone((prev) => !prev);
 
 	return (
-		<ScheduleItemDiv>
+		<ScheduleItemDiv isDone={isDone}>
 			<ToggleButton onClick={toggleIsDone}>
 				{isDone ? <CheckedCircleIcon /> : <EmptyCircleIcon />}
 			</ToggleButton>
