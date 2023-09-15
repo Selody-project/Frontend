@@ -8,6 +8,7 @@ export const ScheduleItemDiv = styled(BaseCard)`
 	gap: 16px;
 	height: 67px;
 	min-height: 67px;
+	opacity: ${({ isDone }) => (isDone ? 0.5 : 1)};
 `;
 
 export const ToggleButton = styled.button`
