@@ -15,19 +15,25 @@ export const ListDiv = styled.div`
 	display: flex;
 	flex-direction: row;
 	margin-top: 30px;
-	gap: 34px;
+	gap: 26px;
 	cursor: pointer;
 `;
 
 export const ItemDiv = styled.div`
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 	gap: 8px;
+	width: 80px;
 
 	& > h4 {
 		color: ${({ theme: { colors } }) => colors.text_02};
 		font-size: 12px;
 		text-align: center;
+		max-width: 80px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 `;
 
