@@ -5,6 +5,7 @@ export const ContainerDiv = styled.div`
 	flex-direction: column;
 	gap: 14px;
 	margin-top: 52px;
+	font-family: Inter;
 `;
 
 export const FeedDiv = styled.div`
