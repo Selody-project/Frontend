@@ -1,15 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 
-import CheckedCircleIcon from "@/assets/icon/ic-checked-circle.svg";
 import DeleteScheduleIcon from "@/assets/icon/ic-delete-schedule.svg";
 import EditScheduleIcon from "@/assets/icon/ic-edit-schedule.svg";
-import EmptyCircleIcon from "@/assets/icon/ic-empty-circle.svg";
 
 import {
 	ScheduleItemContentDiv,
 	ScheduleItemDiv,
 	ScheduleItemRightButtonsDiv,
-	ToggleButton,
 } from "./ScheduleItem.styles";
 
 const getTimeString = (date, isEnd = false) => {
@@ -32,15 +29,8 @@ const getTimeString = (date, isEnd = false) => {
 };
 
 const ScheduleItem = ({ schedule: { title, start, end } }) => {
-	const [isDone, setIsDone] = useState(false);
-
-	const toggleIsDone = () => setIsDone((prev) => !prev);
-
 	return (
-		<ScheduleItemDiv isDone={isDone}>
-			<ToggleButton onClick={toggleIsDone}>
-				{isDone ? <CheckedCircleIcon /> : <EmptyCircleIcon />}
-			</ToggleButton>
+		<ScheduleItemDiv>
 			<ScheduleItemContentDiv>
 				<span>{title}</span>
 				<span>
