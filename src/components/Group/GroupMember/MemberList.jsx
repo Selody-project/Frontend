@@ -21,9 +21,7 @@ const MemberList = () => {
 	const groupInfoDetail = useSelector((state) => state.group.groupInfoDetail);
 
 	const handleOption = (num) =>
-		optionMenuOpenedMemberIndex === num
-			? setOptionMenuOpenedMemberIndex(null)
-			: setOptionMenuOpenedMemberIndex(num);
+		setOptionMenuOpenedMemberIndex((prev) => (prev === num ? null : num));
 
 	const deleteMember = (groupId, userId) => {
 		dispatch(deleteGroupMember({ groupId, userId }));

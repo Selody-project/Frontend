@@ -55,9 +55,7 @@ const GroupFeed = () => {
 	// console.log(user?.userId);
 
 	const handleOption = (num) =>
-		optionMenuOpenedFeedIndex === num
-			? setOptionMenuOpenedFeedIndex(null)
-			: setOptionMenuOpenedFeedIndex(num);
+		setOptionMenuOpenedFeedIndex((prev) => (prev === num ? null : num));
 
 	return (
 		<ContainerDiv>
