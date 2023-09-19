@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ModalWrapper = styled.div`
+export const ModalContentDiv = styled.div`
 	position: fixed;
 	top: 50%;
 	left: 50%;
@@ -11,6 +11,7 @@ export const ModalWrapper = styled.div`
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
+	background-color: ${({ bg }) => bg};
 `;
 
 export const BackdropWrapper = styled.div`

@@ -11,8 +11,8 @@ import useScrollLock from "@/hooks/useScrollLock.jsx";
 import {
 	BackdropWrapper,
 	IconButton,
+	ModalContentDiv,
 	ModalHeaderDiv,
-	ModalWrapper,
 } from "./BaseModal.style.js";
 
 const Backdrop = () => {
@@ -26,7 +26,7 @@ const Backdrop = () => {
 	);
 };
 
-const Modal = ({ title, children, hasClose, style }) => {
+const Modal = ({ title, children, hasClose, style, bg }) => {
 	const dispatch = useDispatch();
 
 	const handleClose = () => {
@@ -34,7 +34,7 @@ const Modal = ({ title, children, hasClose, style }) => {
 	};
 
 	return (
-		<ModalWrapper style={style}>
+		<ModalContentDiv style={style} bg={bg}>
 			<ModalHeaderDiv>
 				<span>{title}</span>
 				{hasClose && (
@@ -44,18 +44,18 @@ const Modal = ({ title, children, hasClose, style }) => {
 				)}
 			</ModalHeaderDiv>
 			{children}
-		</ModalWrapper>
+		</ModalContentDiv>
 	);
 };
 
-const BaseModal = ({ title = null, children, hasClose = true, style }) => {
+const BaseModal = ({ title = null, children, hasClose = true, style, bg }) => {
 	useScrollLock();
 
 	return (
 		<>
 			{ReactDOM.createPortal(<Backdrop />, document.getElementById("backdrop"))}
 			{ReactDOM.createPortal(
-				<Modal title={title} hasClose={hasClose} style={style}>
+				<Modal title={title} hasClose={hasClose} style={style} bg={bg}>
 					{children}
 				</Modal>,
 				document.getElementById("modal"),
