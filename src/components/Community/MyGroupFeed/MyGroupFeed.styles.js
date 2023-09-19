@@ -4,7 +4,7 @@ export const ContainerDiv = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 14px;
-	margin-top: 52px;
+	margin-top: 42px;
 	font-family: Inter;
 `;
 
