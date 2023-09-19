@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import ScheduleModal from "@/components/Common/ScheduleModal/ScheduleModal.jsx";
 import ScheduleItem from "@/components/ScheduleItemList/ScheduleItem/ScheduleItem.jsx";
-import { setEdit } from "@/features/auth/auth-slice.js";
+import { SCHEDULE_MODAL_TYPE, UI_TYPE } from "@/constants/uiConstans.js";
 import { createInviteLink } from "@/features/group/group-invite-service.js";
 import { getSchedule } from "@/features/schedule/schedule-service.js";
 import { openModal } from "@/features/ui/ui-slice.js";
@@ -30,8 +30,12 @@ const ShareTodoList = () => {
 	const [selectedTab, setSelectedTab] = useState(true);
 
 	const handleModalOpen = (type) => {
-		dispatch(setEdit(false));
-		dispatch(openModal({ type }));
+		dispatch(
+			openModal({
+				type,
+				scheduleModalMode: SCHEDULE_MODAL_TYPE.CREATE,
+			}),
+		);
 	};
 
 	const createInviteCodeHandler = () => {
@@ -68,7 +72,7 @@ const ShareTodoList = () => {
 							<TodoTitle>
 								일정 후보{" "}
 								<AddEventButton
-									onClick={() => handleModalOpen("SHARE_SCHEDULE")}
+									onClick={() => handleModalOpen(UI_TYPE.SHARE_SCHEDULE)}
 								>
 									<img src="/todo_add.svg" alt="Add-icon" />
 									일정 후보 추가
@@ -84,7 +88,7 @@ const ShareTodoList = () => {
 							<TodoTitle>
 								오늘의 할 일
 								<AddEventButton
-									onClick={() => handleModalOpen("PERSONAL_SCHEDULE")}
+									onClick={() => handleModalOpen(UI_TYPE.PERSONAL_SCHEDULE)}
 								>
 									<img src="/todo_add.svg" alt="Add-icon" />
 									일정 추가
@@ -102,12 +106,12 @@ const ShareTodoList = () => {
 					)}
 				</TodoBody>
 			</TodoContainer>
-			{(openedModal === "PERSONAL_SCHEDULE" ||
-				openedModal === "SHARE_SCHEDULE") && (
+			{(openedModal === UI_TYPE.PERSONAL_SCHEDULE ||
+				openedModal === UI_TYPE.SHARE_SCHEDULE) && (
 				<ScheduleModal
 					type={openedModal}
 					initFormValues={
-						openedModal === "PERSONAL_SCHEDULE"
+						openedModal === UI_TYPE.PERSONAL_SCHEDULE
 							? {
 									title: "",
 									details: "",

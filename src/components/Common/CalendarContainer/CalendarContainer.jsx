@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { CALENDAR_COLORS, SCHEDULE_TYPE } from "@/constants/calendarConstants";
+import { SCHEDULE_MODAL_TYPE } from "@/constants/uiConstans";
 import {
 	currentMonthFn,
 	currentYearFn,
@@ -120,8 +121,12 @@ const CalendarContainer = ({ type }) => {
 	};
 
 	const menuHandler = () => {
-		// dispatch(setEdit(true));
-		dispatch(openModal({ type: SCHEDULE_TYPE.PERSONAL }));
+		dispatch(
+			openModal({
+				type: SCHEDULE_TYPE.PERSONAL,
+				scheduleModalMode: SCHEDULE_MODAL_TYPE.EDIT,
+			}),
+		);
 		// console.log(schedule[0].id);
 		dispatch(setId(schedule.id));
 	};

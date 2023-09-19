@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-import BaseModal from "@/components/Common/Modal/BaseModal.jsx";
+import BaseModal from "@/components/Base/BaseModal/BaseModal.jsx";
+import { UI_TYPE } from "@/constants/uiConstans";
 import {
 	createSchedule,
 	updateSchedule,
@@ -54,7 +55,7 @@ const ScheduleModal = ({ type, initFormValues }) => {
 		formValues.startTime !== "" &&
 		formValues.endDate !== "" &&
 		formValues.endTime !== "" &&
-		(type === "SHARE_SCHEDULE"
+		(type === UI_TYPE.SHARE_SCHEDULE
 			? formValues.voteEndDate !== "" && formValues.voteEndTime !== ""
 			: true);
 
@@ -140,7 +141,7 @@ const ScheduleModal = ({ type, initFormValues }) => {
 					/>
 				</DateDiv>
 			</DateContainerDiv>
-			{type === "SHARE_SCHEDULE" ? (
+			{type === UI_TYPE.SHARE_SCHEDULE ? (
 				<>
 					<LabelDiv>일정 투표 종료일</LabelDiv>
 					<DateContainerDiv>

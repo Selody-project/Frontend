@@ -8,6 +8,7 @@ import SelodyLogo from "@/components/Common/SelodyLogo";
 import Tab from "@/components/Common/Tab/Tab";
 import NotificationDropdown from "@/components/Notification/NotificationDropdown/NotificationDropdown";
 import { HEADER_TAB_CONSTANTS } from "@/constants/tabConstants";
+import { UI_TYPE } from "@/constants/uiConstans";
 import { openModal } from "@/features/ui/ui-slice";
 
 import {
@@ -82,7 +83,7 @@ const Header = () => {
 				<RightDiv>
 					<GroupCreateButton
 						onClick={() => {
-							dispatch(openModal({ type: "CREATE_GROUP" }));
+							dispatch(openModal({ type: UI_TYPE.CREATE_GROUP }));
 						}}
 					>
 						그룹 만들기

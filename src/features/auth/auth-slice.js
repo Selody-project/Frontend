@@ -17,15 +17,15 @@ const initialState = {
 	user: null,
 	isLoading: true,
 	token: null,
-	edit: false,
 };
 
 const authSlice = createSlice({
 	name: "auth",
 	initialState,
 	reducers: {
-		setEdit: (state, { payload }) => {
-			state.edit = payload;
+		logoutHandler: (state) => {
+			state.user = null;
+			toast.success("로그아웃에 성공하셨습니다.");
 		},
 	},
 	extraReducers: (builder) => {
@@ -147,6 +147,6 @@ const authSlice = createSlice({
 	},
 });
 
-export const { setEdit } = authSlice.actions;
+export const { logoutHandler } = authSlice.actions;
 
 export default authSlice.reducer;
