@@ -116,10 +116,11 @@ export const getCurrentUser = createAsyncThunk(
 
 export const updateUserProfile = createAsyncThunk(
 	"user/updateUserProfile",
-	async ({ nickname }, thunkAPI) => {
+	async ({ nickname, email }, thunkAPI) => {
 		try {
 			const response = await customFetch.patch(`/api/user/profile`, {
 				nickname,
+				email,
 			});
 
 			if (response.statusText !== "OK") {
@@ -128,7 +129,7 @@ export const updateUserProfile = createAsyncThunk(
 
 			return response.data;
 		} catch (error) {
-			return thunkAPI.rejectWithValue(error.message);
+			return thunkAPI.rejectWithValue(error.response.status);
 		}
 	},
 );
@@ -146,6 +147,25 @@ export const updateUserPassword = createAsyncThunk(
 			}
 
 			return response.data;
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error.message);
+		}
+	},
+);
+
+export const withdrawMembership = createAsyncThunk(
+	"user/withdrawal",
+	async (userId, thunkAPI) => {
+		try {
+			const response = await customFetch.delete(
+				`/api/auth/withdrawal/${userId}`,
+			);
+
+			if (response.status === 204) {
+				return response.data;
+			}
+
+			throw response.data;
 		} catch (error) {
 			return thunkAPI.rejectWithValue(error.message);
 		}

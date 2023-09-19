@@ -1,14 +1,19 @@
 import styled from "styled-components";
 
-export const MyPageContainer = styled.div`
+export const ContainerDiv = styled.div`
 	display: flex;
-	margin: 50px 50px 0px 50px;
-	font-family: "Inter", sans-serif;
+	margin: 70px 30px;
+	gap: 32px;
+	font-family: "Inter";
+	background-color: ${({ theme: { colors } }) => colors.white};
 `;
 
-export const TabsContainer = styled.div`
+export const TabsAside = styled.aside`
 	display: flex;
 	flex-direction: column;
+	gap: 5px;
+	margin-top: 70px;
+	height: 100vh;
 
 	& > h1 {
 		font-size: 32px;
@@ -17,20 +22,46 @@ export const TabsContainer = styled.div`
 	}
 `;
 
-export const Tab = styled.div`
+export const TabsDiv = styled.div`
+	position: sticky;
+	top: 250px;
+`;
+
+export const TabDiv = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	min-width: 160px;
-	padding: 12px 20px;
-	margin-right: 10px;
-	margin-bottom: 5px;
+	width: 132px;
+	padding: 16px 32px;
 	border-radius: 50px;
-	background-color: ${(props) => (props.selected ? "#6c63ff" : "transparent")};
-	color: ${(props) => (props.selected ? "white" : "gray")};
-	font-weight: ${(props) => (props.selected ? "bold" : "normal")};
-	box-shadow: ${(props) =>
-		props.selected ? "0px 4px 2px rgba(0, 0, 0, 0.25)" : "none"};
+	background-color: ${({ isSelected, theme: { colors } }) =>
+		isSelected ? colors.primary : "transparent"};
+	color: ${({ isSelected, theme: { colors } }) =>
+		isSelected ? colors.white : colors.text_02};
+	font-weight: ${({
+		isSelected,
+		theme: {
+			typography: { weight },
+		},
+	}) => (isSelected ? weight.semibold : weight.regular)};
+	box-shadow: ${({ isSelected }) =>
+		isSelected ? "0px 4px 2px rgba(0, 0, 0, 0.25)" : "none"};
 	cursor: pointer;
-	transition: all 0.2s ease-in-out;
+`;
+
+export const MainSection = styled.section`
+	width: 100%;
+	/* margin-left: 228px; */
+
+	& > h1 {
+		color: ${({ theme: { colors } }) => colors.text_01};
+		font-size: 32px;
+		font-weight: ${({
+			theme: {
+				typography: { weight },
+			},
+		}) => weight.medium};
+		line-height: normal;
+		margin-bottom: 28px;
+	}
 `;

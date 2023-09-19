@@ -10,6 +10,7 @@ import {
 	googleLogin,
 	updateUserProfile,
 	updateUserPassword,
+	withdrawMembership,
 } from "./auth-service.js";
 
 const initialState = {
@@ -120,8 +121,11 @@ const authSlice = createSlice({
 			})
 			.addCase(updateUserProfile.rejected, (state, { payload }) => {
 				state.isLoading = false;
-				console.log(payload);
-				toast.error(payload);
+				if (payload === 400) {
+					toast.error("잘못된 이메일 형식입니다.");
+				} else if (payload === 409) {
+					toast.error("중복된 닉네임 또는 이메일입니다.");
+				}
 			})
 			// 유저 비밀번호 수정
 			.addCase(updateUserPassword.pending, (state) => {
@@ -135,6 +139,19 @@ const authSlice = createSlice({
 				state.isLoading = false;
 				console.log(payload);
 				toast.error(payload);
+			})
+			// 회원 탈퇴
+			.addCase(withdrawMembership.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(withdrawMembership.fulfilled, (state) => {
+				state.isLoading = false;
+				state.user = null;
+				toast.success("회원 탈퇴가 완료되었습니다.");
+			})
+			.addCase(withdrawMembership.rejected, (state, { payload }) => {
+				state.isLoading = false;
+				console.log(payload);
 			});
 	},
 });

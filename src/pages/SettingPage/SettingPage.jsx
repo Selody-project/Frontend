@@ -1,48 +1,53 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
 
-import { Box, Tab, Tabs, Container } from "@mui/material";
+import SettingTab from "@/components/Setting/SettingTab";
+import WithdrawalTab from "@/components/Setting/WithdrawalTab/WithdrawalTab";
 
-import PasswordUpdate from "../../components/Setting/PasswordUpdate";
-import ProfileSettings from "../../components/Setting/ProfileSettings";
-import SharedSettings from "../../components/Setting/SharedSettings";
-import { getCurrentUser } from "../../features/auth/auth-service";
+import {
+	ContainerDiv,
+	MainSection,
+	TabDiv,
+	TabsAside,
+	TabsDiv,
+} from "./SettingPage.style";
 
 const SettingPage = () => {
 	const [selectedTab, setSelectedTab] = useState(0);
-	const { user } = useSelector((state) => state.auth);
-	const dispatch = useDispatch();
-
-	useEffect(() => {
-		if (typeof user !== "object") {
-			dispatch(getCurrentUser());
-		}
-	}, []);
-
-	const handleChange = (event, newValue) => {
-		setSelectedTab(newValue);
-	};
 
 	return (
-		<Container>
-			<Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-				<Tabs
-					variant="fullWidth"
-					value={selectedTab}
-					onChange={handleChange}
-					textColor="secondary"
-					indicatorColor="secondary"
-					sx={{ "& .MuiTab-root": { fontWeight: "bold" } }}
-				>
-					<Tab label="프로필 및 계정 관리" />
-					<Tab label="공유일정 및 채팅관리" />
-					<Tab label="비밀번호 변경" id="PasswordUpdate" />
-				</Tabs>
-			</Box>
-			{selectedTab === 0 && <ProfileSettings userInfo={user} />}
-			{selectedTab === 1 && <SharedSettings />}
-			{selectedTab === 2 && <PasswordUpdate />}
-		</Container>
+		<ContainerDiv>
+			<TabsAside>
+				<TabsDiv>
+					<TabDiv
+						data-testid="settingTab"
+						isSelected={selectedTab === 0}
+						onClick={() => setSelectedTab(0)}
+					>
+						설정
+					</TabDiv>
+					<TabDiv
+						data-testid="withdrawalTab"
+						isSelected={selectedTab === 1}
+						onClick={() => setSelectedTab(1)}
+					>
+						회원 탈퇴
+					</TabDiv>
+				</TabsDiv>
+			</TabsAside>
+			<MainSection>
+				{selectedTab === 0 ? (
+					<>
+						<h1>설정</h1>
+						<SettingTab />
+					</>
+				) : (
+					<>
+						<h1>회원 탈퇴</h1>
+						<WithdrawalTab />
+					</>
+				)}
+			</MainSection>
+		</ContainerDiv>
 	);
 };
 

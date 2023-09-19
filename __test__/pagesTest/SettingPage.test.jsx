@@ -35,14 +35,14 @@ describe("SettingPage Component", () => {
 	});
 
 	it("renders all the tabs", () => {
-		const { getByText } = render(
+		const { getByTestId } = render(
 			<Provider store={store}>
 				<SettingPage />
 			</Provider>,
 		);
 
-		expect(getByText("프로필 및 계정 관리")).toBeInTheDocument();
-		expect(getByText("공유일정 및 채팅관리")).toBeInTheDocument();
-		expect(getByText("비밀번호 변경")).toBeInTheDocument();
+		expect(getByTestId("settingTab")).toBeInTheDocument();
+		expect(getByTestId("withdrawalTab")).toBeInTheDocument();
+		// expect(getByText("비밀번호 변경")).toBeInTheDocument();
 	});
 });
