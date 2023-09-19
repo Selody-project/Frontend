@@ -41,7 +41,7 @@ describe("SettingPage Component", () => {
 			</Provider>,
 		);
 
-		expect(getByTestId("settingTab")).toBeInTheDocument();
+		expect(getByTestId("profileTab")).toBeInTheDocument();
 		expect(getByTestId("withdrawalTab")).toBeInTheDocument();
 		// expect(getByText("비밀번호 변경")).toBeInTheDocument();
 	});

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import SettingTab from "@/components/Setting/SettingTab";
+import ProfileTab from "@/components/Setting/ProfileTab";
 import WithdrawalTab from "@/components/Setting/WithdrawalTab/WithdrawalTab";
 
 import {
@@ -19,11 +19,11 @@ const SettingPage = () => {
 			<TabsAside>
 				<TabsDiv>
 					<TabDiv
-						data-testid="settingTab"
+						data-testid="profileTab"
 						isSelected={selectedTab === 0}
 						onClick={() => setSelectedTab(0)}
 					>
-						설정
+						프로필
 					</TabDiv>
 					<TabDiv
 						data-testid="withdrawalTab"
@@ -38,7 +38,7 @@ const SettingPage = () => {
 				{selectedTab === 0 ? (
 					<>
 						<h1>설정</h1>
-						<SettingTab />
+						<ProfileTab />
 					</>
 				) : (
 					<>

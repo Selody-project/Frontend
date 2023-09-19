@@ -3,7 +3,7 @@ import React from "react";
 import GroupScheduleSetting from "./GroupScheduleSetting/GroupScheduleSetting";
 import UserInfo from "./UserInfo/UserInfo";
 
-const SettingTab = () => {
+const ProfileTab = () => {
 	return (
 		<>
 			<UserInfo />
@@ -12,4 +12,4 @@ const SettingTab = () => {
 	);
 };
 
-export default SettingTab;
+export default ProfileTab;
