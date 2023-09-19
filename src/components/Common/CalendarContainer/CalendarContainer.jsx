@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { SCHEDULE_TYPE } from "@/constants/calendarConstants";
 import {
@@ -85,10 +85,6 @@ const CalendarContainer = ({ type }) => {
 
 	const calendarRef = useRef(null);
 	// const eventColorMap = useRef({});
-
-	const { currentYear, currentMonth, currentWeek } = useSelector(
-		(state) => state.schedule,
-	);
 
 	const [selectedGroup, setSelectedGroup] = useState(null);
 	const [anchorEl, setAnchorEl] = useState(null);
@@ -281,9 +277,6 @@ const CalendarContainer = ({ type }) => {
 			<CustomCalendar
 				ref={calendarRef}
 				fullCalendarEvents={generateSchedulesWithoutTitle(DUMMY_SCHEDUELS)}
-				currentYear={currentYear}
-				currentMonth={currentMonth}
-				currentWeek={currentWeek}
 				handleDateChange={handleDateChange}
 				handleDateClick={handleDateClick}
 				handleScheduleClick={

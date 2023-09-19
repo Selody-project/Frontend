@@ -47,22 +47,17 @@ const CustomCalendar = forwardRef(
 	(
 		{
 			fullCalendarEvents,
-			currentYear,
-			currentMonth,
-			currentWeek,
 			handleDateChange,
 			handleDateClick,
 			handleScheduleClick = null,
 		},
 		calendarRef,
 	) => {
-		const currentCalendarView = useSelector(
-			({ schedule }) => schedule.currentCalendarView,
-		);
+		const { currentYear, currentMonth, currentWeek, currentCalendarView } =
+			useSelector((state) => state.schedule);
 		const dispatch = useDispatch();
 
 		const theme = useTheme();
-
 		useEffect(() => {
 			if (currentCalendarView === VIEW_TYPE.DAY_GRID_MONTH) {
 				const scheduleEventsDivsForEachDate = document.querySelectorAll(
