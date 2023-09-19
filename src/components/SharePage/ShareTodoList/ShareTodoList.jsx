@@ -121,8 +121,8 @@ const ShareTodoList = () => {
 									endTime: "",
 									untilDate: "",
 									untilTime: "",
-									repeat: "none",
-									notification: "none",
+									repeat: "NONE",
+									notification: "NO",
 							  }
 							: {
 									title: "",

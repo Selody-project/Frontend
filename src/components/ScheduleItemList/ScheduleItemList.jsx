@@ -217,8 +217,8 @@ const ScheduleItemList = () => {
 						endTime: "",
 						untilDate: "",
 						untilTime: "",
-						repeat: "none",
-						notification: "none",
+						repeat: "NONE",
+						notification: "NO",
 					}}
 				/>
 			)}
