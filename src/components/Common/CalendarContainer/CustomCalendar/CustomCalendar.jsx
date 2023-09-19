@@ -100,13 +100,11 @@ const CustomCalendar = forwardRef(
 		},
 		calendarRef,
 	) => {
-		const { year, month, week, currentCalendarView } = useSelector(
-			(state) => state.schedule,
-		);
+		const { currentYear, currentMonth, currentWeek, currentCalendarView } =
+			useSelector((state) => state.schedule);
 		const dispatch = useDispatch();
 
 		const theme = useTheme();
-
 		useEffect(() => {
 			if (currentCalendarView === VIEW_TYPE.DAY_GRID_MONTH) {
 				const scheduleEventsDivsForEachDate = document.querySelectorAll(
@@ -152,7 +150,12 @@ const CustomCalendar = forwardRef(
 				isMonthly={currentCalendarView === VIEW_TYPE.DAY_GRID_MONTH}
 			>
 				<TitleSelect
-					value={getSelectValue(currentCalendarView, year, month, week)}
+					value={getSelectValue(
+						currentCalendarView,
+						currentYear,
+						currentMonth,
+						currentWeek,
+					)}
 					isMonthly={currentCalendarView === VIEW_TYPE.DAY_GRID_MONTH}
 					onChange={(e) => {
 						const [yearValue, monthValue, weekValue] =
