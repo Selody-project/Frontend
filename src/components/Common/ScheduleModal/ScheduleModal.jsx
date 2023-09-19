@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-import BaseModal from "@/components/Base/BaseModal/BaseModal.jsx";
+import BaseModal from "@/components/Common/Modal/BaseModal.jsx";
 import { UI_TYPE } from "@/constants/uiConstans";
 import {
 	createSchedule,

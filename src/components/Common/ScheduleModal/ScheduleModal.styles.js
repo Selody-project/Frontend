@@ -1,64 +1,71 @@
 import styled from "styled-components";
 
-export const TitleInput = styled.input`
-	border: 1px solid #ced4da;
-	font-size: 16px;
-	margin-bottom: 20px;
+export const ScheduleModalLayoutDiv = styled.div`
 	width: 100%;
-	height: 40px;
-	border-radius: 4px;
-	padding: 0 10px;
-
-	&::placeholder {
-		font-family: "Inter", sans-serif;
+	max-width: 590px;
+	display: flex;
+	flex-direction: column;
+	padding: 0 20px;
+	font-family: "Inter", sans-serif;
+	font-size: ${({ theme }) => theme.typography.size.s3};
+	& input,
+	& textarea {
+		&:focus {
+			outline: none;
+		}
+		color: ${({ theme }) => theme.colors.text_03};
+		&,
+		&::placeholder {
+			font-family: "Inter", sans-serif;
+			font-weight: ${({ theme }) => theme.typography.weight.medium};
+		}
+		&::placeholder {
+			color: ${({ theme }) => theme.colors.disabled_text};
+		}
 	}
 `;
 
-export const DateInput = styled.input`
-	display: block;
-	border: 1px solid #ced4da;
-	background: #f4f6fc;
-	font-size: 16px;
+export const TitleInput = styled.input`
+	all: unset;
 	width: 100%;
-	height: 40px;
-	border-radius: 4px;
-	padding: 0 10px;
-	font-family: "Inter", sans-serif;
-
-	&::placeholder {
-		font-family: "Inter", sans-serif;
-	}
-
-	&:focus {
-		outline: none;
-	}
+	height: 35px;
+	margin-bottom: 24px;
+	border-bottom: 1px solid ${({ theme }) => theme.colors.text_01};
 `;
 
 export const DetailTextarea = styled.textarea`
-	border: 1px solid #ced4da;
-	background: #f4f6fc;
-	display: block;
-	font-size: 16px;
-	margin-bottom: 20px;
+	all: unset;
 	resize: none;
 	width: 100%;
-	height: 100px;
-	border-radius: 4px;
-	padding: 10px;
-
+	height: 109px;
+	background-color: ${({ theme }) => theme.colors.bg_01};
+	display: block;
+	font-size: 16px;
+	padding: 14px;
+	margin-bottom: ${({ theme }) => theme.spacing.padding.medium}px;
 	&::placeholder {
-		font-family: "Inter", sans-serif;
+		color: ${({ theme }) => theme.colors.disabled_text};
 	}
 `;
 
-export const LabelDiv = styled.div`
-	color: #30374f;
-	font-size: 14px;
-	font-weight: 500;
+export const InputLabel = styled.label`
+	color: ${({ theme: { colors } }) => colors.text_01};
+	font-size: ${({
+		theme: {
+			typography: { size },
+		},
+	}) => size.s2};
+	line-height: 17px;
+	font-weight: ${({
+		theme: {
+			typography: { weight },
+		},
+	}) => weight.medium};
 	margin-bottom: 12px;
 `;
 
 export const DateContainerDiv = styled.div`
+	position: relative;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -67,31 +74,105 @@ export const DateContainerDiv = styled.div`
 
 export const DateDiv = styled.div`
 	display: flex;
+	gap: 15px;
 	width: 45%;
+`;
 
-	& > input:first-of-type {
-		margin-right: 10px;
+export const DateInput = styled.input`
+	border: none;
+	position: relative;
+	display: block;
+	background: ${({ theme: { colors } }) => colors.bg_01};
+	&[type="date"] {
+		width: 127px;
+	}
+	&[type="time"] {
+		width: 107px;
+	}
+	height: 33px;
+	padding: 0 10px;
+	&::-webkit-calendar-picker-indicator {
+		cursor: pointer;
+		position: absolute;
+		opacity: 0;
+		width: 100%;
 	}
 `;
 
-export const RepeatSelect = styled.select``;
+export const AllDayCheckBoxDiv = styled.div`
+	position: absolute;
+	right: 0;
+	bottom: -37px;
+	& > label {
+		display: flex;
+		align-items: center;
+		gap: 9px;
+		font-size: ${({
+			theme: {
+				typography: { size },
+			},
+		}) => size.s1};
+		cursor: pointer;
+		& > input {
+			accent-color: ${({ theme: { colors } }) => colors.primary};
+			cursor: pointer;
+		}
+	}
+`;
 
-export const RepeatTermDiv = styled.div`
-	margin-top: 24px;
+export const RepeatContainerDiv = styled.div`
+	display: flex;
+	gap: 24px;
+	margin-bottom: 24px;
+	& > div {
+		display: flex;
+		flex-direction: column;
+	}
+`;
+
+export const StyledSelect = styled.select`
+	all: unset;
+	cursor: pointer;
+	padding: 8px 12px;
+	background: url("data:image/svg+xml,%3Csvg width='12' height='6' viewBox='0 0 14 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L7 7L13 1' stroke='%23121127' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A")
+		no-repeat right 10px center;
+	border: 1px solid ${({ theme: { colors } }) => colors.disabled_text};
+	width: 196px;
+	height: 33px;
+	line-height: 15px;
+	font-size: ${({
+		theme: {
+			typography: { size },
+		},
+	}) => size.s2};
+	color: ${({ theme: { colors } }) => colors.text_03};
 `;
 
 export const FooterDiv = styled.div`
 	display: flex;
 	justify-content: flex-end;
-	margin-top: 80px;
+	margin-top: 9px;
+	padding-bottom: 19px;
 `;
 
 export const SubmitButton = styled.button`
+	display: block;
 	cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
-	background-color: ${(props) =>
-		props.disabled ? "#C9CEDA" : props.theme.colors.primary};
+	background-color: ${({ disabled, theme: { colors } }) =>
+		disabled ? colors.btn_02 : colors.primary};
+	border-radius: 5px;
 	color: white;
-	padding: 12px 40px;
-	font-size: 14px;
-	font-weight: 600;
+	width: 132px;
+	height: 40px;
+	text-align: center;
+	font-size: ${({
+		theme: {
+			typography: { size },
+		},
+	}) => size.s2};
+	font-weight: ${({
+		theme: {
+			typography: { weight },
+		},
+	}) => weight.semibold};
 `;
