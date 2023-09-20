@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 import { useTheme } from "styled-components";
 
 import BaseModal from "@/components/Base/BaseModal/BaseModal";
-import { UI_TYPE } from "@/constants/uiConstans";
+import { SCHEDULE_MODAL_TYPE, UI_TYPE } from "@/constants/uiConstans";
 import {
 	createSchedule,
 	updateSchedule,
@@ -27,31 +27,57 @@ import {
 	StyledSelect,
 } from "./ScheduleModal.styles";
 
-const ScheduleModal = ({ type, initFormValues }) => {
+const initialFormValues = {
+	title: "",
+	content: "",
+	startDate: "", // 나중에 DateTime ISOString 형태로 변경 예정
+	startTime: "",
+	endDate: "",
+	endTime: "",
+	recurrence: false,
+	freq: "NONE",
+	interval: "",
+	byweekday: "",
+	until: "",
+	isAllDay: false,
+	notification: false,
+};
+
+const convertToDateInputValue = (date) => {
+	return date.toISOString().slice(0, 10);
+};
+
+const getModalTitle = (dateValue) => {
+	const YYYY_MM_DD = dateValue.replace(/-/g, ".");
+	const title = `${YYYY_MM_DD.slice(0, 4)}년 ${YYYY_MM_DD.slice(
+		5,
+		7,
+	)}월 ${YYYY_MM_DD.slice(8, 10)}일`;
+	return title;
+};
+
+const ScheduleModal = () => {
 	const theme = useTheme();
 
 	const dispatch = useDispatch();
-	const { edit } = useSelector((state) => state.auth);
-	const { id } = useSelector((state) => state.schedule);
-	const [formValues, setFormValues] = useState(initFormValues);
 
-	const today = new Date().toISOString().slice(0, 10);
-	let currentDate = today.replace(/-/g, ".");
-	currentDate = `${currentDate.slice(0, 4)}년 ${currentDate.slice(
-		5,
-		7,
-	)}월 ${currentDate.slice(8, 10)}일`;
+	const { openedModal, scheduleModalMode, scheduleModalId } = useSelector(
+		(state) => state.ui,
+	);
+	const [formValues, setFormValues] = useState(initialFormValues);
+
+	const isEditMode = scheduleModalMode === SCHEDULE_MODAL_TYPE.EDIT;
+	const today = convertToDateInputValue(new Date());
 
 	const handleAlldayValueChange = (event) => {
 		const { checked } = event.target;
-		if (checked) {
-			setFormValues((prev) => ({
-				...prev,
-				startTime: "",
-				endDate: prev.startDate,
-				endTime: "",
-			}));
-		}
+		setFormValues((prev) => ({
+			...prev,
+			isAllDay: checked,
+			endDate: checked ? prev.startDate : prev.endDate,
+			startTime: checked ? "00:00" : prev.startTime,
+			endTime: checked ? "00:00" : prev.endTime,
+		}));
 	};
 
 	const isTimeValid = () => {
@@ -67,13 +93,14 @@ const ScheduleModal = ({ type, initFormValues }) => {
 	};
 
 	const checkFieldsFilled = () =>
-		formValues.title !== "" &&
-		formValues.details !== "" &&
+		formValues.title.trim() !== "" &&
+		formValues.content.trim() !== "" &&
 		formValues.startDate !== "" &&
 		formValues.startTime !== "" &&
 		formValues.endDate !== "" &&
 		formValues.endTime !== "" &&
-		(type === UI_TYPE.SHARE_SCHEDULE
+		(formValues.freq === "NONE" || formValues.until) &&
+		(openedModal === UI_TYPE.SHARE_SCHEDULE
 			? formValues.voteEndDate !== "" && formValues.voteEndTime !== ""
 			: true);
 
@@ -84,22 +111,47 @@ const ScheduleModal = ({ type, initFormValues }) => {
 		}
 
 		// 일정 저장 로직
-		if (!edit) {
+		if (!isEditMode) {
 			dispatch(createSchedule(formValues));
 		}
-		if (edit) {
-			dispatch(updateSchedule({ schedule: formValues, id }));
+		if (isEditMode) {
+			dispatch(updateSchedule({ schedule: formValues, id: scheduleModalId }));
 		}
 
 		// 폼 초기화
-		setFormValues({ ...initFormValues });
+		setFormValues(initialFormValues);
 
 		// 메뉴 닫기
 		dispatch(closeModal());
 	};
 
+	const calculateUntilDateString = (endDateStr) => {
+		const endDate = new Date(endDateStr);
+		let untilDate;
+		if (formValues.freq === "DAILY") {
+			untilDate = endDate.setDate(endDate.getDate() + 1);
+		} else if (formValues.freq === "WEEKLY") {
+			untilDate = endDate.setDate(endDate.getDate() + 7);
+		} else if (formValues.freq === "MONTHLY") {
+			untilDate = endDate.setMonth(endDate.getMonth() + 1);
+		}
+		return new Date(untilDate).toISOString().slice(0, 10);
+	};
+
+	useEffect(() => {
+		if (formValues.startDate !== formValues.endDate)
+			setFormValues((prev) => ({ ...prev, isAllDay: false }));
+		else if (formValues.startTime !== "00:00" || formValues.endTime !== "00:00")
+			setFormValues((prev) => ({ ...prev, isAllDay: false }));
+	}, [
+		formValues.startDate,
+		formValues.endDate,
+		formValues.startTime,
+		formValues.endTime,
+	]);
+
 	return (
-		<BaseModal title={currentDate} bg={theme.colors.white}>
+		<BaseModal title={getModalTitle(today)} bg={theme.colors.white}>
 			<ScheduleModalLayoutDiv>
 				<TitleInput
 					id="title"
@@ -107,16 +159,16 @@ const ScheduleModal = ({ type, initFormValues }) => {
 					placeholder="일정 제목"
 					value={formValues.title}
 					onChange={(e) =>
-						setFormValues({ ...formValues, title: e.target.value })
+						setFormValues((prev) => ({ ...prev, title: e.target.value }))
 					}
 				/>
 				<DetailTextarea
-					id="details"
+					id="content"
 					rows="5"
 					placeholder="상세 내용"
-					value={formValues.details}
+					value={formValues.content}
 					onChange={(e) =>
-						setFormValues({ ...formValues, details: e.target.value })
+						setFormValues((prev) => ({ ...prev, content: e.target.value }))
 					}
 				/>
 				<InputLabel htmlFor="startDate">날짜 및 시간</InputLabel>
@@ -128,15 +180,21 @@ const ScheduleModal = ({ type, initFormValues }) => {
 							min={today}
 							value={formValues.startDate}
 							onChange={(e) =>
-								setFormValues({ ...formValues, startDate: e.target.value })
+								setFormValues((prev) => ({
+									...prev,
+									startDate: e.target.value,
+								}))
 							}
 						/>
 						<DateInput
 							type="time"
 							value={formValues.startTime}
-							onChange={(e) =>
-								setFormValues({ ...formValues, startTime: e.target.value })
-							}
+							onChange={(e) => {
+								setFormValues((prev) => ({
+									...prev,
+									startTime: e.target.value,
+								}));
+							}}
 						/>
 					</DateDiv>
 					~
@@ -151,6 +209,11 @@ const ScheduleModal = ({ type, initFormValues }) => {
 						/>
 						<DateInput
 							type="time"
+							min={
+								formValues.startDate === formValues.endDate
+									? formValues.startTime
+									: undefined
+							}
 							value={formValues.endTime}
 							onChange={(e) =>
 								setFormValues({ ...formValues, endTime: e.target.value })
@@ -160,13 +223,17 @@ const ScheduleModal = ({ type, initFormValues }) => {
 					{formValues.startDate && (
 						<AllDayCheckBoxDiv>
 							<label>
-								<input type="checkbox" onChange={handleAlldayValueChange} />
+								<input
+									type="checkbox"
+									onChange={handleAlldayValueChange}
+									checked={formValues.isAllDay}
+								/>
 								하루 종일
 							</label>
 						</AllDayCheckBoxDiv>
 					)}
 				</DateContainerDiv>
-				{type === UI_TYPE.SHARE_SCHEDULE ? (
+				{openedModal === UI_TYPE.SHARE_SCHEDULE ? (
 					<>
 						<InputLabel>일정 투표 종료일</InputLabel>
 						<DateContainerDiv>
@@ -182,7 +249,6 @@ const ScheduleModal = ({ type, initFormValues }) => {
 										})
 									}
 								/>
-
 								<DateInput
 									type="time"
 									value={formValues.voteEndTime}
@@ -204,28 +270,31 @@ const ScheduleModal = ({ type, initFormValues }) => {
 								id="repeat"
 								value={formValues.repeat}
 								onChange={(e) =>
-									setFormValues({ ...formValues, repeat: e.target.value })
+									setFormValues((prev) => ({
+										...prev,
+										freq: e.target.value,
+										until: e.target.value === "NONE" ? "" : prev.until,
+									}))
 								}
 							>
 								<option value="NONE">반복 안함</option>
 								<option value="DAILY">매일</option>
 								<option value="WEEKLY">매주</option>
 								<option value="MONTHLY">매월</option>
-								<option value="YEARLY">매년</option>
 							</StyledSelect>
 						</div>
-						{formValues.repeat !== "NONE" && (
+						{formValues.freq !== "NONE" && (
 							<div>
 								<InputLabel>반복 종료 날짜</InputLabel>
 								<DateInput
 									type="date"
-									min={today}
-									value={formValues.untilDate}
+									min={calculateUntilDateString(formValues.endDate)}
+									value={formValues.until}
 									onChange={(e) =>
-										setFormValues({
-											...formValues,
-											untilDate: e.target.value,
-										})
+										setFormValues((prev) => ({
+											...prev,
+											until: e.target.value,
+										}))
 									}
 								/>
 							</div>
@@ -234,11 +303,12 @@ const ScheduleModal = ({ type, initFormValues }) => {
 				)}
 				<InputLabel htmlFor="alarm">알림 기능</InputLabel>
 				<StyledSelect
+					value={formValues.notification}
 					onChange={(e) =>
-						setFormValues({
-							...formValues,
-							notification: e.target.value,
-						})
+						setFormValues((prev) => ({
+							...prev,
+							notification: e.target.value === "NO",
+						}))
 					}
 				>
 					<option value="NO">사용 안함</option>
@@ -246,7 +316,7 @@ const ScheduleModal = ({ type, initFormValues }) => {
 				</StyledSelect>
 				<FooterDiv>
 					<SubmitButton onClick={handleSubmit} disabled={!checkFieldsFilled()}>
-						{edit ? "수정하기" : "저장하기"}
+						{isEditMode ? "수정하기" : "저장하기"}
 					</SubmitButton>
 				</FooterDiv>
 			</ScheduleModalLayoutDiv>
