@@ -95,6 +95,12 @@ const calculateIsAllDay = (startDate, startTime, endDate, endTime) => {
 	return startDate === endDate && startTime === "00:00" && endTime === "23:59";
 };
 
+const getNextDateInputValue = (startDate) => {
+	const prevDate = new Date(startDate);
+	const nextDate = prevDate.setDate(prevDate.getDate() + 1);
+	return new Date(nextDate).toISOString().slice(0, 10);
+};
+
 const ScheduleModal = () => {
 	const dispatch = useDispatch();
 	// previous form value to compare
@@ -199,7 +205,7 @@ const ScheduleModal = () => {
 		setFormValues((prev) => ({
 			...prev,
 			isAllDay: checked,
-			endDate: checked ? prev.startDate : prev.endDate,
+			endDate: checked ? getNextDateInputValue(prev.startDate) : prev.endDate,
 			startTime: checked ? "00:00" : prev.startTime,
 			endTime: checked ? "23:59" : prev.endTime,
 		}));
@@ -330,7 +336,19 @@ const ScheduleModal = () => {
 			toast.error("반복 간격은 0보다 큰 자연수여야 합니다");
 			return false;
 		}
-		return true;
+		if (formValues.startDate === formValues.endDate) {
+			if (formValues.startTime < formValues.endTime) {
+				return true;
+			}
+			toast.error(
+				"종료 시간은 시작 시간보다 동일하거나 빠를 수 없습니다. 다시 입력해주세요.",
+			);
+			return false;
+		}
+		toast.error(
+			"종료 시간은 시작 시간보다 동일하거나 빠를 수 없습니다. 다시 입력해주세요.",
+		);
+		return false;
 	};
 	// validate byweekday
 	const checkByweekdayIsValid = () => {
