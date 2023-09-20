@@ -5,8 +5,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import NotificationIcon from "@/assets/icon/ic-notification.svg";
 import SelodyLogo from "@/components/Common/SelodyLogo";
 import NotificationDropdown from "@/components/Notification/NotificationDropdown/NotificationDropdown";
-import { UI_TYPE } from "@/constants/uiConstans";
-import { openModal } from "@/features/ui/ui-slice";
+import { openCreateGroupModal } from "@/features/ui/ui-slice";
 
 import {
 	LogoDiv,
@@ -97,7 +96,7 @@ const Header = () => {
 				<RightDiv>
 					<GroupCreateButton
 						onClick={() => {
-							dispatch(openModal({ type: UI_TYPE.CREATE_GROUP }));
+							dispatch(openCreateGroupModal());
 						}}
 					>
 						그룹 만들기
