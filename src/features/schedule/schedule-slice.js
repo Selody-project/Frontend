@@ -11,7 +11,6 @@ const initialState = {
 	month: 0,
 	year: 0,
 	isLoading: false,
-	id: null,
 };
 
 const scheduleSlice = createSlice({
@@ -26,9 +25,6 @@ const scheduleSlice = createSlice({
 		},
 		currentYearFn: (state, { payload }) => {
 			state.year = payload;
-		},
-		setId: (state, { payload }) => {
-			state.id = payload;
 		},
 	},
 	extraReducers: (builder) => {
@@ -61,7 +57,7 @@ const scheduleSlice = createSlice({
 	},
 });
 
-export const { saveSchedule, currentMonthFn, currentYearFn, setId } =
+export const { saveSchedule, currentMonthFn, currentYearFn } =
 	scheduleSlice.actions;
 
 export default scheduleSlice.reducer;

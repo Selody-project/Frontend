@@ -2,13 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { CALENDAR_COLORS, SCHEDULE_TYPE } from "@/constants/calendarConstants";
-import { SCHEDULE_MODAL_TYPE } from "@/constants/uiConstans";
 import {
 	currentMonthFn,
 	currentYearFn,
-	setId,
 } from "@/features/schedule/schedule-slice";
-import { openModal } from "@/features/ui/ui-slice";
+import { openScheduleEditModal } from "@/features/ui/ui-slice";
 import { getRandomColor } from "@/utils/color";
 
 import { CalendarContainerDiv } from "./CalendarContainer.styles";
@@ -120,15 +118,16 @@ const CalendarContainer = ({ type }) => {
 		return eventColorMap.current[eventId];
 	};
 
-	const menuHandler = () => {
-		dispatch(
-			openModal({
-				type: SCHEDULE_TYPE.PERSONAL,
-				scheduleModalMode: SCHEDULE_MODAL_TYPE.EDIT,
-			}),
-		);
-		// console.log(schedule[0].id);
-		dispatch(setId(schedule.id));
+	const menuHandler = (schedules) => {
+		if (schedules.length === 1) {
+			dispatch(
+				openScheduleEditModal({
+					type: SCHEDULE_TYPE.PERSONAL,
+				}),
+			);
+		} else {
+			// 리스트 모달 띄우기
+		}
 	};
 
 	const handleInviteButtonClick = (event) => {

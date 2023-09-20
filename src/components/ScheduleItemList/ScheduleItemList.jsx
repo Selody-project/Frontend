@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import ScheduleAddIcon from "@/assets/icon/ic-schedule-add.svg";
 import ScheduleModal from "@/components/Common/ScheduleModal/ScheduleModal.jsx";
 import ScheduleItem from "@/components/ScheduleItemList/ScheduleItem/ScheduleItem";
-import { SCHEDULE_MODAL_TYPE, UI_TYPE } from "@/constants/uiConstans";
+import { UI_TYPE } from "@/constants/uiConstans";
 import { getSchedule } from "@/features/schedule/schedule-service.js";
-import { openModal } from "@/features/ui/ui-slice";
+import { openScheduleCreateModal } from "@/features/ui/ui-slice";
 
 import {
 	TodoHeader,
@@ -156,9 +156,8 @@ const ScheduleItemList = () => {
 
 	const handleMenuOpen = () => {
 		dispatch(
-			openModal({
+			openScheduleCreateModal({
 				type: UI_TYPE.PERSONAL_SCHEDULE,
-				scheduleModalMode: SCHEDULE_MODAL_TYPE.CREATE,
 			}),
 		);
 	};
