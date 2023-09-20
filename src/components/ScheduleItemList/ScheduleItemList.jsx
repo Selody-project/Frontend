@@ -199,7 +199,13 @@ const ScheduleItemList = () => {
 					) : (
 						<TodoList>
 							{DUMMY_PERSONAL_SCHEDULES.map((schedule) => {
-								return <ScheduleItem key={schedule.id} schedule={schedule} />;
+								return (
+									<ScheduleItem
+										key={schedule.id}
+										schedule={schedule}
+										isGroup={false}
+									/>
+								);
 							})}
 						</TodoList>
 					)}
