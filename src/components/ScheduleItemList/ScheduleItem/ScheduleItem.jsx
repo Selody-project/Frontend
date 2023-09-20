@@ -1,9 +1,12 @@
 import React from "react";
 
+import { useTheme } from "styled-components";
+
 import DeleteScheduleIcon from "@/assets/icon/ic-delete-schedule.svg";
 import EditScheduleIcon from "@/assets/icon/ic-edit-schedule.svg";
 
 import {
+	ColoredCircleDiv,
 	ScheduleItemContentDiv,
 	ScheduleItemDiv,
 	ScheduleItemRightButtonsDiv,
@@ -28,9 +31,14 @@ const getTimeString = (date, isEnd = false) => {
 	}${todayHours}:${todayMinutes}`;
 };
 
-const ScheduleItem = ({ schedule: { title, start, end } }) => {
+const ScheduleItem = ({ schedule: { title, start, end, isGroup } }) => {
+	const { colors } = useTheme();
+
 	return (
 		<ScheduleItemDiv>
+			<ColoredCircleDiv
+				bgColor={isGroup ? colors.sunday : colors.disabled_text}
+			/>
 			<ScheduleItemContentDiv>
 				<span>{title}</span>
 				<span>

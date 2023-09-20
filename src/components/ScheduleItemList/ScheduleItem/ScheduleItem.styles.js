@@ -11,6 +11,14 @@ export const ScheduleItemDiv = styled(BaseCard)`
 	padding-left: 15px;
 `;
 
+export const ColoredCircleDiv = styled.div`
+	border-radius: 50%;
+	border: 1px solid ${({ theme: { colors } }) => colors.disabled_text};
+	background-color: ${(props) => props.bgColor};
+	width: 24px;
+	height: 24px;
+`;
+
 export const ScheduleItemContentDiv = styled.div`
 	flex: 1;
 	display: flex;
