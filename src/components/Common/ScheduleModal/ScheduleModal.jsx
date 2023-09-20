@@ -56,6 +56,12 @@ const getModalTitle = (dateValue) => {
 	return title;
 };
 
+const getNextDateInputValue = (startDate) => {
+	const prevDate = new Date(startDate);
+	const nextDate = prevDate.setDate(prevDate.getDate() + 1);
+	return new Date(nextDate).toISOString().slice(0, 10);
+};
+
 const ScheduleModal = () => {
 	const theme = useTheme();
 
@@ -74,22 +80,29 @@ const ScheduleModal = () => {
 		setFormValues((prev) => ({
 			...prev,
 			isAllDay: checked,
-			endDate: checked ? prev.startDate : prev.endDate,
+			endDate: checked ? getNextDateInputValue(prev.startDate) : prev.endDate,
 			startTime: checked ? "00:00" : prev.startTime,
 			endTime: checked ? "00:00" : prev.endTime,
 		}));
 	};
 
-	const isTimeValid = () => {
-		if (formValues.startDate === formValues.endDate) {
-			if (formValues.endTime < formValues.startTime) {
-				toast.error(
-					"종료 시간은 시작 시간보다 빠를 수 없습니다. 다시 입력해주세요.",
-				);
-				return false;
-			}
+	const checkTimeIsValid = () => {
+		if (formValues.startDate < formValues.endDate) {
+			return true;
 		}
-		return true;
+		if (formValues.startDate === formValues.endDate) {
+			if (formValues.startTime < formValues.endTime) {
+				return true;
+			}
+			toast.error(
+				"종료 시간은 시작 시간보다 동일하거나 빠를 수 없습니다. 다시 입력해주세요.",
+			);
+			return false;
+		}
+		toast.error(
+			"종료 시간은 시작 시간보다 동일하거나 빠를 수 없습니다. 다시 입력해주세요.",
+		);
+		return false;
 	};
 
 	const checkFieldsFilled = () =>
@@ -106,7 +119,7 @@ const ScheduleModal = () => {
 
 	const handleSubmit = () => {
 		// 시간 유효성 검사
-		if (!isTimeValid()) {
+		if (!checkTimeIsValid()) {
 			return;
 		}
 
@@ -201,6 +214,7 @@ const ScheduleModal = () => {
 					<DateDiv>
 						<DateInput
 							type="date"
+							disabled={!formValues.startDate}
 							min={formValues.startDate || today}
 							value={formValues.endDate}
 							onChange={(e) =>
