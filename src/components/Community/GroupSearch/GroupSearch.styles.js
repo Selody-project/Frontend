@@ -46,7 +46,6 @@ export const GroupDiv = styled.div`
 	}
 
 	& > h4 {
-		color: #9ca4ad;
 		color: ${({ theme: { colors } }) => colors.disabled_text};
 		font-size: ${({ theme: { typography } }) => typography.size.s2};
 		font-weight: ${({ theme: { typography } }) => typography.weight.medium};
