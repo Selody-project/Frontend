@@ -4,12 +4,11 @@ export const ContainerDiv = styled.div`
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	gap: 20px 26px;
-	margin-top: 28px;
+	margin-top: 42px;
 	font-family: Inter;
 `;
 
 export const GroupDiv = styled.div`
-	/* height: 204px; */
 	border-radius: 10px;
 	border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
 	display: flex;
