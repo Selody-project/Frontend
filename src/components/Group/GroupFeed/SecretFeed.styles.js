@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ContainerDiv = styled.div`
+export const SecretSection = styled.section`
 	display: flex;
 	flex-direction: column;
 	width: 100%;

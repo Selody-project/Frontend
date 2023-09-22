@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ContainerDiv = styled.div`
+export const GroupMain = styled.main`
 	display: flex;
 	gap: 30px;
 `;

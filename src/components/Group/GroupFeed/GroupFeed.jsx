@@ -10,10 +10,10 @@ import SampleImg from "@/assets/img/feed/img-group-sample-01.jpeg";
 import { SORT_OPTION_TYPE } from "@/constants/groupFeedConstants";
 
 import {
-	ContainerDiv,
+	FeedSection,
 	TitleDiv,
 	Button,
-	FeedDiv,
+	FeedArticle,
 	OptionDiv,
 	OptionMenuDiv,
 	TopDiv,
@@ -58,7 +58,7 @@ const GroupFeed = () => {
 		setOptionMenuOpenedFeedIndex((prev) => (prev === num ? null : num));
 
 	return (
-		<ContainerDiv>
+		<FeedSection>
 			<TitleDiv>
 				<h2>그룹 피드</h2>
 				<ul>
@@ -85,7 +85,7 @@ const GroupFeed = () => {
 
 			{/* 추후 Feed Landing에서 컴포넌트 가져와서 변경 */}
 			{mockItems.map((info) => (
-				<FeedDiv key={info.id}>
+				<FeedArticle key={info.id}>
 					<OptionDiv>
 						<OptionThreeDotIcon
 							onClick={() => {
@@ -130,9 +130,9 @@ const GroupFeed = () => {
 							</IconItemDiv>
 						</IconDiv>
 					</BottomDiv>
-				</FeedDiv>
+				</FeedArticle>
 			))}
-		</ContainerDiv>
+		</FeedSection>
 	);
 };
 

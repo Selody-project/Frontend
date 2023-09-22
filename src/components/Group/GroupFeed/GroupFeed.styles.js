@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ContainerDiv = styled.div`
+export const FeedSection = styled.section`
 	display: flex;
 	flex-direction: column;
 	gap: 14px;
@@ -32,7 +32,7 @@ export const Button = styled.button`
 	cursor: pointer;
 `;
 
-export const FeedDiv = styled.div`
+export const FeedArticle = styled.article`
 	display: flex;
 	flex-direction: column;
 	border-radius: 10px;

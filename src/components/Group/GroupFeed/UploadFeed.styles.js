@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ContainerDiv = styled.div`
+export const UploadSection = styled.section`
 	height: 150px;
 	border-radius: 10px;
 	border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
