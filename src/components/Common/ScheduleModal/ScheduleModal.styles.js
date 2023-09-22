@@ -122,11 +122,44 @@ export const AllDayCheckBoxDiv = styled.div`
 
 export const RepeatContainerDiv = styled.div`
 	display: flex;
-	gap: 24px;
+	gap: 12px;
+	flex-direction: column;
 	margin-bottom: 24px;
-	& > div {
+	& > div:first-child {
+		display: flex;
+		gap: 24px;
+		& > div {
+			display: flex;
+			flex-direction: column;
+		}
+	}
+`;
+
+export const WeeklyDatePickerDiv = styled.div`
+	bottom: -100%;
+	display: flex;
+	justify-content: space-between;
+	width: 196px;
+	font-size: ${({
+		theme: {
+			typography: { size },
+		},
+	}) => size.s1};
+	& > label {
+		&,
+		& > input {
+			cursor: pointer;
+		}
 		display: flex;
 		flex-direction: column;
+		align-items: center;
+		accent-color: ${({ theme: { colors } }) => colors.primary};
+		&:first-child {
+			color: ${({ theme: { colors } }) => colors.sunday};
+		}
+		&:last-child {
+			color: ${({ theme: { colors } }) => colors.saturday};
+		}
 	}
 `;
 
