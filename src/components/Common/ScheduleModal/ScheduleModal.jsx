@@ -25,7 +25,18 @@ import {
 	AllDayCheckBoxDiv,
 	RepeatContainerDiv,
 	StyledSelect,
+	WeeklyDatePickerDiv,
 } from "./ScheduleModal.styles";
+
+const WEEK_STRING_PAIRS = [
+	["SU", "일"],
+	["MO", "월"],
+	["TU", "화"],
+	["WE", "수"],
+	["TH", "목"],
+	["FR", "금"],
+	["SA", "토"],
+];
 
 const initialFormValues = {
 	title: "",
@@ -37,7 +48,15 @@ const initialFormValues = {
 	recurrence: false,
 	freq: "NONE",
 	interval: "",
-	byweekday: "",
+	byweekday: {
+		[WEEK_STRING_PAIRS[0][0]]: false,
+		[WEEK_STRING_PAIRS[1][0]]: false,
+		[WEEK_STRING_PAIRS[2][0]]: false,
+		[WEEK_STRING_PAIRS[3][0]]: false,
+		[WEEK_STRING_PAIRS[4][0]]: false,
+		[WEEK_STRING_PAIRS[5][0]]: false,
+		[WEEK_STRING_PAIRS[6][0]]: false,
+	},
 	until: "",
 	isAllDay: false,
 	notification: false,
@@ -138,22 +157,35 @@ const ScheduleModal = () => {
 		(formValues.freq === "NONE" ||
 			(formValues.until &&
 				formValues.until > calculateUntilDateString(formValues.endDate))) &&
-		(openedModal === UI_TYPE.SHARE_SCHEDULE
-			? formValues.voteEndDate !== "" && formValues.voteEndTime !== ""
-			: true);
+		(
+			formValues.freq !== "WEEKLY" ||
+			Object.values(formValues.byweekday).filter((bool) => bool).length > 0
+		)(
+			openedModal === UI_TYPE.SHARE_SCHEDULE
+				? formValues.voteEndDate !== "" && formValues.voteEndTime !== ""
+				: true,
+		);
 
 	const handleSubmit = () => {
 		// 시간 유효성 검사
 		if (!checkTimeIsValid()) {
 			return;
 		}
-
+		const byweekdayEntries = Object.entries(formValues.byweekday);
+		const byweekdayStr = byweekdayEntries
+			.filter(([, value]) => value)
+			.map(([key]) => key)
+			.join();
+		const requestBody = {
+			...formValues,
+			byweekday: byweekdayStr,
+		};
 		// 일정 저장 로직
 		if (!isEditMode) {
-			dispatch(createSchedule(formValues));
+			dispatch(createSchedule(requestBody));
 		}
 		if (isEditMode) {
-			dispatch(updateSchedule({ schedule: formValues, id: scheduleModalId }));
+			dispatch(updateSchedule({ schedule: requestBody, id: scheduleModalId }));
 		}
 
 		// 폼 초기화
@@ -293,39 +325,64 @@ const ScheduleModal = () => {
 					formValues.endDate && (
 						<RepeatContainerDiv>
 							<div>
-								<InputLabel htmlFor="repeat">반복 여부</InputLabel>
-								<StyledSelect
-									id="repeat"
-									value={formValues.freq}
-									onChange={(e) =>
-										setFormValues((prev) => ({
-											...prev,
-											freq: e.target.value,
-											until: e.target.value === "NONE" ? "" : prev.until,
-										}))
-									}
-								>
-									<option value="NONE">반복 안함</option>
-									<option value="DAILY">매일</option>
-									<option value="WEEKLY">매주</option>
-									<option value="MONTHLY">매월</option>
-								</StyledSelect>
-							</div>
-							{formValues.freq !== "NONE" && (
 								<div>
-									<InputLabel>반복 종료 날짜</InputLabel>
-									<DateInput
-										type="date"
-										min={calculateUntilDateString(formValues.endDate)}
-										value={formValues.until}
+									<InputLabel htmlFor="frequency">반복 여부</InputLabel>
+									<StyledSelect
+										id="frequency"
+										value={formValues.freq}
 										onChange={(e) =>
 											setFormValues((prev) => ({
 												...prev,
-												until: e.target.value,
+												freq: e.target.value,
+												until: e.target.value === "NONE" ? "" : prev.until,
 											}))
 										}
-									/>
+									>
+										<option value="NONE">반복 안함</option>
+										<option value="DAILY">매일</option>
+										<option value="WEEKLY">매주</option>
+										<option value="MONTHLY">매월</option>
+									</StyledSelect>
 								</div>
+								{formValues.freq !== "NONE" && (
+									<div>
+										<InputLabel>반복 종료 날짜</InputLabel>
+										<DateInput
+											type="date"
+											min={calculateUntilDateString(formValues.endDate)}
+											value={formValues.until}
+											onChange={(e) =>
+												setFormValues((prev) => ({
+													...prev,
+													until: e.target.value,
+												}))
+											}
+										/>
+									</div>
+								)}
+							</div>
+							{formValues.freq === "WEEKLY" && (
+								<WeeklyDatePickerDiv>
+									{WEEK_STRING_PAIRS.map(([EN, KR]) => (
+										<label key={EN} htmlFor={EN}>
+											{KR}
+											<input
+												type="checkbox"
+												id={EN}
+												checked={formValues.byweekday[EN]}
+												onChange={({ target: { checked } }) => {
+													setFormValues((prev) => ({
+														...prev,
+														byweekday: {
+															...prev.byweekday,
+															[EN]: checked,
+														},
+													}));
+												}}
+											/>
+										</label>
+									))}
+								</WeeklyDatePickerDiv>
 							)}
 						</RepeatContainerDiv>
 					)
