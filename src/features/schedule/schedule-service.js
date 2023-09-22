@@ -51,35 +51,44 @@ export const getSchedule = createAsyncThunk(
 export const createSchedule = createAsyncThunk(
 	"schedule/createSchedule",
 	async (schedule, thunkAPI) => {
-		const {
-			title,
-			details,
-			startDate,
-			endDate,
-			startTime,
-			endTime,
-			repeat,
-			untilDate,
-			untilTime,
-		} = schedule;
-
-		const startDateTime = convertToUTC(startDate, startTime);
-		const endDateTime = convertToUTC(endDate, endTime);
-		const untileDateTime = convertToUTC(untilDate, untilTime);
-
-		const rec = repeat === "none" ? 0 : 1;
-		const inter = repeat === "none" ? 0 : 1;
-
 		try {
+			const {
+				title,
+				content,
+				startDate,
+				startTime,
+				endDate,
+				endTime,
+				freq,
+				byweekday: byweekdayObj,
+				until,
+				isAllDay,
+				notification,
+			} = schedule;
+			console.log(notification);
+			const startDateTime = convertToUTC(startDate, startTime);
+			const endDateTime = isAllDay
+				? new Date(`${startDate}T23:59:59.999`)
+				: convertToUTC(endDate, endTime);
+			const untileDateTime = until ? convertToUTC(until, "00:00") : null;
+
+			const byweekdayEntries = Object.entries(byweekdayObj);
+			const byweekday =
+				byweekdayEntries
+					.filter(([, value]) => value)
+					.map(([key]) => key)
+					.join() || null;
 			const response = await customFetch.post(`/api/user/calendar`, {
 				title,
-				content: details,
+				content,
 				startDateTime,
 				endDateTime,
-				freq: repeat,
-				recurrence: rec,
-				interval: inter,
+				recurrence: Number(freq !== "NONE"),
+				freq: freq === "NONE" ? null : freq,
+				interval: freq === "NONE" ? null : 1,
+				byweekday,
 				until: untileDateTime,
+				// notification
 			});
 			if (response.status !== 201) {
 				throw response.data;

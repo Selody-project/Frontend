@@ -45,7 +45,6 @@ const initialFormValues = {
 	startTime: "",
 	endDate: "",
 	endTime: "",
-	recurrence: false,
 	freq: "NONE",
 	interval: "",
 	byweekday: {
@@ -90,7 +89,6 @@ const ScheduleModal = () => {
 		(state) => state.ui,
 	);
 	const [formValues, setFormValues] = useState(initialFormValues);
-
 	const isEditMode = scheduleModalMode === SCHEDULE_MODAL_TYPE.EDIT;
 	const today = convertToDateInputValue(new Date());
 
@@ -157,35 +155,23 @@ const ScheduleModal = () => {
 		(formValues.freq === "NONE" ||
 			(formValues.until &&
 				formValues.until > calculateUntilDateString(formValues.endDate))) &&
-		(
-			formValues.freq !== "WEEKLY" ||
-			Object.values(formValues.byweekday).filter((bool) => bool).length > 0
-		)(
-			openedModal === UI_TYPE.SHARE_SCHEDULE
-				? formValues.voteEndDate !== "" && formValues.voteEndTime !== ""
-				: true,
-		);
+		(formValues.freq === "WEEKLY"
+			? Object.values(formValues.byweekday).filter((bool) => bool).length > 0
+			: true) &&
+		(openedModal === UI_TYPE.SHARE_SCHEDULE
+			? formValues.voteEndDate !== "" && formValues.voteEndTime !== ""
+			: true);
 
 	const handleSubmit = () => {
 		// 시간 유효성 검사
 		if (!checkTimeIsValid()) {
 			return;
 		}
-		const byweekdayEntries = Object.entries(formValues.byweekday);
-		const byweekdayStr = byweekdayEntries
-			.filter(([, value]) => value)
-			.map(([key]) => key)
-			.join();
-		const requestBody = {
-			...formValues,
-			byweekday: byweekdayStr,
-		};
 		// 일정 저장 로직
 		if (!isEditMode) {
-			dispatch(createSchedule(requestBody));
-		}
-		if (isEditMode) {
-			dispatch(updateSchedule({ schedule: requestBody, id: scheduleModalId }));
+			dispatch(createSchedule(formValues));
+		} else {
+			dispatch(updateSchedule({ schedule: formValues, id: scheduleModalId }));
 		}
 
 		// 폼 초기화
@@ -196,7 +182,8 @@ const ScheduleModal = () => {
 	};
 
 	useEffect(() => {
-		if (formValues.startDate !== formValues.endDate)
+		if (!formValues.startDate) return;
+		if (getNextDateInputValue(formValues.startDate) !== formValues.endDate)
 			setFormValues((prev) => ({ ...prev, isAllDay: false }));
 		else if (formValues.startTime !== "00:00" || formValues.endTime !== "00:00")
 			setFormValues((prev) => ({ ...prev, isAllDay: false }));
