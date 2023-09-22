@@ -1,6 +1,6 @@
 const convertToUTC = (date, time) => {
 	const localDateTime = new Date(`${date}T${time}:00`);
-	const utcDateTime = localDateTime.toISOString().split(".")[0];
+	const utcDateTime = localDateTime.toISOString();
 	return utcDateTime;
 };
 
