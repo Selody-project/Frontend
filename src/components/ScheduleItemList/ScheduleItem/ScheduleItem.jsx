@@ -13,7 +13,7 @@ import {
 } from "./ScheduleItem.styles";
 
 const getTimeString = (date, isEnd = false) => {
-	const todayMonth = date.getMonth();
+	const todayMonth = date.getMonth() + 1;
 	const todayDate = date.getDate();
 	const todayHours = `${
 		// eslint-disable-next-line no-nested-ternary
@@ -31,7 +31,9 @@ const getTimeString = (date, isEnd = false) => {
 	}${todayHours}:${todayMinutes}`;
 };
 
-const ScheduleItem = ({ schedule: { title, start, end, isGroup } }) => {
+const ScheduleItem = ({
+	schedule: { title, startDateTime, endDateTime, isGroup },
+}) => {
 	const { colors } = useTheme();
 
 	return (
@@ -42,7 +44,8 @@ const ScheduleItem = ({ schedule: { title, start, end, isGroup } }) => {
 			<ScheduleItemContentDiv>
 				<span>{title}</span>
 				<span>
-					{getTimeString(start)} ~ {getTimeString(end, true)}
+					{getTimeString(new Date(startDateTime))} ~{" "}
+					{getTimeString(new Date(endDateTime), true)}
 				</span>
 			</ScheduleItemContentDiv>
 			<ScheduleItemRightButtonsDiv>
