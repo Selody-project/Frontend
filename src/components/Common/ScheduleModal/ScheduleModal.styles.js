@@ -90,7 +90,31 @@ export const RepeatContainerDiv = styled.div`
 	gap: 20px;
 	flex-direction: column;
 	margin-bottom: 24px;
-	& > div {
+	& > div:first-child {
+		display: flex;
+		gap: 24px;
+		& > div {
+			display: flex;
+			flex-direction: column;
+		}
+	}
+`;
+
+export const WeeklyDatePickerDiv = styled.div`
+	bottom: -100%;
+	display: flex;
+	justify-content: space-between;
+	width: 196px;
+	font-size: ${({
+		theme: {
+			typography: { size },
+		},
+	}) => size.s1};
+	& > label {
+		&,
+		& > input {
+			cursor: pointer;
+		}
 		display: flex;
 		gap: 15px;
 		&:first-child > div {
