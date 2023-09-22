@@ -17,9 +17,6 @@ export const deleteGroupMember = createAsyncThunk(
 			}
 			return response.data;
 		} catch (error) {
-			if (error.response) {
-				return thunkAPI.rejectWithValue(error.response.data);
-			}
 			return thunkAPI.rejectWithValue(error.message);
 		}
 	},
@@ -38,9 +35,6 @@ export const rejectGroupJoin = createAsyncThunk(
 			}
 			return response.data;
 		} catch (error) {
-			if (error.response) {
-				return thunkAPI.rejectWithValue(error.response.data);
-			}
 			return thunkAPI.rejectWithValue(error.message);
 		}
 	},
@@ -59,9 +53,6 @@ export const approveGroupJoin = createAsyncThunk(
 			}
 			return response.data;
 		} catch (error) {
-			if (error.response) {
-				return thunkAPI.rejectWithValue(error.response.data);
-			}
 			return thunkAPI.rejectWithValue(error.message);
 		}
 	},
@@ -82,9 +73,6 @@ export const getGroupRequestMemberList = createAsyncThunk(
 			}
 			return response.data;
 		} catch (error) {
-			if (error.response) {
-				return thunkAPI.rejectWithValue(error.response.data);
-			}
 			return thunkAPI.rejectWithValue(error.message);
 		}
 	},
@@ -102,9 +90,6 @@ export const getGroupInfo = createAsyncThunk(
 			}
 			return response.data;
 		} catch (error) {
-			if (error.response) {
-				return thunkAPI.rejectWithValue(error.response.data);
-			}
 			return thunkAPI.rejectWithValue(error.message);
 		}
 	},
@@ -122,9 +107,6 @@ export const getGroupInfoDetail = createAsyncThunk(
 			}
 			return response.data;
 		} catch (error) {
-			if (error.response) {
-				return thunkAPI.rejectWithValue(error.response.data);
-			}
 			return thunkAPI.rejectWithValue(error.message);
 		}
 	},
@@ -143,9 +125,6 @@ export const createGroup = createAsyncThunk(
 			}
 			return response.data;
 		} catch (error) {
-			if (error.response) {
-				return thunkAPI.rejectWithValue(error.response.data);
-			}
 			return thunkAPI.rejectWithValue(error.message);
 		}
 	},
@@ -161,9 +140,6 @@ export const getGroupList = createAsyncThunk(
 			}
 			return response.data;
 		} catch (error) {
-			if (error.response) {
-				return thunkAPI.rejectWithValue(error.response.data);
-			}
 			return thunkAPI.rejectWithValue(error.message);
 		}
 	},
