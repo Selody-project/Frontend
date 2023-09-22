@@ -101,6 +101,29 @@ const ScheduleModal = () => {
 		return false;
 	};
 
+	const calculateUntilDateString = (endDateStr) => {
+		if (typeof endDateStr !== "string") {
+			throw Error(
+				`endDateStr은 문자열 타입이어야 합니다. 현재 값은 ${endDateStr}입니다.`,
+			);
+		}
+		if (endDateStr.trim() === "") {
+			throw Error(
+				`endDateStr은 빈 문자열이 아니어야 합니다. 현재 값은 비어있습니다.`,
+			);
+		}
+		const endDate = new Date(endDateStr);
+		let untilDate;
+		if (formValues.freq === "DAILY") {
+			untilDate = endDate.setDate(endDate.getDate() + 1);
+		} else if (formValues.freq === "WEEKLY") {
+			untilDate = endDate.setDate(endDate.getDate() + 7);
+		} else if (formValues.freq === "MONTHLY") {
+			untilDate = endDate.setMonth(endDate.getMonth() + 1);
+		}
+		return new Date(untilDate).toISOString().slice(0, 10);
+	};
+
 	const checkFieldsFilled = () =>
 		formValues.title.trim() !== "" &&
 		formValues.content.trim() !== "" &&
@@ -108,7 +131,9 @@ const ScheduleModal = () => {
 		formValues.startTime !== "" &&
 		formValues.endDate !== "" &&
 		formValues.endTime !== "" &&
-		(formValues.freq === "NONE" || formValues.until) &&
+		(formValues.freq === "NONE" ||
+			(formValues.until &&
+				formValues.until > calculateUntilDateString(formValues.endDate))) &&
 		(openedModal === UI_TYPE.SHARE_SCHEDULE
 			? formValues.voteEndDate !== "" && formValues.voteEndTime !== ""
 			: true);
@@ -132,19 +157,6 @@ const ScheduleModal = () => {
 
 		// 메뉴 닫기
 		dispatch(closeModal());
-	};
-
-	const calculateUntilDateString = (endDateStr) => {
-		const endDate = new Date(endDateStr);
-		let untilDate;
-		if (formValues.freq === "DAILY") {
-			untilDate = endDate.setDate(endDate.getDate() + 1);
-		} else if (formValues.freq === "WEEKLY") {
-			untilDate = endDate.setDate(endDate.getDate() + 7);
-		} else if (formValues.freq === "MONTHLY") {
-			untilDate = endDate.setMonth(endDate.getMonth() + 1);
-		}
-		return new Date(untilDate).toISOString().slice(0, 10);
 	};
 
 	useEffect(() => {
@@ -273,43 +285,46 @@ const ScheduleModal = () => {
 						</DateContainerDiv>
 					</>
 				) : (
-					<RepeatContainerDiv>
-						<div>
-							<InputLabel htmlFor="repeat">반복 여부</InputLabel>
-							<StyledSelect
-								id="repeat"
-								value={formValues.repeat}
-								onChange={(e) =>
-									setFormValues((prev) => ({
-										...prev,
-										freq: e.target.value,
-										until: e.target.value === "NONE" ? "" : prev.until,
-									}))
-								}
-							>
-								<option value="NONE">반복 안함</option>
-								<option value="DAILY">매일</option>
-								<option value="WEEKLY">매주</option>
-								<option value="MONTHLY">매월</option>
-							</StyledSelect>
-						</div>
-						{formValues.freq !== "NONE" && (
+					formValues.startDate &&
+					formValues.endDate && (
+						<RepeatContainerDiv>
 							<div>
-								<InputLabel>반복 종료 날짜</InputLabel>
-								<DateInput
-									type="date"
-									min={calculateUntilDateString(formValues.endDate)}
-									value={formValues.until}
+								<InputLabel htmlFor="repeat">반복 여부</InputLabel>
+								<StyledSelect
+									id="repeat"
+									value={formValues.freq}
 									onChange={(e) =>
 										setFormValues((prev) => ({
 											...prev,
-											until: e.target.value,
+											freq: e.target.value,
+											until: e.target.value === "NONE" ? "" : prev.until,
 										}))
 									}
-								/>
+								>
+									<option value="NONE">반복 안함</option>
+									<option value="DAILY">매일</option>
+									<option value="WEEKLY">매주</option>
+									<option value="MONTHLY">매월</option>
+								</StyledSelect>
 							</div>
-						)}
-					</RepeatContainerDiv>
+							{formValues.freq !== "NONE" && (
+								<div>
+									<InputLabel>반복 종료 날짜</InputLabel>
+									<DateInput
+										type="date"
+										min={calculateUntilDateString(formValues.endDate)}
+										value={formValues.until}
+										onChange={(e) =>
+											setFormValues((prev) => ({
+												...prev,
+												until: e.target.value,
+											}))
+										}
+									/>
+								</div>
+							)}
+						</RepeatContainerDiv>
+					)
 				)}
 				<InputLabel htmlFor="alarm">알림 기능</InputLabel>
 				<StyledSelect
