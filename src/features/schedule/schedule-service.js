@@ -10,6 +10,32 @@ import convertToUTC, {
 	generateStartDateTime,
 } from "@/utils/convertToUTC.js";
 
+export const getTodaySchedules = createAsyncThunk(
+	"schedule/getTodaySchedule",
+	async (_, thunkAPI) => {
+		try {
+			const today = new Date();
+			const startDateTime = today.toISOString();
+			const endDateTime = new Date(
+				today.setDate(today.getDate() + 1),
+			).toISOString();
+
+			const response = await customFetch.get("/api/user/calendar", {
+				params: {
+					startDateTime,
+					endDateTime,
+				},
+			});
+			return response.data;
+		} catch (error) {
+			if (error.response) {
+				return thunkAPI.rejectWithValue(error.response.data);
+			}
+			return thunkAPI.rejectWithValue(error.message);
+		}
+	},
+);
+
 export const getSchedule = createAsyncThunk(
 	"schedule/getSchedule",
 	async (_, thunkAPI) => {
