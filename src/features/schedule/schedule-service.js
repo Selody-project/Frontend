@@ -89,9 +89,8 @@ export const createSchedule = createAsyncThunk(
 				byweekday: byweekdayObj,
 				until,
 				isAllDay,
-				notification,
 			} = schedule;
-			console.log(notification);
+
 			const startDateTime = convertToUTC(startDate, startTime);
 			const endDateTime = isAllDay
 				? new Date(`${startDate}T23:59:59.999`)
@@ -114,7 +113,6 @@ export const createSchedule = createAsyncThunk(
 				interval: freq === "NONE" ? null : 1,
 				byweekday,
 				until: untileDateTime,
-				// notification
 			});
 			if (response.status !== 201) {
 				throw response.data;
