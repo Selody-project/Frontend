@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from "react";
+import React, { forwardRef } from "react";
 import { useSelector } from "react-redux";
 
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -6,12 +6,10 @@ import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 
-import { CustomCalendarDiv, TitleSelect } from "./CustomCalendar.styles";
+import { VIEW_TYPE } from "@/constants/calendarConstants";
+import { setCurrentView } from "@/features/schedule/schedule-slice";
 
-const VIEW_TYPE = {
-	DAY_GRID_WEEK: "dayGridWeek",
-	DAY_GRID_MONTH: "dayGridMonth",
-};
+import { CustomCalendarDiv, TitleSelect } from "./CustomCalendar.styles";
 
 // 월이 포함한 주차 갯수 계산하기
 const countWeek = (year, month) => {
@@ -92,8 +90,9 @@ const CustomCalendar = forwardRef(
 		{ fullCalendarEvents, handleDateChange, menuHandler = null },
 		calendarRef,
 	) => {
-		const { year, month, week } = useSelector((state) => state.schedule);
-		const [currentView, setCurrentView] = useState(VIEW_TYPE.DAY_GRID_MONTH);
+		const { year, month, week, currentView } = useSelector(
+			(state) => state.schedule,
+		);
 
 		return (
 			<CustomCalendarDiv data-testid="calendar-container">

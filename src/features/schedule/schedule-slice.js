@@ -2,6 +2,7 @@ import { toast } from "react-toastify";
 
 import { createSlice } from "@reduxjs/toolkit";
 
+import { VIEW_TYPE } from "@/constants/calendarConstants.js";
 import getCurrentWeek from "@/utils/getCurrentWeek.js";
 
 import {
@@ -18,6 +19,7 @@ const initialState = {
 	month: new Date().getMonth() + 1,
 	year: new Date().getFullYear(),
 	week: getCurrentWeek(),
+	currentView: VIEW_TYPE.DAY_GRID_MONTH,
 	isLoading: false,
 };
 
@@ -41,6 +43,15 @@ const scheduleSlice = createSlice({
 		},
 		resetWeek: (state) => {
 			state.week = getCurrentWeek();
+		},
+		setCurrentView: (state, { payload }) => {
+			if (
+				payload !== VIEW_TYPE.DAY_GRID_MONTH &&
+				payload !== VIEW_TYPE.DAY_GRID_WEEK
+			) {
+				throw new Error("잘못된 view type입니다.");
+			}
+			state.currentView = payload;
 		},
 	},
 	extraReducers: (builder) => {
@@ -82,7 +93,13 @@ const scheduleSlice = createSlice({
 	},
 });
 
-export const { resetDate, setYear, setMonth, setWeek, resetWeek } =
-	scheduleSlice.actions;
+export const {
+	resetDate,
+	setYear,
+	setMonth,
+	setWeek,
+	resetWeek,
+	setCurrentView,
+} = scheduleSlice.actions;
 
 export default scheduleSlice.reducer;
