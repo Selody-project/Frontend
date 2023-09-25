@@ -3,11 +3,11 @@ import { toast } from "react-toastify";
 import { createSlice } from "@reduxjs/toolkit";
 
 import { VIEW_TYPE } from "@/constants/calendarConstants.js";
-import getCurrentWeek from "@/utils/getCurrentWeek.js";
+import { getCurrentWeek } from "@/utils/calendarUtils.js";
 
 import {
 	createSchedule,
-	getSchedule,
+	getSchedules,
 	getTodaySchedules,
 } from "./schedule-service.js";
 
@@ -79,15 +79,15 @@ const scheduleSlice = createSlice({
 			.addCase(getTodaySchedules.rejected, (state) => {
 				state.isLoading = false;
 			})
-			.addCase(getSchedule.pending, (state) => {
+			.addCase(getSchedules.pending, (state) => {
 				state.isLoading = true;
 			})
-			.addCase(getSchedule.fulfilled, (state, { payload }) => {
+			.addCase(getSchedules.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
 				state.nonRecSchedules = payload.nonRecurrenceSchedule;
 				state.recSchedules = payload.recurrenceSchedule;
 			})
-			.addCase(getSchedule.rejected, (state) => {
+			.addCase(getSchedules.rejected, (state) => {
 				state.isLoading = false;
 			});
 	},

@@ -1,15 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import customFetch from "@/components/UI/BaseAxios.js";
+import { VIEW_TYPE } from "@/constants/calendarConstants";
+import { getFirstDateOfWeek } from "@/utils/calendarUtils";
 import { convertScheduleFormValueToData } from "@/utils/convertSchedule";
-import {
-	convertToLocalTimezone,
-	convertRecurrenceToLocalTimezone,
-} from "@/utils/convertToLocalTimeZone.js";
-import convertToUTC, {
-	generateEndDateTime,
-	generateStartDateTime,
-} from "@/utils/convertToUTC.js";
+import convertToUTC from "@/utils/convertToUTC.js";
 
 export const getTodaySchedules = createAsyncThunk(
 	"schedule/getTodaySchedule",
@@ -37,32 +32,55 @@ export const getTodaySchedules = createAsyncThunk(
 	},
 );
 
-export const getSchedule = createAsyncThunk(
-	"schedule/getSchedule",
-	async (_, thunkAPI) => {
+export const getSchedules = createAsyncThunk(
+	"schedule/getSchedules",
+	async ({ isGroup, groupId }, thunkAPI) => {
 		const state = thunkAPI.getState();
-		const { year, month } = state.schedule;
+		const { year, month, week, currentView } = state.schedule;
+		const firstDateOfWeek = getFirstDateOfWeek(year, month, week);
+		const doesWeekContainNextMonth =
+			getFirstDateOfWeek(year, month, week + 1) > 1;
+		const doesWeekContainNextYear = doesWeekContainNextMonth && year === 12;
 
-		const startDateTime = generateStartDateTime(year, month);
-		const endDateTime = generateEndDateTime(year, month);
+		const startDateTime = new Date(
+			year,
+			month - 1,
+			currentView === VIEW_TYPE.DAY_GRID_MONTH ? undefined : firstDateOfWeek,
+		).toISOString();
+		const endDateTime = new Date(
+			doesWeekContainNextYear ? year + 1 : year,
+			// eslint-disable-next-line no-nested-ternary
+			doesWeekContainNextYear
+				? 1
+				: doesWeekContainNextMonth
+				? month
+				: month - 1,
+			// eslint-disable-next-line no-nested-ternary
+			currentView === VIEW_TYPE.DAY_GRID_MONTH
+				? undefined
+				: doesWeekContainNextMonth
+				? 1
+				: firstDateOfWeek + 6,
+		).toISOString();
+
+		if ((isGroup && !groupId) || (!isGroup && groupId))
+			throw new Error(
+				"isGroup일 때는 groupId가 필수이며, isGroup이 아닐 때는 groupId가 필요 없습니다.",
+			);
 
 		try {
 			const response = await customFetch.get(
-				`/api/user/calendar?startDateTime=${startDateTime.replace(
-					".000Z",
-					"",
-				)}&endDateTime=${endDateTime.replace(".000Z", "")}`,
+				`/api/${!isGroup ? "user" : `group/${groupId}`}/calendar`,
+				{
+					params: {
+						startDateTime,
+						endDateTime,
+					},
+				},
 			);
 			if (response.status !== 200) {
 				throw response.data;
 			}
-
-			response.data.nonRecurrenceSchedule = convertToLocalTimezone(
-				response.data.nonRecurrenceSchedule,
-			);
-			response.data.recurrenceSchedule = convertRecurrenceToLocalTimezone(
-				response.data.recurrenceSchedule,
-			);
 
 			return response.data;
 		} catch (error) {
@@ -103,7 +121,6 @@ export const deleteSchedule = createAsyncThunk(
 			if (response.status !== 204) {
 				throw response.data;
 			}
-			thunkAPI.dispatch(getSchedule());
 			return response.data;
 		} catch (error) {
 			if (error.response) {
@@ -143,7 +160,6 @@ export const updateSchedule = createAsyncThunk(
 			if (response.status !== 201) {
 				throw response.data;
 			}
-			thunkAPI.dispatch(getSchedule());
 			return response.data;
 		} catch (error) {
 			if (error.response) {

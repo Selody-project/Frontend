@@ -14,16 +14,4 @@ export const convertFromUTC = (dateTime) => {
 	};
 };
 
-export const generateStartDateTime = (year, month) => {
-	const date = new Date(year, month - 1, 1);
-
-	return date.toISOString();
-};
-
-export const generateEndDateTime = (year, month) => {
-	const date = new Date(year, month, 0);
-
-	return date.toISOString();
-};
-
 export default convertToUTC;
