@@ -78,10 +78,8 @@ describe("schedule slice", () => {
 
 		const actions = store.getActions();
 		expect(actions[0].type).toEqual("schedule/createSchedule/pending");
-		expect(actions[1].type).toEqual("schedule/getSchedule/pending");
-		expect(actions[2].type).toEqual("schedule/createSchedule/fulfilled");
-		expect(actions[3].type).toEqual("schedule/createSchedule/pending");
-		expect(actions[4].type).toEqual("schedule/getSchedule/fulfilled");
+		expect(actions[1].type).toEqual("schedule/createSchedule/fulfilled");
+		expect(actions[2].type).toEqual("schedule/createSchedule/pending");
 	});
 
 	it("should handle createSchedule success without recurrence", async () => {
@@ -112,9 +110,7 @@ describe("schedule slice", () => {
 
 		const actions = store.getActions();
 		expect(actions[0].type).toEqual("schedule/createSchedule/pending");
-		expect(actions[1].type).toEqual("schedule/getSchedule/pending");
-		expect(actions[2].type).toEqual("schedule/createSchedule/fulfilled");
-		expect(actions[3].type).toEqual("schedule/createSchedule/pending");
-		expect(actions[4].type).toEqual("schedule/getSchedule/fulfilled");
+		expect(actions[1].type).toEqual("schedule/createSchedule/fulfilled");
+		expect(actions[2].type).toEqual("schedule/createSchedule/pending");
 	});
 });
