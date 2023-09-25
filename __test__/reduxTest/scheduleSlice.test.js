@@ -1,6 +1,7 @@
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
 
+import { VIEW_TYPE } from "@/constants/calendarConstants.js";
 import getCurrentWeek from "@/utils/getCurrentWeek.js";
 
 import { createSchedule } from "../../src/features/schedule/schedule-service.js";
@@ -42,6 +43,7 @@ describe("schedule slice", () => {
 				month: new Date().getMonth() + 1,
 				year: new Date().getFullYear(),
 				week: getCurrentWeek(),
+				currentView: VIEW_TYPE.DAY_GRID_MONTH,
 				isLoading: false,
 			},
 		});
