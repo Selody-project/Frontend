@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import customFetch from "@/components/UI/BaseAxios.js";
+import { convertScheduleFormValueToData } from "@/utils/convertSchedule";
 import {
 	convertToLocalTimezone,
 	convertRecurrenceToLocalTimezone,
@@ -78,42 +79,10 @@ export const createSchedule = createAsyncThunk(
 	"schedule/createSchedule",
 	async (schedule, thunkAPI) => {
 		try {
-			const {
-				title,
-				content,
-				startDate,
-				startTime,
-				endDate,
-				endTime,
-				freq,
-				byweekday: byweekdayObj,
-				until,
-				isAllDay,
-			} = schedule;
-
-			const startDateTime = convertToUTC(startDate, startTime);
-			const endDateTime = isAllDay
-				? new Date(`${startDate}T23:59:59.999`)
-				: convertToUTC(endDate, endTime);
-			const untileDateTime = until ? convertToUTC(until, "00:00") : null;
-
-			const byweekdayEntries = Object.entries(byweekdayObj);
-			const byweekday =
-				byweekdayEntries
-					.filter(([, value]) => value)
-					.map(([key]) => key)
-					.join() || null;
-			const response = await customFetch.post(`/api/user/calendar`, {
-				title,
-				content,
-				startDateTime,
-				endDateTime,
-				recurrence: Number(freq !== "NONE"),
-				freq: freq === "NONE" ? null : freq,
-				interval: freq === "NONE" ? null : 1,
-				byweekday,
-				until: untileDateTime,
-			});
+			const response = await customFetch.post(
+				`/api/user/calendar`,
+				convertScheduleFormValueToData(schedule),
+			);
 			if (response.status !== 201) {
 				throw response.data;
 			}
