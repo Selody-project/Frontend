@@ -24,7 +24,9 @@ import {
 const ShareTodoList = () => {
 	const dispatch = useDispatch();
 	const { openedModal } = useSelector((state) => state.ui);
-	const { month, year, totalSchedule } = useSelector((state) => state.schedule);
+	const { month, year, todaySchedules } = useSelector(
+		(state) => state.schedule,
+	);
 	const { group } = useSelector((state) => state.group);
 	const { inviteCode } = useSelector((state) => state.groupInvite);
 	const [selectedTab, setSelectedTab] = useState(true);
@@ -97,7 +99,7 @@ const ShareTodoList = () => {
 							</TodoTitle>
 							<TodoSubtitle>하루동안의 할 일을 관리합니다.</TodoSubtitle>
 							<TodoList>
-								{totalSchedule.map((s) => {
+								{todaySchedules.map((s) => {
 									return (
 										<ScheduleItem key={Math.random().toString()} schedule={s} />
 									);

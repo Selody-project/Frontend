@@ -1,4 +1,5 @@
 import React, { forwardRef, useState } from "react";
+import { useSelector } from "react-redux";
 
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -88,30 +89,20 @@ const getDateOptions = (currentView) => {
 
 const CustomCalendar = forwardRef(
 	(
-		{
-			fullCalendarEvents,
-			currentYear,
-			currentMonth,
-			currentWeek,
-			handleDateChange,
-			menuHandler = null,
-		},
+		{ fullCalendarEvents, handleDateChange, menuHandler = null },
 		calendarRef,
 	) => {
+		const { year, month, week } = useSelector((state) => state.schedule);
 		const [currentView, setCurrentView] = useState(VIEW_TYPE.DAY_GRID_MONTH);
 
 		return (
 			<CustomCalendarDiv data-testid="calendar-container">
 				<TitleSelect
-					value={getSelectValue(
-						currentView,
-						currentYear,
-						currentMonth,
-						currentWeek,
-					)}
+					value={getSelectValue(currentView, year, month, week)}
 					onChange={(e) => {
-						const [year, month, week] = e.target.value.split("-");
-						handleDateChange(year, month, week || null);
+						const [yearValue, monthValue, weekValue] =
+							e.target.value.split("-");
+						handleDateChange(yearValue, monthValue, weekValue || null);
 					}}
 				>
 					{getDateOptions(currentView)}

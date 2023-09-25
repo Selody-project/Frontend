@@ -2,6 +2,8 @@ import { toast } from "react-toastify";
 
 import { createSlice } from "@reduxjs/toolkit";
 
+import getCurrentWeek from "@/utils/getCurrentWeek.js";
+
 import {
 	createSchedule,
 	getSchedule,
@@ -9,12 +11,13 @@ import {
 } from "./schedule-service.js";
 
 const initialState = {
-	totalSchedule: [],
-	schedule: [],
+	nonRecSchedules: [],
 	recSchedules: [],
 	todaySchedules: [],
-	month: 0,
-	year: 0,
+	schedulesForTheWeek: [],
+	month: new Date().getMonth() + 1,
+	year: new Date().getFullYear(),
+	week: getCurrentWeek(),
 	isLoading: false,
 };
 
@@ -22,14 +25,22 @@ const scheduleSlice = createSlice({
 	name: "schedule",
 	initialState,
 	reducers: {
-		saveSchedule: (state, { payload }) => {
-			state.schedule = [...state.schedule, payload];
+		resetDate: (state) => {
+			state.year = new Date().getFullYear();
+			state.month = new Date().getMonth() + 1;
+			state.week = getCurrentWeek();
 		},
-		currentMonthFn: (state, { payload }) => {
+		setYear: (state, { payload }) => {
+			state.year = payload;
+		},
+		setMonth: (state, { payload }) => {
 			state.month = payload;
 		},
-		currentYearFn: (state, { payload }) => {
-			state.year = payload;
+		setWeek: (state, { payload }) => {
+			state.week = payload;
+		},
+		resetWeek: (state) => {
+			state.week = getCurrentWeek();
 		},
 	},
 	extraReducers: (builder) => {
@@ -62,12 +73,8 @@ const scheduleSlice = createSlice({
 			})
 			.addCase(getSchedule.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
-				state.schedule = payload.nonRecurrenceSchedule;
+				state.nonRecSchedules = payload.nonRecurrenceSchedule;
 				state.recSchedules = payload.recurrenceSchedule;
-				state.totalSchedule = [
-					...payload.nonRecurrenceSchedule,
-					...state.recSchedules,
-				];
 			})
 			.addCase(getSchedule.rejected, (state) => {
 				state.isLoading = false;
@@ -75,7 +82,7 @@ const scheduleSlice = createSlice({
 	},
 });
 
-export const { saveSchedule, currentMonthFn, currentYearFn } =
+export const { resetDate, setYear, setMonth, setWeek, resetWeek } =
 	scheduleSlice.actions;
 
 export default scheduleSlice.reducer;
