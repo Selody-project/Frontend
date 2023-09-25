@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { CALENDAR_COLORS, SCHEDULE_TYPE } from "@/constants/calendarConstants";
+import { SCHEDULE_TYPE } from "@/constants/calendarConstants";
 import {
-	currentMonthFn,
-	currentYearFn,
+	resetDate,
+	resetWeek,
+	setMonth,
+	setWeek,
+	setYear,
 } from "@/features/schedule/schedule-slice";
 import { openScheduleEditModal } from "@/features/ui/ui-slice";
-import { getRandomColor } from "@/utils/color";
+import getCurrentWeek from "@/utils/getCurrentWeek";
 
 import { CalendarContainerDiv } from "./CalendarContainer.styles";
 import CustomCalendar from "./CustomCalendar/CustomCalendar";
@@ -23,61 +26,60 @@ const getFirstDateOfWeek = (year, month, week) => {
 	return firstDateOfMonth.getDate();
 };
 
-// currentWeek 초기화를 위해 현재 몇 주차인지 계산합니다.
-const getCurrentWeek = () => {
-	const today = new Date();
-	const date = today.getDate();
-	const day = today.getDay(); // 0~6;
-	const firstDateOfWeek = date - day;
-	const currentWeekNum = Math.ceil((firstDateOfWeek - 1) / 7) + 1;
-	return currentWeekNum;
-};
-
 const CalendarContainer = ({ type }) => {
-	const currentWeekStart = new Date();
-
 	const dispatch = useDispatch();
 
 	const calendarRef = useRef(null);
-	const eventColorMap = useRef({});
 
-	const { schedule, recSchedules } = useSelector((state) => state.schedule);
+	const { nonRecSchedules, recSchedules } = useSelector(
+		(state) => state.schedule,
+	);
 
 	const [selectedGroup, setSelectedGroup] = useState(null);
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [inviteInput, setInviteInput] = useState("");
 	const [invitationLink, setInvitationLink] = useState("");
-	const [events, setEvents] = useState([]);
-	const [currentWeek, setCurrentWeek] = useState(getCurrentWeek());
-	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
-	const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
 
-	const fullCalendarEvents = events.map((event) => ({
-		title: event.text,
-		start: event.start.toISOString().replace(".000Z", ""),
-		end: event.end.toISOString().replace(".000Z", ""),
-		color:
-			event.colors !== ""
-				? event.colors
-				: CALENDAR_COLORS[events.indexOf(event) % CALENDAR_COLORS.length],
-	}));
+	const fullCalendarEvents = [...recSchedules, ...nonRecSchedules].map(
+		(schedule) => {
+			if (schedule.recurrence) {
+				return {
+					id: schedule.id,
+					userId: schedule.userId,
+					// daysOfWeek: schedule.byweekday,
+					startTime: new Date(schedule.recurrenceDateList[0].startDateTime),
+					endDateTime: new Date(schedule.recurrenceDateList[0].endDateTime),
+					startRecur: new Date(schedule.recurrenceDateList[0].startDateTime),
+					endRecur: new Date(schedule.until),
+				};
+			}
+
+			return {
+				id: schedule.id,
+				userId: schedule.userId,
+				title: schedule.title,
+				start: new Date(schedule.startDateTime),
+				end: new Date(schedule.endDateTime),
+			};
+		},
+	);
 
 	const updateDateState = (year, month, week) => {
-		setCurrentMonth(month);
-		setCurrentYear(year);
+		dispatch(setMonth(month));
+		dispatch(setYear(year));
 		// 리스트 보기여서 select에서 제공된 주차의 경우
 		if (week) {
-			return setCurrentWeek(week);
+			return dispatch(setWeek(week));
 		}
 		// 월별 보기인데 현재 날짜에 해당하는 년월인 경우
 		if (
 			new Date().getMonth() + 1 === Number(month) &&
 			new Date().getFullYear() === Number(year)
 		) {
-			return setCurrentWeek(getCurrentWeek());
+			return dispatch(resetWeek());
 		}
 		// 그 외 모든 월별 보기의 경우
-		return setCurrentWeek(1);
+		return dispatch(setWeek(1));
 	};
 
 	const handleDateChange = (year, month, week = null) => {
@@ -111,13 +113,6 @@ const CalendarContainer = ({ type }) => {
 		updateDateState(year, month, week);
 	};
 
-	const getColorForEvent = (eventId) => {
-		if (!eventColorMap.current[eventId]) {
-			eventColorMap.current[eventId] = getRandomColor();
-		}
-		return eventColorMap.current[eventId];
-	};
-
 	const menuHandler = (schedules) => {
 		if (schedules.length === 1) {
 			dispatch(
@@ -149,49 +144,8 @@ const CalendarContainer = ({ type }) => {
 	// }, [dispatch]);
 
 	useEffect(() => {
-		dispatch(currentMonthFn(currentMonth));
-		dispatch(currentYearFn(currentYear));
-	}, [currentMonth]);
-
-	useEffect(() => {
-		currentWeekStart.setDate(
-			currentWeekStart.getDate() - currentWeekStart.getDay(),
-		);
-	}, [currentWeekStart]);
-
-	useEffect(() => {
-		const scheduleEvents = schedule.map((event) => {
-			const startDate = new Date(event.startDateTime);
-			const endDate = new Date(event.endDateTime);
-
-			return {
-				start: startDate,
-				end: endDate,
-				text: event.title,
-				colors: getColorForEvent(event.id),
-			};
-		});
-
-		const recSchedule = recSchedules
-			.map((rec) => {
-				const color = getColorForEvent(rec.id);
-
-				return rec.recurrenceDateList.map((event) => {
-					const startDate = new Date(event.startDateTime);
-					const endDate = new Date(event.endDateTime);
-
-					return {
-						start: startDate,
-						end: endDate,
-						text: rec.title,
-						colors: color,
-					};
-				});
-			})
-			.flat();
-
-		setEvents([...scheduleEvents, ...recSchedule]);
-	}, [schedule, recSchedules]);
+		dispatch(resetDate());
+	}, []);
 
 	return (
 		<CalendarContainerDiv>
@@ -212,9 +166,6 @@ const CalendarContainer = ({ type }) => {
 			<CustomCalendar
 				ref={calendarRef}
 				fullCalendarEvents={fullCalendarEvents}
-				currentYear={currentYear}
-				currentMonth={currentMonth}
-				currentWeek={currentWeek}
 				handleDateChange={handleDateChange}
 				menuHandler={type === SCHEDULE_TYPE.PERSONAL && menuHandler}
 			/>
