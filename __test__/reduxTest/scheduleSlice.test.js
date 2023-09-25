@@ -9,21 +9,6 @@ import { server } from "../__mocks__/msw/server.js";
 
 const mockStore = configureMockStore([thunk]);
 
-const byweekdayWithoutRecur = {
-	SU: false,
-	MO: false,
-	TU: false,
-	WE: false,
-	TH: false,
-	FR: false,
-	SA: false,
-};
-
-const byweekdayWithRecur = {
-	...byweekdayWithoutRecur,
-	SU: true,
-};
-
 jest.mock("react-toastify", () => ({
 	toast: {
 		success: jest.fn(),
@@ -65,7 +50,7 @@ describe("schedule slice", () => {
 				recurrence: 1,
 				freq: "WEEKLY",
 				interval: "",
-				byweekday: byweekdayWithRecur,
+				byweekday: [1],
 				until: "2026-01-05",
 				isAllDay: false,
 				notification: false,
@@ -98,7 +83,7 @@ describe("schedule slice", () => {
 				endTime: "17:00",
 				freq: "NONE",
 				interval: "",
-				byweekday: byweekdayWithoutRecur,
+				byweekday: [],
 				until: "",
 				isAllDay: false,
 				notification: false,
