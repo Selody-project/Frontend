@@ -32,6 +32,34 @@ export const getTodaySchedules = createAsyncThunk(
 	},
 );
 
+export const getSchedulesForTheWeek = createAsyncThunk(
+	"schedule/getSchedulesForTheWeek",
+	async (_, thunkAPI) => {
+		try {
+			const today = new Date();
+			const startDateTime = new Date(
+				today.setDate(today.getDate() + 1),
+			).toISOString();
+			const endDateTime = new Date(
+				today.setDate(today.getDate() + 6),
+			).toISOString();
+
+			const response = await customFetch.get("/api/user/calendar", {
+				params: {
+					startDateTime,
+					endDateTime,
+				},
+			});
+			return response.data;
+		} catch (error) {
+			if (error.response) {
+				return thunkAPI.rejectWithValue(error.response.data);
+			}
+			return thunkAPI.rejectWithValue(error.message);
+		}
+	},
+);
+
 export const getSchedules = createAsyncThunk(
 	"schedule/getSchedules",
 	async ({ isGroup, groupId }, thunkAPI) => {

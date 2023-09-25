@@ -8,6 +8,7 @@ import { getCurrentWeek } from "@/utils/calendarUtils.js";
 import {
 	createSchedule,
 	getSchedules,
+	getSchedulesForTheWeek,
 	getTodaySchedules,
 } from "./schedule-service.js";
 
@@ -77,6 +78,19 @@ const scheduleSlice = createSlice({
 					.sort((prev, curr) => prev.startDateTime > curr.startDateTime);
 			})
 			.addCase(getTodaySchedules.rejected, (state) => {
+				state.isLoading = false;
+			})
+			.addCase(getSchedulesForTheWeek.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(getSchedulesForTheWeek.fulfilled, (state, { payload }) => {
+				const { nonRecurrenceSchedule, recurrenceSchedule } = payload;
+				state.isLoading = false;
+				state.schedulesForTheWeek = nonRecurrenceSchedule
+					.concat(recurrenceSchedule)
+					.sort((prev, curr) => prev.startDateTime > curr.startDateTime);
+			})
+			.addCase(getSchedulesForTheWeek.rejected, (state) => {
 				state.isLoading = false;
 			})
 			.addCase(getSchedules.pending, (state) => {
