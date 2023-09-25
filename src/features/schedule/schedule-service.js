@@ -7,7 +7,7 @@ import { convertScheduleFormValueToData } from "@/utils/convertSchedule";
 import convertToUTC from "@/utils/convertToUTC.js";
 
 export const getTodaySchedules = createAsyncThunk(
-	"schedule/getTodaySchedule",
+	"schedule/getTodaySchedules",
 	async (_, thunkAPI) => {
 		try {
 			const today = new Date();
