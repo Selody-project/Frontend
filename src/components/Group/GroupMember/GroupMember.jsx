@@ -7,10 +7,14 @@ import {
 	getGroupRequestMemberList,
 } from "@/features/group/group-service";
 
+import {
+	MemberInnerDiv,
+	MemberH3,
+	MemberUl,
+} from "./GroupMember.Shared.styles";
 import { ContainerAside, MemberDiv } from "./GroupMember.styles";
 import MemberList from "./MemberList";
 import MemberRequestList from "./MemberRequestList";
-import { MemberInnerDiv, MemberH3, MemberUl } from "./Shared.styles";
 
 const GroupMember = () => {
 	const { user } = useSelector((state) => state.auth);

@@ -9,8 +9,12 @@ import {
 	rejectGroupJoin,
 } from "@/features/group/group-service";
 
+import {
+	MemberInnerDiv,
+	MemberH3,
+	MemberUl,
+} from "./GroupMember.Shared.styles";
 import { ButtonDiv, ButtonInnerDiv } from "./GroupMember.styles";
-import { MemberInnerDiv, MemberH3, MemberUl } from "./Shared.styles";
 
 const MemberRequestList = () => {
 	const dispatch = useDispatch();

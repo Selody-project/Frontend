@@ -5,8 +5,12 @@ import Option from "@/assets/icon/ic-feed-option.svg";
 import SampleImg from "@/assets/img/feed/img-group-sample-01.jpeg";
 import { deleteGroupMember } from "@/features/group/group-service";
 
+import {
+	MemberInnerDiv,
+	MemberH3,
+	MemberUl,
+} from "./GroupMember.Shared.styles";
 import { OptionMenuDiv } from "./GroupMember.styles";
-import { MemberInnerDiv, MemberH3, MemberUl } from "./Shared.styles";
 
 const MemberList = () => {
 	const [optionMenuOpenedMemberIndex, setOptionMenuOpenedMemberIndex] =
