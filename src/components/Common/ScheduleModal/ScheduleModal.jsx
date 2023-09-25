@@ -56,7 +56,6 @@ const initialFormValues = {
 	},
 	until: "",
 	isAllDay: false,
-	notification: false,
 };
 
 const convertToDateInputValue = (date) => {
@@ -370,19 +369,6 @@ const ScheduleModal = () => {
 						</RepeatContainerDiv>
 					)
 				)}
-				<InputLabel htmlFor="alarm">알림 기능</InputLabel>
-				<StyledSelect
-					value={formValues.notification}
-					onChange={(e) =>
-						setFormValues((prev) => ({
-							...prev,
-							notification: e.target.value === "NO",
-						}))
-					}
-				>
-					<option value="NO">사용 안함</option>
-					<option value="YES">사용함</option>
-				</StyledSelect>
 				<FooterDiv>
 					<SubmitButton onClick={handleSubmit} disabled={!checkFieldsFilled()}>
 						{isEditMode ? "수정하기" : "저장하기"}
