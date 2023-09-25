@@ -47,15 +47,7 @@ const initialFormValues = {
 	endTime: "",
 	freq: "NONE",
 	interval: "",
-	byweekday: {
-		[WEEK_STRING_PAIRS[0][0]]: false,
-		[WEEK_STRING_PAIRS[1][0]]: false,
-		[WEEK_STRING_PAIRS[2][0]]: false,
-		[WEEK_STRING_PAIRS[3][0]]: false,
-		[WEEK_STRING_PAIRS[4][0]]: false,
-		[WEEK_STRING_PAIRS[5][0]]: false,
-		[WEEK_STRING_PAIRS[6][0]]: false,
-	},
+	byweekday: [],
 	until: "",
 	isAllDay: false,
 };
@@ -77,6 +69,16 @@ const getNextDateInputValue = (startDate) => {
 	const prevDate = new Date(startDate);
 	const nextDate = prevDate.setDate(prevDate.getDate() + 1);
 	return new Date(nextDate).toISOString().slice(0, 10);
+};
+
+const setByweekday = (weekNum, prev, checked) => {
+	if (!checked) {
+		return prev.filter((num) => num !== weekNum);
+	}
+	if (prev.indexOf(weekNum) === -1) {
+		prev.push(weekNum);
+	}
+	return prev;
 };
 
 const ScheduleModal = () => {
@@ -154,9 +156,7 @@ const ScheduleModal = () => {
 		(formValues.freq === "NONE" ||
 			(formValues.until &&
 				formValues.until > calculateUntilDateString(formValues.endDate))) &&
-		(formValues.freq === "WEEKLY"
-			? Object.values(formValues.byweekday).filter((bool) => bool).length > 0
-			: true) &&
+		(formValues.freq === "WEEKLY" ? formValues.byweekday.length > 0 : true) &&
 		(openedModal === UI_TYPE.SHARE_SCHEDULE
 			? formValues.voteEndDate !== "" && formValues.voteEndTime !== ""
 			: true);
@@ -349,20 +349,21 @@ const ScheduleModal = () => {
 							</div>
 							{formValues.freq === "WEEKLY" && (
 								<WeeklyDatePickerDiv>
-									{WEEK_STRING_PAIRS.map(([EN, KR]) => (
+									{WEEK_STRING_PAIRS.map(([EN, KR], index) => (
 										<label key={EN} htmlFor={EN}>
 											{KR}
 											<input
 												type="checkbox"
 												id={EN}
-												checked={formValues.byweekday[EN]}
+												checked={formValues.byweekday.indexOf(index) !== -1}
 												onChange={({ target: { checked } }) => {
 													setFormValues((prev) => ({
 														...prev,
-														byweekday: {
-															...prev.byweekday,
-															[EN]: checked,
-														},
+														byweekday: setByweekday(
+															index,
+															prev.byweekday,
+															checked,
+														),
 													}));
 												}}
 											/>
