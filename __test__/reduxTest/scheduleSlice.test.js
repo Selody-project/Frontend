@@ -1,6 +1,8 @@
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
 
+import getCurrentWeek from "@/utils/getCurrentWeek.js";
+
 import { createSchedule } from "../../src/features/schedule/schedule-service.js";
 import { server } from "../__mocks__/msw/server.js";
 
@@ -33,13 +35,14 @@ describe("schedule slice", () => {
 	beforeEach(() => {
 		store = mockStore({
 			schedule: {
-				totalSchedule: [],
-				schedule: [],
+				nonRecSchedules: [],
 				recSchedules: [],
-				month: 0,
-				year: 0,
+				todaySchedules: [],
+				schedulesForTheWeek: [],
+				month: new Date().getMonth() + 1,
+				year: new Date().getFullYear(),
+				week: getCurrentWeek(),
 				isLoading: false,
-				id: null,
 			},
 		});
 	});
