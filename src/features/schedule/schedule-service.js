@@ -86,7 +86,6 @@ export const createSchedule = createAsyncThunk(
 			if (response.status !== 201) {
 				throw response.data;
 			}
-			thunkAPI.dispatch(getSchedule());
 			return response.data;
 		} catch (error) {
 			if (error.response) {
