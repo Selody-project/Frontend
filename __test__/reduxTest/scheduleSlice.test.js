@@ -2,7 +2,7 @@ import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
 
 import { VIEW_TYPE } from "@/constants/calendarConstants.js";
-import getCurrentWeek from "@/utils/getCurrentWeek.js";
+import { getCurrentWeek } from "@/utils/calendarUtils";
 
 import { createSchedule } from "../../src/features/schedule/schedule-service.js";
 import { server } from "../__mocks__/msw/server.js";
