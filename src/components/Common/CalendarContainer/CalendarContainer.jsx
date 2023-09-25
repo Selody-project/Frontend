@@ -10,8 +10,7 @@ import {
 	setYear,
 } from "@/features/schedule/schedule-slice";
 import { openScheduleEditModal } from "@/features/ui/ui-slice";
-import { getFirstDateOfWeek } from "@/utils/calendarUtils";
-import getCurrentWeek from "@/utils/getCurrentWeek";
+import { getCurrentWeek, getFirstDateOfWeek } from "@/utils/calendarUtils";
 
 import { CalendarContainerDiv } from "./CalendarContainer.styles";
 import CustomCalendar from "./CustomCalendar/CustomCalendar";
