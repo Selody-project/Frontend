@@ -5,7 +5,7 @@ import ScheduleModal from "@/components/Common/ScheduleModal/ScheduleModal.jsx";
 import ScheduleItem from "@/components/ScheduleItemList/ScheduleItem/ScheduleItem.jsx";
 import { UI_TYPE } from "@/constants/uiConstans.js";
 import { createInviteLink } from "@/features/group/group-invite-service.js";
-import { getSchedule } from "@/features/schedule/schedule-service.js";
+import { getSchedules } from "@/features/schedule/schedule-service.js";
 import { openScheduleCreateModal } from "@/features/ui/ui-slice.js";
 
 import {
@@ -36,7 +36,7 @@ const ShareTodoList = () => {
 	};
 
 	useEffect(() => {
-		dispatch(getSchedule());
+		dispatch(getSchedules());
 	}, [month, year]);
 
 	return (
