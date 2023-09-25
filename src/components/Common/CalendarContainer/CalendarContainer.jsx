@@ -10,21 +10,12 @@ import {
 	setYear,
 } from "@/features/schedule/schedule-slice";
 import { openScheduleEditModal } from "@/features/ui/ui-slice";
+import { getFirstDateOfWeek } from "@/utils/calendarUtils";
 import getCurrentWeek from "@/utils/getCurrentWeek";
 
 import { CalendarContainerDiv } from "./CalendarContainer.styles";
 import CustomCalendar from "./CustomCalendar/CustomCalendar";
 import InviteUser from "../../SharePage/InviteUser";
-
-// 리스트(주마다 보기)로 진행했을 떄 보여줄 첫 일요일을 계산합니다.
-const getFirstDateOfWeek = (year, month, week) => {
-	const firstDateOfMonth = new Date(year, month - 1);
-	const firstDayOfMonth = firstDateOfMonth.getDay();
-	firstDateOfMonth.setDate(
-		firstDateOfMonth.getDate() - firstDayOfMonth + 7 * (week - 1),
-	);
-	return firstDateOfMonth.getDate();
-};
 
 const CalendarContainer = ({ type }) => {
 	const dispatch = useDispatch();
