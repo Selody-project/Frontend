@@ -25,7 +25,7 @@ const ScheduleItemList = () => {
 	const dispatch = useDispatch();
 	const { openedModal } = useSelector((state) => state.ui);
 	const todaySchedules = useSelector((state) => state.schedule.todaySchedules);
-	const [selectedTab, setSelectedTab] = useState(false);
+	const [isTodayTab, setIsTodayTab] = useState(true);
 
 	useEffect(() => {
 		dispatch(getTodaySchedules());
@@ -43,16 +43,10 @@ const ScheduleItemList = () => {
 		<>
 			<ScheduleItemListLayoutAside data-testid="personal-todo-list">
 				<TodoHeader>
-					<TodoTab
-						selected={selectedTab === false}
-						onClick={() => setSelectedTab(false)}
-					>
+					<TodoTab selected={isTodayTab} onClick={() => setIsTodayTab(true)}>
 						오늘 일정
 					</TodoTab>
-					<TodoTab
-						selected={selectedTab === true}
-						onClick={() => setSelectedTab(true)}
-					>
+					<TodoTab selected={!isTodayTab} onClick={() => setIsTodayTab(false)}>
 						예정
 					</TodoTab>
 				</TodoHeader>
