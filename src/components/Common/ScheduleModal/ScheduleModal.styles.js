@@ -184,7 +184,8 @@ export const StyledSelect = styled.select`
 export const FooterDiv = styled.div`
 	display: flex;
 	justify-content: flex-end;
-	margin-top: 9px;
+	margin-top: ${({ isAllDayCheckboxDisplayed }) =>
+		isAllDayCheckboxDisplayed ? 29 : 9}px;
 	padding-bottom: 19px;
 `;
 
