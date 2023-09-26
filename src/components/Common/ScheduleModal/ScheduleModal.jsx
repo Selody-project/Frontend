@@ -370,7 +370,11 @@ const ScheduleModal = () => {
 						</RepeatContainerDiv>
 					)
 				)}
-				<FooterDiv>
+				<FooterDiv
+					isAllDayCheckboxDisplayed={
+						formValues.startDate && !formValues.endDate
+					}
+				>
 					<SubmitButton onClick={handleSubmit} disabled={!checkFieldsFilled()}>
 						{isEditMode ? "수정하기" : "저장하기"}
 					</SubmitButton>
