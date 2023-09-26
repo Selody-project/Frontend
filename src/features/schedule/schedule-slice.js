@@ -60,9 +60,44 @@ const scheduleSlice = createSlice({
 			.addCase(createSchedule.pending, (state) => {
 				state.isLoading = true;
 			})
-			.addCase(createSchedule.fulfilled, (state) => {
-				state.isLoading = false;
+			.addCase(createSchedule.fulfilled, (state, { payload }) => {
 				toast.success("일정 추가에 성공하셨습니다!");
+				if (payload.recurrence) {
+					state.recSchedules.push(payload);
+				} else {
+					state.nonRecSchedules.push(payload);
+				}
+				const today = new Date();
+				const isToday =
+					today.toDateString() ===
+					new Date(payload.startDateTime).toDateString();
+				const lastDayAfterSevenDaysEnd = new Date(
+					today.getFullYear(),
+					today.getMonth(),
+					today.getDate() + 8,
+				);
+				const isForTheWeek =
+					!isToday &&
+					new Date(payload.startDateTime) < lastDayAfterSevenDaysEnd;
+				// eslint-disable-next-line no-nested-ternary
+				const arrayToUpdate = isToday
+					? state.todaySchedules
+					: isForTheWeek
+					? state.schedulesForTheWeek
+					: null;
+				if (arrayToUpdate) {
+					const indexToInsert = arrayToUpdate.findIndex(
+						(schedule) =>
+							new Date(schedule.startDateTime) >=
+							new Date(payload.startDateTime),
+					);
+					if (indexToInsert === -1) {
+						arrayToUpdate.push(payload);
+					} else {
+						arrayToUpdate.splice(indexToInsert, 0, payload);
+					}
+				}
+				state.isLoading = false;
 			})
 			.addCase(createSchedule.rejected, (state) => {
 				state.isLoading = false;
