@@ -138,11 +138,14 @@ const authSlice = createSlice({
 			.addCase(updateUserProfile.pending, (state) => {
 				state.isLoading = true;
 			})
-			.addCase(updateUserProfile.fulfilled, (state, { payload }) => {
-				state.isLoading = false;
-				state.user = payload;
-				toast.success("프로필이 수정되었습니다.");
-			})
+			.addCase(
+				updateUserProfile.fulfilled,
+				(state, { payload: { email, nickname, profileImage } }) => {
+					state.isLoading = false;
+					state.user = { ...state.user, email, nickname, profileImage };
+					toast.success("프로필이 수정되었습니다.");
+				},
+			)
 			.addCase(updateUserProfile.rejected, (state, { payload }) => {
 				state.isLoading = false;
 				const { error } = payload.response.data;

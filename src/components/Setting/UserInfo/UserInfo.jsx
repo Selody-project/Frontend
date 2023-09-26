@@ -21,6 +21,7 @@ const UserInfo = () => {
 	const { nickname, email, profileImage } = user;
 	const initProfileImg = profileImage ?? DefaultProfile;
 
+	const [profileObj, setProfileObj] = useState();
 	const [newProfileImg, setNewProfileImg] = useState(initProfileImg);
 	const [newNickname, setNewNickname] = useState(nickname);
 	const [newEmail, setNewEmail] = useState(email);
@@ -37,7 +38,7 @@ const UserInfo = () => {
 		formdata.append("data", JSON.stringify(data));
 
 		if (newProfileImg !== initProfileImg) {
-			formdata.append("image", newProfileImg);
+			formdata.append("image", profileObj);
 		}
 
 		dispatch(updateUserProfile(formdata));
@@ -49,6 +50,7 @@ const UserInfo = () => {
 		reader.readAsDataURL(file);
 		reader.onloadend = () => {
 			setNewProfileImg(reader.result);
+			setProfileObj(file);
 		};
 	};
 
