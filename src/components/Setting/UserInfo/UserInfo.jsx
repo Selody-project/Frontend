@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import DefaultProfile from "@/assets/img/img-default-profile.png";
 import { updateUserProfile } from "@/features/auth/auth-service";
 
 import {
 	ButtonWrapDiv,
 	ContainerDiv,
-	ImgSelectSpan,
+	ImgSelectLabel,
 	InfoDiv,
 	LabelH4,
 	ProfileImg,
@@ -17,19 +18,38 @@ import CustomInput from "../CustomInput/CustomInput";
 const UserInfo = () => {
 	const dispatch = useDispatch();
 	const { user } = useSelector((state) => state.auth);
-	const { nickname, email } = user;
+	const { nickname, email, profileImage } = user;
+	const initProfileImg = profileImage ?? DefaultProfile;
 
-	// const [newProfileImg,setNewProfileImg]=useState()
+	const [newProfileImg, setNewProfileImg] = useState(initProfileImg);
 	const [newNickname, setNewNickname] = useState(nickname);
 	const [newEmail, setNewEmail] = useState(email);
 
 	const isSaveEnabled =
-		(newNickname !== nickname || newEmail !== email) && newNickname.trim();
+		(newNickname !== nickname ||
+			newEmail !== email ||
+			newProfileImg !== initProfileImg) &&
+		newNickname.trim();
 
 	const onSave = () => {
-		dispatch(
-			updateUserProfile({ nickname: newNickname.trim(), email: newEmail }),
-		);
+		const formdata = new FormData();
+		const data = { email: newEmail, nickname: newNickname.trim() };
+		formdata.append("data", JSON.stringify(data));
+
+		if (newProfileImg !== initProfileImg) {
+			formdata.append("image", newProfileImg);
+		}
+
+		dispatch(updateUserProfile(formdata));
+	};
+
+	const handleChangeImg = (e) => {
+		const file = e.target.files[0];
+		const reader = new FileReader();
+		reader.readAsDataURL(file);
+		reader.onloadend = () => {
+			setNewProfileImg(reader.result);
+		};
 	};
 
 	return (
@@ -37,11 +57,9 @@ const UserInfo = () => {
 			<h3>내 프로필</h3>
 			<InfoDiv>
 				<LabelH4>프로필</LabelH4>
-				<ProfileImg
-					src="https://yt3.ggpht.com/ytc/AOPolaSlb8-cH_rN_lZDD1phXr7aHFpoOqMVoepaGuTm=s48-c-k-c0x00ffffff-no-rj"
-					alt="profile-img"
-				/>
-				<ImgSelectSpan>이미지 재선택</ImgSelectSpan>
+				<ProfileImg src={newProfileImg} alt="profile-img" />
+				<ImgSelectLabel htmlFor="profileImg">이미지 재선택</ImgSelectLabel>
+				<input type="file" id="profileImg" onChange={handleChangeImg} />
 			</InfoDiv>
 			<InfoDiv spaceBetween>
 				<CustomInput

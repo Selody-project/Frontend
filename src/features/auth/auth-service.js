@@ -116,20 +116,18 @@ export const getCurrentUser = createAsyncThunk(
 
 export const updateUserProfile = createAsyncThunk(
 	"user/updateUserProfile",
-	async ({ nickname, email }, thunkAPI) => {
+	async (formdata, thunkAPI) => {
 		try {
-			const response = await customFetch.patch(`/api/user/profile`, {
-				nickname,
-				email,
+			const response = await customFetch.patch(`/api/user/profile`, formdata, {
+				headers: { "Content-Type": "multipart/form-data" },
 			});
 
 			if (response.statusText !== "OK") {
 				throw response.data;
 			}
-
 			return response.data;
 		} catch (error) {
-			return thunkAPI.rejectWithValue(error.response.status);
+			return thunkAPI.rejectWithValue(error);
 		}
 	},
 );

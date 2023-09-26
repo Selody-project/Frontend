@@ -36,9 +36,21 @@ const authSlice = createSlice({
 			})
 			.addCase(
 				signup.fulfilled,
-				(state, { payload: { email, nickname, userId, provider, snsId } }) => {
+				(
+					state,
+					{
+						payload: { email, nickname, userId, provider, snsId, profileImage },
+					},
+				) => {
 					state.isLoading = false;
-					state.user = { email, nickname, userId, provider, snsId };
+					state.user = {
+						email,
+						nickname,
+						userId,
+						provider,
+						snsId,
+						profileImage,
+					};
 					toast.success(`환영합니다! ${state.user.nickname}님`);
 				},
 			)
@@ -52,9 +64,21 @@ const authSlice = createSlice({
 			})
 			.addCase(
 				login.fulfilled,
-				(state, { payload: { email, nickname, userId, provider, snsId } }) => {
+				(
+					state,
+					{
+						payload: { email, nickname, userId, provider, snsId, profileImage },
+					},
+				) => {
 					state.isLoading = false;
-					state.user = { email, nickname, userId, provider, snsId };
+					state.user = {
+						email,
+						nickname,
+						userId,
+						provider,
+						snsId,
+						profileImage,
+					};
 				},
 			)
 			.addCase(login.rejected, (state, { payload }) => {
@@ -121,11 +145,8 @@ const authSlice = createSlice({
 			})
 			.addCase(updateUserProfile.rejected, (state, { payload }) => {
 				state.isLoading = false;
-				if (payload === 400) {
-					toast.error("잘못된 이메일 형식입니다.");
-				} else if (payload === 409) {
-					toast.error("중복된 닉네임 또는 이메일입니다.");
-				}
+				const { error } = payload.response.data;
+				toast.error(error);
 			})
 			// 유저 비밀번호 수정
 			.addCase(updateUserPassword.pending, (state) => {

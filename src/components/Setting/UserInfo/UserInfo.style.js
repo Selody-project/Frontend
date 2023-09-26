@@ -28,6 +28,10 @@ export const InfoDiv = styled.div`
 		css`
 			justify-content: space-between;
 		`}
+
+	#profileImg {
+		display: none;
+	}
 `;
 
 export const LabelH4 = styled.h4`
@@ -44,10 +48,10 @@ export const ProfileImg = styled.img`
 	height: 80px;
 	border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
 	border-radius: 50%;
-	object-fit: contain;
+	object-fit: cover;
 `;
 
-export const ImgSelectSpan = styled.span`
+export const ImgSelectLabel = styled.label`
 	margin-left: 24px;
 	color: ${({ theme: { colors } }) => colors.disabled_text};
 	font-size: 14px;
