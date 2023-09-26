@@ -1,3 +1,6 @@
+import moment from "moment";
+
+import { getIsAllDay } from "@/utils/calendarUtils";
 import convertToUTC from "@/utils/convertToUTC";
 
 export const convertScheduleFormValueToData = ({
@@ -61,20 +64,64 @@ export const convertScheduleFormValueToData = ({
 	};
 };
 
-// export const convertScheduleDataToState = ({
-// 	id,
-// 	userId,
-// 	title,
-// 	content,
-// 	startDateTime,
-// 	endDateTime,
-// 	recurrence,
-// 	freq,
-// 	interval,
-// 	byweekday,
-// 	until,
-// }) => {
-//     return {
-//         id, userId, title, content,
-//     }
-// };
+export const convertScheduleDataToFormValue = ({
+	id,
+	userId,
+	title,
+	content,
+	startDateTime,
+	endDateTime,
+	freq,
+	interval,
+	byweekday: byweekdayStr,
+	until,
+}) => {
+	const startDate = moment(startDateTime).format("YYYY-MM-DD");
+	const startTime = moment(startDateTime).format("HH:mm");
+	const endDate = moment(endDateTime).format("YYYY-MM-DD");
+	const endTime = moment(endDateTime).format("HH:mm");
+	const isAllDay = getIsAllDay(new Date(startDateTime), new Date(endDateTime));
+
+	const byweekday =
+		!byweekdayStr ||
+		byweekdayStr.split(",").map((weekStr) => {
+			if (weekStr === "SU") {
+				return 0;
+			}
+			if (weekStr === "MO") {
+				return 1;
+			}
+			if (weekStr === "TU") {
+				return 2;
+			}
+			if (weekStr === "WE") {
+				return 3;
+			}
+			if (weekStr === "TH") {
+				return 4;
+			}
+			if (weekStr === "FR") {
+				return 5;
+			}
+			if (weekStr === "SA") {
+				return 6;
+			}
+			throw new Error("존재하지 않는 요일입니다.");
+		});
+
+	return {
+		id,
+		userId,
+		title,
+		content,
+		startDate,
+		startTime,
+		endDate,
+		endTime,
+		freq: freq || "NONE",
+		interval: interval || "",
+		byweekday,
+		until: until || "",
+		isAllDay,
+	};
+};

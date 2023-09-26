@@ -1,9 +1,13 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 
 import { useTheme } from "styled-components";
 
 import DeleteScheduleIcon from "@/assets/icon/ic-delete-schedule.svg";
 import EditScheduleIcon from "@/assets/icon/ic-edit-schedule.svg";
+import { UI_TYPE } from "@/constants/uiConstans";
+import { openScheduleEditModal } from "@/features/ui/ui-slice";
+import { getIsAllDay } from "@/utils/calendarUtils";
 
 import {
 	ColoredCircleDiv,
@@ -40,12 +44,7 @@ const getTimeString = (start, end) => {
 	}`;
 
 	const isOnlyToday = startDate.toDateString() === endDate.toDateString();
-	const isAllDay =
-		new Date(startDate.setDate(startDate.getDate() + 1)).toDateString() ===
-			endDate.toDateString() &&
-		!endDate.getHours() &&
-		!endDate.getMinutes();
-	if (isOnlyToday || isAllDay) {
+	if (isOnlyToday || getIsAllDay(startDate, endDate)) {
 		endDateString = null;
 	}
 	return `${startDateString} ${startTimeString} ~ ${
@@ -54,9 +53,11 @@ const getTimeString = (start, end) => {
 };
 
 const ScheduleItem = ({
-	schedule: { title, startDateTime, endDateTime, isGroup },
+	schedule: { id, isGroup, title, startDateTime, endDateTime },
 }) => {
 	const { colors } = useTheme();
+	const dispatch = useDispatch();
+
 	return (
 		<ScheduleItemDiv>
 			<ColoredCircleDiv
@@ -67,7 +68,20 @@ const ScheduleItem = ({
 				<span>{getTimeString(startDateTime, endDateTime)}</span>
 			</ScheduleItemContentDiv>
 			<ScheduleItemRightButtonsDiv>
-				<button type="button" aria-label="editSchedule">
+				<button
+					type="button"
+					aria-label="editSchedule"
+					onClick={() =>
+						dispatch(
+							openScheduleEditModal({
+								type: isGroup
+									? UI_TYPE.SHARE_SCHEDULE
+									: UI_TYPE.PERSONAL_SCHEDULE,
+								id,
+							}),
+						)
+					}
+				>
 					<EditScheduleIcon />
 				</button>
 				<button type="button" aria-label="deleteSchedule">
