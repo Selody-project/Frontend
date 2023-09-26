@@ -12,30 +12,51 @@ import {
 	ScheduleItemRightButtonsDiv,
 } from "./ScheduleItem.styles";
 
-const getTimeString = (date, isEnd = false) => {
-	const todayMonth = date.getMonth() + 1;
-	const todayDate = date.getDate();
-	const todayHours = `${
+const getTimeString = (start, end) => {
+	const startDate = new Date(start);
+	const endDate = new Date(end);
+	const startDateString = `${startDate.getMonth()}월 ${startDate.getDate()}일`;
+	const startTimeString = `${
+		startDate.getHours() < 10
+			? `0${startDate.getHours()}`
+			: startDate.getHours()
+	}:${
+		startDate.getMinutes() < 10
+			? `0${startDate.getMinutes()}`
+			: startDate.getMinutes()
+	}`;
+	let endDateString = `${endDate.getMonth()}월 ${endDate.getDate()}일`;
+	const endTimeString = `${
 		// eslint-disable-next-line no-nested-ternary
-		date.getHours() === 12
-			? `오후 12`
-			: date.getHours() > 12
-			? `오후 ${date.getHours() - 12}`
-			: `오전 ${date.getHours()}`
+		!endDate.getHours() && !endDate.getMinutes()
+			? 24
+			: endDate.getHours() < 10
+			? `0${endDate.getHours()}`
+			: endDate.getHours()
+	}:${
+		endDate.getMinutes() < 10
+			? `0${endDate.getMinutes()}`
+			: endDate.getMinutes()
 	}`;
-	const todayMinutes = `${
-		date.getMinutes() >= 10 ? `${date.getMinutes()}` : `0${date.getMinutes()}`
-	}`;
-	return `${
-		!isEnd ? `${todayMonth}월 ${todayDate}일 ` : ""
-	}${todayHours}:${todayMinutes}`;
+
+	const isOnlyToday = startDate.toDateString() === endDate.toDateString();
+	const isAllDay =
+		new Date(startDate.setDate(startDate.getDate() + 1)).toDateString() ===
+			endDate.toDateString() &&
+		!endDate.getHours() &&
+		!endDate.getMinutes();
+	if (isOnlyToday || isAllDay) {
+		endDateString = null;
+	}
+	return `${startDateString} ${startTimeString} ~ ${
+		endDateString || ""
+	} ${endTimeString}`;
 };
 
 const ScheduleItem = ({
 	schedule: { title, startDateTime, endDateTime, isGroup },
 }) => {
 	const { colors } = useTheme();
-
 	return (
 		<ScheduleItemDiv>
 			<ColoredCircleDiv
@@ -43,10 +64,7 @@ const ScheduleItem = ({
 			/>
 			<ScheduleItemContentDiv>
 				<span>{title}</span>
-				<span>
-					{getTimeString(new Date(startDateTime))} ~{" "}
-					{getTimeString(new Date(endDateTime), true)}
-				</span>
+				<span>{getTimeString(startDateTime, endDateTime)}</span>
 			</ScheduleItemContentDiv>
 			<ScheduleItemRightButtonsDiv>
 				<button type="button" aria-label="editSchedule">
