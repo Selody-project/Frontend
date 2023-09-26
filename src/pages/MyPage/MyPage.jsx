@@ -21,10 +21,10 @@ const MyPage = () => {
 
 	const dispatch = useDispatch();
 
-	const groupList = useSelector((state) => state.group.groupList);
+	const groupList = useSelector((state) => state.group.groupList.groups);
 
 	useEffect(() => {
-		dispatch(getGroupList(1));
+		dispatch(getGroupList(32));
 	}, []);
 
 	return (
