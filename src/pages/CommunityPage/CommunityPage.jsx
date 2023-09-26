@@ -22,6 +22,7 @@ const CommunityPage = () => {
 	const [tabIndex, setTabIndex] = useState(0);
 	const [searchKeyword, setSearchKeyword] = useState("");
 	const [onSearch, setOnSearch] = useState(false);
+
 	const dispatch = useDispatch();
 
 	const searchGroupList = useSelector((state) => state.group.searchGroupList);
@@ -34,10 +35,15 @@ const CommunityPage = () => {
 		}
 	};
 
-	const handleSearchClick = (event) => {
-		event.preventDefault();
+	const handleSearchClick = () => {
 		dispatch(searchGroup(searchKeyword));
 		setOnSearch(true);
+	};
+
+	const handleSearchKeyPress = (event) => {
+		if (event.key === "Enter") {
+			handleSearchClick();
+		}
 	};
 
 	return (
@@ -57,6 +63,7 @@ const CommunityPage = () => {
 						<Input
 							placeholder="다른 그룹을 탐색해보세요."
 							onChange={handleSearchInput}
+							onKeyPress={handleSearchKeyPress}
 						/>
 						<SearchButton onClick={handleSearchClick}>
 							<SearchIcon />
