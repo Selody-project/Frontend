@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import SampleImg from "@/assets/img/feed/img-group-sample-01.jpeg";
-// import GroupSearch from "@/components/Community/GroupSearch/GroupSearch";
+import GroupInfo from "@/components/Group/GroupInfo/GroupInfo";
+import { getGroupList } from "@/features/group/group-service";
 
 import {
 	ContainerMain,
@@ -12,11 +14,19 @@ import {
 	ProfileRightInnerDiv,
 	TabDiv,
 	TabButton,
-	// GroupSection,
 } from "./MyPage.styles";
 
 const MyPage = () => {
 	const [tab, setTab] = useState("mygroup");
+
+	const dispatch = useDispatch();
+
+	const groupList = useSelector((state) => state.group.groupList);
+
+	useEffect(() => {
+		dispatch(getGroupList(1));
+	}, []);
+
 	return (
 		<ContainerMain>
 			<ProfileSection>
@@ -60,6 +70,7 @@ const MyPage = () => {
 					</li>
 				</ul>
 			</TabDiv>
+			<GroupInfo groupInfo={groupList} />
 		</ContainerMain>
 	);
 };

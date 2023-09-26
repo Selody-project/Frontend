@@ -95,5 +95,3 @@ export const TabButton = styled.button`
 	font-weight: ${({ theme: { typography } }) => typography.weight.semibold};
 	cursor: pointer;
 `;
-
-export const GroupSection = styled.section``;
