@@ -7,7 +7,7 @@ export const TabDiv = styled.div`
 
 	& > ul {
 		display: flex;
-		gap: 48px;
+		gap: 24px;
 	}
 `;
 
