@@ -11,13 +11,40 @@ export const GroupDiv = styled.div`
 	}
 `;
 
-export const ListDiv = styled.div`
-	display: flex;
-	flex-direction: row;
-	margin-top: 30px;
-	gap: 26px;
-	cursor: pointer;
+export const Div = styled.div`
+	overflow: hidden;
+	/* mask-image: linear-gradient(
+		to left,
+		transparent 0,
+		transparent 51px,
+		#000 77px,
+		#000 100%
+	); */
+
+	& > ul {
+		display: inline-block;
+		transition: all 0.3s ease-out;
+
+		& > li {
+			display: flex;
+			flex-direction: row;
+			margin-top: 30px;
+			gap: 26px;
+			cursor: pointer;
+		}
+	}
 `;
+
+export const LeftButton = styled.button`
+	padding: 20px;
+	border-radius: 50%;
+	background-color: blue;
+	color: #fff;
+	cursor: pointer;
+	display: ${({ disabled }) => disabled && "none"};
+`;
+
+export const RightButton = styled(LeftButton)``;
 
 export const ItemDiv = styled.div`
 	display: flex;
