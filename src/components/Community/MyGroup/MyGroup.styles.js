@@ -13,6 +13,7 @@ export const GroupDiv = styled.div`
 
 export const Div = styled.div`
 	overflow: hidden;
+	/* display: flex; */
 	/* mask-image: linear-gradient(
 		to left,
 		transparent 0,
@@ -35,10 +36,18 @@ export const Div = styled.div`
 	}
 `;
 
+export const ButtonDiv = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+`;
+
 export const LeftButton = styled.button`
-	padding: 20px;
+	width: 40px;
+	height: 40px;
+	text-align: center;
 	border-radius: 50%;
-	background-color: blue;
+	background-color: black;
 	color: #fff;
 	cursor: pointer;
 	display: ${({ disabled }) => disabled && "none"};

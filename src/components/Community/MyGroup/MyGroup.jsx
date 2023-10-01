@@ -7,6 +7,7 @@ import { inqueryUserGroup } from "@/features/user/user-service";
 import {
 	GroupDiv,
 	Div,
+	ButtonDiv,
 	LeftButton,
 	RightButton,
 	ItemDiv,
@@ -30,18 +31,12 @@ const MyGroup = () => {
 		const maxWidth = childRef?.current?.clientWidth;
 		const width = parentRef?.current?.clientWidth;
 		setWidthGap(maxWidth - width);
-		if (currentWidth > maxWidth) {
-			setDisableNextButton(true);
-		} else {
-			setCurrentWidth((nextWidth) => nextWidth + 200);
-		}
+		setCurrentWidth((nextWidth) => nextWidth + 200);
 	};
 
 	const handlePrevButton = () => {
 		if (currentWidth > 0) {
 			setCurrentWidth((prevWidth) => prevWidth - 200);
-		} else {
-			setDisablePrevButton(true);
 		}
 	};
 
@@ -49,13 +44,30 @@ const MyGroup = () => {
 		dispatch(inqueryUserGroup());
 	}, []);
 
+	useEffect(() => {
+		if (currentWidth > widthGap) {
+			setDisableNextButton(true);
+		} else {
+			setDisableNextButton(false);
+		}
+		if (currentWidth > 0) {
+			setDisablePrevButton(false);
+		} else {
+			setDisablePrevButton(true);
+		}
+	}, [currentWidth]);
+
 	return (
 		<GroupDiv>
 			<h3>내 그룹</h3>
 			<Div ref={parentRef}>
-				<LeftButton onClick={handlePrevButton} disabled={disablePrevButton}>
-					레프트버튼
-				</LeftButton>
+				{!disablePrevButton && (
+					<ButtonDiv>
+						<LeftButton onClick={handlePrevButton} disabled={disablePrevButton}>
+							버튼
+						</LeftButton>
+					</ButtonDiv>
+				)}
 				<ul
 					style={{
 						transform:
@@ -78,9 +90,16 @@ const MyGroup = () => {
 						))}
 					</li>
 				</ul>
-				<RightButton onClick={handleNextButton} disabled={disableNextButton}>
-					라이트버튼
-				</RightButton>
+				{!disableNextButton && (
+					<ButtonDiv>
+						<RightButton
+							onClick={handleNextButton}
+							disabled={disableNextButton}
+						>
+							버튼
+						</RightButton>
+					</ButtonDiv>
+				)}
 			</Div>
 		</GroupDiv>
 	);
