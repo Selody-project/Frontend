@@ -154,17 +154,15 @@ export const updateUserPassword = createAsyncThunk(
 
 export const withdrawMembership = createAsyncThunk(
 	"user/withdrawal",
-	async (userId, thunkAPI) => {
+	async (_, thunkAPI) => {
 		try {
-			const response = await customFetch.delete(
-				`/api/auth/withdrawal/${userId}`,
-			);
+			const response = await customFetch.delete(`/api/auth/withdrawal`);
 
-			if (response.status === 204) {
-				return response.data;
+			if (response.status !== 204) {
+				throw response.data;
 			}
 
-			throw response.data;
+			return response.data;
 		} catch (error) {
 			return thunkAPI.rejectWithValue(error.message);
 		}
