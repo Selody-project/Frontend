@@ -27,9 +27,7 @@ const MyGroupFeed = () => {
 		useState(null);
 
 	const handleOption = (num) =>
-		optionMenuOpenedFeedIndex === num
-			? setOptionMenuOpenedFeedIndex(null)
-			: setOptionMenuOpenedFeedIndex(num);
+		setOptionMenuOpenedFeedIndex((prev) => (prev === num ? null : num));
 
 	const dispatch = useDispatch();
 
@@ -39,8 +37,6 @@ const MyGroupFeed = () => {
 		// dispatch(getGroupPost({ groupId: 31, postId: 3 }));
 		dispatch(getUserGroupPost(0));
 	}, []);
-
-	// console.log(userGroupPost);
 
 	return (
 		<ContainerDiv>
@@ -78,7 +74,7 @@ const MyGroupFeed = () => {
 							{/* 추후 api 연결 후 매핑 고려해볼 예정 */}
 							<IconItemDiv>
 								<HeartIcon />
-								<span>12</span>
+								<span>{post.likesCount}</span>
 							</IconItemDiv>
 							<IconItemDiv>
 								<CommentIcon />
