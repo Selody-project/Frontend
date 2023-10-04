@@ -5,7 +5,6 @@ import CrownIcon from "@/assets/icon/ic-crown.svg";
 import CommentIcon from "@/assets/icon/ic-feed-comment.svg";
 import HeartIcon from "@/assets/icon/ic-feed-heart.svg";
 import OptionThreeDotIcon from "@/assets/icon/ic-feed-option.svg";
-import ShareIcon from "@/assets/icon/ic-feed-share.svg";
 import SampleImg from "@/assets/img/feed/img-group-sample-01.jpeg";
 import { getUserGroupPost } from "@/features/post/post-service";
 import { useTimeStamp } from "@/hooks/useTimeStamp";
@@ -79,10 +78,6 @@ const MyGroupFeed = () => {
 							<IconItemDiv>
 								<CommentIcon />
 								<span>2</span>
-							</IconItemDiv>
-							<IconItemDiv>
-								<ShareIcon />
-								<span>3</span>
 							</IconItemDiv>
 						</IconDiv>
 					</BottomDiv>
