@@ -71,7 +71,7 @@ export const convertScheduleDataToFormValue = ({
 	endDateTime,
 	freq,
 	interval,
-	byweekday: byweekdayStr,
+	byweekday: byweekdayStrArray,
 	until,
 }) => {
 	const startDate = moment(startDateTime).format("YYYY-MM-DD");
@@ -80,32 +80,32 @@ export const convertScheduleDataToFormValue = ({
 	const endTime = moment(endDateTime).format("HH:mm");
 	const isAllDay = getIsAllDay(new Date(startDateTime), new Date(endDateTime));
 
-	const byweekday =
-		!byweekdayStr ||
-		byweekdayStr.split(",").map((weekStr) => {
-			if (weekStr === "SU") {
-				return 0;
-			}
-			if (weekStr === "MO") {
-				return 1;
-			}
-			if (weekStr === "TU") {
-				return 2;
-			}
-			if (weekStr === "WE") {
-				return 3;
-			}
-			if (weekStr === "TH") {
-				return 4;
-			}
-			if (weekStr === "FR") {
-				return 5;
-			}
-			if (weekStr === "SA") {
-				return 6;
-			}
-			throw new Error("존재하지 않는 요일입니다.");
-		});
+	const byweekday = byweekdayStrArray
+		? byweekdayStrArray.map((weekStr) => {
+				if (weekStr === "SU") {
+					return 0;
+				}
+				if (weekStr === "MO") {
+					return 1;
+				}
+				if (weekStr === "TU") {
+					return 2;
+				}
+				if (weekStr === "WE") {
+					return 3;
+				}
+				if (weekStr === "TH") {
+					return 4;
+				}
+				if (weekStr === "FR") {
+					return 5;
+				}
+				if (weekStr === "SA") {
+					return 6;
+				}
+				throw new Error("존재하지 않는 요일입니다.");
+		  })
+		: [];
 
 	return {
 		id,
