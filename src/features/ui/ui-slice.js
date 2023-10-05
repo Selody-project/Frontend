@@ -6,6 +6,7 @@ const initialState = {
 	openedModal: null,
 	scheduleModalMode: SCHEDULE_MODAL_TYPE.CREATE,
 	scheduleModalId: null,
+	isLoading: true,
 };
 
 const uiSlice = createSlice({
@@ -41,8 +42,14 @@ const uiSlice = createSlice({
 		openCreateGroupModal: (state) => {
 			state.openedModal = UI_TYPE.CREATE_GROUP;
 		},
-		closeModal: (state) => {
-			state.openedModal = null;
+		closeModal: () => {
+			return initialState;
+		},
+		setIsLoading: (state, { payload }) => {
+			if (typeof payload !== "boolean") {
+				throw new Error("isLoading의 state는 boolean 값만 가능합니다.");
+			}
+			state.isLoading = payload;
 		},
 	},
 });
@@ -52,6 +59,7 @@ export const {
 	openScheduleEditModal,
 	openCreateGroupModal,
 	closeModal,
+	setIsLoading,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;

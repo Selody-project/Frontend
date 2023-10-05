@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
+import _ from "lodash";
 import { useTheme } from "styled-components";
 
 import BaseModal from "@/components/Base/BaseModal/BaseModal";
@@ -10,7 +11,9 @@ import {
 	createSchedule,
 	updateSchedule,
 } from "@/features/schedule/schedule-service.js";
-import { closeModal } from "@/features/ui/ui-slice";
+import { closeModal, setIsLoading } from "@/features/ui/ui-slice";
+import { getSchedule } from "@/utils/calendarUtils";
+import { convertScheduleDataToFormValue } from "@/utils/convertSchedule";
 
 import {
 	TitleInput,
@@ -80,17 +83,17 @@ const setByweekday = (weekNum, prev, checked) => {
 	}
 	return prev;
 };
-
 const ScheduleModal = () => {
 	const theme = useTheme();
 
 	const dispatch = useDispatch();
 
-	const { openedModal, scheduleModalMode, scheduleModalId } = useSelector(
-		(state) => state.ui,
-	);
-	const [formValues, setFormValues] = useState(initialFormValues);
+	const prevFormValue = useRef(initialFormValues);
+
+	const { openedModal, scheduleModalMode, scheduleModalId, isLoading } =
+		useSelector((state) => state.ui);
 	const isEditMode = scheduleModalMode === SCHEDULE_MODAL_TYPE.EDIT;
+	const [formValues, setFormValues] = useState(initialFormValues);
 	const today = convertToDateInputValue(new Date());
 
 	const handleAlldayValueChange = (event) => {
@@ -146,26 +149,38 @@ const ScheduleModal = () => {
 		return new Date(untilDate).toISOString().slice(0, 10);
 	};
 
-	const checkFieldsFilled = () =>
-		formValues.title.trim() !== "" &&
-		formValues.content.trim() !== "" &&
-		formValues.startDate !== "" &&
-		formValues.startTime !== "" &&
-		formValues.endDate !== "" &&
-		formValues.endTime !== "" &&
-		(formValues.freq === "NONE" ||
-			(formValues.until &&
-				formValues.until > calculateUntilDateString(formValues.endDate))) &&
-		(formValues.freq === "WEEKLY" ? formValues.byweekday.length > 0 : true) &&
-		(openedModal === UI_TYPE.SHARE_SCHEDULE
-			? formValues.voteEndDate !== "" && formValues.voteEndTime !== ""
-			: true);
+	const checkFormIsChanged = () => {
+		const trimmedFormValues = {
+			...formValues,
+			title: formValues.title.trim(),
+			content: formValues.content.trim(),
+		};
+		if (_.isEqual(trimmedFormValues, prevFormValue.current)) {
+			return false;
+		}
+		return (
+			formValues.title.trim() !== "" &&
+			formValues.content.trim() !== "" &&
+			formValues.startDate !== "" &&
+			formValues.startTime !== "" &&
+			formValues.endDate !== "" &&
+			formValues.endTime !== "" &&
+			(formValues.freq === "NONE" ||
+				(formValues.until &&
+					formValues.until > calculateUntilDateString(formValues.endDate))) &&
+			(formValues.freq === "WEEKLY" ? formValues.byweekday.length > 0 : true) &&
+			(openedModal === UI_TYPE.SHARE_SCHEDULE
+				? formValues.voteEndDate !== "" && formValues.voteEndTime !== ""
+				: true)
+		);
+	};
 
 	const handleSubmit = () => {
 		// 시간 유효성 검사
 		if (!checkTimeIsValid()) {
 			return;
 		}
+
 		// 일정 저장 로직
 		if (!isEditMode) {
 			dispatch(createSchedule(formValues));
@@ -179,7 +194,6 @@ const ScheduleModal = () => {
 		// 메뉴 닫기
 		dispatch(closeModal());
 	};
-
 	useEffect(() => {
 		if (!formValues.startDate) return;
 		if (getNextDateInputValue(formValues.startDate) !== formValues.endDate)
@@ -192,6 +206,22 @@ const ScheduleModal = () => {
 		formValues.startTime,
 		formValues.endTime,
 	]);
+
+	useEffect(() => {
+		if (isEditMode) {
+			getSchedule(scheduleModalId, (schedule) => {
+				dispatch(setIsLoading(false));
+				setFormValues(convertScheduleDataToFormValue(schedule));
+				prevFormValue.current = convertScheduleDataToFormValue(schedule);
+			});
+		} else {
+			dispatch(setIsLoading(false));
+		}
+
+		return () => {
+			dispatch(closeModal());
+		};
+	}, [isEditMode, scheduleModalId]);
 
 	return (
 		<BaseModal title={getModalTitle(today)} bg={theme.colors.white}>
@@ -379,7 +409,10 @@ const ScheduleModal = () => {
 						formValues.startDate && !formValues.endDate
 					}
 				>
-					<SubmitButton onClick={handleSubmit} disabled={!checkFieldsFilled()}>
+					<SubmitButton
+						onClick={handleSubmit}
+						disabled={!checkFormIsChanged() || isLoading}
+					>
 						{isEditMode ? "수정하기" : "저장하기"}
 					</SubmitButton>
 				</FooterDiv>
