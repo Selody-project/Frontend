@@ -413,6 +413,21 @@ const ScheduleModal = () => {
 		// 메뉴 닫기
 		dispatch(closeModal());
 	};
+	useEffect(() => {
+		if (isEditMode) {
+			getSchedule(scheduleModalId, (schedule) => {
+				dispatch(setIsLoading(false));
+				setFormValues(convertScheduleDataToFormValue(schedule));
+				prevFormValue.current = convertScheduleDataToFormValue(schedule);
+			});
+		} else {
+			dispatch(setIsLoading(false));
+		}
+
+		return () => {
+			dispatch(closeModal());
+		};
+	}, [isEditMode, scheduleModalId]);
 
 	useEffect(() => {
 		if (isEditMode) {
