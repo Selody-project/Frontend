@@ -59,15 +59,6 @@ const convertToDateInputValue = (date) => {
 	return date.toISOString().slice(0, 10);
 };
 
-const getModalTitle = (dateValue) => {
-	const YYYY_MM_DD = dateValue.replace(/-/g, ".");
-	const title = `${YYYY_MM_DD.slice(0, 4)}년 ${YYYY_MM_DD.slice(
-		5,
-		7,
-	)}월 ${YYYY_MM_DD.slice(8, 10)}일`;
-	return title;
-};
-
 const getNextDateInputValue = (startDate) => {
 	const prevDate = new Date(startDate);
 	const nextDate = prevDate.setDate(prevDate.getDate() + 1);
@@ -264,7 +255,10 @@ const ScheduleModal = () => {
 	}, [isEditMode, scheduleModalId]);
 
 	return (
-		<FormModal title={getModalTitle(today)} isEmpty={!checkFormIsChanged()}>
+		<FormModal
+			title={isEditMode ? "일정 수정" : "일정 추가"}
+			isEmpty={!checkFormIsChanged()}
+		>
 			<ScheduleModalLayoutDiv>
 				<TitleInput
 					id="title"
