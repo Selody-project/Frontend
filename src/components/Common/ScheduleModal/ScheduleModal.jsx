@@ -44,9 +44,9 @@ const WEEK_STRING_PAIRS = [
 const initialFormValues = {
 	title: "",
 	content: "",
-	startDate: "",
+	startDate: moment().format("YYYY-MM-DD"),
 	startTime: moment().format("HH:mm"),
-	endDate: "",
+	endDate: moment().format("YYYY-MM-DD"),
 	endTime: moment().format("HH:mm"),
 	freq: "NONE",
 	interval: "",
