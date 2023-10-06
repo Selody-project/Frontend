@@ -79,6 +79,7 @@ export const convertScheduleDataToFormValue = ({
 	const endDate = moment(endDateTime).format("YYYY-MM-DD");
 	const endTime = moment(endDateTime).format("HH:mm");
 	const isAllDay = getIsAllDay(new Date(startDateTime), new Date(endDateTime));
+	until &&= moment(until).format("YYYY-MM-DD");
 
 	const byweekday = byweekdayStrArray
 		? byweekdayStrArray.map((weekStr) => {
