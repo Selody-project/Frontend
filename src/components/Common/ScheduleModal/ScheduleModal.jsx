@@ -413,6 +413,7 @@ const ScheduleModal = () => {
 		// 메뉴 닫기
 		dispatch(closeModal());
 	};
+
 	useEffect(() => {
 		if (isEditMode) {
 			getSchedule(scheduleModalId, (schedule) => {
@@ -428,6 +429,18 @@ const ScheduleModal = () => {
 			dispatch(closeModal());
 		};
 	}, [isEditMode, scheduleModalId]);
+
+	useEffect(() => {
+		if (formValues.freq !== "WEEKLY" || !formValues.startDate) {
+			return;
+		}
+		const weekNum = new Date(formValues.startDate).getDay();
+		setFormValues((prev) => ({
+			...prev,
+			byweekday:
+				prev.byweekday.indexOf(weekNum) === -1 ? [weekNum] : prev.byweekday,
+		}));
+	}, [formValues.startDate, formValues.freq]);
 
 	useEffect(() => {
 		if (isEditMode) {
