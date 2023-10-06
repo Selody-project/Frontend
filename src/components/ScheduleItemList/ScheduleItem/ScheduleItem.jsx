@@ -19,7 +19,9 @@ import {
 const getTimeString = (start, end) => {
 	const startDate = new Date(start);
 	const endDate = new Date(end);
-	const startDateString = `${startDate.getMonth()}월 ${startDate.getDate()}일`;
+	const startDateString = `${
+		startDate.getMonth() + 1
+	}월 ${startDate.getDate()}일`;
 	const startTimeString = `${
 		startDate.getHours() < 10
 			? `0${startDate.getHours()}`
@@ -29,7 +31,7 @@ const getTimeString = (start, end) => {
 			? `0${startDate.getMinutes()}`
 			: startDate.getMinutes()
 	}`;
-	let endDateString = `${endDate.getMonth()}월 ${endDate.getDate()}일`;
+	let endDateString = `${endDate.getMonth() + 1}월 ${endDate.getDate()}일`;
 	const endTimeString = `${
 		// eslint-disable-next-line no-nested-ternary
 		!endDate.getHours() && !endDate.getMinutes()
