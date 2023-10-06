@@ -10,6 +10,7 @@ import {
 	getSchedules,
 	getSchedulesForTheWeek,
 	getTodaySchedules,
+	updateSchedule,
 } from "./schedule-service.js";
 
 const initialState = {
@@ -22,6 +23,50 @@ const initialState = {
 	week: getCurrentWeek(),
 	currentView: VIEW_TYPE.DAY_GRID_MONTH,
 	isLoading: false,
+};
+
+const checkIsTodaySchedule = (startStr, endStr) => {
+	const startDate = new Date(startStr);
+	const endDate = new Date(endStr);
+	const today = new Date();
+	today.setHours(0, 0, 0, 0);
+	// 시작 날짜가 오늘인 경우
+	if (today.toDateString() === startDate.toDateString()) {
+		return true;
+	}
+	// 시작 날짜가 오늘 이전인데, 끝나는 날짜는 오늘 시작 이후일 경우
+	if (today > startDate && endDate > today) {
+		return true;
+	}
+	return false;
+};
+
+const checkIsScheduleForTheWeek = (startStr, endStr) => {
+	const startDate = new Date(startStr);
+	const endDate = new Date(endStr);
+	const today = new Date();
+	const nextDate = new Date();
+	nextDate.setDate(nextDate.getDate() + 1);
+	nextDate.setHours(0, 0, 0, 0);
+	const startDateAfterSevenDays = new Date(
+		today.getFullYear(),
+		today.getMonth(),
+		today.getDate() + 8,
+	);
+	// 시작 날짜가 7일 이후인 경우
+	if (startDate >= startDateAfterSevenDays) {
+		return false;
+	}
+	// 시작 날짜가 다음날부터 7일 이전인 경우
+	if (startDate >= nextDate && startDate < startDateAfterSevenDays) {
+		return true;
+	}
+	// 시작 날짜가 오늘까지인 일정들
+	// 그 중 끝나는 일정이 다음날 이상인 경우
+	if (endDate >= nextDate) {
+		return true;
+	}
+	return false;
 };
 
 const scheduleSlice = createSlice({
@@ -60,42 +105,36 @@ const scheduleSlice = createSlice({
 			.addCase(createSchedule.pending, (state) => {
 				state.isLoading = true;
 			})
-			.addCase(createSchedule.fulfilled, (state, { payload }) => {
-				toast.success("일정 추가에 성공하셨습니다!");
-				if (payload.recurrence) {
-					state.recSchedules.push(payload);
+			.addCase(createSchedule.fulfilled, (state, { payload: newSchedule }) => {
+				toast.success("일정이 추가되었습니다");
+				if (newSchedule.recurrence) {
+					state.recSchedules.push(newSchedule);
 				} else {
-					state.nonRecSchedules.push(payload);
+					state.nonRecSchedules.push(newSchedule);
 				}
-				const today = new Date();
-				const isToday =
-					today.toDateString() ===
-					new Date(payload.startDateTime).toDateString();
-				const lastDayAfterSevenDaysEnd = new Date(
-					today.getFullYear(),
-					today.getMonth(),
-					today.getDate() + 8,
-				);
-				const isForTheWeek =
-					!isToday &&
-					new Date(payload.startDateTime) < lastDayAfterSevenDaysEnd;
-				// eslint-disable-next-line no-nested-ternary
-				const arrayToUpdate = isToday
-					? state.todaySchedules
-					: isForTheWeek
-					? state.schedulesForTheWeek
-					: null;
-				if (arrayToUpdate) {
-					const indexToInsert = arrayToUpdate.findIndex(
-						(schedule) =>
-							new Date(schedule.startDateTime) >=
-							new Date(payload.startDateTime),
+				if (
+					checkIsTodaySchedule(
+						newSchedule.startDateTime,
+						newSchedule.endDateTime || newSchedule.until,
+					)
+				) {
+					state.todaySchedules.push(newSchedule);
+					state.todaySchedules.sort(
+						(prev, curr) =>
+							new Date(prev.startDateTime) - new Date(curr.startDateTime),
 					);
-					if (indexToInsert === -1) {
-						arrayToUpdate.push(payload);
-					} else {
-						arrayToUpdate.splice(indexToInsert, 0, payload);
-					}
+				}
+				if (
+					checkIsScheduleForTheWeek(
+						newSchedule.startDateTime,
+						newSchedule.endDateTime || newSchedule.until,
+					)
+				) {
+					state.schedulesForTheWeek.push(newSchedule);
+					state.schedulesForTheWeek.sort(
+						(prev, curr) =>
+							new Date(prev.startDateTime) - new Date(curr.startDateTime),
+					);
 				}
 				state.isLoading = false;
 			})
@@ -110,7 +149,10 @@ const scheduleSlice = createSlice({
 				state.isLoading = false;
 				state.todaySchedules = nonRecurrenceSchedule
 					.concat(recurrenceSchedule)
-					.sort((prev, curr) => prev.startDateTime > curr.startDateTime);
+					.sort(
+						(prev, curr) =>
+							new Date(prev.startDateTime) - new Date(curr.startDateTime),
+					);
 			})
 			.addCase(getTodaySchedules.rejected, (state) => {
 				state.isLoading = false;
@@ -123,7 +165,10 @@ const scheduleSlice = createSlice({
 				state.isLoading = false;
 				state.schedulesForTheWeek = nonRecurrenceSchedule
 					.concat(recurrenceSchedule)
-					.sort((prev, curr) => prev.startDateTime > curr.startDateTime);
+					.sort(
+						(prev, curr) =>
+							new Date(prev.startDateTime) - new Date(curr.startDateTime),
+					);
 			})
 			.addCase(getSchedulesForTheWeek.rejected, (state) => {
 				state.isLoading = false;
@@ -138,6 +183,77 @@ const scheduleSlice = createSlice({
 			})
 			.addCase(getSchedules.rejected, (state) => {
 				state.isLoading = false;
+			})
+			.addCase(updateSchedule.pending, (state) => {
+				toast.pending("");
+				state.isLoading = true;
+			})
+			.addCase(
+				updateSchedule.fulfilled,
+				(state, { payload: updatedSchedule }) => {
+					toast.success("일정이 수정되었습니다");
+					const indexInNonRecSchedules = state.nonRecSchedules.findIndex(
+						(schedule) => schedule.id === updatedSchedule.id,
+					);
+					const indexInRecSchedules = state.recSchedules.findIndex(
+						(schedule) => schedule.id === updatedSchedule.id,
+					);
+					const indexInTodaySchedules = state.todaySchedules.findIndex(
+						(schedule) => schedule.id === updatedSchedule.id,
+					);
+					const indexInSchedulesForTheWeek =
+						state.schedulesForTheWeek.findIndex(
+							(schedule) => schedule.id === updatedSchedule.id,
+						);
+					if (indexInNonRecSchedules !== -1) {
+						state.nonRecSchedules.splice(indexInNonRecSchedules, 1);
+					}
+					if (indexInRecSchedules !== -1) {
+						state.recSchedules.splice(indexInRecSchedules, 1);
+					}
+					if (indexInTodaySchedules !== -1) {
+						state.todaySchedules.splice(indexInTodaySchedules, 1);
+					}
+					if (indexInSchedulesForTheWeek !== -1) {
+						state.schedulesForTheWeek.splice(indexInSchedulesForTheWeek, 1);
+					}
+
+					if (updatedSchedule.recurrence) {
+						state.recSchedules.push(updatedSchedule);
+					} else {
+						state.nonRecSchedules.push(updatedSchedule);
+					}
+					// 오늘 날짜인 경우
+					if (
+						checkIsTodaySchedule(
+							updatedSchedule.startDateTime,
+							updatedSchedule.endDateTime,
+						)
+					) {
+						state.todaySchedules.push(updatedSchedule);
+						state.todaySchedules.sort(
+							(prev, curr) =>
+								new Date(prev.startDateTime) - new Date(curr.startDateTime),
+						);
+					}
+					// 일주일 내 일정인 경우(오늘 일정과 겹칠 수 있음)
+					if (
+						checkIsScheduleForTheWeek(
+							updatedSchedule.startDateTime,
+							updatedSchedule.endDateTime,
+						)
+					) {
+						state.schedulesForTheWeek.push(updatedSchedule);
+						state.schedulesForTheWeek.sort(
+							(prev, curr) =>
+								new Date(prev.startDateTime) - new Date(curr.startDateTime),
+						);
+					}
+				},
+			)
+			.addCase(updateSchedule.rejected, (state, { payload }) => {
+				state.isLoading = false;
+				toast.error(payload);
 			});
 	},
 });
