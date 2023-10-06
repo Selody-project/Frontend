@@ -83,6 +83,7 @@ const setByweekday = (weekNum, prev, checked) => {
 	}
 	return prev;
 };
+
 const ScheduleModal = () => {
 	const theme = useTheme();
 
@@ -95,6 +96,26 @@ const ScheduleModal = () => {
 	const isEditMode = scheduleModalMode === SCHEDULE_MODAL_TYPE.EDIT;
 	const [formValues, setFormValues] = useState(initialFormValues);
 	const today = convertToDateInputValue(new Date());
+
+	const handleDateValue = (event) => {
+		const {
+			target: { value, id },
+		} = event;
+		if (id === "startDate") {
+			setFormValues((prev) => ({
+				...prev,
+				startDate: value,
+				endDate: !prev.endDate || prev.endDate < value ? value : prev.endDate,
+			}));
+		} else if (id === "endDate") {
+			setFormValues((prev) => ({
+				...prev,
+				startDate:
+					!prev.startDate || prev.startDate > value ? value : prev.endDate,
+				endDate: value,
+			}));
+		}
+	};
 
 	const handleAlldayValueChange = (event) => {
 		const { checked } = event.target;
@@ -168,7 +189,12 @@ const ScheduleModal = () => {
 			(formValues.freq === "NONE" ||
 				(formValues.until &&
 					formValues.until > calculateUntilDateString(formValues.endDate))) &&
-			(formValues.freq === "WEEKLY" ? formValues.byweekday.length > 0 : true) &&
+			(formValues.freq === "WEEKLY"
+				? formValues.byweekday.length > 0 &&
+				  formValues.byweekday.indexOf(
+						new Date(formValues.startDate).getDay() !== -1,
+				  )
+				: true) &&
 			(openedModal === UI_TYPE.SHARE_SCHEDULE
 				? formValues.voteEndDate !== "" && formValues.voteEndTime !== ""
 				: true)
@@ -194,8 +220,12 @@ const ScheduleModal = () => {
 		// 메뉴 닫기
 		dispatch(closeModal());
 	};
+
 	useEffect(() => {
-		if (!formValues.startDate) return;
+		// set isAllDay
+		if (!formValues.startDate) {
+			return;
+		}
 		if (getNextDateInputValue(formValues.startDate) !== formValues.endDate)
 			setFormValues((prev) => ({ ...prev, isAllDay: false }));
 		else if (formValues.startTime !== "00:00" || formValues.endTime !== "00:00")
@@ -206,6 +236,18 @@ const ScheduleModal = () => {
 		formValues.startTime,
 		formValues.endTime,
 	]);
+
+	useEffect(() => {
+		if (formValues.freq !== "WEEKLY" || !formValues.startDate) {
+			return;
+		}
+		const weekNum = new Date(formValues.startDate).getDay();
+		setFormValues((prev) => ({
+			...prev,
+			byweekday:
+				prev.byweekday.indexOf(weekNum) === -1 ? [weekNum] : prev.byweekday,
+		}));
+	}, [formValues.startDate, formValues.freq]);
 
 	useEffect(() => {
 		if (isEditMode) {
@@ -252,12 +294,7 @@ const ScheduleModal = () => {
 							type="date"
 							min={today}
 							value={formValues.startDate}
-							onChange={(e) =>
-								setFormValues((prev) => ({
-									...prev,
-									startDate: e.target.value,
-								}))
-							}
+							onChange={handleDateValue}
 						/>
 						<DateInput
 							type="time"
@@ -273,13 +310,12 @@ const ScheduleModal = () => {
 					~
 					<DateDiv>
 						<DateInput
+							id="endDate"
 							type="date"
 							disabled={!formValues.startDate}
 							min={formValues.startDate || today}
 							value={formValues.endDate}
-							onChange={(e) =>
-								setFormValues({ ...formValues, endDate: e.target.value })
-							}
+							onChange={handleDateValue}
 						/>
 						<DateInput
 							type="time"
@@ -389,11 +425,10 @@ const ScheduleModal = () => {
 												onChange={({ target: { checked } }) => {
 													setFormValues((prev) => ({
 														...prev,
-														byweekday: setByweekday(
-															index,
-															prev.byweekday,
-															checked,
-														),
+														byweekday:
+															new Date(formValues.startDate).getDay() === index
+																? prev.byweekday
+																: setByweekday(index, prev.byweekday, checked),
 													}));
 												}}
 											/>
