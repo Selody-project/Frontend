@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const ScheduleModalLayoutDiv = styled.div`
 	width: 100%;
-	max-width: 590px;
+	min-width: 590px;
 	display: flex;
 	flex-direction: column;
 	padding: 0 20px;
@@ -69,7 +69,7 @@ export const DateContainerDiv = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	margin-bottom: 24px;
+	margin-bottom: 39px;
 `;
 
 export const DateDiv = styled.div`
@@ -102,11 +102,13 @@ export const DateInput = styled.input`
 export const AllDayCheckBoxDiv = styled.div`
 	position: absolute;
 	right: 0;
-	bottom: -37px;
+	height: 15px;
+	bottom: -24px;
 	& > label {
+		height: 100%;
 		display: flex;
 		align-items: center;
-		gap: 9px;
+		gap: 4px;
 		font-size: ${({
 			theme: {
 				typography: { size },
@@ -127,7 +129,7 @@ export const RepeatContainerDiv = styled.div`
 	margin-bottom: 24px;
 	& > div:first-child {
 		display: flex;
-		gap: 24px;
+		gap: 20px;
 		& > div {
 			display: flex;
 			flex-direction: column;
