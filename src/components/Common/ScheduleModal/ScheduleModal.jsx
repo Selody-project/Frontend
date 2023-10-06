@@ -109,7 +109,7 @@ const ScheduleModal = () => {
 			setFormValues((prev) => ({
 				...prev,
 				startDate:
-					!prev.startDate || prev.startDate > value ? value : prev.endDate,
+					!prev.startDate || prev.startDate > value ? value : prev.startDate,
 				endDate: value,
 			}));
 		}
