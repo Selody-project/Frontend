@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 import _ from "lodash";
+import moment from "moment";
 
 import FormModal from "@/components/Common/Modal/FormModal/FormModal";
 import { SCHEDULE_MODAL_TYPE, UI_TYPE } from "@/constants/uiConstans";
@@ -43,10 +44,10 @@ const WEEK_STRING_PAIRS = [
 const initialFormValues = {
 	title: "",
 	content: "",
-	startDate: "", // 나중에 DateTime ISOString 형태로 변경 예정
-	startTime: "",
+	startDate: "",
+	startTime: moment().format("HH:mm"),
 	endDate: "",
-	endTime: "",
+	endTime: moment().format("HH:mm"),
 	freq: "NONE",
 	interval: "",
 	byweekday: [],
