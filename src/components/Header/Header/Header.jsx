@@ -35,22 +35,21 @@ const Header = () => {
 
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-	const closeDropdown = (e) => {
-		if (
-			!profileRef.current.contains(e.target) &&
-			!dropdownRef.current.contains(e.target)
-		) {
-			setIsDropdownOpen(false);
+	const handleDropdown = (e) => {
+		if (isDropdownOpen) {
+			if (!dropdownRef.current.contains(e.target)) {
+				setIsDropdownOpen(false);
+			}
+		} else if (profileRef.current.contains(e.target)) {
+			setIsDropdownOpen(true);
 		}
 	};
 
 	useEffect(() => {
-		if (isDropdownOpen) {
-			window.addEventListener("click", closeDropdown);
-		}
+		window.addEventListener("click", handleDropdown);
 
 		return () => {
-			window.removeEventListener("click", closeDropdown);
+			window.removeEventListener("click", handleDropdown);
 		};
 	});
 
@@ -92,7 +91,6 @@ const Header = () => {
 					<ProfileDiv>
 						<ProfileImg
 							ref={profileRef}
-							onClick={() => setIsDropdownOpen(true)}
 							src="https://yt3.ggpht.com/ytc/AOPolaSlb8-cH_rN_lZDD1phXr7aHFpoOqMVoepaGuTm=s48-c-k-c0x00ffffff-no-rj"
 							alt="user-profile"
 						/>
