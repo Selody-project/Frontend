@@ -34,26 +34,11 @@ const authSlice = createSlice({
 			.addCase(signup.pending, (state) => {
 				state.isLoading = true;
 			})
-			.addCase(
-				signup.fulfilled,
-				(
-					state,
-					{
-						payload: { email, nickname, userId, provider, snsId, profileImage },
-					},
-				) => {
-					state.isLoading = false;
-					state.user = {
-						email,
-						nickname,
-						userId,
-						provider,
-						snsId,
-						profileImage,
-					};
-					toast.success(`환영합니다! ${state.user.nickname}님`);
-				},
-			)
+			.addCase(signup.fulfilled, (state, { payload }) => {
+				state.isLoading = false;
+				state.user = payload;
+				toast.success(`환영합니다! ${state.user.nickname}님`);
+			})
 			.addCase(signup.rejected, (state, payload) => {
 				state.isLoading = false;
 				toast.error(payload.error);
@@ -62,25 +47,10 @@ const authSlice = createSlice({
 			.addCase(login.pending, (state) => {
 				state.isLoading = true;
 			})
-			.addCase(
-				login.fulfilled,
-				(
-					state,
-					{
-						payload: { email, nickname, userId, provider, snsId, profileImage },
-					},
-				) => {
-					state.isLoading = false;
-					state.user = {
-						email,
-						nickname,
-						userId,
-						provider,
-						snsId,
-						profileImage,
-					};
-				},
-			)
+			.addCase(login.fulfilled, (state, { payload }) => {
+				state.isLoading = false;
+				state.user = payload;
+			})
 			.addCase(login.rejected, (state, { payload }) => {
 				state.isLoading = false;
 				toast.error(payload.error);

@@ -35,6 +35,7 @@ export const InfoDiv = styled.div`
 `;
 
 export const LabelH4 = styled.h4`
+	white-space: nowrap;
 	font-weight: ${({
 		theme: {
 			typography: { weight },
@@ -64,10 +65,34 @@ export const ImgSelectLabel = styled.label`
 	cursor: pointer;
 `;
 
+export const IntroductionH4 = styled(LabelH4)`
+	margin-right: 30px;
+`;
+
+export const IntroductionTextarea = styled.textarea`
+	width: 100%;
+	min-height: 60px;
+	background-color: ${({ theme }) => theme.colors.bg_01};
+	border: none;
+	padding: 12px;
+	font-size: 12px;
+	font-family: Inter;
+	font-weight: ${({
+		theme: {
+			typography: { weight },
+		},
+	}) => weight.medium};
+	resize: none;
+
+	&:focus {
+		outline: 1px solid ${({ theme: { colors } }) => colors.primary};
+	}
+`;
+
 export const ButtonWrapDiv = styled.div`
 	display: flex;
 	justify-content: flex-end;
-	margin-top: 86px;
+	margin-top: 22px;
 `;
 
 export const SaveButton = styled.button`

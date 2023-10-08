@@ -9,6 +9,8 @@ import {
 	ContainerDiv,
 	ImgSelectLabel,
 	InfoDiv,
+	IntroductionH4,
+	IntroductionTextarea,
 	LabelH4,
 	ProfileImg,
 	SaveButton,
@@ -18,23 +20,29 @@ import CustomInput from "../CustomInput/CustomInput";
 const UserInfo = () => {
 	const dispatch = useDispatch();
 	const { user } = useSelector((state) => state.auth);
-	const { nickname, email, profileImage } = user;
+	const { nickname, email, profileImage, introduction } = user;
 	const initProfileImg = profileImage ?? DefaultProfile;
 
 	const [profileObj, setProfileObj] = useState();
 	const [newProfileImg, setNewProfileImg] = useState(initProfileImg);
 	const [newNickname, setNewNickname] = useState(nickname);
 	const [newEmail, setNewEmail] = useState(email);
+	const [newIntroduction, setNewIntroduction] = useState(introduction);
 
 	const isSaveEnabled =
 		(newNickname !== nickname ||
 			newEmail !== email ||
-			newProfileImg !== initProfileImg) &&
+			newProfileImg !== initProfileImg ||
+			newIntroduction !== introduction) &&
 		newNickname.trim();
 
 	const onSave = () => {
 		const formdata = new FormData();
-		const data = { email: newEmail, nickname: newNickname.trim() };
+		const data = {
+			email: newEmail,
+			nickname: newNickname.trim(),
+			introduction: newIntroduction,
+		};
 		formdata.append("data", JSON.stringify(data));
 
 		if (newProfileImg !== initProfileImg) {
@@ -74,6 +82,13 @@ const UserInfo = () => {
 					type="email"
 					defaultValue={newEmail}
 					onChange={(e) => setNewEmail(e.target.value)}
+				/>
+			</InfoDiv>
+			<InfoDiv>
+				<IntroductionH4>소개글</IntroductionH4>
+				<IntroductionTextarea
+					defaultValue={newIntroduction}
+					onChange={(e) => setNewIntroduction(e.target.value)}
 				/>
 			</InfoDiv>
 			<ButtonWrapDiv>
