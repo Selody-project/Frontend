@@ -33,7 +33,7 @@ const MyGroupFeed = () => {
 	const userGroupPost = useSelector((state) => state.post.userGroupPost?.feed);
 
 	useEffect(() => {
-		// dispatch(getGroupPost({ groupId: 31, postId: 3 }));
+		// dispatch(getGroupPost({ groupId: 31, postId: 3 }));s
 		dispatch(getUserGroupPost(0));
 	}, []);
 

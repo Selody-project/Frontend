@@ -23,7 +23,9 @@ export const getUserGroupPost = createAsyncThunk(
 	"post/getUserGroupPost",
 	async (recordId, thunkAPI) => {
 		try {
-			const response = await customFetch.get(`/api/user/feed/${recordId}`);
+			const response = await customFetch.get(
+				`/api/user/post?last_record_id=${recordId}`,
+			);
 			if (response.status !== 200) {
 				throw response.data;
 			}
