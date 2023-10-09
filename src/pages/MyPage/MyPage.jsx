@@ -23,6 +23,8 @@ const MyPage = () => {
 
 	const groupList = useSelector((state) => state.group.groupList.groups);
 
+	const auth = useSelector((state) => state.auth.user);
+
 	useEffect(() => {
 		dispatch(getGroupList(32));
 	}, []);
@@ -33,17 +35,17 @@ const MyPage = () => {
 				<ProfileLeftDiv>
 					<img src={SampleImg} alt="sampleImg" />
 					<ProfileInfoDiv>
-						<h3>홍길동</h3>
-						<p>자신을 표현하는 간단한 소개글이 들어갑니다.</p>
+						<h3>{auth.nickname}</h3>
+						<p>{auth.introduction}</p>
 					</ProfileInfoDiv>
 				</ProfileLeftDiv>
 				<ProfileRightDiv>
 					<ProfileRightInnerDiv>
-						<h3>21</h3>
+						<h3>{auth.groupCount.toLocaleString()}</h3>
 						<h4>참여한 그룹</h4>
 					</ProfileRightInnerDiv>
 					<ProfileRightInnerDiv>
-						<h3>1,240</h3>
+						<h3>{auth.postCount.toLocaleString()}</h3>
 						<h4>작성한 피드</h4>
 					</ProfileRightInnerDiv>
 				</ProfileRightDiv>
