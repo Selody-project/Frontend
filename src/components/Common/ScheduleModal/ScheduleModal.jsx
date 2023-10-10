@@ -139,25 +139,25 @@ const ScheduleModal = () => {
 		return false;
 	};
 
-	const calculateUntilDateString = (endDateStr) => {
-		if (typeof endDateStr !== "string") {
+	const calculateUntilDateString = (startDateStr) => {
+		if (typeof startDateStr !== "string") {
 			throw Error(
-				`endDateStr은 문자열 타입이어야 합니다. 현재 값은 ${endDateStr}입니다.`,
+				`startDateStr은 문자열 타입이어야 합니다. 현재 값은 ${startDateStr}입니다.`,
 			);
 		}
-		if (endDateStr.trim() === "") {
+		if (startDateStr.trim() === "") {
 			throw Error(
-				`endDateStr은 빈 문자열이 아니어야 합니다. 현재 값은 비어있습니다.`,
+				`startDateStr은 빈 문자열이 아니어야 합니다. 현재 값은 비어있습니다.`,
 			);
 		}
-		const endDate = new Date(endDateStr);
+		const startDate = new Date(startDateStr);
 		let untilDate;
 		if (formValues.freq === "DAILY") {
-			untilDate = endDate.setDate(endDate.getDate() + 1);
+			untilDate = startDate.setDate(startDate.getDate() + 1);
 		} else if (formValues.freq === "WEEKLY") {
-			untilDate = endDate.setDate(endDate.getDate() + 7);
+			untilDate = startDate.setDate(startDate.getDate() + 7);
 		} else if (formValues.freq === "MONTHLY") {
-			untilDate = endDate.setMonth(endDate.getMonth() + 1);
+			untilDate = startDate.setMonth(startDate.getMonth() + 1);
 		}
 		return new Date(untilDate).toISOString().slice(0, 10);
 	};
@@ -180,7 +180,7 @@ const ScheduleModal = () => {
 			formValues.endTime !== "" &&
 			(formValues.freq === "NONE" ||
 				(formValues.until &&
-					formValues.until > calculateUntilDateString(formValues.endDate))) &&
+					formValues.until > calculateUntilDateString(formValues.startDate))) &&
 			(formValues.freq === "WEEKLY"
 				? formValues.byweekday.length > 0 &&
 				  formValues.byweekday.indexOf(
@@ -396,7 +396,7 @@ const ScheduleModal = () => {
 										<InputLabel>반복 종료 날짜</InputLabel>
 										<DateInput
 											type="date"
-											min={calculateUntilDateString(formValues.endDate)}
+											min={calculateUntilDateString(formValues.startDate)}
 											value={formValues.until}
 											onChange={(e) =>
 												setFormValues((prev) => ({
