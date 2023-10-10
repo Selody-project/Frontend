@@ -6,6 +6,7 @@ import { useTheme } from "styled-components";
 import DeleteScheduleIcon from "@/assets/icon/ic-delete-schedule.svg";
 import EditScheduleIcon from "@/assets/icon/ic-edit-schedule.svg";
 import { UI_TYPE } from "@/constants/uiConstans";
+import { deleteSchedule } from "@/features/schedule/schedule-service";
 import { openScheduleEditModal } from "@/features/ui/ui-slice";
 import { getIsAllDay } from "@/utils/calendarUtils";
 
@@ -60,6 +61,13 @@ const ScheduleItem = ({
 	const { colors } = useTheme();
 	const dispatch = useDispatch();
 
+	const handleDeleteSchedule = () => {
+		const ok = window.confirm("이 일정을 삭제하겠습니까?");
+		if (ok) {
+			dispatch(deleteSchedule(id));
+		}
+	};
+
 	return (
 		<ScheduleItemDiv>
 			<ColoredCircleDiv
@@ -94,7 +102,11 @@ const ScheduleItem = ({
 				>
 					<EditScheduleIcon />
 				</button>
-				<button type="button" aria-label="deleteSchedule">
+				<button
+					type="button"
+					aria-label="deleteSchedule"
+					onClick={handleDeleteSchedule}
+				>
 					<DeleteScheduleIcon />
 				</button>
 			</ScheduleItemRightButtonsDiv>
