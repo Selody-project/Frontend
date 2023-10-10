@@ -36,6 +36,20 @@ export const ScheduleItemContentDiv = styled.div`
 			typography: { weight },
 		},
 	}) => weight.medium};
+	& > div {
+		display: flex;
+		align-items: center;
+		& > .recur {
+			background-color: ${({ theme: { colors } }) => colors.primary};
+			width: 39px;
+			height: 17px;
+			line-height: 17px;
+			text-align: center;
+			border-radius: 10px;
+			color: ${({ theme: { colors } }) => colors.white};
+			font-size: 10px;
+		}
+	}
 `;
 
 export const ScheduleItemRightButtonsDiv = styled.div`
