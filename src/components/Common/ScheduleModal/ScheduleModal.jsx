@@ -189,9 +189,9 @@ const ScheduleModal = () => {
 			formValues.endDate !== "" &&
 			formValues.endTime !== "" &&
 			(formValues.freq === "NONE" ||
-				(formValues.until &&
-					formValues.until >
-						calculateUntilDateString(formValues.startDate, formValues.freq))) &&
+				!formValues.until ||
+				formValues.until >=
+					calculateUntilDateString(formValues.startDate, formValues.freq)) &&
 			(formValues.freq === "WEEKLY"
 				? formValues.byweekday.length > 0 &&
 				  formValues.byweekday.indexOf(
@@ -268,6 +268,13 @@ const ScheduleModal = () => {
 			dispatch(closeModal());
 		};
 	}, [isEditMode, scheduleModalId]);
+
+	// console.log(
+	// 	formValues.freq === "NONE",
+	// 	formValues.until !== "" &&
+	// 		formValues.until >
+	// 			calculateUntilDateString(formValues.startDate, formValues.freq),
+	// );
 
 	return (
 		<BaseModal
