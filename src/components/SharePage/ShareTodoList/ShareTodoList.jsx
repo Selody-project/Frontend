@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import ScheduleModal from "@/components/Common/ScheduleModal/ScheduleModal.jsx";
 import ScheduleItem from "@/components/ScheduleItemList/ScheduleItem/ScheduleItem.jsx";
 import { UI_TYPE } from "@/constants/uiConstans.js";
 import { createInviteLink } from "@/features/group/group-invite-service.js";
-import { getSchedules } from "@/features/schedule/schedule-service.js";
 import { openScheduleCreateModal } from "@/features/ui/ui-slice.js";
 
 import {
@@ -24,9 +23,7 @@ import {
 const ShareTodoList = () => {
 	const dispatch = useDispatch();
 	const { openedModal } = useSelector((state) => state.ui);
-	const { month, year, todaySchedules } = useSelector(
-		(state) => state.schedule,
-	);
+	const { todaySchedules } = useSelector((state) => state.schedule);
 	const { group } = useSelector((state) => state.group);
 	const { inviteCode } = useSelector((state) => state.groupInvite);
 	const [selectedTab, setSelectedTab] = useState(true);
@@ -34,10 +31,6 @@ const ShareTodoList = () => {
 	const createInviteCodeHandler = () => {
 		dispatch(createInviteLink(group.groupId));
 	};
-
-	useEffect(() => {
-		dispatch(getSchedules());
-	}, [month, year]);
 
 	return (
 		<Wrapper>

@@ -7,15 +7,14 @@ import { getCurrentWeek } from "@/utils/calendarUtils.js";
 
 import {
 	createSchedule,
-	getSchedules,
+	getSchedulesSummary,
 	getSchedulesForTheWeek,
 	getTodaySchedules,
 	updateSchedule,
 } from "./schedule-service.js";
 
 const initialState = {
-	nonRecSchedules: [],
-	recSchedules: [],
+	calendarSchedules: [],
 	todaySchedules: [],
 	schedulesForTheWeek: [],
 	month: new Date().getMonth() + 1,
@@ -107,11 +106,7 @@ const scheduleSlice = createSlice({
 			})
 			.addCase(createSchedule.fulfilled, (state, { payload: newSchedule }) => {
 				toast.success("일정이 추가되었습니다");
-				if (newSchedule.recurrence) {
-					state.recSchedules.push(newSchedule);
-				} else {
-					state.nonRecSchedules.push(newSchedule);
-				}
+				state.calendarSchedules.push(newSchedule);
 				if (
 					checkIsTodaySchedule(
 						newSchedule.startDateTime,
@@ -145,14 +140,9 @@ const scheduleSlice = createSlice({
 				state.isLoading = true;
 			})
 			.addCase(getTodaySchedules.fulfilled, (state, { payload }) => {
-				const { nonRecurrenceSchedule, recurrenceSchedule } = payload;
+				const { schedules } = payload;
 				state.isLoading = false;
-				state.todaySchedules = nonRecurrenceSchedule
-					.concat(recurrenceSchedule)
-					.sort(
-						(prev, curr) =>
-							new Date(prev.startDateTime) - new Date(curr.startDateTime),
-					);
+				state.todaySchedules = schedules;
 			})
 			.addCase(getTodaySchedules.rejected, (state) => {
 				state.isLoading = false;
@@ -161,27 +151,21 @@ const scheduleSlice = createSlice({
 				state.isLoading = true;
 			})
 			.addCase(getSchedulesForTheWeek.fulfilled, (state, { payload }) => {
-				const { nonRecurrenceSchedule, recurrenceSchedule } = payload;
+				const { schedules } = payload;
 				state.isLoading = false;
-				state.schedulesForTheWeek = nonRecurrenceSchedule
-					.concat(recurrenceSchedule)
-					.sort(
-						(prev, curr) =>
-							new Date(prev.startDateTime) - new Date(curr.startDateTime),
-					);
+				state.schedulesForTheWeek = schedules;
 			})
 			.addCase(getSchedulesForTheWeek.rejected, (state) => {
 				state.isLoading = false;
 			})
-			.addCase(getSchedules.pending, (state) => {
+			.addCase(getSchedulesSummary.pending, (state) => {
 				state.isLoading = true;
 			})
-			.addCase(getSchedules.fulfilled, (state, { payload }) => {
+			.addCase(getSchedulesSummary.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
-				state.nonRecSchedules = payload.nonRecurrenceSchedule;
-				state.recSchedules = payload.recurrenceSchedule;
+				state.calendarSchedules = payload.schedules;
 			})
-			.addCase(getSchedules.rejected, (state) => {
+			.addCase(getSchedulesSummary.rejected, (state) => {
 				state.isLoading = false;
 			})
 			.addCase(updateSchedule.pending, (state) => {
@@ -192,12 +176,10 @@ const scheduleSlice = createSlice({
 				updateSchedule.fulfilled,
 				(state, { payload: updatedSchedule }) => {
 					toast.success("일정이 수정되었습니다");
-					const indexInNonRecSchedules = state.nonRecSchedules.findIndex(
-						(schedule) => schedule.id === updatedSchedule.id,
+					state.calendarSchedules = state.calendarSchedules.filter(
+						(prev) => prev.id !== updatedSchedule.id,
 					);
-					const indexInRecSchedules = state.recSchedules.findIndex(
-						(schedule) => schedule.id === updatedSchedule.id,
-					);
+					state.calendarSchedules.push(updatedSchedule);
 					const indexInTodaySchedules = state.todaySchedules.findIndex(
 						(schedule) => schedule.id === updatedSchedule.id,
 					);
@@ -205,23 +187,11 @@ const scheduleSlice = createSlice({
 						state.schedulesForTheWeek.findIndex(
 							(schedule) => schedule.id === updatedSchedule.id,
 						);
-					if (indexInNonRecSchedules !== -1) {
-						state.nonRecSchedules.splice(indexInNonRecSchedules, 1);
-					}
-					if (indexInRecSchedules !== -1) {
-						state.recSchedules.splice(indexInRecSchedules, 1);
-					}
 					if (indexInTodaySchedules !== -1) {
 						state.todaySchedules.splice(indexInTodaySchedules, 1);
 					}
 					if (indexInSchedulesForTheWeek !== -1) {
 						state.schedulesForTheWeek.splice(indexInSchedulesForTheWeek, 1);
-					}
-
-					if (updatedSchedule.recurrence) {
-						state.recSchedules.push(updatedSchedule);
-					} else {
-						state.nonRecSchedules.push(updatedSchedule);
 					}
 					// 오늘 날짜인 경우
 					if (
