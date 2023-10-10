@@ -11,6 +11,7 @@ import {
 	getSchedulesForTheWeek,
 	getTodaySchedules,
 	updateSchedule,
+	deleteSchedule,
 } from "./schedule-service.js";
 
 const initialState = {
@@ -102,9 +103,11 @@ const scheduleSlice = createSlice({
 	extraReducers: (builder) => {
 		builder
 			.addCase(createSchedule.pending, (state) => {
+				toast.loading("업로드 중");
 				state.isLoading = true;
 			})
 			.addCase(createSchedule.fulfilled, (state, { payload: newSchedule }) => {
+				toast.dismiss();
 				toast.success("일정이 추가되었습니다");
 				state.calendarSchedules.push(newSchedule);
 				if (
@@ -169,12 +172,13 @@ const scheduleSlice = createSlice({
 				state.isLoading = false;
 			})
 			.addCase(updateSchedule.pending, (state) => {
-				toast.pending("");
+				toast.loading("수정 중");
 				state.isLoading = true;
 			})
 			.addCase(
 				updateSchedule.fulfilled,
 				(state, { payload: updatedSchedule }) => {
+					toast.dismiss();
 					toast.success("일정이 수정되었습니다");
 					state.calendarSchedules = state.calendarSchedules.filter(
 						(prev) => prev.id !== updatedSchedule.id,
@@ -224,6 +228,28 @@ const scheduleSlice = createSlice({
 			.addCase(updateSchedule.rejected, (state, { payload }) => {
 				state.isLoading = false;
 				toast.error(payload);
+			})
+			.addCase(deleteSchedule.pending, (state) => {
+				toast.loading("삭제 중");
+				state.isLoading = true;
+			})
+			.addCase(deleteSchedule.fulfilled, (state, { meta: { arg: id } }) => {
+				toast.dismiss();
+				toast.success("일정이 삭제되었습니다");
+				state.isLoading = false;
+				state.calendarSchedules = state.calendarSchedules.filter(
+					(prev) => prev.id !== id,
+				);
+				state.todaySchedules = state.todaySchedules.filter(
+					(prev) => prev.id !== id,
+				);
+				state.schedulesForTheWeek = state.schedulesForTheWeek.filter(
+					(prev) => prev.id !== id,
+				);
+			})
+			.addCase(deleteSchedule.rejected, (state, { payload }) => {
+				toast.error(payload);
+				state.isLoading = false;
 			});
 	},
 });
