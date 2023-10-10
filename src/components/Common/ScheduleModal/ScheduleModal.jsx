@@ -76,7 +76,7 @@ const setByweekday = (weekNum, prev, checked) => {
 	return prev;
 };
 
-const calculateUntilDateString = (startDateStr, freq) => {
+const calculateMinUntilDateString = (startDateStr, freq) => {
 	if (typeof startDateStr !== "string") {
 		throw Error(
 			`startDateStr은 문자열 타입이어야 합니다. 현재 값은 ${startDateStr}입니다.`,
@@ -125,7 +125,7 @@ const ScheduleModal = () => {
 				endDate: !prev.endDate || prev.endDate < value ? value : prev.endDate,
 				until:
 					prev.freq !== "NONE" && prev.until !== ""
-						? calculateUntilDateString(value, prev.freq)
+						? calculateMinUntilDateString(value, prev.freq)
 						: "",
 			}));
 		} else if (id === "endDate") {
@@ -191,7 +191,7 @@ const ScheduleModal = () => {
 			(formValues.freq === "NONE" ||
 				!formValues.until ||
 				formValues.until >=
-					calculateUntilDateString(formValues.startDate, formValues.freq)) &&
+					calculateMinUntilDateString(formValues.startDate, formValues.freq)) &&
 			(formValues.freq === "WEEKLY"
 				? formValues.byweekday.length > 0 &&
 				  formValues.byweekday.indexOf(
@@ -403,7 +403,7 @@ const ScheduleModal = () => {
 												until:
 													e.target.value === "NONE"
 														? ""
-														: calculateUntilDateString(
+														: calculateMinUntilDateString(
 																prev.startDate,
 																e.target.value,
 														  ),
@@ -429,7 +429,7 @@ const ScheduleModal = () => {
 														until:
 															e.target.value === "NO"
 																? ""
-																: calculateUntilDateString(
+																: calculateMinUntilDateString(
 																		prev.startDate,
 																		prev.freq,
 																  ),
@@ -445,7 +445,7 @@ const ScheduleModal = () => {
 												<InputLabel>반복 종료 날짜</InputLabel>
 												<DateInput
 													type="date"
-													min={calculateUntilDateString(
+													min={calculateMinUntilDateString(
 														formValues.startDate,
 														formValues.freq,
 													)}
