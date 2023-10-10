@@ -21,8 +21,7 @@ describe("schedule slice", () => {
 	beforeEach(() => {
 		store = mockStore({
 			schedule: {
-				nonRecSchedules: [],
-				recSchedules: [],
+				calendarSchedules: [],
 				todaySchedules: [],
 				schedulesForTheWeek: [],
 				month: new Date().getMonth() + 1,
@@ -42,7 +41,7 @@ describe("schedule slice", () => {
 		const mockPayload = {
 			schedule: {
 				title: "test-title",
-				details: "test-content",
+				content: "test-content",
 				startDate: "2023-05-06",
 				startTime: "09:00",
 				endDate: "2023-05-07",
