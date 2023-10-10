@@ -195,7 +195,7 @@ export const SubmitButton = styled.button`
 	display: block;
 	cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
 	background-color: ${({ disabled, theme: { colors } }) =>
-		disabled ? colors.btn_02 : colors.primary};
+		disabled ? colors.btn_02 : colors.btn_01};
 	border-radius: 5px;
 	color: white;
 	width: 132px;
