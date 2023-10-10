@@ -110,7 +110,9 @@ const ScheduleModal = () => {
 		useSelector((state) => state.ui);
 	const isEditMode = scheduleModalMode === SCHEDULE_MODAL_TYPE.EDIT;
 	const [formValues, setFormValues] = useState(initialFormValues);
-	const today = convertToDateInputValue(new Date());
+	const minStartDate = convertToDateInputValue(
+		new Date(new Date().setMonth(new Date().getMonth() - 6)),
+	);
 
 	const handleDateValue = (event) => {
 		const {
@@ -297,7 +299,7 @@ const ScheduleModal = () => {
 						<DateInput
 							id="startDate"
 							type="date"
-							min={today}
+							min={minStartDate}
 							value={formValues.startDate}
 							onChange={handleDateValue}
 						/>
@@ -318,7 +320,7 @@ const ScheduleModal = () => {
 							id="endDate"
 							type="date"
 							disabled={!formValues.startDate}
-							min={formValues.startDate || today}
+							min={formValues.endDate}
 							value={formValues.endDate}
 							onChange={handleDateValue}
 						/>
@@ -355,7 +357,7 @@ const ScheduleModal = () => {
 							<DateDiv>
 								<DateInput
 									type="date"
-									min={formValues.startDate || today}
+									min={minStartDate}
 									value={formValues.voteEndDate}
 									onChange={(e) =>
 										setFormValues({
