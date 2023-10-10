@@ -55,7 +55,7 @@ const getTimeString = (start, end) => {
 };
 
 const ScheduleItem = ({
-	schedule: { id, isGroup, title, startDateTime, endDateTime },
+	schedule: { id, isGroup, title, startDateTime, endDateTime, recurrence },
 }) => {
 	const { colors } = useTheme();
 	const dispatch = useDispatch();
@@ -66,7 +66,15 @@ const ScheduleItem = ({
 				bgColor={isGroup ? colors.sunday : colors.disabled_text}
 			/>
 			<ScheduleItemContentDiv>
-				<span>{title}</span>
+				<div>
+					<span>{title}</span>
+					{recurrence === 1 && (
+						<>
+							&nbsp;
+							<span className="recur">반복</span>
+						</>
+					)}
+				</div>
 				<span>{getTimeString(startDateTime, endDateTime)}</span>
 			</ScheduleItemContentDiv>
 			<ScheduleItemRightButtonsDiv>
