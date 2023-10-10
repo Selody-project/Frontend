@@ -463,6 +463,13 @@ const ScheduleModal = () => {
 		};
 	}, [isEditMode, scheduleModalId]);
 
+	// console.log(
+	// 	formValues.freq === "NONE",
+	// 	formValues.until !== "" &&
+	// 		formValues.until >
+	// 			calculateUntilDateString(formValues.startDate, formValues.freq),
+	// );
+
 	return (
 		<FormModal isEmpty={checkIsEmpty()}>
 			<ScheduleModalLayoutDiv>
