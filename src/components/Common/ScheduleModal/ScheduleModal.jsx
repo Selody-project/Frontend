@@ -76,6 +76,29 @@ const setByweekday = (weekNum, prev, checked) => {
 	return prev;
 };
 
+const calculateUntilDateString = (startDateStr, freq) => {
+	if (typeof startDateStr !== "string") {
+		throw Error(
+			`startDateStr은 문자열 타입이어야 합니다. 현재 값은 ${startDateStr}입니다.`,
+		);
+	}
+	if (startDateStr.trim() === "") {
+		throw Error(
+			`startDateStr은 빈 문자열이 아니어야 합니다. 현재 값은 비어있습니다.`,
+		);
+	}
+	const startDate = new Date(startDateStr);
+	let untilDate;
+	if (freq === "DAILY") {
+		untilDate = startDate.setDate(startDate.getDate() + 1);
+	} else if (freq === "WEEKLY") {
+		untilDate = startDate.setDate(startDate.getDate() + 7);
+	} else if (freq === "MONTHLY") {
+		untilDate = startDate.setMonth(startDate.getMonth() + 1);
+	}
+	return new Date(untilDate).toISOString().slice(0, 10);
+};
+
 const ScheduleModal = () => {
 	const theme = useTheme();
 
@@ -98,6 +121,10 @@ const ScheduleModal = () => {
 				...prev,
 				startDate: value,
 				endDate: !prev.endDate || prev.endDate < value ? value : prev.endDate,
+				until:
+					prev.freq !== "NONE" && prev.until !== ""
+						? calculateUntilDateString(value, prev.freq)
+						: "",
 			}));
 		} else if (id === "endDate") {
 			setFormValues((prev) => ({
@@ -133,33 +160,14 @@ const ScheduleModal = () => {
 			);
 			return false;
 		}
+		if (formValues.until && formValues.startDate >= formValues.until) {
+			toast.error("반복 종료 일자는 일정 시작 날짜보다 커야합니다.");
+			return false;
+		}
 		toast.error(
 			"종료 시간은 시작 시간보다 동일하거나 빠를 수 없습니다. 다시 입력해주세요.",
 		);
 		return false;
-	};
-
-	const calculateUntilDateString = (startDateStr) => {
-		if (typeof startDateStr !== "string") {
-			throw Error(
-				`startDateStr은 문자열 타입이어야 합니다. 현재 값은 ${startDateStr}입니다.`,
-			);
-		}
-		if (startDateStr.trim() === "") {
-			throw Error(
-				`startDateStr은 빈 문자열이 아니어야 합니다. 현재 값은 비어있습니다.`,
-			);
-		}
-		const startDate = new Date(startDateStr);
-		let untilDate;
-		if (formValues.freq === "DAILY") {
-			untilDate = startDate.setDate(startDate.getDate() + 1);
-		} else if (formValues.freq === "WEEKLY") {
-			untilDate = startDate.setDate(startDate.getDate() + 7);
-		} else if (formValues.freq === "MONTHLY") {
-			untilDate = startDate.setMonth(startDate.getMonth() + 1);
-		}
-		return new Date(untilDate).toISOString().slice(0, 10);
 	};
 
 	const checkFormIsChanged = () => {
@@ -180,7 +188,8 @@ const ScheduleModal = () => {
 			formValues.endTime !== "" &&
 			(formValues.freq === "NONE" ||
 				(formValues.until &&
-					formValues.until > calculateUntilDateString(formValues.startDate))) &&
+					formValues.until >
+						calculateUntilDateString(formValues.startDate, formValues.freq))) &&
 			(formValues.freq === "WEEKLY"
 				? formValues.byweekday.length > 0 &&
 				  formValues.byweekday.indexOf(
@@ -230,6 +239,7 @@ const ScheduleModal = () => {
 	]);
 
 	useEffect(() => {
+		// set byweekday
 		if (formValues.freq !== "WEEKLY" || !formValues.startDate) {
 			return;
 		}
@@ -381,7 +391,13 @@ const ScheduleModal = () => {
 											setFormValues((prev) => ({
 												...prev,
 												freq: e.target.value,
-												until: e.target.value === "NONE" ? "" : prev.until,
+												until:
+													e.target.value === "NONE"
+														? ""
+														: calculateUntilDateString(
+																prev.startDate,
+																e.target.value,
+														  ),
 											}))
 										}
 									>
@@ -392,20 +408,49 @@ const ScheduleModal = () => {
 									</StyledSelect>
 								</div>
 								{formValues.freq !== "NONE" && (
-									<div>
-										<InputLabel>반복 종료 날짜</InputLabel>
-										<DateInput
-											type="date"
-											min={calculateUntilDateString(formValues.startDate)}
-											value={formValues.until}
-											onChange={(e) =>
-												setFormValues((prev) => ({
-													...prev,
-													until: e.target.value,
-												}))
-											}
-										/>
-									</div>
+									<>
+										<div>
+											<InputLabel htmlFor="until">반복 종료</InputLabel>
+											<StyledSelect
+												id="until"
+												value={formValues.until === "" ? "NO" : "YES"}
+												onChange={(e) =>
+													setFormValues((prev) => ({
+														...prev,
+														until:
+															e.target.value === "NO"
+																? ""
+																: calculateUntilDateString(
+																		prev.startDate,
+																		prev.freq,
+																  ),
+													}))
+												}
+											>
+												<option value="NO">안 함</option>
+												<option value="YES">날짜</option>
+											</StyledSelect>
+										</div>
+										{formValues.until !== "" && (
+											<div>
+												<InputLabel>반복 종료 날짜</InputLabel>
+												<DateInput
+													type="date"
+													min={calculateUntilDateString(
+														formValues.startDate,
+														formValues.freq,
+													)}
+													value={formValues.until}
+													onChange={(e) =>
+														setFormValues((prev) => ({
+															...prev,
+															until: e.target.value,
+														}))
+													}
+												/>
+											</div>
+										)}
+									</>
 								)}
 							</div>
 							{formValues.freq === "WEEKLY" && (
