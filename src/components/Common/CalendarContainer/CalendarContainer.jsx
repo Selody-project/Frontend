@@ -11,6 +11,7 @@ import {
 } from "@/features/schedule/schedule-slice";
 import { openScheduleEditModal } from "@/features/ui/ui-slice";
 import { getCurrentWeek, getFirstDateOfWeek } from "@/utils/calendarUtils";
+import { convertByweekdayStringToNumberArray } from "@/utils/convertSchedule";
 
 import { CalendarContainerDiv } from "./CalendarContainer.styles";
 import CustomCalendar from "./CustomCalendar/CustomCalendar";
@@ -21,38 +22,34 @@ const CalendarContainer = ({ type }) => {
 
 	const calendarRef = useRef(null);
 
-	const { nonRecSchedules, recSchedules } = useSelector(
-		(state) => state.schedule,
-	);
+	const { calendarSchedules } = useSelector((state) => state.schedule);
 
 	const [selectedGroup, setSelectedGroup] = useState(null);
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [inviteInput, setInviteInput] = useState("");
 	const [invitationLink, setInvitationLink] = useState("");
 
-	const fullCalendarEvents = [...recSchedules, ...nonRecSchedules].map(
-		(schedule) => {
-			if (schedule.recurrence) {
-				return {
-					id: schedule.id,
-					userId: schedule.userId,
-					// daysOfWeek: schedule.byweekday,
-					startTime: new Date(schedule.recurrenceDateList[0].startDateTime),
-					endDateTime: new Date(schedule.recurrenceDateList[0].endDateTime),
-					startRecur: new Date(schedule.recurrenceDateList[0].startDateTime),
-					endRecur: new Date(schedule.until),
-				};
-			}
-
+	const fullCalendarEvents = calendarSchedules.map((schedule) => {
+		if (schedule.recurrence) {
 			return {
 				id: schedule.id,
 				userId: schedule.userId,
-				title: schedule.title,
-				start: new Date(schedule.startDateTime),
-				end: new Date(schedule.endDateTime),
+				daysOfWeek: convertByweekdayStringToNumberArray(schedule.byweekday),
+				startTime: new Date(schedule.startDateTime),
+				endDateTime: new Date(schedule.endDateTime),
+				startRecur: new Date(schedule.startRecur),
+				endRecur: new Date(schedule.until),
 			};
-		},
-	);
+		}
+
+		return {
+			id: schedule.id,
+			userId: schedule.userId,
+			title: schedule.title,
+			start: new Date(schedule.startDateTime),
+			end: new Date(schedule.endDateTime),
+		};
+	});
 
 	const updateDateState = (year, month, week) => {
 		dispatch(setMonth(month));

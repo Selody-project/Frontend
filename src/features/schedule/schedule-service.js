@@ -59,8 +59,8 @@ export const getSchedulesForTheWeek = createAsyncThunk(
 	},
 );
 
-export const getSchedules = createAsyncThunk(
-	"schedule/getSchedules",
+export const getSchedulesSummary = createAsyncThunk(
+	"schedule/getSchedulesSummary",
 	async ({ isGroup, groupId }, thunkAPI) => {
 		const state = thunkAPI.getState();
 		const { year, month, week, currentView } = state.schedule;
@@ -108,7 +108,6 @@ export const getSchedules = createAsyncThunk(
 			if (response.status !== 200) {
 				throw response.data;
 			}
-
 			return response.data;
 		} catch (error) {
 			if (error.response) {
