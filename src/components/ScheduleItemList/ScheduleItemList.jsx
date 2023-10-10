@@ -79,9 +79,12 @@ const ScheduleItemList = () => {
 								(schedule) => {
 									return (
 										<ScheduleItem
-											key={schedule.id}
+											key={
+												schedule.recurrence
+													? schedule.startDateTime + schedule.id
+													: schedule.id
+											}
 											schedule={schedule}
-											isGroup={schedule.isGroup}
 										/>
 									);
 								},
