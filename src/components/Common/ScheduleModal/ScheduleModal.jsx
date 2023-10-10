@@ -345,6 +345,10 @@ const ScheduleModal = () => {
 			);
 			return false;
 		}
+		if (formValues.until && formValues.startDate >= formValues.until) {
+			toast.error("반복 종료 일자는 일정 시작 날짜보다 커야합니다.");
+			return false;
+		}
 		toast.error(
 			"종료 시간은 시작 시간보다 동일하거나 빠를 수 없습니다. 다시 입력해주세요.",
 		);
@@ -431,6 +435,7 @@ const ScheduleModal = () => {
 	}, [isEditMode, scheduleModalId]);
 
 	useEffect(() => {
+		// set byweekday
 		if (formValues.freq !== "WEEKLY" || !formValues.startDate) {
 			return;
 		}
