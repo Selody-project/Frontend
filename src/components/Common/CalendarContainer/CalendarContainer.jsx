@@ -11,7 +11,6 @@ import {
 } from "@/features/schedule/schedule-slice";
 import { openScheduleEditModal } from "@/features/ui/ui-slice";
 import { getCurrentWeek, getFirstDateOfWeek } from "@/utils/calendarUtils";
-import { convertByweekdayStringToNumberArray } from "@/utils/convertSchedule";
 
 import { CalendarContainerDiv } from "./CalendarContainer.styles";
 import CustomCalendar from "./CustomCalendar/CustomCalendar";
@@ -34,7 +33,7 @@ const CalendarContainer = ({ type }) => {
 			return {
 				id: schedule.id,
 				userId: schedule.userId,
-				daysOfWeek: convertByweekdayStringToNumberArray(schedule.byweekday),
+				daysOfWeek: schedule.byweekday,
 				startTime: new Date(schedule.startDateTime),
 				endDateTime: new Date(schedule.endDateTime),
 				startRecur: new Date(schedule.startRecur),
