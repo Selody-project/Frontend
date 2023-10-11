@@ -14,6 +14,7 @@ export const convertScheduleFormValueToData = ({
 	byweekday,
 	until,
 	isAllDay,
+	interval,
 }) => {
 	const startDateTime = convertToUTC(startDate, startTime);
 	const endDateTime = isAllDay
@@ -56,7 +57,7 @@ export const convertScheduleFormValueToData = ({
 		endDateTime,
 		recurrence: Number(freq !== "NONE"),
 		freq: freq === "NONE" ? null : freq,
-		interval: freq === "NONE" ? null : 1,
+		interval,
 		byweekday,
 		until: untileDateTime,
 	};
@@ -118,7 +119,7 @@ export const convertScheduleDataToFormValue = ({
 		endDate,
 		endTime,
 		freq: freq || "NONE",
-		interval: interval || "",
+		interval,
 		byweekday,
 		until: until || "",
 		isAllDay,
