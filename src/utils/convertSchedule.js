@@ -16,6 +16,13 @@ export const convertScheduleFormValueToData = ({
 	isAllDay,
 	interval,
 }) => {
+	const todayStartDateTime = new Date();
+	const todayEndDateTime = new Date();
+	todayStartDateTime.setHours(0, 0, 0, 0);
+	todayEndDateTime.setHours(0, 0, 0, 0);
+	todayEndDateTime.setDate(todayEndDateTime.getDate() + 1);
+	const requestStartDateTime = todayStartDateTime.toISOString();
+	const requestEndDateTime = todayEndDateTime.toISOString();
 	const startDateTime = convertToUTC(startDate, startTime);
 	const endDateTime = isAllDay
 		? new Date(`${startDate}T23:59:59.999`)
@@ -51,13 +58,15 @@ export const convertScheduleFormValueToData = ({
 			: null;
 
 	return {
+		requestStartDateTime,
+		requestEndDateTime,
 		title,
 		content,
 		startDateTime,
 		endDateTime,
 		recurrence: Number(freq !== "NONE"),
-		freq: freq === "NONE" ? null : freq,
-		interval,
+		freq: freq !== "NONE" ? freq.replace("_N", "") : null,
+		interval: interval || null,
 		byweekday,
 		until: untileDateTime,
 	};
@@ -118,9 +127,9 @@ export const convertScheduleDataToFormValue = ({
 		startTime,
 		endDate,
 		endTime,
-		freq: freq || "NONE",
-		interval,
-		byweekday,
+		freq: freq ? `${freq}${interval > 1 ? "_N" : ""}` : "NONE",
+		interval: interval || "",
+		byweekday: byweekday && byweekday.length > 0 ? byweekday : [],
 		until: until || "",
 		isAllDay,
 	};
