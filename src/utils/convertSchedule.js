@@ -1,6 +1,6 @@
 import moment from "moment";
 
-import { getIsAllDay } from "@/utils/calendarUtils";
+import { checkIsAlldaySchedule } from "@/utils/calendarUtils";
 import convertToUTC from "@/utils/convertToUTC";
 
 export const convertScheduleFormValueToData = ({
@@ -25,36 +25,15 @@ export const convertScheduleFormValueToData = ({
 	const requestEndDateTime = todayEndDateTime.toISOString();
 	const startDateTime = convertToUTC(startDate, startTime);
 	const endDateTime = isAllDay
-		? new Date(`${startDate}T23:59:59.999`)
+		? new Date(`${startDate}T23:59:59.999`).toISOString()
 		: convertToUTC(endDate, endTime);
 	const untileDateTime = until ? convertToUTC(until, "00:00") : null;
+	const weekNumGap =
+		new Date(startDateTime).getDay() - new Date(startDateTime).getUTCDay();
 
 	byweekday =
 		byweekday.length > 0
-			? byweekday.map((weekNum) => {
-					if (weekNum === 0) {
-						return "SU";
-					}
-					if (weekNum === 1) {
-						return "MO";
-					}
-					if (weekNum === 2) {
-						return "TU";
-					}
-					if (weekNum === 3) {
-						return "WE";
-					}
-					if (weekNum === 4) {
-						return "TH";
-					}
-					if (weekNum === 5) {
-						return "FR";
-					}
-					if (weekNum === 6) {
-						return "SA";
-					}
-					throw new Error("존재하지 않는 요일입니다.");
-			  })
+			? byweekday.map((weekNumInHere) => weekNumInHere - weekNumGap)
 			: null;
 
 	return {
@@ -81,42 +60,22 @@ export const convertScheduleDataToFormValue = ({
 	endDateTime,
 	freq,
 	interval,
-	byweekday: byweekdayStrArray,
+	byweekday,
 	until,
 }) => {
 	const startDate = moment(startDateTime).format("YYYY-MM-DD");
 	const startTime = moment(startDateTime).format("HH:mm");
 	const endDate = moment(endDateTime).format("YYYY-MM-DD");
 	const endTime = moment(endDateTime).format("HH:mm");
-	const isAllDay = getIsAllDay(new Date(startDateTime), new Date(endDateTime));
+	const isAllDay = checkIsAlldaySchedule(startDateTime, endDateTime);
 	until &&= moment(until).format("YYYY-MM-DD");
+	const weekNumGap =
+		new Date(startDateTime).getDay() - new Date(startDateTime).getUTCDay();
 
-	const byweekday = byweekdayStrArray
-		? byweekdayStrArray.map((weekStr) => {
-				if (weekStr === "SU") {
-					return 0;
-				}
-				if (weekStr === "MO") {
-					return 1;
-				}
-				if (weekStr === "TU") {
-					return 2;
-				}
-				if (weekStr === "WE") {
-					return 3;
-				}
-				if (weekStr === "TH") {
-					return 4;
-				}
-				if (weekStr === "FR") {
-					return 5;
-				}
-				if (weekStr === "SA") {
-					return 6;
-				}
-				throw new Error("존재하지 않는 요일입니다.");
-		  })
-		: [];
+	byweekday =
+		byweekday?.length > 0
+			? byweekday.map((UTCWeekNum) => UTCWeekNum + weekNumGap)
+			: [];
 
 	return {
 		id,
@@ -129,7 +88,7 @@ export const convertScheduleDataToFormValue = ({
 		endTime,
 		freq: freq ? `${freq}${interval > 1 ? "_N" : ""}` : "NONE",
 		interval: interval || "",
-		byweekday: byweekday && byweekday.length > 0 ? byweekday : [],
+		byweekday,
 		until: until || "",
 		isAllDay,
 	};
