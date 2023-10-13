@@ -341,18 +341,11 @@ const ScheduleModal = () => {
 				return true;
 			}
 			toast.error(
-				"종료 시간은 시작 시간보다 동일하거나 빠를 수 없습니다. 다시 입력해주세요.",
+				"반복 요일은 무조건 일정 시작 날짜에 해당하는 요일을 포함해야 합니다.",
 			);
 			return false;
 		}
-		if (formValues.until && formValues.startDate >= formValues.until) {
-			toast.error("반복 종료 일자는 일정 시작 날짜보다 커야합니다.");
-			return false;
-		}
-		toast.error(
-			"종료 시간은 시작 시간보다 동일하거나 빠를 수 없습니다. 다시 입력해주세요.",
-		);
-		return false;
+		return true;
 	};
 	// validate byweekday
 	const checkByweekdayIsValid = () => {
@@ -436,7 +429,10 @@ const ScheduleModal = () => {
 
 	useEffect(() => {
 		// set byweekday
-		if (formValues.freq !== "WEEKLY" || !formValues.startDate) {
+		if (
+			!(formValues.freq === "WEEKLY" || formValues.freq === "WEEKLY_N") ||
+			!formValues.startDate
+		) {
 			return;
 		}
 		const weekNum = new Date(formValues.startDate).getDay();
