@@ -60,12 +60,6 @@ const convertToDateInputValue = (date) => {
 	return date.toISOString().slice(0, 10);
 };
 
-const getNextDateInputValue = (startDate) => {
-	const prevDate = new Date(startDate);
-	const nextDate = prevDate.setDate(prevDate.getDate() + 1);
-	return new Date(nextDate).toISOString().slice(0, 10);
-};
-
 const getRecurringString = (freqEndsWithN) => {
 	if (!freqEndsWithN.endsWith("N")) {
 		throw new Error("반복 텍스트는 freq가 N으로 끝나는 경우에만 return합니다");
@@ -320,10 +314,15 @@ const ScheduleModal = () => {
 		if (!formValues.startDate) {
 			return;
 		}
-		if (getNextDateInputValue(formValues.startDate) !== formValues.endDate)
+		if (
+			formValues.startDate === formValues.endDate &&
+			formValues.startTime === "00:00" &&
+			formValues.endTime === "23:59"
+		) {
+			setFormValues((prev) => ({ ...prev, isAllDay: true }));
+		} else {
 			setFormValues((prev) => ({ ...prev, isAllDay: false }));
-		else if (formValues.startTime !== "00:00" || formValues.endTime !== "00:00")
-			setFormValues((prev) => ({ ...prev, isAllDay: false }));
+		}
 	}, [
 		formValues.startDate,
 		formValues.endDate,
