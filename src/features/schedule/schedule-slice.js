@@ -73,14 +73,15 @@ const scheduleSlice = createSlice({
 					toast.success("일정이 추가되었습니다");
 					state.calendarSchedules.push(scheduleSummary);
 					if (todaySchedules.length > 0) {
-						state.todaySchedules.concat(todaySchedules);
+						state.todaySchedules = state.todaySchedules.concat(todaySchedules);
 						state.todaySchedules.sort(
 							(prev, curr) =>
 								new Date(prev.startDateTime) - new Date(curr.startDateTime),
 						);
 					}
 					if (schedulesForTheWeek.length > 0) {
-						state.schedulesForTheWeek.concat(schedulesForTheWeek);
+						state.schedulesForTheWeek =
+							state.schedulesForTheWeek.concat(schedulesForTheWeek);
 						state.schedulesForTheWeek.sort(
 							(prev, curr) =>
 								new Date(prev.startDateTime) - new Date(curr.startDateTime),
@@ -144,26 +145,23 @@ const scheduleSlice = createSlice({
 					state.calendarSchedules = state.calendarSchedules.filter(
 						(prev) => prev.id !== scheduleSummary.id,
 					);
-					state.calendarSchedules.push(scheduleSummary);
-					const indexInTodaySchedules = state.todaySchedules.findIndex(
-						(schedule) => schedule.id === scheduleSummary.id,
+					state.todaySchedules = state.todaySchedules.filter(
+						(schedule) => schedule.id !== scheduleSummary.id,
 					);
 					state.schedulesForTheWeek = state.schedulesForTheWeek.filter(
 						(schedule) => schedule.id !== scheduleSummary.id,
 					);
-					if (indexInTodaySchedules !== -1) {
-						state.todaySchedules.splice(indexInTodaySchedules, 1);
-					}
 					state.calendarSchedules.push(scheduleSummary);
 					if (todaySchedules.length > 0) {
-						state.todaySchedules.concat(todaySchedules);
+						state.todaySchedules = state.todaySchedules.concat(todaySchedules);
 						state.todaySchedules.sort(
 							(prev, curr) =>
 								new Date(prev.startDateTime) - new Date(curr.startDateTime),
 						);
 					}
 					if (schedulesForTheWeek.length > 0) {
-						state.schedulesForTheWeek.concat(schedulesForTheWeek);
+						state.schedulesForTheWeek =
+							state.schedulesForTheWeek.concat(schedulesForTheWeek);
 						state.schedulesForTheWeek.sort(
 							(prev, curr) =>
 								new Date(prev.startDateTime) - new Date(curr.startDateTime),
