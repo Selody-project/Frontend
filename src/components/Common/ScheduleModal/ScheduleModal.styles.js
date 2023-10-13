@@ -124,38 +124,81 @@ export const AllDayCheckBoxDiv = styled.div`
 
 export const RepeatContainerDiv = styled.div`
 	display: flex;
-	gap: 12px;
+	gap: 20px;
 	flex-direction: column;
 	margin-bottom: 24px;
-	& > div:first-child {
+	& > div {
 		display: flex;
-		gap: 20px;
-		& > div {
+		gap: 15px;
+		&:first-child > div {
 			display: flex;
 			flex-direction: column;
+		}
+		&:last-child > .interval_N {
+			display: flex;
+			gap: 6px;
+			align-items: center;
+			& > input[type="number"] {
+				all: unset;
+				border: 1px solid ${({ theme: { colors } }) => colors.disabled_text};
+				width: 98px;
+				height: 100%;
+				padding: 8px 10px;
+				color: ${({ theme: { colors } }) => colors.disabled_text};
+				/* Chrome, Safari, Edge, Opera */
+				&::-webkit-outer-spin-button,
+				&::-webkit-inner-spin-button {
+					-webkit-appearance: none;
+					margin: 0;
+				}
+				appearance: textfield;
+			}
+			& > span {
+				color: ${({ theme: { colors } }) => colors.text_03};
+			}
 		}
 	}
 `;
 
-export const WeeklyDatePickerDiv = styled.div`
-	bottom: -100%;
+export const ByweekdayPickerDiv = styled.div`
+	padding: 0 10px;
 	display: flex;
 	justify-content: space-between;
 	width: 196px;
-	font-size: ${({
-		theme: {
-			typography: { size },
-		},
-	}) => size.s1};
+	height: 31px;
+	font-size: 10px;
 	& > label {
 		&,
-		& > input {
+		& > div > input {
 			cursor: pointer;
+		}
+		& > span,
+		& > div {
+			width: 100%;
+			height: 12px;
+		}
+		& > span {
+			text-align: center;
+			line-height: 12px;
+		}
+		& > div {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			& > input {
+				display: block;
+				margin: 0;
+				width: 9px;
+				height: 9px;
+			}
 		}
 		display: flex;
 		flex-direction: column;
+		gap: 7px;
 		align-items: center;
+		width: 12px;
 		accent-color: ${({ theme: { colors } }) => colors.primary};
+		color: ${({ theme: { colors } }) => colors.disabled_text};
 		&:first-child {
 			color: ${({ theme: { colors } }) => colors.sunday};
 		}
