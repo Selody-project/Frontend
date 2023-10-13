@@ -8,7 +8,7 @@ import EditScheduleIcon from "@/assets/icon/ic-edit-schedule.svg";
 import { UI_TYPE } from "@/constants/uiConstans";
 import { deleteSchedule } from "@/features/schedule/schedule-service";
 import { openScheduleEditModal } from "@/features/ui/ui-slice";
-import { getIsAllDay } from "@/utils/calendarUtils";
+import { checkIsAlldaySchedule } from "@/utils/calendarUtils";
 
 import {
 	ColoredCircleDiv,
@@ -47,7 +47,7 @@ const getTimeString = (start, end) => {
 	}`;
 
 	const isOnlyToday = startDate.toDateString() === endDate.toDateString();
-	if (isOnlyToday || getIsAllDay(startDate, endDate)) {
+	if (isOnlyToday || checkIsAlldaySchedule(start, end)) {
 		endDateString = null;
 	}
 	return `${startDateString} ${startTimeString} ~ ${

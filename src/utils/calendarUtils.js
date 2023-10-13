@@ -1,4 +1,7 @@
+import moment from "moment";
+
 import customFetch from "@/components/Base/BaseAxios";
+import convertToUTC from "@/utils/convertToUTC";
 
 // 리스트(주마다 보기)로 진행했을 떄 보여줄 첫 일요일을 계산합니다.
 export const getFirstDateOfWeek = (year, month, week) => {
@@ -20,15 +23,21 @@ export const getCurrentWeek = () => {
 	return currentWeekNum;
 };
 
-export const getIsAllDay = (startDate, endDate) => {
-	if (!(startDate instanceof Date) || !(endDate instanceof Date)) {
-		throw new Error("startDate와 endDate는 모두 Date 객체여야 합니다.");
+export const checkIsAlldaySchedule = (startDateTime, endDateTime) => {
+	if (
+		!(typeof startDateTime === "string") ||
+		!(typeof endDateTime === "string")
+	) {
+		throw new Error("getIsAllDay의 인자는 string 타입이어야 합니다.");
 	}
+	const gap = new Date(endDateTime) - new Date(startDateTime);
+	const startDateFormat = moment(startDateTime).format("YYYY-MM-DD");
+	const endDateFormat = moment(startDateTime).format("YYYY-MM-DD");
+
 	return (
-		new Date(startDate.setDate(startDate.getDate() + 1)).toDateString() ===
-			endDate.toDateString() &&
-		!endDate.getHours() &&
-		!endDate.getMinutes()
+		startDateFormat === endDateFormat &&
+		gap === 86399999 &&
+		convertToUTC(startDateFormat, "00:00") === startDateTime
 	);
 };
 
