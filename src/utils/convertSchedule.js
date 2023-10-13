@@ -33,7 +33,14 @@ export const convertScheduleFormValueToData = ({
 
 	byweekday =
 		byweekday.length > 0
-			? byweekday.map((weekNumInHere) => weekNumInHere - weekNumGap)
+			? byweekday.map((weekNumInHere) =>
+					// eslint-disable-next-line no-nested-ternary
+					!weekNumGap
+						? weekNumInHere
+						: weekNumInHere - 1 < 0
+						? weekNumInHere + 6
+						: weekNumInHere - 1,
+			  )
 			: null;
 
 	return {
@@ -74,7 +81,14 @@ export const convertScheduleDataToFormValue = ({
 
 	byweekday =
 		byweekday?.length > 0
-			? byweekday.map((UTCWeekNum) => UTCWeekNum + weekNumGap)
+			? byweekday.map((UTCWeekNum) =>
+					// eslint-disable-next-line no-nested-ternary
+					!weekNumGap
+						? UTCWeekNum
+						: UTCWeekNum + 1 > 6
+						? UTCWeekNum - 6
+						: UTCWeekNum + 1,
+			  )
 			: [];
 
 	return {
