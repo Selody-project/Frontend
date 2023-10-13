@@ -174,9 +174,9 @@ const ScheduleModal = () => {
 		setFormValues((prev) => ({
 			...prev,
 			isAllDay: checked,
-			endDate: checked ? getNextDateInputValue(prev.startDate) : prev.endDate,
+			endDate: checked ? prev.startDate : prev.endDate,
 			startTime: checked ? "00:00" : prev.startTime,
-			endTime: checked ? "00:00" : prev.endTime,
+			endTime: checked ? "23:59" : prev.endTime,
 		}));
 	};
 	const handleIntervalChange = (event) => {
