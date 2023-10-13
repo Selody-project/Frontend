@@ -28,7 +28,7 @@ import {
 	StyledSelect,
 	RepeatContainerDiv,
 	AllDayCheckBoxDiv,
-	WeeklyDatePickerDiv,
+	ByweekdayPickerDiv,
 } from "./ScheduleModal.styles";
 
 const WEEK_STRING_PAIRS = [
@@ -65,6 +65,22 @@ const getNextDateInputValue = (startDate) => {
 	return new Date(nextDate).toISOString().slice(0, 10);
 };
 
+const getRecurringString = (freqEndsWithN) => {
+	if (!freqEndsWithN.endsWith("N")) {
+		throw new Error("반복 텍스트는 freq가 N으로 끝나는 경우에만 return합니다");
+	}
+	if (freqEndsWithN.startsWith("DAILY")) {
+		return "일";
+	}
+	if (freqEndsWithN.startsWith("WEEKLY")) {
+		return "주";
+	}
+	if (freqEndsWithN.startsWith("MONTHLY")) {
+		return "개월";
+	}
+	return "년";
+};
+
 const setByweekday = (weekNum, prev, checked) => {
 	if (!checked) {
 		return prev.filter((num) => num !== weekNum);
@@ -75,25 +91,41 @@ const setByweekday = (weekNum, prev, checked) => {
 	return prev;
 };
 
-const calculateMinUntilDateString = (startDateStr, freq) => {
+const calculateMinUntilDateString = (
+	startDateStr,
+	freq,
+	intervalValue,
+	isInfinite = false,
+) => {
+	const interval = Math.floor(
+		Number(intervalValue) > 0 ? Number(intervalValue) : 1,
+	);
 	if (typeof startDateStr !== "string") {
-		throw Error(
+		throw new Error(
 			`startDateStr은 문자열 타입이어야 합니다. 현재 값은 ${startDateStr}입니다.`,
 		);
 	}
 	if (startDateStr.trim() === "") {
-		throw Error(
+		throw new Error(
 			`startDateStr은 빈 문자열이 아니어야 합니다. 현재 값은 비어있습니다.`,
 		);
 	}
+
+	if (freq === "NONE" || isInfinite) {
+		return "";
+	}
 	const startDate = new Date(startDateStr);
-	let untilDate;
-	if (freq === "DAILY") {
+	let untilDate = "";
+	if (freq === "DAILY" || freq === "DAILY_N") {
+		untilDate = startDate.setDate(startDate.getDate() + interval + 1);
+	} else if (freq === "WEEKLY" || freq === "WEEKLY_N") {
+		untilDate = startDate.setDate(startDate.getDate() + 7 * interval + 1);
+	} else if (freq === "MONTHLY" || freq === "MONTHLY_N") {
+		startDate.setMonth(startDate.getMonth() + interval);
 		untilDate = startDate.setDate(startDate.getDate() + 1);
-	} else if (freq === "WEEKLY") {
-		untilDate = startDate.setDate(startDate.getDate() + 7);
-	} else if (freq === "MONTHLY") {
-		untilDate = startDate.setMonth(startDate.getMonth() + 1);
+	} else if (freq === "YEARLY" || freq === "YEARLY_N") {
+		startDate.setFullYear(startDate.getFullYear() + interval);
+		untilDate = startDate.setDate(startDate.getDate() + 1);
 	}
 	return new Date(untilDate).toISOString().slice(0, 10);
 };
@@ -120,10 +152,12 @@ const ScheduleModal = () => {
 				...prev,
 				startDate: value,
 				endDate: !prev.endDate || prev.endDate < value ? value : prev.endDate,
-				until:
-					prev.freq !== "NONE" && prev.until !== ""
-						? calculateMinUntilDateString(value, prev.freq)
-						: "",
+				until: calculateMinUntilDateString(
+					value,
+					prev.freq,
+					prev.interval,
+					prev.until === "",
+				),
 			}));
 		} else if (id === "endDate") {
 			setFormValues((prev) => ({
@@ -145,6 +179,24 @@ const ScheduleModal = () => {
 			endTime: checked ? "00:00" : prev.endTime,
 		}));
 	};
+	const handleIntervalChange = (event) => {
+		const {
+			target: { value },
+		} = event;
+		if (Number.isNaN(Number(value))) {
+			return;
+		}
+		setFormValues((prev) => ({
+			...prev,
+			interval: Number(value) >= 0 ? value : 1,
+			until: calculateMinUntilDateString(
+				prev.startDate,
+				prev.freq,
+				value,
+				Boolean(!prev.until),
+			),
+		}));
+	};
 
 	const checkTimeIsValid = () => {
 		if (formValues.startDate < formValues.endDate) {
@@ -154,22 +206,64 @@ const ScheduleModal = () => {
 			if (formValues.startTime < formValues.endTime) {
 				return true;
 			}
+			toast.error("시작 시간은 종료 시간보다 빨라야 합니다.");
+			return false;
+		}
+		toast.error("종료 날짜는 시작 날짜보다 동일하거나 빠를 수 없습니다.");
+		return false;
+	};
+
+	const checkIntervalIsValid = () => {
+		if (
+			formValues.freq !== "NONE" &&
+			(!Number.isInteger(Number(formValues.interval)) ||
+				Number(formValues.interval) <= 0)
+		) {
+			toast.error("반복 간격은 0보다 큰 자연수여야 합니다");
+			return false;
+		}
+		return true;
+	};
+
+	const checkByweekdayIsValid = () => {
+		if (!formValues.freq.startsWith("WEEKLY")) return true;
+		if (
+			formValues.byweekday.indexOf(new Date(formValues.startDate).getDay()) ===
+			-1
+		) {
 			toast.error(
-				"종료 시간은 시작 시간보다 동일하거나 빠를 수 없습니다. 다시 입력해주세요.",
+				"반복 요일은 무조건 일정 시작 날짜에 해당하는 요일을 포함해야 합니다.",
 			);
 			return false;
 		}
+		return true;
+	};
+
+	const checkUntilIsValid = () => {
 		if (formValues.until && formValues.startDate >= formValues.until) {
-			toast.error("반복 종료 일자는 일정 시작 날짜보다 커야합니다.");
+			toast.error("반복 종료 일자는 일정 시작 날짜보다 커야 합니다.");
 			return false;
 		}
+		if (
+			!formValues.until ||
+			formValues.until >=
+				calculateMinUntilDateString(
+					formValues.startDate,
+					formValues.freq,
+					formValues.interval,
+				)
+		) {
+			return true;
+		}
 		toast.error(
-			"종료 시간은 시작 시간보다 동일하거나 빠를 수 없습니다. 다시 입력해주세요.",
+			`반복 종료 일자는 최소 ${formValues.interval}${getRecurringString(
+				formValues.freq,
+			)} 이후여야 합니다.`,
 		);
 		return false;
 	};
 
-	const checkFormIsChanged = () => {
+	const checkFormIsFilledOrChanged = () => {
 		const trimmedFormValues = {
 			...formValues,
 			title: formValues.title.trim(),
@@ -185,16 +279,8 @@ const ScheduleModal = () => {
 			formValues.startTime !== "" &&
 			formValues.endDate !== "" &&
 			formValues.endTime !== "" &&
-			(formValues.freq === "NONE" ||
-				!formValues.until ||
-				formValues.until >=
-					calculateMinUntilDateString(formValues.startDate, formValues.freq)) &&
-			(formValues.freq === "WEEKLY"
-				? formValues.byweekday.length > 0 &&
-				  formValues.byweekday.indexOf(
-						new Date(formValues.startDate).getDay() !== -1,
-				  )
-				: true) &&
+			(formValues.freq === "NONE" || formValues.interval > 0) &&
+			(formValues.freq === "WEEKLY" ? formValues.byweekday.length > 0 : true) &&
 			(openedModal === UI_TYPE.SHARE_SCHEDULE
 				? formValues.voteEndDate !== "" && formValues.voteEndTime !== ""
 				: true)
@@ -202,8 +288,13 @@ const ScheduleModal = () => {
 	};
 
 	const handleSubmit = () => {
-		// 시간 유효성 검사
-		if (!checkTimeIsValid()) {
+		// form 유효성 검사
+		if (
+			!checkTimeIsValid() ||
+			!checkIntervalIsValid() ||
+			!checkByweekdayIsValid() ||
+			!checkUntilIsValid()
+		) {
 			return;
 		}
 
@@ -239,7 +330,10 @@ const ScheduleModal = () => {
 
 	useEffect(() => {
 		// set byweekday
-		if (formValues.freq !== "WEEKLY" || !formValues.startDate) {
+		if (
+			!(formValues.freq === "WEEKLY" || formValues.freq === "WEEKLY_N") ||
+			!formValues.startDate
+		) {
 			return;
 		}
 		const weekNum = new Date(formValues.startDate).getDay();
@@ -276,7 +370,7 @@ const ScheduleModal = () => {
 	return (
 		<FormModal
 			title={isEditMode ? "일정 수정" : "일정 추가"}
-			isEmpty={!checkFormIsChanged()}
+			isEmpty={!checkFormIsFilledOrChanged()}
 		>
 			<ScheduleModalLayoutDiv>
 				<TitleInput
@@ -397,20 +491,25 @@ const ScheduleModal = () => {
 											setFormValues((prev) => ({
 												...prev,
 												freq: e.target.value,
-												until:
-													e.target.value === "NONE"
-														? ""
-														: calculateMinUntilDateString(
-																prev.startDate,
-																e.target.value,
-														  ),
+												interval: e.target.value !== "NONE" ? 1 : "",
+												until: calculateMinUntilDateString(
+													prev.startDate,
+													e.target.value,
+													1,
+													Boolean(!prev.until),
+												),
 											}))
 										}
 									>
 										<option value="NONE">반복 안함</option>
 										<option value="DAILY">매일</option>
+										<option value="DAILY_N">N일 간격</option>
 										<option value="WEEKLY">매주</option>
+										<option value="WEEKLY_N">N주 간격</option>
 										<option value="MONTHLY">매월</option>
+										<option value="MONTHLY_N">N개월 간격</option>
+										<option value="YEARLY">매년</option>
+										<option value="YEARLY_N">N년 간격</option>
 									</StyledSelect>
 								</div>
 								{formValues.freq !== "NONE" && (
@@ -423,13 +522,12 @@ const ScheduleModal = () => {
 												onChange={(e) =>
 													setFormValues((prev) => ({
 														...prev,
-														until:
-															e.target.value === "NO"
-																? ""
-																: calculateMinUntilDateString(
-																		prev.startDate,
-																		prev.freq,
-																  ),
+														until: calculateMinUntilDateString(
+															prev.startDate,
+															prev.freq,
+															prev.interval,
+															e.target.value === "NO",
+														),
 													}))
 												}
 											>
@@ -445,6 +543,7 @@ const ScheduleModal = () => {
 													min={calculateMinUntilDateString(
 														formValues.startDate,
 														formValues.freq,
+														formValues.interval,
 													)}
 													value={formValues.until}
 													onChange={(e) =>
@@ -459,29 +558,56 @@ const ScheduleModal = () => {
 									</>
 								)}
 							</div>
-							{formValues.freq === "WEEKLY" && (
-								<WeeklyDatePickerDiv>
-									{WEEK_STRING_PAIRS.map(([EN, KR], index) => (
-										<label key={EN} htmlFor={EN}>
-											{KR}
-											<input
-												type="checkbox"
-												id={EN}
-												checked={formValues.byweekday.indexOf(index) !== -1}
-												onChange={({ target: { checked } }) => {
-													setFormValues((prev) => ({
-														...prev,
-														byweekday:
-															new Date(formValues.startDate).getDay() === index
-																? prev.byweekday
-																: setByweekday(index, prev.byweekday, checked),
-													}));
-												}}
-											/>
-										</label>
-									))}
-								</WeeklyDatePickerDiv>
-							)}
+							<div>
+								{(formValues.freq === "WEEKLY" ||
+									formValues.freq === "WEEKLY_N") && (
+									<ByweekdayPickerDiv>
+										{WEEK_STRING_PAIRS.map(([EN, KR], index) => (
+											<label key={EN} htmlFor={EN}>
+												<span>{KR}</span>
+												<div>
+													<input
+														type="checkbox"
+														id={EN}
+														checked={formValues.byweekday.indexOf(index) !== -1}
+														onChange={({ target: { checked } }) => {
+															setFormValues((prev) => ({
+																...prev,
+																byweekday:
+																	new Date(formValues.startDate).getDay() ===
+																	index
+																		? prev.byweekday
+																		: setByweekday(
+																				index,
+																				prev.byweekday,
+																				checked,
+																		  ),
+															}));
+														}}
+													/>
+												</div>
+											</label>
+										))}
+									</ByweekdayPickerDiv>
+								)}
+								{formValues.freq.endsWith("N") && (
+									<div className="interval_N">
+										<input
+											id="interval"
+											type="number"
+											step={1}
+											min={1}
+											value={formValues.interval}
+											onChange={handleIntervalChange}
+										/>
+										<span>
+											{`${getRecurringString(
+												formValues.freq,
+											)} 간격으로 반복합니다.`}
+										</span>
+									</div>
+								)}{" "}
+							</div>
 						</RepeatContainerDiv>
 					)
 				)}
@@ -492,7 +618,7 @@ const ScheduleModal = () => {
 				>
 					<SubmitButton
 						onClick={handleSubmit}
-						disabled={!checkFormIsChanged() || isLoading}
+						disabled={!checkFormIsFilledOrChanged() || isLoading}
 					>
 						{isEditMode ? "수정하기" : "저장하기"}
 					</SubmitButton>
