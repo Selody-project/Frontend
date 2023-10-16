@@ -1,15 +1,16 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
+import LeftArrowIcon from "@/assets/icon/ic-left-arrow.svg";
+import RightArrowIcon from "@/assets/icon/ic-right-arrow.svg";
 import SampleImg from "@/assets/img/feed/img-group-sample-01.jpeg";
 import { inqueryUserGroup } from "@/features/user/user-service";
 
 import {
 	GroupDiv,
 	Div,
-	ButtonDiv,
-	LeftButton,
-	RightButton,
+	LeftButtonDiv,
+	RightButtonDiv,
 	ItemDiv,
 	CircleDiv,
 } from "./MyGroup.styles";
@@ -55,18 +56,19 @@ const MyGroup = () => {
 		} else {
 			setDisablePrevButton(true);
 		}
-	}, [currentWidth]);
+	}, [currentWidth, widthGap]);
 
 	return (
 		<GroupDiv>
 			<h3>내 그룹</h3>
 			<Div ref={parentRef}>
 				{!disablePrevButton && (
-					<ButtonDiv>
-						<LeftButton onClick={handlePrevButton} disabled={disablePrevButton}>
-							버튼
-						</LeftButton>
-					</ButtonDiv>
+					<LeftButtonDiv
+						onClick={handlePrevButton}
+						disabled={disablePrevButton}
+					>
+						<LeftArrowIcon />
+					</LeftButtonDiv>
 				)}
 				<ul
 					style={{
@@ -91,14 +93,12 @@ const MyGroup = () => {
 					</li>
 				</ul>
 				{!disableNextButton && (
-					<ButtonDiv>
-						<RightButton
-							onClick={handleNextButton}
-							disabled={disableNextButton}
-						>
-							버튼
-						</RightButton>
-					</ButtonDiv>
+					<RightButtonDiv
+						onClick={handleNextButton}
+						disabled={disableNextButton}
+					>
+						<RightArrowIcon />
+					</RightButtonDiv>
 				)}
 			</Div>
 		</GroupDiv>

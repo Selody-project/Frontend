@@ -13,14 +13,7 @@ export const GroupDiv = styled.div`
 
 export const Div = styled.div`
 	overflow: hidden;
-	/* display: flex; */
-	/* mask-image: linear-gradient(
-		to left,
-		transparent 0,
-		transparent 51px,
-		#000 77px,
-		#000 100%
-	); */
+	position: relative;
 
 	& > ul {
 		display: inline-block;
@@ -36,24 +29,18 @@ export const Div = styled.div`
 	}
 `;
 
-export const ButtonDiv = styled.div`
+export const LeftButtonDiv = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	position: absolute;
+	top: 44%;
+	z-index: 2;
 `;
 
-export const LeftButton = styled.button`
-	width: 40px;
-	height: 40px;
-	text-align: center;
-	border-radius: 50%;
-	background-color: black;
-	color: #fff;
-	cursor: pointer;
-	display: ${({ disabled }) => disabled && "none"};
+export const RightButtonDiv = styled(LeftButtonDiv)`
+	right: 0;
 `;
-
-export const RightButton = styled(LeftButton)``;
 
 export const ItemDiv = styled.div`
 	display: flex;
