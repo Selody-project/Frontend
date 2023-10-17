@@ -18,11 +18,15 @@ import {
 } from "./ScheduleItem.styles";
 
 const getTimeString = (start, end) => {
+	const isAllday = checkIsAlldaySchedule(start, end);
 	const startDate = new Date(start);
 	const endDate = new Date(end);
 	const startDateString = `${
 		startDate.getMonth() + 1
 	}월 ${startDate.getDate()}일`;
+	if (isAllday) {
+		return `${startDateString} 하루 종일`;
+	}
 	const startTimeString = `${
 		startDate.getHours() < 10
 			? `0${startDate.getHours()}`
