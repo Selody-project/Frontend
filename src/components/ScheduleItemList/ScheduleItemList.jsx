@@ -59,8 +59,12 @@ const ScheduleItemList = () => {
 				<TodoBody>
 					<TodoBodyHeader>
 						<div>
-							<TodoH2>오늘 일정</TodoH2>
-							<TodoH3>하루동안의 할 일을 관리합니다.</TodoH3>
+							<TodoH2>{isTodayTab ? "오늘 일정" : "예정"}</TodoH2>
+							<TodoH3>
+								{isTodayTab
+									? "하루동안의 할 일을 관리합니다."
+									: "앞으로 7일간 예정된 일정을 확인합니다."}
+							</TodoH3>
 						</div>
 						<ScheduleAddButton onClick={handleMenuOpen}>
 							<ScheduleAddIcon />
