@@ -15,7 +15,7 @@ const GroupInfo = ({ groupInfo, target }) => {
 					<h4>{info.member}명의 그룹원</h4>
 				</GroupDiv>
 			))}
-			<div ref={target} style={{ height: "30px" }} />
+			<div ref={target} />
 		</ContainerDiv>
 	);
 };

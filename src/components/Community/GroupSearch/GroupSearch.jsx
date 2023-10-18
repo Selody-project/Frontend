@@ -8,10 +8,9 @@ import useObserver from "@/hooks/useObserver";
 const GroupSearch = ({ onSearch, searchGroupList }) => {
 	const dispatch = useDispatch();
 	const groupList = useSelector((state) => state.group.groupList);
+	const lastRecordId = useSelector((state) => state.group.lastRecordId);
 
 	const [group, setGroup] = useState([]);
-
-	const lastRecordId = useSelector((state) => state.group.lastRecordId);
 
 	const target = useRef(null);
 

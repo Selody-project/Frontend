@@ -4,7 +4,8 @@ import { getGroupPost, getUserGroupPost } from "./post-service";
 
 const initialState = {
 	groupPost: null,
-	userGroupPost: null,
+	userGroupPost: [],
+	lastRecordId: 0,
 	isLoading: false,
 };
 
@@ -29,7 +30,10 @@ const postSlice = createSlice({
 			})
 			.addCase(getUserGroupPost.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
-				state.userGroupPost = payload;
+				payload.feed.forEach((postInfo) => {
+					state.userGroupPost.push(postInfo);
+				});
+				state.lastRecordId = payload.feed[payload.feed.length - 1].postId;
 			})
 			.addCase(getUserGroupPost.rejected, (state) => {
 				state.isLoading = false;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import CrownIcon from "@/assets/icon/ic-crown.svg";
@@ -7,6 +7,7 @@ import HeartIcon from "@/assets/icon/ic-feed-heart.svg";
 import OptionThreeDotIcon from "@/assets/icon/ic-feed-option.svg";
 import SampleImg from "@/assets/img/feed/img-group-sample-01.jpeg";
 import { getUserGroupPost } from "@/features/post/post-service";
+import useObserver from "@/hooks/useObserver";
 import { useTimeStamp } from "@/hooks/useTimeStamp";
 
 import {
@@ -22,20 +23,29 @@ import {
 } from "./MyGroupFeed.styles";
 
 const MyGroupFeed = () => {
+	const dispatch = useDispatch();
+
+	const userGroupPost = useSelector((state) => state.post.userGroupPost);
+	const lastRecordId = useSelector((state) => state.post.lastRecordId);
+
+	const target = useRef(null);
+
+	const isObserving = useObserver(target, { threshold: 0.3 });
+
 	const [optionMenuOpenedFeedIndex, setOptionMenuOpenedFeedIndex] =
 		useState(null);
 
 	const handleOption = (num) =>
 		setOptionMenuOpenedFeedIndex((prev) => (prev === num ? null : num));
 
-	const dispatch = useDispatch();
-
-	const userGroupPost = useSelector((state) => state.post.userGroupPost?.feed);
-
 	useEffect(() => {
-		// dispatch(getGroupPost({ groupId: 31, postId: 3 }));s
-		dispatch(getUserGroupPost(0));
-	}, []);
+		const dispatchGetUserGroupPost = async () => {
+			await dispatch(getUserGroupPost(lastRecordId));
+		};
+		if (isObserving) {
+			dispatchGetUserGroupPost();
+		}
+	}, [isObserving, dispatch]);
 
 	return (
 		<ContainerDiv>
@@ -68,9 +78,7 @@ const MyGroupFeed = () => {
 					</TopDiv>
 					<BottomDiv>
 						<p>{post.content}</p>
-
 						<IconDiv>
-							{/* 추후 api 연결 후 매핑 고려해볼 예정 */}
 							<IconItemDiv>
 								<HeartIcon />
 								<span>{post.likesCount}</span>
@@ -83,6 +91,7 @@ const MyGroupFeed = () => {
 					</BottomDiv>
 				</FeedDiv>
 			))}
+			<div ref={target} />
 		</ContainerDiv>
 	);
 };
