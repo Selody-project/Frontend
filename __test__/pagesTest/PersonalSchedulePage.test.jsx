@@ -114,4 +114,33 @@ describe("PersonalSchedulePage", () => {
 		expect(addButton).toBeNull();
 		expect(todaySchedule).not.toBeNull();
 	});
+
+	it("render '반복' text when todaySchedules contain recurring schedule", () => {
+		const titleString = "반복 일정";
+		render(<PersonalSchedulePage />, {
+			preloadedState: {
+				schedule: {
+					todaySchedules: [
+						{
+							id: 0,
+							isGroup: false,
+							title: titleString,
+							startDateTime: new Date().toISOString(),
+							endDateTime: new Date().toISOString(),
+							recurrence: 1,
+						},
+					],
+					calendarSchedules: [],
+					schedulesForTheWeek: [],
+				},
+			},
+		});
+
+		const addButton = screen.queryByRole("button", {
+			name: "아직 추가된 일정이 없습니다! 할 일을 추가하여 하루동안 할 일을 관리해보세요.",
+		});
+		const todaySchedule = screen.queryByTestId("recurreningText");
+		expect(addButton).toBeNull();
+		expect(todaySchedule).not.toBeNull();
+	});
 });
