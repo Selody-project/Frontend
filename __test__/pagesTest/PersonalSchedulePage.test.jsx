@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import React from "react";
+import ReactDOM from "react-dom";
 
 import { userEvent } from "@storybook/testing-library";
 import { screen } from "@testing-library/react";
@@ -29,7 +30,25 @@ jest.mock(
 	},
 );
 
-describe("PersonalSchedulePage", () => {
+const TITLE_TEXT = "일정 1";
+const getInitialScheduleState = (recurrence) => {
+	return {
+		todaySchedules: [
+			{
+				id: 0,
+				isGroup: false,
+				title: TITLE_TEXT,
+				startDateTime: new Date().toISOString(),
+				endDateTime: new Date().toISOString(),
+				recurrence,
+			},
+		],
+		calendarSchedules: [],
+		schedulesForTheWeek: [],
+	};
+};
+
+describe("PersonalSchedulePage without ScheduleModal", () => {
 	it("renders Header, CalendarContainer, and PersonalTodoList", () => {
 		render(<PersonalSchedulePage />);
 		expect(screen.getByTestId("calendar-container")).toBeInTheDocument();
@@ -87,52 +106,24 @@ describe("PersonalSchedulePage", () => {
 	});
 
 	it("do not render schedule add button and render one todaySchedule when todaySchedule is not empty", () => {
-		const titleString = "일정 1";
 		render(<PersonalSchedulePage />, {
 			preloadedState: {
-				schedule: {
-					todaySchedules: [
-						{
-							id: 0,
-							isGroup: false,
-							title: titleString,
-							startDateTime: new Date().toISOString(),
-							endDateTime: new Date().toISOString(),
-							recurrence: 0,
-						},
-					],
-					calendarSchedules: [],
-					schedulesForTheWeek: [],
-				},
+				schedule: getInitialScheduleState(0),
 			},
 		});
 
 		const addButton = screen.queryByRole("button", {
 			name: "아직 추가된 일정이 없습니다! 할 일을 추가하여 하루동안 할 일을 관리해보세요.",
 		});
-		const todaySchedule = screen.queryByRole("heading", { name: titleString });
+		const todaySchedule = screen.queryByRole("heading", { name: TITLE_TEXT });
 		expect(addButton).toBeNull();
 		expect(todaySchedule).not.toBeNull();
 	});
 
 	it("render '반복' text when todaySchedules contain recurring schedule", () => {
-		const titleString = "반복 일정";
 		render(<PersonalSchedulePage />, {
 			preloadedState: {
-				schedule: {
-					todaySchedules: [
-						{
-							id: 0,
-							isGroup: false,
-							title: titleString,
-							startDateTime: new Date().toISOString(),
-							endDateTime: new Date().toISOString(),
-							recurrence: 1,
-						},
-					],
-					calendarSchedules: [],
-					schedulesForTheWeek: [],
-				},
+				schedule: getInitialScheduleState(1),
 			},
 		});
 
@@ -142,5 +133,40 @@ describe("PersonalSchedulePage", () => {
 		const todaySchedule = screen.queryByTestId("recurreningText");
 		expect(addButton).toBeNull();
 		expect(todaySchedule).not.toBeNull();
+	});
+});
+
+describe("PersonalSchedulePage with Modal", () => {
+	beforeAll(() => {
+		ReactDOM.createPortal = jest.fn((element) => {
+			return element;
+		});
+		window.scrollTo = jest.fn(() => {});
+	});
+
+	it("render ScheduleModal if click '일정 추가' button", () => {
+		render(<PersonalSchedulePage />);
+
+		userEvent.click(screen.queryByRole("button", { name: "일정 추가" }));
+
+		const saveButton = screen.queryByRole("button", {
+			name: "저장하기",
+		});
+		expect(saveButton).toBeDisabled();
+	});
+
+	it("render ScheduleModal if click big add button", () => {
+		render(<PersonalSchedulePage />);
+
+		userEvent.click(
+			screen.queryByRole("button", {
+				name: "아직 추가된 일정이 없습니다! 할 일을 추가하여 하루동안 할 일을 관리해보세요.",
+			}),
+		);
+
+		const saveButton = screen.queryByRole("button", {
+			name: "저장하기",
+		});
+		expect(saveButton).toBeDisabled();
 	});
 });
