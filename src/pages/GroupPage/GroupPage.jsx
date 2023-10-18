@@ -19,7 +19,7 @@ const GroupPage = () => {
 	const dispatch = useDispatch();
 	const isPublicGroup = useSelector((state) => state.group.isPublicGroup);
 	const groupInfo = useSelector((state) => state.group.groupInfo);
-	const groupRequestMemberList = useSelector(
+	const requestMemberList = useSelector(
 		(state) => state.group.groupRequestMemberList,
 	);
 
@@ -46,7 +46,10 @@ const GroupPage = () => {
 						<UploadFeed />
 						<GroupFeed />
 					</div>
-					<GroupMember requestMemberList={groupRequestMemberList} />
+					<GroupMember
+						requestMemberList={requestMemberList}
+						groupId={param.id}
+					/>
 				</>
 			)}
 		</GroupMain>

@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import RequestCheck from "@/assets/icon/ic-request-check.svg";
 import RequestClose from "@/assets/icon/ic-request-close.svg";
@@ -16,18 +16,14 @@ import {
 } from "./GroupMember.Shared.styles";
 import { ButtonDiv, ButtonInnerDiv } from "./GroupMember.styles";
 
-const MemberRequestList = () => {
+const MemberRequestList = ({ requestMemberList, groupId }) => {
 	const dispatch = useDispatch();
 
-	const groupRequestMemberList = useSelector(
-		(state) => state.group.groupRequestMemberList,
-	);
-
-	const approveRequest = (groupId, userId) => {
+	const approveRequest = (userId) => {
 		dispatch(approveGroupJoin({ groupId, userId }));
 	};
 
-	const rejectRequest = (groupId, userId) => {
+	const rejectRequest = (userId) => {
 		dispatch(rejectGroupJoin({ groupId, userId }));
 	};
 
@@ -36,14 +32,14 @@ const MemberRequestList = () => {
 			<MemberInnerDiv>
 				<MemberH3>그룹원 신청</MemberH3>
 				<MemberUl>
-					{groupRequestMemberList.map((info) => (
+					{requestMemberList.map((info) => (
 						<li key={info.member.userId}>
 							<img src={SampleImg} alt="sampleImg" />
 							<h4>{info.member.nickname}</h4>
 							<ButtonDiv>
 								<ButtonInnerDiv
 									onClick={() => {
-										approveRequest(20, info.member.userId);
+										approveRequest(info.member.userId);
 									}}
 								>
 									<button type="button">
@@ -53,7 +49,7 @@ const MemberRequestList = () => {
 								</ButtonInnerDiv>
 								<ButtonInnerDiv
 									onClick={() => {
-										rejectRequest(20, info.member.userId);
+										rejectRequest(info.member.userId);
 									}}
 								>
 									<button type="button">

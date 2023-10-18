@@ -12,7 +12,7 @@ import { ContainerAside, MemberDiv } from "./GroupMember.styles";
 import MemberList from "./MemberList";
 import MemberRequestList from "./MemberRequestList";
 
-const GroupMember = ({ groupRequestMemberList }) => {
+const GroupMember = ({ requestMemberList, groupId }) => {
 	const { user } = useSelector((state) => state.auth);
 
 	return (
@@ -29,7 +29,12 @@ const GroupMember = ({ groupRequestMemberList }) => {
 				</MemberInnerDiv>
 			</MemberDiv>
 			<MemberDiv>
-				{groupRequestMemberList?.length === 0 || <MemberRequestList />}
+				{requestMemberList?.length === 0 || (
+					<MemberRequestList
+						requestMemberList={requestMemberList}
+						groupId={groupId}
+					/>
+				)}
 				<MemberList />
 			</MemberDiv>
 		</ContainerAside>
