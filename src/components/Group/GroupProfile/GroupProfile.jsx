@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import React from "react";
 
 import AddIcon from "@/assets/icon/ic-group-add.svg";
 import SampleImg from "@/assets/img/feed/img-group-sample-01.jpeg";
-import { inqueryUserGroup } from "@/features/user/user-service";
 
 import {
 	ContainerDiv,
@@ -14,26 +11,7 @@ import {
 	BottomDiv,
 } from "./GroupProfile.styles";
 
-const GroupProfile = ({ groupInfo }) => {
-	const param = useParams();
-	const dispatch = useDispatch();
-
-	const userGroup = useSelector((state) => state.user.userGroupList);
-
-	const [isGroupMember, setIsGroupMember] = useState(false);
-
-	useEffect(() => {
-		dispatch(inqueryUserGroup());
-	}, []);
-
-	useEffect(() => {
-		userGroup?.groupList?.forEach((info) => {
-			if (info.groupId === Number(param.id)) {
-				setIsGroupMember(true);
-			}
-		});
-	}, [userGroup]);
-
+const GroupProfile = ({ groupInfo, isGroupMember }) => {
 	return (
 		<ContainerDiv>
 			<TopDiv>

@@ -7,12 +7,9 @@ import HeartIcon from "@/assets/icon/ic-feed-heart.svg";
 import OptionThreeDotIcon from "@/assets/icon/ic-feed-option.svg";
 import ShareIcon from "@/assets/icon/ic-feed-share.svg";
 import SampleImg from "@/assets/img/feed/img-group-sample-01.jpeg";
-import { SORT_OPTION_TYPE } from "@/constants/groupFeedConstants";
 
 import {
 	FeedSection,
-	TitleDiv,
-	Button,
 	FeedArticle,
 	OptionDiv,
 	OptionMenuDiv,
@@ -43,46 +40,14 @@ const mockItems = [
 ];
 
 const GroupFeed = () => {
-	const [sortOption, setSortOption] = useState(SORT_OPTION_TYPE.LATEST);
-
 	const [optionMenuOpenedFeedIndex, setOptionMenuOpenedFeedIndex] =
 		useState(null);
-
-	// const groupInfoDetail = useSelector((state) => state.group.groupInfoDetail);
-	// const { user } = useSelector((state) => state.auth);
-
-	// console.log(groupInfoDetail?.leaderInfo.userId);
-	// console.log(user?.userId);
 
 	const handleOption = (num) =>
 		setOptionMenuOpenedFeedIndex((prev) => (prev === num ? null : num));
 
 	return (
 		<FeedSection>
-			<TitleDiv>
-				<h2>그룹 피드</h2>
-				<ul>
-					<li>
-						<Button
-							type="button"
-							onClick={() => setSortOption(SORT_OPTION_TYPE.LATEST)}
-							disabled={sortOption === SORT_OPTION_TYPE.LATEST}
-						>
-							최신순
-						</Button>
-					</li>
-					<li>
-						<Button
-							type="button"
-							onClick={() => setSortOption(SORT_OPTION_TYPE.BEST)}
-							disabled={sortOption === SORT_OPTION_TYPE.BEST}
-						>
-							좋아요순
-						</Button>
-					</li>
-				</ul>
-			</TitleDiv>
-
 			{/* 추후 Feed Landing에서 컴포넌트 가져와서 변경 */}
 			{mockItems.map((info) => (
 				<FeedArticle key={info.id}>

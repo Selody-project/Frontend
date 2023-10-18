@@ -4,7 +4,7 @@ export const UploadSection = styled.section`
 	height: 150px;
 	border-radius: 10px;
 	border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
-	margin-bottom: 36px;
+	margin-bottom: 72px;
 	padding: 24px 24px 18px 18px;
 	font-family: Inter;
 `;

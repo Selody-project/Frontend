@@ -7,31 +7,6 @@ export const FeedSection = styled.section`
 	font-family: Inter;
 `;
 
-export const TitleDiv = styled.div`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-
-	& > h2 {
-		font-size: ${({ theme: { typography } }) => typography.size.m1};
-		color: ${({ theme: { colors } }) => colors.text_01};
-		font-weight: ${({ theme: { typography } }) => typography.weight.medium};
-	}
-
-	& > ul {
-		display: flex;
-		gap: 18px;
-	}
-`;
-
-export const Button = styled.button`
-	color: ${({ disabled, theme: { colors } }) =>
-		disabled ? colors.text_01 : colors.disabled_text};
-	font-size: ${({ theme: { typography } }) => typography.size.s2};
-	font-weight: ${({ theme: { typography } }) => typography.weight.medium};
-	cursor: pointer;
-`;
-
 export const FeedArticle = styled.article`
 	display: flex;
 	flex-direction: column;
