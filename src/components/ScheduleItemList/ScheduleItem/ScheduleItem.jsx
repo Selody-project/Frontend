@@ -79,7 +79,7 @@ const ScheduleItem = ({
 			/>
 			<ScheduleItemContentDiv>
 				<div>
-					<span>{title}</span>
+					<h3>{title}</h3>
 					{recurrence === 1 && (
 						<>
 							&nbsp;
