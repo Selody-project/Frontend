@@ -77,12 +77,12 @@ describe("PersonalSchedulePage without ScheduleModal", () => {
 		const todaySchedulesTab = screen.queryByRole("button", {
 			name: "오늘 일정",
 		});
-		expect(todaySchedulesTab).toHaveStyle(
-			`background-color: ${lightTheme.colors.white}`,
-		);
-		expect(schedulesForTheWeekTab).toHaveStyle(
-			`background-color: ${lightTheme.colors.primary}`,
-		);
+		expect(todaySchedulesTab).toHaveStyle({
+			backgroundColor: lightTheme.colors.white,
+		});
+		expect(schedulesForTheWeekTab).toHaveStyle({
+			backgroundColor: lightTheme.colors.primary,
+		});
 	});
 
 	it("render todaySchedules tab when click '오늘 일정' button after click '예정' button", () => {
