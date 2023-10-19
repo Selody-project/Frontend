@@ -22,7 +22,7 @@ export const TabDiv = styled.div`
 	}
 `;
 
-export const FeddTitleDiv = styled.div`
+export const FeedTitleDiv = styled.div`
 	display: flex;
 	justify-content: space-between;
 

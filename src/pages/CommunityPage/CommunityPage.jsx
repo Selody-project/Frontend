@@ -12,7 +12,7 @@ import { searchGroup } from "@/features/group/group-service";
 import {
 	ContainerDiv,
 	FeedDiv,
-	FeddTitleDiv,
+	FeedTitleDiv,
 	SearchDiv,
 	Input,
 	SearchButton,
@@ -56,7 +56,7 @@ const CommunityPage = () => {
 		<ContainerDiv>
 			<MyGroup />
 			<FeedDiv>
-				<FeddTitleDiv>
+				<FeedTitleDiv>
 					<Tab
 						defaultOption={TAB_OPTION_TYPE.MY_GROUP_FEED}
 						tabOption={TAB_OPTION_TYPE.GROUP_SEARCH}
@@ -75,7 +75,7 @@ const CommunityPage = () => {
 							<SearchIcon />
 						</SearchButton>
 					</SearchDiv>
-				</FeddTitleDiv>
+				</FeedTitleDiv>
 
 				{tabIndex ? (
 					<GroupSearch onSearch={onSearch} searchGroupList={searchGroupList} />
