@@ -33,10 +33,22 @@ export const ProfileInfoDiv = styled.div`
 		font-size: 22px;
 		font-weight: ${({ theme: { typography } }) => typography.weight.semibold};
 	}
+`;
+
+export const ProfileIntroductionDiv = styled.div`
+	display: flex;
+	align-items: center;
+	margin-top: 18px;
 
 	& > p {
-		margin-top: 18px;
-		font-size: 14px;
+		font-size: ${({ theme: { typography } }) => typography.size.s2};
+	}
+
+	& > svg {
+		margin-left: 10px;
+		width: 14px;
+		height: 14px;
+		cursor: pointer;
 	}
 `;
 
