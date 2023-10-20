@@ -141,6 +141,7 @@ describe("open ScheduleModal in PersonalSchedulePage", () => {
 		ReactDOM.createPortal = jest.fn((element) => {
 			return element;
 		});
+		window.scrollTo = jest.fn();
 	});
 
 	it("render ScheduleModal if click '일정 추가' button", () => {
