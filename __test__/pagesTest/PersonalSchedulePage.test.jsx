@@ -7,10 +7,12 @@ import ReactDOM from "react-dom";
 import { userEvent } from "@storybook/testing-library";
 import { screen } from "@testing-library/react";
 
-import { render } from "../../jest.setup.js";
 import "@testing-library/jest-dom";
-import PersonalSchedulePage from "../../src/pages/PersonalSchedulePage/PersonalSchedulePage.jsx";
-import lightTheme from "../../src/styles/theme.js";
+import ScheduleModal from "@/components/Common/ScheduleModal/ScheduleModal.jsx";
+import PersonalSchedulePage from "@/pages/PersonalSchedulePage/PersonalSchedulePage.jsx";
+import lightTheme from "@/styles/theme.js";
+
+import { render } from "../../jest.setup.js";
 
 jest.mock("@fullcalendar/react", () => () => (
 	<div data-testid="mock-fullcalendar" />
@@ -168,5 +170,94 @@ describe("open ScheduleModal in PersonalSchedulePage", () => {
 			name: "저장하기",
 		});
 		expect(saveButton).toBeDisabled();
+	});
+});
+
+describe("display components in ScheduleModal", () => {
+	beforeAll(() => {
+		ReactDOM.createPortal = jest.fn((element) => {
+			return element;
+		});
+		window.scrollTo = jest.fn();
+	});
+
+	// beforeEach(() => {
+	// 	render(<PersonalSchedulePage />, {
+	// 		preloadedState: {
+	// 			schedule: getInitialScheduleState(0),
+	// 		},
+	// 	});
+	// 	userEvent.click(screen.queryByRole("button", { name: "일정 추가" }));
+	// });
+
+	it("change displayed components if schedule is recurring or not", () => {
+		render(<ScheduleModal />);
+
+		// initial render
+		const labelForToggleFreq = screen.queryByLabelText("반복 종료");
+		expect(labelForToggleFreq).toBeNull();
+
+		const select = screen.queryByLabelText("반복 여부");
+		// DAILY
+		userEvent.selectOptions(select, "DAILY");
+
+		expect(screen.queryByRole("option", { name: "매일" }).selected).toBe(true);
+		expect(screen.queryByLabelText("반복 종료")).not.toBeNull();
+
+		// DAILY_N
+		userEvent.selectOptions(select, "DAILY_N");
+
+		expect(screen.queryByRole("option", { name: "N일 간격" }).selected).toBe(
+			true,
+		);
+		expect(screen.queryByDisplayValue(1)).not.toBeNull();
+		expect(screen.queryByText("일 간격으로 반복합니다.")).not.toBeNull();
+
+		// WEEKLY
+		userEvent.selectOptions(select, "WEEKLY");
+
+		expect(screen.queryByRole("option", { name: "매주" }).selected).toBe(true);
+		expect(screen.queryByLabelText("반복 종료")).not.toBeNull();
+		expect(screen.queryByLabelText("월")).not.toBeNull();
+
+		// WEEKLY_N
+		userEvent.selectOptions(select, "WEEKLY_N");
+
+		expect(screen.queryByRole("option", { name: "N주 간격" }).selected).toBe(
+			true,
+		);
+		expect(screen.queryByDisplayValue(1)).not.toBeNull();
+		expect(screen.queryByText("주 간격으로 반복합니다.")).not.toBeNull();
+		expect(screen.queryByLabelText("월")).not.toBeNull();
+
+		// MONTHLY
+		userEvent.selectOptions(select, "MONTHLY");
+
+		expect(screen.queryByRole("option", { name: "매월" }).selected).toBe(true);
+		expect(screen.queryByLabelText("반복 종료")).not.toBeNull();
+
+		// MONTHLY_N
+		userEvent.selectOptions(select, "MONTHLY_N");
+
+		expect(screen.queryByRole("option", { name: "N개월 간격" }).selected).toBe(
+			true,
+		);
+		expect(screen.queryByDisplayValue(1)).not.toBeNull();
+		expect(screen.queryByText("개월 간격으로 반복합니다.")).not.toBeNull();
+
+		// YEARLY
+		userEvent.selectOptions(select, "YEARLY");
+
+		expect(screen.queryByRole("option", { name: "매년" }).selected).toBe(true);
+		expect(screen.queryByLabelText("반복 종료")).not.toBeNull();
+
+		// YEARLY_N
+		userEvent.selectOptions(select, "YEARLY_N");
+
+		expect(screen.queryByRole("option", { name: "N년 간격" }).selected).toBe(
+			true,
+		);
+		expect(screen.queryByDisplayValue(1)).not.toBeNull();
+		expect(screen.queryByText("년 간격으로 반복합니다.")).not.toBeNull();
 	});
 });
