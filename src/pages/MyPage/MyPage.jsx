@@ -7,7 +7,10 @@ import GroupInfo from "@/components/Group/GroupInfo/GroupInfo";
 import Tab from "@/components/Tab/Tab";
 import { TAB_OPTION_TITLE, TAB_OPTION_TYPE } from "@/constants/tabConstants";
 import { getGroupList } from "@/features/group/group-service";
-import { inqueryUserGroup } from "@/features/user/user-service";
+import {
+	inqueryUserGroup,
+	inqueryRequestUserGroup,
+} from "@/features/user/user-service";
 import useObserver from "@/hooks/useObserver";
 
 import {
@@ -23,9 +26,12 @@ import {
 const MyPage = () => {
 	const dispatch = useDispatch();
 
-	const userGroup = useSelector((state) => state.user.userGroupList.groupList);
+	const userGroup = useSelector((state) => state.user.userGroupList);
 	const auth = useSelector((state) => state.auth.user);
 	const groupList = useSelector((state) => state.group.groupList);
+	const userRequestGroup = useSelector(
+		(state) => state.user.userRequestGroupList,
+	);
 	const lastRecordId = useSelector((state) => state.group.lastRecordId);
 
 	const [group, setGroup] = useState([]);
@@ -40,6 +46,7 @@ const MyPage = () => {
 
 	useEffect(() => {
 		dispatch(inqueryUserGroup());
+		dispatch(inqueryRequestUserGroup());
 
 		if (auth.introduction === "") {
 			setIntroduction("소개글을 입력해주세요.");
@@ -61,6 +68,8 @@ const MyPage = () => {
 	useEffect(() => {
 		if (userGroup?.length === 0) {
 			setGroup(groupList);
+		} else if (tabIndex) {
+			setGroup(userRequestGroup);
 		} else {
 			setGroup(userGroup);
 		}
@@ -102,7 +111,7 @@ const MyPage = () => {
 				tabIndex={tabIndex}
 				setTabIndex={setTabIndex}
 			/>
-			{tabIndex ? null : <GroupInfo groupInfo={group} target={target} />}
+			<GroupInfo groupInfo={group} target={target} />
 		</ContainerMain>
 	);
 };

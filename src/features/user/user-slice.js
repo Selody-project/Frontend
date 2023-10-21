@@ -1,9 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf, isAllOf } from "@reduxjs/toolkit";
 
-import { inqueryUserGroup } from "./user-service";
+import { inqueryUserGroup, inqueryRequestUserGroup } from "./user-service";
 
 const initialState = {
 	userGroupList: [],
+	userRequestGroupList: [],
 	isUserGroupFetching: false,
 };
 
@@ -13,16 +14,29 @@ const userSlice = createSlice({
 	reducers: {},
 	extraReducers: (builder) => {
 		builder
-			.addCase(inqueryUserGroup.pending, (state) => {
-				state.isUserGroupFetching = true;
-			})
-			.addCase(inqueryUserGroup.fulfilled, (state, { payload }) => {
+			.addMatcher(
+				isAnyOf(inqueryUserGroup.pending, inqueryRequestUserGroup),
+				(state) => {
+					state.isUserGroupFetching = true;
+				},
+			)
+			.addMatcher(
+				isAnyOf(inqueryUserGroup.rejected, inqueryRequestUserGroup.rejected),
+				(state) => {
+					state.isUserGroupFetching = false;
+				},
+			)
+			.addMatcher(isAllOf(inqueryUserGroup.fulfilled), (state, { payload }) => {
 				state.isUserGroupFetching = false;
 				state.userGroupList = payload;
 			})
-			.addCase(inqueryUserGroup.rejected, (state) => {
-				state.isUserGroupFetching = false;
-			});
+			.addMatcher(
+				isAllOf(inqueryRequestUserGroup.fulfilled),
+				(state, { payload }) => {
+					state.isUserGroupFetching = false;
+					state.userRequestGroupList = payload;
+				},
+			);
 	},
 });
 
