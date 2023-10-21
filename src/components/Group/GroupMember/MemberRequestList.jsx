@@ -1,8 +1,8 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 
-import RequestCheck from "@/assets/icon/ic-request-check.svg";
-import RequestClose from "@/assets/icon/ic-request-close.svg";
+import RequestCheckIcon from "@/assets/icon/ic-request-check.svg";
+import RequestCloseIcon from "@/assets/icon/ic-request-close.svg";
 import SampleImg from "@/assets/img/feed/img-group-sample-01.jpeg";
 import {
 	approveGroupJoin,
@@ -43,7 +43,7 @@ const MemberRequestList = ({ requestMemberList, groupId }) => {
 									}}
 								>
 									<button type="button">
-										<RequestCheck />
+										<RequestCheckIcon />
 									</button>
 									<span>수락</span>
 								</ButtonInnerDiv>
@@ -53,7 +53,7 @@ const MemberRequestList = ({ requestMemberList, groupId }) => {
 									}}
 								>
 									<button type="button">
-										<RequestClose />
+										<RequestCloseIcon />
 									</button>
 									<span>거절</span>
 								</ButtonInnerDiv>
