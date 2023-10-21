@@ -35,7 +35,7 @@ const GroupMember = ({ requestMemberList, groupId }) => {
 						groupId={groupId}
 					/>
 				)}
-				<MemberList />
+				<MemberList groupId={groupId} />
 			</MemberDiv>
 		</ContainerAside>
 	);

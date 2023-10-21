@@ -12,18 +12,18 @@ import {
 } from "./GroupMember.Shared.styles";
 import { OptionMenuDiv } from "./GroupMember.styles";
 
-const MemberList = () => {
+const MemberList = ({ groupId }) => {
 	const [optionMenuOpenedMemberIndex, setOptionMenuOpenedMemberIndex] =
 		useState(null);
 
 	const dispatch = useDispatch();
 
-	const groupInfoDetail = useSelector((state) => state.group.groupInfoDetail);
+	const groupInfo = useSelector((state) => state.group.groupInfo);
 
 	const handleOption = (num) =>
 		setOptionMenuOpenedMemberIndex((prev) => (prev === num ? null : num));
 
-	const deleteMember = (groupId, userId) => {
+	const deleteMember = (userId) => {
 		dispatch(deleteGroupMember({ groupId, userId }));
 	};
 
@@ -31,7 +31,7 @@ const MemberList = () => {
 		<MemberInnerDiv>
 			<MemberH3>그룹원</MemberH3>
 			<MemberUl>
-				{groupInfoDetail?.information.memberInfo.map((info) => (
+				{groupInfo?.information.memberInfo.map((info) => (
 					<li key={info.userId}>
 						<img src={SampleImg} alt="sampleImg" />
 						<h4>{info.nickname}</h4>
@@ -44,7 +44,7 @@ const MemberList = () => {
 							{optionMenuOpenedMemberIndex === info.userId && (
 								<OptionMenuDiv
 									onClick={() => {
-										deleteMember(20, info.userId);
+										deleteMember(info.userId);
 									}}
 								>
 									내보내기
