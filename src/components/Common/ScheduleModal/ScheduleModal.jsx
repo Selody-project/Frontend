@@ -125,6 +125,10 @@ const calculateMinUntilDateString = (
 	return new Date(untilDate).toISOString().slice(0, 10);
 };
 
+const calculateIsAllDay = (startDate, startTime, endDate, endTime) => {
+	return startDate === endDate && startTime === "00:00" && endTime === "23:59";
+};
+
 const ScheduleModal = () => {
 	const theme = useTheme();
 
@@ -140,29 +144,81 @@ const ScheduleModal = () => {
 		new Date(new Date().setMonth(new Date().getMonth() - 6)),
 	);
 
-	const handleDateValue = (event) => {
+	const handleDateValueChange = (event) => {
 		const {
 			target: { value, id },
 		} = event;
 		if (id === "startDate") {
-			setFormValues((prev) => ({
-				...prev,
-				startDate: value,
-				endDate: !prev.endDate || prev.endDate < value ? value : prev.endDate,
-				until: calculateMinUntilDateString(
-					value,
-					prev.freq,
-					prev.interval,
-					prev.until === "",
-				),
-			}));
+			setFormValues((prev) => {
+				const endDate =
+					!prev.endDate || prev.endDate < value ? value : prev.endDate;
+				return {
+					...prev,
+					startDate: value,
+					endDate,
+					until: calculateMinUntilDateString(
+						value,
+						prev.freq,
+						prev.interval,
+						prev.until === "",
+					),
+					isAllDay: calculateIsAllDay(
+						value,
+						prev.startTime,
+						endDate,
+						prev.endTime,
+					),
+				};
+			});
 		} else if (id === "endDate") {
-			setFormValues((prev) => ({
-				...prev,
-				startDate:
-					!prev.startDate || prev.startDate > value ? value : prev.startDate,
-				endDate: value,
-			}));
+			setFormValues((prev) => {
+				const startDate =
+					!prev.startDate || prev.startDate > value ? value : prev.startDate;
+				return {
+					...prev,
+					startDate,
+					endDate: value,
+					isAllDay: calculateIsAllDay(
+						startDate,
+						prev.startTime,
+						value,
+						prev.endTime,
+					),
+				};
+			});
+		}
+	};
+
+	const handleTimeValueChange = (event) => {
+		const {
+			target: { value, id },
+		} = event;
+		if (id === "startTime") {
+			setFormValues((prev) => {
+				return {
+					...prev,
+					startTime: value,
+					isAllDay: calculateIsAllDay(
+						prev.startDate,
+						value,
+						prev.endDate,
+						prev.endTime,
+					),
+				};
+			});
+		} else if (id === "endTime") {
+			setFormValues((prev) => {
+				return {
+					...prev,
+					endTime: value,
+					isAllDay: calculateIsAllDay(
+						prev.startDate,
+						prev.startTime,
+						prev.endDate,
+						value,
+					),
+				};
+			});
 		}
 	};
 
@@ -176,6 +232,7 @@ const ScheduleModal = () => {
 			endTime: checked ? "23:59" : prev.endTime,
 		}));
 	};
+
 	const handleIntervalChange = (event) => {
 		const {
 			target: { value },
@@ -310,27 +367,6 @@ const ScheduleModal = () => {
 	};
 
 	useEffect(() => {
-		// set isAllDay
-		if (!formValues.startDate) {
-			return;
-		}
-		if (
-			formValues.startDate === formValues.endDate &&
-			formValues.startTime === "00:00" &&
-			formValues.endTime === "23:59"
-		) {
-			setFormValues((prev) => ({ ...prev, isAllDay: true }));
-		} else {
-			setFormValues((prev) => ({ ...prev, isAllDay: false }));
-		}
-	}, [
-		formValues.startDate,
-		formValues.endDate,
-		formValues.startTime,
-		formValues.endTime,
-	]);
-
-	useEffect(() => {
 		// set byweekday
 		if (
 			!(formValues.freq === "WEEKLY" || formValues.freq === "WEEKLY_N") ||
@@ -361,13 +397,6 @@ const ScheduleModal = () => {
 			dispatch(closeModal());
 		};
 	}, [isEditMode, scheduleModalId]);
-
-	// console.log(
-	// 	formValues.freq === "NONE",
-	// 	formValues.until !== "" &&
-	// 		formValues.until >
-	// 			calculateUntilDateString(formValues.startDate, formValues.freq),
-	// );
 
 	return (
 		<BaseModal
@@ -401,17 +430,13 @@ const ScheduleModal = () => {
 							type="date"
 							min={minStartDate}
 							value={formValues.startDate}
-							onChange={handleDateValue}
+							onChange={handleDateValueChange}
 						/>
 						<DateInput
+							id="startTime"
 							type="time"
 							value={formValues.startTime}
-							onChange={(e) => {
-								setFormValues((prev) => ({
-									...prev,
-									startTime: e.target.value,
-								}));
-							}}
+							onChange={handleTimeValueChange}
 						/>
 					</DateDiv>
 					~
@@ -422,9 +447,10 @@ const ScheduleModal = () => {
 							disabled={!formValues.startDate}
 							min={formValues.endDate}
 							value={formValues.endDate}
-							onChange={handleDateValue}
+							onChange={handleDateValueChange}
 						/>
 						<DateInput
+							id="endTime"
 							type="time"
 							min={
 								formValues.startDate === formValues.endDate
@@ -432,9 +458,7 @@ const ScheduleModal = () => {
 									: undefined
 							}
 							value={formValues.endTime}
-							onChange={(e) =>
-								setFormValues({ ...formValues, endTime: e.target.value })
-							}
+							onChange={handleTimeValueChange}
 						/>
 					</DateDiv>
 					{formValues.startDate && (
