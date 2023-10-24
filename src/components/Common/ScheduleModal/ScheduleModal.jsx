@@ -15,6 +15,9 @@ import { closeModal, setIsLoading } from "@/features/ui/ui-slice";
 import { getSchedule } from "@/utils/calendarUtils";
 import { convertScheduleDataToFormValue } from "@/utils/convertSchedule";
 
+import DateAndTime from "./DateAndTime";
+import Repeat from "./Repeat";
+import RepeatDetail, { getRecurringString } from "./RepeatDetail";
 import {
 	TitleInput,
 	DateInput,
@@ -25,21 +28,8 @@ import {
 	SubmitButton,
 	ScheduleModalLayoutDiv,
 	InputLabel,
-	StyledSelect,
 	RepeatContainerDiv,
-	AllDayCheckBoxDiv,
-	ByweekdayPickerDiv,
 } from "./ScheduleModal.styles";
-
-const WEEK_STRING_PAIRS = [
-	["SU", "일"],
-	["MO", "월"],
-	["TU", "화"],
-	["WE", "수"],
-	["TH", "목"],
-	["FR", "금"],
-	["SA", "토"],
-];
 
 const initialFormValues = {
 	title: "",
@@ -48,37 +38,11 @@ const initialFormValues = {
 	startTime: moment().format("HH:mm"),
 	endDate: moment().format("YYYY-MM-DD"),
 	endTime: moment().format("HH:mm"),
+	isAllDay: false,
 	freq: "NONE",
 	interval: "",
 	byweekday: [],
 	until: "",
-	isAllDay: false,
-};
-
-const getRecurringString = (freqEndsWithN) => {
-	if (!freqEndsWithN.endsWith("N")) {
-		throw new Error("반복 텍스트는 freq가 N으로 끝나는 경우에만 return합니다");
-	}
-	if (freqEndsWithN.startsWith("DAILY")) {
-		return "일";
-	}
-	if (freqEndsWithN.startsWith("WEEKLY")) {
-		return "주";
-	}
-	if (freqEndsWithN.startsWith("MONTHLY")) {
-		return "개월";
-	}
-	return "년";
-};
-
-const setByweekday = (weekNum, prev, checked) => {
-	if (!checked) {
-		return prev.filter((num) => num !== weekNum);
-	}
-	if (prev.indexOf(weekNum) === -1) {
-		prev.push(weekNum);
-	}
-	return prev;
 };
 
 const calculateMinUntilDateString = (
@@ -118,6 +82,16 @@ const calculateMinUntilDateString = (
 		untilDate = startDate.setDate(startDate.getDate() + 1);
 	}
 	return new Date(untilDate).toISOString().slice(0, 10);
+};
+
+const setByweekday = (weekNum, prev, checked) => {
+	if (!checked) {
+		return prev.filter((num) => num !== weekNum);
+	}
+	if (prev.indexOf(weekNum) === -1) {
+		prev.push(weekNum);
+	}
+	return prev;
 };
 
 const calculateIsAllDay = (startDate, startTime, endDate, endTime) => {
@@ -202,31 +176,27 @@ const ScheduleModal = () => {
 			target: { value, id },
 		} = event;
 		if (id === "startTime") {
-			setFormValues((prev) => {
-				return {
-					...prev,
-					startTime: value,
-					isAllDay: calculateIsAllDay(
-						prev.startDate,
-						value,
-						prev.endDate,
-						prev.endTime,
-					),
-				};
-			});
+			setFormValues((prev) => ({
+				...prev,
+				startTime: value,
+				isAllDay: calculateIsAllDay(
+					prev.startDate,
+					value,
+					prev.endDate,
+					prev.endTime,
+				),
+			}));
 		} else if (id === "endTime") {
-			setFormValues((prev) => {
-				return {
-					...prev,
-					endTime: value,
-					isAllDay: calculateIsAllDay(
-						prev.startDate,
-						prev.startTime,
-						prev.endDate,
-						value,
-					),
-				};
-			});
+			setFormValues((prev) => ({
+				...prev,
+				endTime: value,
+				isAllDay: calculateIsAllDay(
+					prev.startDate,
+					prev.startTime,
+					prev.endDate,
+					value,
+				),
+			}));
 		}
 	};
 	// handle isAllDay change
@@ -240,8 +210,26 @@ const ScheduleModal = () => {
 			endTime: checked ? "23:59" : prev.endTime,
 		}));
 	};
+	// handle freq change
+	const handleFreqValueChange = (event) => {
+		const {
+			target: { value },
+		} = event;
+		setFormValues((prev) => ({
+			...prev,
+			freq: value,
+			interval: value !== "NONE" ? 1 : "",
+			until: calculateMinUntilDateString(
+				prev.startDate,
+				value,
+				1,
+				Boolean(!prev.until),
+			),
+			byweekday: [new Date(prev.startDate).getDay()],
+		}));
+	};
 	// handle interval change
-	const handleIntervalChange = (event) => {
+	const handleIntervalValueChange = (event) => {
 		const {
 			target: { value },
 		} = event;
@@ -258,6 +246,38 @@ const ScheduleModal = () => {
 				Boolean(!prev.until),
 			),
 		}));
+	};
+	// handle byweekday change
+	const handleByweekdayValueChange = ({ target: { checked } }, weekNum) => {
+		setFormValues((prev) => ({
+			...prev,
+			byweekday:
+				new Date(prev.startDate).getDay() === weekNum
+					? prev.byweekday
+					: setByweekday(weekNum, prev.byweekday, checked),
+		}));
+	};
+	// handle until change
+	const handleUntilValueChange = (event) => {
+		const {
+			target: { value, id },
+		} = event;
+		if (id === "untilOrNot") {
+			setFormValues((prev) => ({
+				...prev,
+				until: calculateMinUntilDateString(
+					prev.startDate,
+					prev.freq,
+					prev.interval,
+					value === "NO",
+				),
+			}));
+		} else if (id === "until") {
+			setFormValues((prev) => ({
+				...prev,
+				until: value,
+			}));
+		}
 	};
 
 	// valdate when change event occurs
@@ -417,58 +437,16 @@ const ScheduleModal = () => {
 						setFormValues((prev) => ({ ...prev, content: e.target.value }))
 					}
 				/>
-				<InputLabel htmlFor="startDate">날짜 및 시간</InputLabel>
-				<DateContainerDiv>
-					<DateDiv>
-						<DateInput
-							id="startDate"
-							type="date"
-							min={minStartDate}
-							value={formValues.startDate}
-							onChange={handleDateValueChange}
-						/>
-						<DateInput
-							id="startTime"
-							type="time"
-							value={formValues.startTime}
-							onChange={handleTimeValueChange}
-						/>
-					</DateDiv>
-					~
-					<DateDiv>
-						<DateInput
-							id="endDate"
-							type="date"
-							disabled={!formValues.startDate}
-							min={formValues.endDate}
-							value={formValues.endDate}
-							onChange={handleDateValueChange}
-						/>
-						<DateInput
-							id="endTime"
-							type="time"
-							min={
-								formValues.startDate === formValues.endDate
-									? formValues.startTime
-									: undefined
-							}
-							value={formValues.endTime}
-							onChange={handleTimeValueChange}
-						/>
-					</DateDiv>
-					{formValues.startDate && (
-						<AllDayCheckBoxDiv>
-							<label>
-								<input
-									type="checkbox"
-									onChange={handleIsAllDayValueChange}
-									checked={formValues.isAllDay}
-								/>
-								하루 종일
-							</label>
-						</AllDayCheckBoxDiv>
-					)}
-				</DateContainerDiv>
+				<DateAndTime
+					startDate={formValues.startDate}
+					startTime={formValues.startTime}
+					endDate={formValues.endDate}
+					endTime={formValues.endTime}
+					isAllDay={formValues.isAllDay}
+					onDateChange={handleDateValueChange}
+					onTimeChange={handleTimeValueChange}
+					onIsAllDayChange={handleIsAllDayValueChange}
+				/>
 				{openedModal === UI_TYPE.SHARE_SCHEDULE ? (
 					<>
 						<InputLabel>일정 투표 종료일</InputLabel>
@@ -499,138 +477,30 @@ const ScheduleModal = () => {
 						</DateContainerDiv>
 					</>
 				) : (
-					formValues.startDate &&
-					formValues.endDate && (
-						<RepeatContainerDiv>
-							<div>
-								<div>
-									<InputLabel htmlFor="frequency">반복 여부</InputLabel>
-									<StyledSelect
-										id="frequency"
-										value={formValues.freq}
-										onChange={(e) =>
-											setFormValues((prev) => ({
-												...prev,
-												freq: e.target.value,
-												interval: e.target.value !== "NONE" ? 1 : "",
-												until: calculateMinUntilDateString(
-													prev.startDate,
-													e.target.value,
-													1,
-													Boolean(!prev.until),
-												),
-											}))
-										}
-									>
-										<option value="NONE">반복 안함</option>
-										<option value="DAILY">매일</option>
-										<option value="DAILY_N">N일 간격</option>
-										<option value="WEEKLY">매주</option>
-										<option value="WEEKLY_N">N주 간격</option>
-										<option value="MONTHLY">매월</option>
-										<option value="MONTHLY_N">N개월 간격</option>
-										<option value="YEARLY">매년</option>
-										<option value="YEARLY_N">N년 간격</option>
-									</StyledSelect>
-								</div>
-								{formValues.freq !== "NONE" && (
-									<>
-										<div>
-											<InputLabel htmlFor="until">반복 종료</InputLabel>
-											<StyledSelect
-												id="until"
-												value={formValues.until === "" ? "NO" : "YES"}
-												onChange={(e) =>
-													setFormValues((prev) => ({
-														...prev,
-														until: calculateMinUntilDateString(
-															prev.startDate,
-															prev.freq,
-															prev.interval,
-															e.target.value === "NO",
-														),
-													}))
-												}
-											>
-												<option value="NO">안 함</option>
-												<option value="YES">날짜</option>
-											</StyledSelect>
-										</div>
-										{formValues.until !== "" && (
-											<div>
-												<InputLabel>반복 종료 날짜</InputLabel>
-												<DateInput
-													type="date"
-													min={calculateMinUntilDateString(
-														formValues.startDate,
-														formValues.freq,
-														formValues.interval,
-													)}
-													value={formValues.until}
-													onChange={(e) =>
-														setFormValues((prev) => ({
-															...prev,
-															until: e.target.value,
-														}))
-													}
-												/>
-											</div>
-										)}
-									</>
-								)}
-							</div>
-							<div>
-								{(formValues.freq === "WEEKLY" ||
-									formValues.freq === "WEEKLY_N") && (
-									<ByweekdayPickerDiv>
-										{WEEK_STRING_PAIRS.map(([EN, KR], index) => (
-											<label key={EN} htmlFor={EN}>
-												<span>{KR}</span>
-												<div>
-													<input
-														type="checkbox"
-														id={EN}
-														checked={formValues.byweekday.indexOf(index) !== -1}
-														onChange={({ target: { checked } }) => {
-															setFormValues((prev) => ({
-																...prev,
-																byweekday:
-																	new Date(formValues.startDate).getDay() ===
-																	index
-																		? prev.byweekday
-																		: setByweekday(
-																				index,
-																				prev.byweekday,
-																				checked,
-																		  ),
-															}));
-														}}
-													/>
-												</div>
-											</label>
-										))}
-									</ByweekdayPickerDiv>
-								)}
-								{formValues.freq.endsWith("N") && (
-									<div className="interval_N">
-										<input
-											id="interval"
-											type="number"
-											step={1}
-											min={1}
-											value={formValues.interval}
-											onChange={handleIntervalChange}
-										/>
-										<span>
-											{`${getRecurringString(
-												formValues.freq,
-											)} 간격으로 반복합니다.`}
-										</span>
-									</div>
-								)}{" "}
-							</div>
-						</RepeatContainerDiv>
-					)
+					<RepeatContainerDiv>
+						<Repeat
+							freq={formValues.freq}
+							until={formValues.until}
+							minUntil={calculateMinUntilDateString(
+								formValues.startDate,
+								formValues.freq,
+								formValues.interval,
+							)}
+							onFreqChange={handleFreqValueChange}
+							onUntilChange={handleUntilValueChange}
+						/>
+						<RepeatDetail
+							isWeekly={
+								formValues.freq === "WEEKLY" || formValues.freq === "WEEKLY_N"
+							}
+							isWithN={formValues.freq.endsWith("N")}
+							freq={formValues.freq}
+							interval={formValues.interval}
+							byweekday={formValues.byweekday}
+							onByweekdayChange={handleByweekdayValueChange}
+							onIntervalChange={handleIntervalValueChange}
+						/>
+					</RepeatContainerDiv>
 				)}
 				<FooterDiv
 					isAllDayCheckboxDisplayed={
