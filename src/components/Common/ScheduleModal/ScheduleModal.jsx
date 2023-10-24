@@ -145,10 +145,17 @@ const ScheduleModal = () => {
 			setFormValues((prev) => {
 				const endDate =
 					!prev.endDate || prev.endDate < value ? value : prev.endDate;
+				const startDateWeekNum = new Date(value).getDay();
+				const byweekday =
+					prev.freq.startsWith("WEEKLY") &&
+					prev.byweekday.indexOf(startDateWeekNum) === -1
+						? [startDateWeekNum]
+						: prev.byweekday;
 				return {
 					...prev,
 					startDate: value,
 					endDate,
+					byweekday,
 					until: calculateMinUntilDateString(
 						value,
 						prev.freq,
@@ -167,9 +174,16 @@ const ScheduleModal = () => {
 			setFormValues((prev) => {
 				const startDate =
 					!prev.startDate || prev.startDate > value ? value : prev.startDate;
+				const startDateWeekNum = new Date(startDate).getDay();
+				const byweekday =
+					prev.freq.startsWith("WEEKLY") &&
+					prev.byweekday.indexOf(startDateWeekNum) === -1
+						? [startDateWeekNum]
+						: prev.byweekday;
 				return {
 					...prev,
 					startDate,
+					byweekday,
 					endDate: value,
 					isAllDay: calculateIsAllDay(
 						startDate,
@@ -358,22 +372,6 @@ const ScheduleModal = () => {
 		// 메뉴 닫기
 		dispatch(closeModal());
 	};
-
-	useEffect(() => {
-		// set byweekday
-		if (
-			!(formValues.freq === "WEEKLY" || formValues.freq === "WEEKLY_N") ||
-			!formValues.startDate
-		) {
-			return;
-		}
-		const weekNum = new Date(formValues.startDate).getDay();
-		setFormValues((prev) => ({
-			...prev,
-			byweekday:
-				prev.byweekday.indexOf(weekNum) === -1 ? [weekNum] : prev.byweekday,
-		}));
-	}, [formValues.startDate, formValues.freq]);
 
 	useEffect(() => {
 		if (isEditMode) {
