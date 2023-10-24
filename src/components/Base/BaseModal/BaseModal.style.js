@@ -11,7 +11,7 @@ export const ModalContentDiv = styled.div`
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
-	background-color: ${(props) => props.bg};
+	background-color: ${(props) => props.bgColor};
 `;
 
 export const BackdropWrapper = styled.div`

@@ -372,7 +372,7 @@ const ScheduleModal = () => {
 	return (
 		<BaseModal
 			title={isEditMode ? "일정 수정" : "일정 추가"}
-			bg={theme.colors.white}
+			bgColor={theme.colors.white}
 		>
 			<ScheduleModalLayoutDiv>
 				<TitleInput

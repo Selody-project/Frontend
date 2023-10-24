@@ -16,7 +16,7 @@ const GroupCreateModal = () => {
 	const handleClick = () => {};
 
 	return (
-		<BaseModal title="그룹 만들기" bg="#fff">
+		<BaseModal title="그룹 만들기" bgColor="#fff">
 			<GroupNameInput
 				placeholder="그룹 이름"
 				onChange={(e) => setName(e.target.value)}
