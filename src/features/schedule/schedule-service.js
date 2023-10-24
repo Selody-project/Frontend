@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import customFetch from "@/components/Base/BaseAxios.js";
 import { VIEW_TYPE } from "@/constants/calendarConstants";
+import commonThunk from "@/features/commonThunk";
 import { getFirstDateOfWeek } from "@/utils/calendarUtils";
 import { convertScheduleFormValueToData } from "@/utils/convertSchedule";
 
@@ -15,13 +15,19 @@ export const getTodaySchedules = createAsyncThunk(
 				today.setDate(today.getDate() + 1),
 			).toISOString();
 
-			const response = await customFetch.get("/api/user/calendar", {
-				params: {
-					startDateTime,
-					endDateTime,
+			const data = await commonThunk(
+				{
+					method: "GET",
+					url: "/api/user/calendar",
+					params: {
+						startDateTime,
+						endDateTime,
+					},
+					successCode: 200,
 				},
-			});
-			return response.data;
+				thunkAPI,
+			);
+			return data;
 		} catch (error) {
 			if (error.response) {
 				return thunkAPI.rejectWithValue(error.response.data);
@@ -43,13 +49,20 @@ export const getSchedulesForTheWeek = createAsyncThunk(
 				today.setDate(today.getDate() + 6),
 			).toISOString();
 
-			const response = await customFetch.get("/api/user/calendar", {
-				params: {
-					startDateTime,
-					endDateTime,
+			const data = await commonThunk(
+				{
+					method: "GET",
+					url: "/api/user/calendar",
+					params: {
+						startDateTime,
+						endDateTime,
+					},
+					successCode: 200,
 				},
-			});
-			return response.data;
+				thunkAPI,
+			);
+
+			return data;
 		} catch (error) {
 			if (error.response) {
 				return thunkAPI.rejectWithValue(error.response.data);
@@ -96,19 +109,19 @@ export const getSchedulesSummary = createAsyncThunk(
 			);
 
 		try {
-			const response = await customFetch.get(
-				`/api/${!isGroup ? "user" : `group/${groupId}`}/calendar`,
+			const data = await commonThunk(
 				{
+					method: "GET",
+					url: `/api/${!isGroup ? "user" : `group/${groupId}`}/calendar`,
 					params: {
 						startDateTime,
 						endDateTime,
 					},
+					successCode: 200,
 				},
+				thunkAPI,
 			);
-			if (response.status !== 200) {
-				throw response.data;
-			}
-			return response.data;
+			return data;
 		} catch (error) {
 			if (error.response) {
 				return thunkAPI.rejectWithValue(error.response.data);
@@ -122,14 +135,16 @@ export const createSchedule = createAsyncThunk(
 	"schedule/createSchedule",
 	async (schedule, thunkAPI) => {
 		try {
-			const response = await customFetch.post(
-				`/api/user/calendar`,
-				convertScheduleFormValueToData(schedule),
+			const data = await commonThunk(
+				{
+					method: "POST",
+					url: `/api/user/calendar`,
+					data: convertScheduleFormValueToData(schedule),
+					successCode: 201,
+				},
+				thunkAPI,
 			);
-			if (response.status !== 201) {
-				throw response.data;
-			}
-			return response.data;
+			return data;
 		} catch (error) {
 			if (error.response) {
 				return thunkAPI.rejectWithValue(error.response.data);
@@ -143,11 +158,11 @@ export const deleteSchedule = createAsyncThunk(
 	"schedule/deleteSchedule",
 	async (id, thunkAPI) => {
 		try {
-			const response = await customFetch.delete(`/api/user/calendar/${id}`);
-			if (response.status !== 204) {
-				throw response.data;
-			}
-			return response.data;
+			const data = await commonThunk(
+				{ method: "DELETE", url: `/api/user/calendar/${id}`, successCode: 204 },
+				thunkAPI,
+			);
+			return data;
 		} catch (error) {
 			if (error.response) {
 				return thunkAPI.rejectWithValue(error.response.data);
@@ -161,14 +176,16 @@ export const updateSchedule = createAsyncThunk(
 	"schedule/updateSchedule",
 	async ({ schedule, id }, thunkAPI) => {
 		try {
-			const response = await customFetch.put(
-				`/api/user/calendar/${id}`,
-				convertScheduleFormValueToData(schedule),
+			const data = await commonThunk(
+				{
+					method: "PUT",
+					url: `/api/user/calendar/${id}`,
+					data: convertScheduleFormValueToData(schedule),
+					successCode: 201,
+				},
+				thunkAPI,
 			);
-			if (response.status !== 201) {
-				throw response.data;
-			}
-			return response.data;
+			return data;
 		} catch (error) {
 			if (error.response) {
 				return thunkAPI.rejectWithValue(error.response.data);
