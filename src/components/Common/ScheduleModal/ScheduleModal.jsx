@@ -56,10 +56,6 @@ const initialFormValues = {
 	isAllDay: false,
 };
 
-const convertToDateInputValue = (date) => {
-	return date.toISOString().slice(0, 10);
-};
-
 const getRecurringString = (freqEndsWithN) => {
 	if (!freqEndsWithN.endsWith("N")) {
 		throw new Error("반복 텍스트는 freq가 N으로 끝나는 경우에만 return합니다");
@@ -140,9 +136,9 @@ const ScheduleModal = () => {
 		useSelector((state) => state.ui);
 	const isEditMode = scheduleModalMode === SCHEDULE_MODAL_TYPE.EDIT;
 	const [formValues, setFormValues] = useState(initialFormValues);
-	const minStartDate = convertToDateInputValue(
+	const minStartDate = moment(
 		new Date(new Date().setMonth(new Date().getMonth() - 6)),
-	);
+	).format("YYYY-MM-DD");
 
 	const handleDateValueChange = (event) => {
 		const {
