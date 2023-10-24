@@ -10,6 +10,7 @@ export const getTodaySchedules = createAsyncThunk(
 	async (_, thunkAPI) => {
 		try {
 			const today = new Date();
+			today.setHours(0, 0, 0, 0);
 			const startDateTime = today.toISOString();
 			const endDateTime = new Date(
 				today.setDate(today.getDate() + 1),
@@ -42,6 +43,7 @@ export const getSchedulesForTheWeek = createAsyncThunk(
 	async (_, thunkAPI) => {
 		try {
 			const today = new Date();
+			today.setHours(0, 0, 0, 0);
 			const startDateTime = new Date(
 				today.setDate(today.getDate() + 1),
 			).toISOString();
