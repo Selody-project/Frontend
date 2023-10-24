@@ -11,7 +11,7 @@ export const ModalContentDiv = styled.div`
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
-	background-color: ${({ bg }) => bg};
+	background-color: ${(props) => props.bg};
 `;
 
 export const BackdropWrapper = styled.div`
@@ -28,8 +28,16 @@ export const ModalHeaderDiv = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	font-size: 20px;
-	font-weight: 600;
+	font-size: ${({
+		theme: {
+			typography: { size },
+		},
+	}) => size.m1};
+	font-weight: ${({
+		theme: {
+			typography: { weight },
+		},
+	}) => weight.semibold};
 	line-height: normal;
 	position: relative;
 	width: 100%;
