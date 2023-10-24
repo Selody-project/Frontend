@@ -126,20 +126,22 @@ const calculateIsAllDay = (startDate, startTime, endDate, endTime) => {
 };
 
 const ScheduleModal = () => {
+	// theme
 	const theme = useTheme();
-
+	// dispatch
 	const dispatch = useDispatch();
-
+	// previous form value to compare
 	const prevFormValue = useRef(initialFormValues);
-
+	// state
 	const { openedModal, scheduleModalMode, scheduleModalId, isLoading } =
 		useSelector((state) => state.ui);
-	const isEditMode = scheduleModalMode === SCHEDULE_MODAL_TYPE.EDIT;
 	const [formValues, setFormValues] = useState(initialFormValues);
+	// value
+	const isEditMode = scheduleModalMode === SCHEDULE_MODAL_TYPE.EDIT;
 	const minStartDate = moment(
 		new Date(new Date().setMonth(new Date().getMonth() - 6)),
 	).format("YYYY-MM-DD");
-
+	// handle date change
 	const handleDateValueChange = (event) => {
 		const {
 			target: { value, id },
@@ -198,7 +200,7 @@ const ScheduleModal = () => {
 			});
 		}
 	};
-
+	// handle time change
 	const handleTimeValueChange = (event) => {
 		const {
 			target: { value, id },
@@ -231,8 +233,8 @@ const ScheduleModal = () => {
 			});
 		}
 	};
-
-	const handleAlldayValueChange = (event) => {
+	// handle isAllDay change
+	const handleIsAllDayValueChange = (event) => {
 		const { checked } = event.target;
 		setFormValues((prev) => ({
 			...prev,
@@ -242,7 +244,7 @@ const ScheduleModal = () => {
 			endTime: checked ? "23:59" : prev.endTime,
 		}));
 	};
-
+	// handle interval change
 	const handleIntervalChange = (event) => {
 		const {
 			target: { value },
@@ -262,71 +264,7 @@ const ScheduleModal = () => {
 		}));
 	};
 
-	const checkTimeIsValid = () => {
-		if (formValues.startDate < formValues.endDate) {
-			return true;
-		}
-		if (formValues.startDate === formValues.endDate) {
-			if (formValues.startTime < formValues.endTime) {
-				return true;
-			}
-			toast.error("시작 시간은 종료 시간보다 빨라야 합니다.");
-			return false;
-		}
-		toast.error("종료 날짜는 시작 날짜보다 동일하거나 빠를 수 없습니다.");
-		return false;
-	};
-
-	const checkIntervalIsValid = () => {
-		if (
-			formValues.freq !== "NONE" &&
-			(!Number.isInteger(Number(formValues.interval)) ||
-				Number(formValues.interval) <= 0)
-		) {
-			toast.error("반복 간격은 0보다 큰 자연수여야 합니다");
-			return false;
-		}
-		return true;
-	};
-
-	const checkByweekdayIsValid = () => {
-		if (!formValues.freq.startsWith("WEEKLY")) return true;
-		if (
-			formValues.byweekday.indexOf(new Date(formValues.startDate).getDay()) ===
-			-1
-		) {
-			toast.error(
-				"반복 요일은 무조건 일정 시작 날짜에 해당하는 요일을 포함해야 합니다.",
-			);
-			return false;
-		}
-		return true;
-	};
-
-	const checkUntilIsValid = () => {
-		if (formValues.until && formValues.startDate >= formValues.until) {
-			toast.error("반복 종료 일자는 일정 시작 날짜보다 커야 합니다.");
-			return false;
-		}
-		if (
-			!formValues.until ||
-			formValues.until >=
-				calculateMinUntilDateString(
-					formValues.startDate,
-					formValues.freq,
-					formValues.interval,
-				)
-		) {
-			return true;
-		}
-		toast.error(
-			`반복 종료 일자는 최소 ${formValues.interval}${getRecurringString(
-				formValues.freq,
-			)} 이후여야 합니다.`,
-		);
-		return false;
-	};
-
+	// valdate when change event occurs
 	const checkFormIsFilledOrChanged = () => {
 		const trimmedFormValues = {
 			...formValues,
@@ -349,6 +287,73 @@ const ScheduleModal = () => {
 				? formValues.voteEndDate !== "" && formValues.voteEndTime !== ""
 				: true)
 		);
+	};
+
+	// validate form values when submit event occurs
+	// validate Date and Time
+	const checkTimeIsValid = () => {
+		if (formValues.startDate < formValues.endDate) {
+			return true;
+		}
+		if (formValues.startDate === formValues.endDate) {
+			if (formValues.startTime < formValues.endTime) {
+				return true;
+			}
+			toast.error("시작 시간은 종료 시간보다 빨라야 합니다.");
+			return false;
+		}
+		toast.error("종료 날짜는 시작 날짜보다 동일하거나 빠를 수 없습니다.");
+		return false;
+	};
+	// validate interval
+	const checkIntervalIsValid = () => {
+		if (
+			formValues.freq !== "NONE" &&
+			(!Number.isInteger(Number(formValues.interval)) ||
+				Number(formValues.interval) <= 0)
+		) {
+			toast.error("반복 간격은 0보다 큰 자연수여야 합니다");
+			return false;
+		}
+		return true;
+	};
+	// validate byweekday
+	const checkByweekdayIsValid = () => {
+		if (!formValues.freq.startsWith("WEEKLY")) return true;
+		if (
+			formValues.byweekday.indexOf(new Date(formValues.startDate).getDay()) ===
+			-1
+		) {
+			toast.error(
+				"반복 요일은 무조건 일정 시작 날짜에 해당하는 요일을 포함해야 합니다.",
+			);
+			return false;
+		}
+		return true;
+	};
+	// validate until
+	const checkUntilIsValid = () => {
+		if (formValues.until && formValues.startDate >= formValues.until) {
+			toast.error("반복 종료 일자는 일정 시작 날짜보다 커야 합니다.");
+			return false;
+		}
+		if (
+			!formValues.until ||
+			formValues.until >=
+				calculateMinUntilDateString(
+					formValues.startDate,
+					formValues.freq,
+					formValues.interval,
+				)
+		) {
+			return true;
+		}
+		toast.error(
+			`반복 종료 일자는 최소 ${formValues.interval}${getRecurringString(
+				formValues.freq,
+			)} 이후여야 합니다.`,
+		);
+		return false;
 	};
 
 	const handleSubmit = () => {
@@ -460,7 +465,7 @@ const ScheduleModal = () => {
 							<label>
 								<input
 									type="checkbox"
-									onChange={handleAlldayValueChange}
+									onChange={handleIsAllDayValueChange}
 									checked={formValues.isAllDay}
 								/>
 								하루 종일
