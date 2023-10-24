@@ -8,6 +8,6 @@ export const BaseCardLayoutDiv = styled.div`
 		},
 	}) => borderRadius.default}px;
 	background-color: ${({ theme: { colors } }) => colors.white};
-	border: 1px solid #6c55fe;
+	border: 1px solid ${({ theme: { colors } }) => colors.primary};
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
