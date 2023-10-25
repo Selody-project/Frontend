@@ -8,8 +8,6 @@ export const ModalWrapper = styled.div`
 	width: fit-content;
 	z-index: 100;
 	overflow: hidden;
-	border-radius: 10px;
-	padding: 2rem;
 	display: flex;
 	justify-content: center;
 	flex-direction: column;

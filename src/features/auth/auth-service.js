@@ -164,7 +164,7 @@ export const withdrawMembership = createAsyncThunk(
 
 			return response.data;
 		} catch (error) {
-			return thunkAPI.rejectWithValue(error.message);
+			return thunkAPI.rejectWithValue(error.response.data);
 		}
 	},
 );

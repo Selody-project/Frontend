@@ -144,7 +144,7 @@ const authSlice = createSlice({
 			})
 			.addCase(withdrawMembership.rejected, (state, { payload }) => {
 				state.isLoading = false;
-				console.log(payload);
+				toast.error(payload.error);
 			});
 	},
 });

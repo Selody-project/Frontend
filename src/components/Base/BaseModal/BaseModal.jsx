@@ -26,7 +26,7 @@ const Backdrop = () => {
 	);
 };
 
-const Modal = ({ title, children, bg }) => {
+const Modal = ({ title, children, bg, hasClose }) => {
 	const dispatch = useDispatch();
 
 	const handleClose = () => {
@@ -37,23 +37,25 @@ const Modal = ({ title, children, bg }) => {
 		<ModalWrapper style={{ backgroundColor: bg }}>
 			<ModalHeaderDiv>
 				<span>{title}</span>
-				<IconButton onClick={handleClose} aria-label="close">
-					<CloseIcon />
-				</IconButton>
+				{hasClose && (
+					<IconButton onClick={handleClose} aria-label="close">
+						<CloseIcon />
+					</IconButton>
+				)}
 			</ModalHeaderDiv>
 			{children}
 		</ModalWrapper>
 	);
 };
 
-const BaseModal = ({ title = null, children, bg }) => {
+const BaseModal = ({ title = null, children, bg, hasClose = true }) => {
 	useScrollLock();
 
 	return (
 		<>
 			{ReactDOM.createPortal(<Backdrop />, document.getElementById("backdrop"))}
 			{ReactDOM.createPortal(
-				<Modal title={title} bg={bg}>
+				<Modal title={title} bg={bg} hasClose={hasClose}>
 					{children}
 				</Modal>,
 				document.getElementById("modal"),
