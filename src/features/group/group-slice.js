@@ -94,8 +94,9 @@ const groupSlice = createSlice({
 				state.isLoading = false;
 				toast.success("그룹을 탈퇴하였습니다.");
 			})
-			.addCase(leaveGroup.rejected, (state) => {
+			.addCase(leaveGroup.rejected, (state, { payload }) => {
 				state.isLoading = false;
+				toast.error(payload.error);
 			});
 	},
 });

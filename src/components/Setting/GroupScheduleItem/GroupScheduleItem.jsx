@@ -51,7 +51,7 @@ const GroupScheduleItem = ({
 							</Button>
 						</>
 					) : (
-						<Button>나가기</Button>
+						<Button onClick={() => handleModal("LEAVE_GROUP")}>나가기</Button>
 					)}
 				</ButtonWrapDiv>
 			</UpperDiv>

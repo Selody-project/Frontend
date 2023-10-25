@@ -3,7 +3,11 @@ import { useDispatch } from "react-redux";
 
 import Checked from "@/assets/icon/ic-round-checked-mark.svg";
 import BaseModal from "@/components/Base/BaseModal/BaseModal";
-import { delegateGroup, deleteGroup } from "@/features/group/group-service";
+import {
+	delegateGroup,
+	deleteGroup,
+	leaveGroup,
+} from "@/features/group/group-service";
 import { setRefetchUserGroup } from "@/features/group/group-slice";
 import { closeModal, openModal } from "@/features/ui/ui-slice";
 import { useAxios } from "@/hooks/useAxios";
@@ -146,6 +150,40 @@ export const GroupDelegateModal = ({ groupInfo, isGroupLoading }) => {
 						disabled={!selectedMemberId || isGroupLoading}
 					>
 						위임하기
+					</Button>
+				</ContentMain>
+			</ContainerDiv>
+		</BaseModal>
+	);
+};
+
+export const GroupLeaveModal = ({ groupInfo, isLoading }) => {
+	const { groupId, name } = groupInfo;
+
+	const dispatch = useDispatch();
+
+	const handleClickLeave = async () => {
+		const response = await dispatch(leaveGroup(groupId));
+		if (response.payload.status === 204) {
+			dispatch(closeModal());
+			dispatch(setRefetchUserGroup(true));
+		}
+	};
+
+	return (
+		<BaseModal bg="#fff">
+			<ContainerDiv>
+				<TitleHeader>
+					<strong>{`${name}을(를) 정말 나가실 건가요?`}</strong>
+				</TitleHeader>
+				<ContentMain>
+					<p className="leave-modal">
+						{`나가면 사용자가 ${name}에 적은 모든 정보가 삭제되어`}
+						<br />
+						복구가 불가능합니다.
+					</p>
+					<Button onClick={handleClickLeave} disabled={isLoading}>
+						나가기
 					</Button>
 				</ContentMain>
 			</ContainerDiv>

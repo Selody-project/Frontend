@@ -25,6 +25,10 @@ export const ContentMain = styled.main`
 	.margin {
 		margin-bottom: 40px;
 	}
+
+	.leave-modal {
+		margin: 48px 0;
+	}
 `;
 
 export const Button = styled.button`

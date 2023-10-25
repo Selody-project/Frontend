@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import {
 	GroupDelegateModal,
 	GroupDeleteModal,
+	GroupLeaveModal,
 } from "@/components/Setting/GroupModals/GroupModals";
 import PasswordTab from "@/components/Setting/PasswordTab/PasswordTab";
 import ProfileTab from "@/components/Setting/ProfileTab";
@@ -60,6 +61,9 @@ const SettingPage = () => {
 			)}
 			{openedModal === "DELEGATE_GROUP" && (
 				<GroupDelegateModal groupInfo={groupInfo} isGroupLoading={isLoading} />
+			)}
+			{openedModal === "LEAVE_GROUP" && (
+				<GroupLeaveModal groupInfo={groupInfo} isGroupLoading={isLoading} />
 			)}
 		</>
 	);

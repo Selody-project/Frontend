@@ -106,7 +106,7 @@ export const leaveGroup = createAsyncThunk(
 			if (response.status !== 204) {
 				throw response.data;
 			}
-			return response.data;
+			return response;
 		} catch (error) {
 			if (error.response) {
 				return thunkAPI.rejectWithValue(error.response.data);
