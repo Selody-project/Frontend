@@ -9,6 +9,7 @@ import {
 	updateGroup,
 	leaveGroup,
 	delegateGroup,
+	changeGroupOption,
 } from "./group-service.js";
 
 const initialState = {
@@ -95,6 +96,16 @@ const groupSlice = createSlice({
 				toast.success("그룹을 탈퇴하였습니다.");
 			})
 			.addCase(leaveGroup.rejected, (state, { payload }) => {
+				state.isLoading = false;
+				toast.error(payload.error);
+			})
+			.addCase(changeGroupOption.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(changeGroupOption.fulfilled, (state) => {
+				state.isLoading = false;
+			})
+			.addCase(changeGroupOption.rejected, (state, { payload }) => {
 				state.isLoading = false;
 				toast.error(payload.error);
 			});

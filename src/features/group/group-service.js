@@ -115,3 +115,24 @@ export const leaveGroup = createAsyncThunk(
 		}
 	},
 );
+
+export const changeGroupOption = createAsyncThunk(
+	"group/changeOption",
+	async ({ groupId, type, status }, thunkAPI) => {
+		try {
+			const response = await customFetch.patch(
+				`/api/user/settings/${groupId}`,
+				{
+					[type]: status,
+				},
+			);
+
+			if (response.status !== 200) {
+				throw response.data;
+			}
+			return response.status;
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error.response.data);
+		}
+	},
+);

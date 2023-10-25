@@ -89,7 +89,8 @@ export const ToggleDiv = styled.div`
 	display: flex;
 	align-items: center;
 	gap: 48px;
-	cursor: pointer;
+	opacity: ${({ isOwner }) => (isOwner ? 0.6 : 1)};
+	cursor: ${({ isOwner }) => (isOwner ? "not-allowed" : "pointer")};
 `;
 
 export const TitleSpan = styled.span``;

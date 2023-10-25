@@ -9,7 +9,6 @@ export const OuterDiv = styled.div`
 	display: flex;
 	align-items: center;
 	position: relative;
-	cursor: pointer;
 
 	& > div {
 		width: 22px;

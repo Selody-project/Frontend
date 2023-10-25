@@ -24,3 +24,11 @@ export const ItemWrapDiv = styled.div`
 	flex-direction: column;
 	gap: 24px;
 `;
+
+export const SkeletonDiv = styled.div`
+	width: 100%;
+	height: 148px;
+	background-color: ${({ theme }) => theme.colors.btn_02};
+	opacity: 0.5;
+	border-radius: 10px;
+`;
