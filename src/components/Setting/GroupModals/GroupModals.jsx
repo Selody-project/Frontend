@@ -77,13 +77,6 @@ const SelectBox = ({ name, isSelected, onClick }) => (
 	</SelectBoxDiv>
 );
 
-const mockMembers = [
-	{ id: 1, memberName: "그룹원 A" },
-	{ id: 2, memberName: "그룹원 B" },
-	{ id: 3, memberName: "그룹원 C" },
-	{ id: 4, memberName: "그룹원 D" },
-];
-
 export const GroupDelegateModal = ({ groupInfo, isGroupLoading }) => {
 	const { groupId, name } = groupInfo;
 
@@ -141,14 +134,6 @@ export const GroupDelegateModal = ({ groupInfo, isGroupLoading }) => {
 								/>
 							))
 						)}
-						{mockMembers.map(({ id, memberName }) => (
-							<SelectBox
-								key={id}
-								name={memberName}
-								onClick={() => setSelectedMemberId(id)}
-								isSelected={id === selectedMemberId}
-							/>
-						))}
 					</SelectWrapDiv>
 					<Button
 						onClick={handleClickDelegate}
