@@ -14,7 +14,7 @@ export const TitleHeader = styled.header`
 `;
 
 export const ContentMain = styled.main`
-	margin-top: 14px;
+	margin: 14px 0;
 
 	& > p {
 		color: ${({ theme }) => theme.colors.disabled_text};
@@ -48,7 +48,7 @@ export const Button = styled.button`
 `;
 
 export const ModalFooter = styled.footer`
-	margin-top: 12px;
+	margin: 12px 0;
 	font-size: 12px;
 	font-weight: ${({ theme }) => theme.typography.weight.medium};
 

@@ -22,6 +22,11 @@ import {
 	TitleHeader,
 } from "./GroupModals.style";
 
+const modalStyle = {
+	padding: "20px",
+	backgroundColor: "white",
+};
+
 export const GroupDeleteModal = ({ groupInfo, isLoading }) => {
 	const { groupId, name } = groupInfo;
 
@@ -36,7 +41,7 @@ export const GroupDeleteModal = ({ groupInfo, isLoading }) => {
 	};
 
 	return (
-		<BaseModal bg="#fff">
+		<BaseModal style={modalStyle}>
 			<ContainerDiv>
 				<TitleHeader>
 					<strong>{`${name}을(를) 정말 삭제하실 건가요?`}</strong>
@@ -109,7 +114,7 @@ export const GroupDelegateModal = ({ groupInfo, isGroupLoading }) => {
 	}, []);
 
 	return (
-		<BaseModal bg="#fff">
+		<BaseModal style={modalStyle}>
 			<ContainerDiv>
 				<TitleHeader>
 					<strong>{`${name}을(를) 위임받을 그룹원을 선택해주세요`}.</strong>
@@ -171,7 +176,7 @@ export const GroupLeaveModal = ({ groupInfo, isLoading }) => {
 	};
 
 	return (
-		<BaseModal bg="#fff">
+		<BaseModal style={modalStyle}>
 			<ContainerDiv>
 				<TitleHeader>
 					<strong>{`${name}을(를) 정말 나가실 건가요?`}</strong>

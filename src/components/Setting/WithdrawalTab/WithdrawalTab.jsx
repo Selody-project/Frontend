@@ -61,7 +61,13 @@ const WithdrawalTab = () => {
 				</WithdrawalButton>
 			</ButtonWrapDiv>
 			{openedModal === "WITHDRAW" && (
-				<BaseModal bg="#fff" hasClose={false}>
+				<BaseModal
+					style={{
+						backgroundColor: "white",
+						borderRadius: "10px",
+					}}
+					hasClose={false}
+				>
 					<ModalContentDiv>
 						<p>
 							Selody를 정말

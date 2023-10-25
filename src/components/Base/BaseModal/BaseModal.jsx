@@ -26,7 +26,7 @@ const Backdrop = () => {
 	);
 };
 
-const Modal = ({ title, children, bg, hasClose }) => {
+const Modal = ({ title, children, hasClose, style }) => {
 	const dispatch = useDispatch();
 
 	const handleClose = () => {
@@ -34,7 +34,7 @@ const Modal = ({ title, children, bg, hasClose }) => {
 	};
 
 	return (
-		<ModalWrapper style={{ backgroundColor: bg }}>
+		<ModalWrapper style={style}>
 			<ModalHeaderDiv>
 				<span>{title}</span>
 				{hasClose && (
@@ -48,14 +48,14 @@ const Modal = ({ title, children, bg, hasClose }) => {
 	);
 };
 
-const BaseModal = ({ title = null, children, bg, hasClose = true }) => {
+const BaseModal = ({ title = null, children, hasClose = true, style }) => {
 	useScrollLock();
 
 	return (
 		<>
 			{ReactDOM.createPortal(<Backdrop />, document.getElementById("backdrop"))}
 			{ReactDOM.createPortal(
-				<Modal title={title} bg={bg} hasClose={hasClose}>
+				<Modal title={title} hasClose={hasClose} style={style}>
 					{children}
 				</Modal>,
 				document.getElementById("modal"),
@@ -66,11 +66,9 @@ const BaseModal = ({ title = null, children, bg, hasClose = true }) => {
 
 BaseModal.propTypes = {
 	children: PropTypes.node.isRequired,
-	bg: PropTypes.string.isRequired,
 };
 Modal.propTypes = {
 	children: PropTypes.node.isRequired,
-	bg: PropTypes.string.isRequired,
 };
 
 export default BaseModal;
