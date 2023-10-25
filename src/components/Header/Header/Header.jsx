@@ -36,10 +36,8 @@ const Header = () => {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
 	const handleDropdown = (e) => {
-		if (isDropdownOpen) {
-			if (!dropdownRef.current.contains(e.target)) {
-				setIsDropdownOpen(false);
-			}
+		if (isDropdownOpen && !dropdownRef.current.contains(e.target)) {
+			setIsDropdownOpen(false);
 		} else if (profileRef.current.contains(e.target)) {
 			setIsDropdownOpen(true);
 		}
