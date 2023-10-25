@@ -23,6 +23,9 @@ describe("SettingPage Component", () => {
 			ui: {
 				openedModal: "",
 			},
+			group: {
+				groupInfo: { groupId: 1, name: "testGroup" },
+			},
 		});
 	});
 

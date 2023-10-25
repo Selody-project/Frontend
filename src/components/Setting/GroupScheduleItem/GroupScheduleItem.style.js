@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const ContainerDiv = styled.div`
 	border-radius: 10px;
-	/* opacity: 0.6; */
 	filter: blur(0.6);
 	background: ${({ theme: { colors } }) => colors.bg_01};
 	box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -29,12 +28,8 @@ export const GroupNameDiv = styled.div`
 		}) => weight.semibold};
 	}
 
-	& > svg {
-		margin: 0px 18px 0px 9px;
-		cursor: pointer;
-	}
-
 	& > div {
+		margin-left: 16px;
 		padding: 5px 20px;
 		border: 1px solid ${({ theme: { colors } }) => colors.primary};
 		border-radius: 14px;

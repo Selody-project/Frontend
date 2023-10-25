@@ -1,16 +1,44 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { setRefetchUserGroup } from "@/features/group/group-slice";
+import { useAxios } from "@/hooks/useAxios";
 
 import { ContainerDiv, ItemWrapDiv } from "./GroupScheduleSetting.style";
 import GroupScheduleItem from "../GroupScheduleItem/GroupScheduleItem";
 
 const GroupScheduleSetting = () => {
+	const dispatch = useDispatch();
+	const { refetchUserGroup } = useSelector((state) => state.group);
+
+	const { response, error, isLoading, refetch } = useAxios({
+		url: "/api/user/settings",
+		method: "GET",
+	});
+
+	const groupList = response?.data;
+
+	useEffect(() => {
+		if (refetchUserGroup) {
+			refetch();
+			dispatch(setRefetchUserGroup(false));
+		}
+	}, [refetchUserGroup]);
+
 	return (
 		<ContainerDiv>
 			<h3>공유 일정 관리</h3>
 			<ItemWrapDiv>
-				<GroupScheduleItem isOwner={true} />
-				<GroupScheduleItem isOwner={false} />
-				<GroupScheduleItem isOwner={false} />
+				{/* eslint-disable-next-line no-nested-ternary */}
+				{isLoading ? (
+					<div>Loading...</div>
+				) : error ? (
+					<div>그룹 정보를 불러오는 데 실패했습니다.</div>
+				) : (
+					groupList?.map((item) => (
+						<GroupScheduleItem key={item.groupId} data={item} />
+					))
+				)}
 			</ItemWrapDiv>
 		</ContainerDiv>
 	);

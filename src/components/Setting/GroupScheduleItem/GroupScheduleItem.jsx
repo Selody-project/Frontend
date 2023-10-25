@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
-import EditIcon from "@/assets/icon/ic-edit.svg";
 import ToggleButton from "@/components/Common/ToggleButton/ToggleButton";
+import { selectGroupInfo } from "@/features/group/group-slice";
+import { openModal } from "@/features/ui/ui-slice";
 
 import {
 	Button,
@@ -16,27 +18,37 @@ import {
 	UpperDiv,
 } from "./GroupScheduleItem.style";
 
-const GroupScheduleItem = ({ isOwner }) => {
-	const [isSharingEnabled, setIsSharingEnabled] = useState(false);
-	const [hasNotification, setHasNotification] = useState(false);
+const GroupScheduleItem = ({
+	data: { groupId, name, shareScheduleOption, notificationOption, accessLevel },
+}) => {
+	const isOwner = accessLevel === "owner";
+
+	const dispatch = useDispatch();
+
+	const [isSharingEnabled, setIsSharingEnabled] = useState(shareScheduleOption);
+	const [hasNotification, setHasNotification] = useState(notificationOption);
+
+	const handleModal = (type) => {
+		dispatch(openModal({ type }));
+		dispatch(selectGroupInfo({ groupId, name }));
+	};
 
 	return (
 		<ContainerDiv>
 			<UpperDiv>
 				<GroupNameDiv>
-					<span>그룹 A</span>
-					{isOwner && (
-						<>
-							<EditIcon />
-							<div>방장</div>
-						</>
-					)}
+					<span>{name}</span>
+					{isOwner && <div>방장</div>}
 				</GroupNameDiv>
 				<ButtonWrapDiv>
 					{isOwner ? (
 						<>
-							<DelegateButton>다른 사람에게 위임</DelegateButton>
-							<Button>그룹 삭제</Button>
+							<DelegateButton onClick={() => handleModal("DELEGATE_GROUP")}>
+								다른 사람에게 위임
+							</DelegateButton>
+							<Button onClick={() => handleModal("DELETE_GROUP")}>
+								그룹 삭제
+							</Button>
 						</>
 					) : (
 						<Button>나가기</Button>
