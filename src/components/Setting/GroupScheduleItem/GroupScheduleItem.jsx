@@ -87,11 +87,8 @@ const GroupScheduleItem = ({
 					<ToggleButton isActive={isSharingEnabled} />
 				</ToggleDiv>
 				<ToggleDiv
-					isOwner={isOwner}
 					onClick={() => {
-						if (!isOwner) {
-							handleClickToggle("notificationOption");
-						}
+						handleClickToggle("notificationOption");
 					}}
 				>
 					<TitleSpan>알림</TitleSpan>
