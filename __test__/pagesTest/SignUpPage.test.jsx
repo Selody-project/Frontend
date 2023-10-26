@@ -35,7 +35,6 @@ describe("SignUpPage Component", () => {
 			target: { value: "test@example.com" },
 		});
 		expect(screen.getByTestId("email-input").value).toBe("test@example.com");
-		expect(screen.getByTestId("email-duplicate-check-button")).toBeEnabled();
 
 		expect(
 			screen.getByTestId("nickname-duplicate-check-button"),
@@ -44,7 +43,6 @@ describe("SignUpPage Component", () => {
 			target: { value: "testuser" },
 		});
 		expect(screen.getByTestId("nickname-input").value).toBe("testuser");
-		expect(screen.getByTestId("nickname-duplicate-check-button")).toBeEnabled();
 
 		fireEvent.change(screen.getByTestId("password-input"), {
 			target: { value: "password123" },

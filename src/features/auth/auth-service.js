@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import customFetch from "@/components/Base/BaseAxios";
+import { customAxios } from "@/hooks/useAxios";
 
 export const signup = createAsyncThunk(
 	"user/signup",
@@ -24,7 +25,7 @@ export const signup = createAsyncThunk(
 
 export const login = createAsyncThunk(
 	"user/login",
-	async ({ email, password, customAxios }, thunkAPI) => {
+	async ({ email, password }, thunkAPI) => {
 		try {
 			const response = await customAxios.post(`/api/auth/login`, {
 				email,

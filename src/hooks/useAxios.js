@@ -1,41 +1,65 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import axios from "axios";
 
-const customAxios = axios.create({
+export const customAxios = axios.create({
 	baseURL: "/back",
+	timeout: 3000,
 	withCredentials: true,
 });
 
-const useAxios = () => {
-	const [loading, setLoading] = useState(false);
+customAxios.interceptors.request.use(
+	(config) => config,
+	(error) => error.response,
+);
 
-	const requestHandler = (config) => {
-		setLoading(true);
-		return config;
+customAxios.interceptors.response.use(
+	(response) => response,
+	(error) => error.response,
+);
+
+export const useAxios = (defaultParams) => {
+	const [response, setResponse] = useState();
+	const [error, setError] = useState();
+	const [isLoading, setIsLoading] = useState(false);
+	const [trigger, setTrigger] = useState(0);
+	const [axiosParams, setAxiosParams] = useState(defaultParams);
+
+	const refetch = () => {
+		setResponse(response);
+		setError(error);
+		setIsLoading(true);
+		setTrigger(Date.now());
 	};
 
-	const responseHandler = (response) => {
-		setLoading(false);
-		return response;
+	const refetchWithParams = (params) => {
+		setAxiosParams(params);
+		setTrigger(Date.now());
 	};
 
-	const errorHandler = (error) => {
-		setLoading(false);
-		return error;
+	const fetchData = async (params) => {
+		try {
+			setIsLoading(true);
+			const result = await customAxios.request(params);
+			setResponse(result);
+			setError();
+		} catch (err) {
+			setResponse();
+			setError(err);
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
-	customAxios.interceptors.request.use(
-		(config) => requestHandler(config),
-		(error) => errorHandler(error),
-	);
+	useEffect(() => {
+		fetchData(axiosParams);
+	}, [trigger]);
 
-	customAxios.interceptors.response.use(
-		(response) => responseHandler(response),
-		(error) => errorHandler(error),
-	);
-
-	return [customAxios, loading];
+	return {
+		response,
+		error,
+		isLoading,
+		refetch,
+		refetchWithParams,
+	};
 };
-
-export default useAxios;

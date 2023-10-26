@@ -1,10 +1,10 @@
 /* eslint-disable no-return-assign */
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
 import { signup } from "@/features/auth/auth-service";
-import useAxios from "@/hooks/useAxios";
+import { useAxios } from "@/hooks/useAxios";
 
 import {
 	DuplicateCheckButton,
@@ -53,8 +53,16 @@ const inputObjList = [
 const SignUpForm = () => {
 	const dispatch = useDispatch();
 
+	const { response, isLoading, refetchWithParams } = useAxios({
+		url: "/api/auth/join",
+		method: "POST",
+	});
+
 	const signUpRef = useRef([]);
 
+	const [isMounted, setIsMounted] = useState(false);
+	const [isFirstAxiosCalled, setIsFirstAxiosCalled] = useState(false);
+	const [clickedType, setClickedType] = useState("");
 	const [formValue, setFormValue] = useState({
 		email: "",
 		nickname: "",
@@ -73,8 +81,6 @@ const SignUpForm = () => {
 		passwordCheck,
 	} = formValue;
 
-	const [customAxios] = useAxios();
-
 	const handleFormValue = (event) => {
 		const changed = {
 			...formValue,
@@ -89,22 +95,13 @@ const SignUpForm = () => {
 	};
 
 	const checkDuplication = async (type) => {
-		const koreanType = type === "email" ? "이메일" : "닉네임";
-		const [targetKey, targetValue, targetRefIdx] =
-			type === "email"
-				? ["checkedEmail", email, 0]
-				: ["checkedNickname", nickname, 1];
-		const response = await customAxios.post("/api/auth/join", {
-			[type]: targetValue,
+		setClickedType(type);
+		const targetValue = type === "email" ? email : nickname;
+		refetchWithParams({
+			url: "/api/auth/join",
+			method: "POST",
+			data: { [type]: targetValue },
 		});
-
-		if (response.status === 200) {
-			toast.success(`사용 가능한 ${koreanType}입니다.`);
-			setFormValue({ ...formValue, [targetKey]: targetValue });
-		} else {
-			signUpRef.current[targetRefIdx].focus();
-			toast.error(`이미 존재하는 ${koreanType}입니다.`);
-		}
 	};
 
 	const isFormComplete = () =>
@@ -139,6 +136,32 @@ const SignUpForm = () => {
 		dispatch(signup({ email, nickname, password }));
 	};
 
+	useEffect(() => {
+		if (isMounted) {
+			if (isFirstAxiosCalled) {
+				const koreanType = clickedType === "email" ? "이메일" : "닉네임";
+				const [targetKey, targetValue, targetRefIdx] =
+					clickedType === "email"
+						? ["checkedEmail", email, 0]
+						: ["checkedNickname", nickname, 1];
+
+				if (response?.status === 200) {
+					toast.success(`사용 가능한 ${koreanType}입니다.`);
+					setFormValue({ ...formValue, [targetKey]: targetValue });
+				} else if (response?.status === 409) {
+					signUpRef.current[targetRefIdx].focus();
+					toast.error(`이미 존재하는 ${koreanType}입니다.`);
+				} else {
+					toast.error(response?.data?.error);
+				}
+			} else {
+				setIsFirstAxiosCalled(true);
+			}
+		} else {
+			setIsMounted(true);
+		}
+	}, [response]);
+
 	return (
 		<StyledSignUpForm onSubmit={handleSubmit}>
 			{inputObjList.map(
@@ -155,15 +178,16 @@ const SignUpForm = () => {
 								value={formValue[key]}
 								onChange={handleFormValue}
 								placeholder={placeholder}
+								disabled={isLoading}
 							/>
 							{hasButton && (
 								<DuplicateCheckButton
 									data-testid={`${key}-duplicate-check-button`}
 									type="button"
 									disabled={
-										key === "email" ? !validateEmail() : nickname === ""
+										isLoading ||
+										(key === "email" ? !validateEmail() : nickname === "")
 									}
-									isActive={key === "email" ? validateEmail() : nickname !== ""}
 									onClick={() => checkDuplication(key)}
 								>
 									중복확인
