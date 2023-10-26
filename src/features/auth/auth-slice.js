@@ -15,7 +15,6 @@ import {
 const initialState = {
 	user: null,
 	isLoading: false,
-	userLoading: false,
 	token: null,
 	edit: false,
 };
@@ -91,27 +90,27 @@ const authSlice = createSlice({
 			})
 			// 로그아웃
 			.addCase(logout.pending, (state) => {
-				state.userLoading = true;
+				state.isLoading = true;
 			})
 			.addCase(logout.fulfilled, (state, { payload }) => {
-				state.userLoading = false;
+				state.isLoading = false;
 				state.user = null;
 				toast.success("로그아웃에 성공하였습니다.");
 			})
 			.addCase(logout.rejected, (state, { payload }) => {
-				state.userLoading = false;
+				state.isLoading = false;
 				console.log(payload);
 			})
 			// 유저 쿠키 토큰 확인
 			.addCase(getCurrentUser.pending, (state) => {
-				state.userLoading = true;
+				state.isLoading = true;
 			})
 			.addCase(getCurrentUser.fulfilled, (state, { payload }) => {
-				state.userLoading = false;
+				state.isLoading = false;
 				state.user = payload?.user;
 			})
 			.addCase(getCurrentUser.rejected, (state, { payload }) => {
-				state.userLoading = false;
+				state.isLoading = false;
 				console.log(payload);
 			})
 			// 유저 프로필 수정
