@@ -29,6 +29,7 @@ import {
 	ScheduleModalLayoutDiv,
 	InputLabel,
 	RepeatContainerDiv,
+	AllDayCheckBoxDiv,
 } from "./ScheduleModal.styles";
 
 const initialFormValues = {
@@ -442,11 +443,21 @@ const ScheduleModal = () => {
 					startTime={formValues.startTime}
 					endDate={formValues.endDate}
 					endTime={formValues.endTime}
-					isAllDay={formValues.isAllDay}
 					onDateChange={handleDateValueChange}
 					onTimeChange={handleTimeValueChange}
-					onIsAllDayChange={handleIsAllDayValueChange}
 				/>
+				{formValues.startDate && (
+					<AllDayCheckBoxDiv>
+						<label>
+							<input
+								type="checkbox"
+								onChange={handleIsAllDayValueChange}
+								checked={formValues.isAllDay}
+							/>
+							하루 종일
+						</label>
+					</AllDayCheckBoxDiv>
+				)}
 				{openedModal === UI_TYPE.SHARE_SCHEDULE ? (
 					<>
 						<InputLabel>일정 투표 종료일</InputLabel>
