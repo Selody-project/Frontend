@@ -8,7 +8,6 @@ import {
 	DateDiv,
 	DateContainerDiv,
 	InputLabel,
-	AllDayCheckBoxDiv,
 } from "./ScheduleModal.styles";
 
 const DateAndTime = ({
@@ -16,10 +15,8 @@ const DateAndTime = ({
 	startTime,
 	endDate,
 	endTime,
-	isAllDay,
 	onDateChange,
 	onTimeChange,
-	onIsAllDayChange,
 }) => {
 	const minStartDate = moment(
 		new Date(new Date().setMonth(new Date().getMonth() - 6)),
@@ -62,18 +59,6 @@ const DateAndTime = ({
 						onChange={onTimeChange}
 					/>
 				</DateDiv>
-				{startDate && (
-					<AllDayCheckBoxDiv>
-						<label>
-							<input
-								type="checkbox"
-								onChange={onIsAllDayChange}
-								checked={isAllDay}
-							/>
-							하루 종일
-						</label>
-					</AllDayCheckBoxDiv>
-				)}
 			</DateContainerDiv>
 		</>
 	);
@@ -84,10 +69,8 @@ DateAndTime.propTypes = {
 	startTime: PropTypes.string.isRequired,
 	endDate: PropTypes.string.isRequired,
 	endTime: PropTypes.string.isRequired,
-	isAllDay: PropTypes.bool.isRequired,
 	onDateChange: PropTypes.func.isRequired,
 	onTimeChange: PropTypes.func.isRequired,
-	onIsAllDayChange: PropTypes.func.isRequired,
 };
 
 export default DateAndTime;
