@@ -69,7 +69,7 @@ export const DateContainerDiv = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	margin-bottom: 39px;
+	margin-bottom: 12px;
 `;
 
 export const DateDiv = styled.div`
@@ -100,10 +100,9 @@ export const DateInput = styled.input`
 `;
 
 export const AllDayCheckBoxDiv = styled.div`
-	position: absolute;
-	right: 0;
-	height: 15px;
-	bottom: -24px;
+	margin-bottom: 12px;
+	display: flex;
+	justify-content: flex-end;
 	& > label {
 		height: 100%;
 		display: flex;
