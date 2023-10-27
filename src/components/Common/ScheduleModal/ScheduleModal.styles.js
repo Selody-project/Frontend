@@ -225,6 +225,9 @@ const CustomHeader = styled.header`
 	& > button {
 		height: fit-content;
 		cursor: pointer;
+		&:disabled {
+			display: none;
+		}
 		&.prev {
 			margin-right: 20px;
 		}
