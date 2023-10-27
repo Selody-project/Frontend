@@ -3,6 +3,7 @@ import React from "react";
 import moment from "moment";
 import PropTypes from "prop-types";
 
+import DatePicker from "./DatePicker";
 import {
 	DateInput,
 	DateDiv,
@@ -27,12 +28,11 @@ const DateAndTime = ({
 			<InputLabel htmlFor="startDate">날짜 및 시간</InputLabel>
 			<DateContainerDiv>
 				<DateDiv>
-					<DateInput
+					<DatePicker
 						id="startDate"
-						type="date"
-						min={minStartDate}
-						value={startDate}
-						onChange={onDateChange}
+						minDateStr={minStartDate}
+						selectedStr={startDate}
+						onChange={(date) => onDateChange(date, "startDate")}
 					/>
 					<DateInput
 						id="startTime"
@@ -43,13 +43,11 @@ const DateAndTime = ({
 				</DateDiv>
 				~
 				<DateDiv>
-					<DateInput
-						id="endDate"
-						type="date"
-						disabled={!startDate}
-						min={startDate}
-						value={endDate}
-						onChange={onDateChange}
+					<DatePicker
+						id="startDate"
+						minDateStr={startDate}
+						selectedStr={endDate}
+						onChange={(date) => onDateChange(date, "endDate")}
 					/>
 					<DateInput
 						id="endTime"

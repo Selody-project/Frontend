@@ -117,10 +117,8 @@ const ScheduleModal = () => {
 		new Date(new Date().setMonth(new Date().getMonth() - 6)),
 	).format("YYYY-MM-DD");
 	// handle date change
-	const handleDateValueChange = (event) => {
-		const {
-			target: { value, id },
-		} = event;
+	const handleDateValueChange = (date, id) => {
+		const value = moment(date).format("YYYY-MM-DD");
 		if (id === "startDate") {
 			setFormValues((prev) => {
 				const endDate =
@@ -262,27 +260,27 @@ const ScheduleModal = () => {
 					: setByweekday(weekNum, prev.byweekday, checked),
 		}));
 	};
-	// handle until change
-	const handleUntilValueChange = (event) => {
+	const toggleUntilOrNot = (event) => {
 		const {
-			target: { value, id },
+			target: { value },
 		} = event;
-		if (id === "untilOrNot") {
-			setFormValues((prev) => ({
-				...prev,
-				until: calculateMinUntilDateString(
-					prev.startDate,
-					prev.freq,
-					prev.interval,
-					value === "NO",
-				),
-			}));
-		} else if (id === "until") {
-			setFormValues((prev) => ({
-				...prev,
-				until: value,
-			}));
-		}
+		setFormValues((prev) => ({
+			...prev,
+			until: calculateMinUntilDateString(
+				prev.startDate,
+				prev.freq,
+				prev.interval,
+				value === "NO",
+			),
+		}));
+	};
+	// handle until change
+	const handleUntilValueChange = (date) => {
+		const value = moment(date).format("YYYY-MM-DD");
+		setFormValues((prev) => ({
+			...prev,
+			until: value,
+		}));
 	};
 
 	// valdate when change event occurs
@@ -503,6 +501,7 @@ const ScheduleModal = () => {
 							)}
 							onFreqChange={handleFreqValueChange}
 							onUntilChange={handleUntilValueChange}
+							onToggleUntilOrNot={toggleUntilOrNot}
 						/>
 						<RepeatDetail
 							isWeekly={
