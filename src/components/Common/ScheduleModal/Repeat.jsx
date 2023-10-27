@@ -2,9 +2,18 @@ import React from "react";
 
 import PropTypes from "prop-types";
 
-import { DateInput, InputLabel, StyledSelect } from "./ScheduleModal.styles";
+import DatePicker from "@/components/Common/ScheduleModal/DatePicker";
 
-const Repeat = ({ freq, until, minUntil, onFreqChange, onUntilChange }) => {
+import { InputLabel, StyledSelect } from "./ScheduleModal.styles";
+
+const Repeat = ({
+	freq,
+	until,
+	minUntil,
+	onFreqChange,
+	onToggleUntilOrNot,
+	onUntilChange,
+}) => {
 	return (
 		<div>
 			<div>
@@ -28,7 +37,7 @@ const Repeat = ({ freq, until, minUntil, onFreqChange, onUntilChange }) => {
 						<StyledSelect
 							id="untilOrNot"
 							value={until === "" ? "NO" : "YES"}
-							onChange={onUntilChange}
+							onChange={onToggleUntilOrNot}
 						>
 							<option value="NO">안 함</option>
 							<option value="YES">날짜</option>
@@ -37,11 +46,10 @@ const Repeat = ({ freq, until, minUntil, onFreqChange, onUntilChange }) => {
 					{until !== "" && (
 						<div>
 							<InputLabel htmlFor="until">반복 종료 날짜</InputLabel>
-							<DateInput
+							<DatePicker
 								id="until"
-								type="date"
-								min={minUntil}
-								value={until}
+								minDateStr={minUntil}
+								selectedStr={until}
 								onChange={onUntilChange}
 							/>
 						</div>
