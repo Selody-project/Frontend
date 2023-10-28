@@ -61,13 +61,10 @@ const authSlice = createSlice({
 			.addCase(naverLogin.pending, (state) => {
 				state.isLoading = true;
 			})
-			.addCase(
-				naverLogin.fulfilled,
-				(state, { payload: { email, nickname } }) => {
-					state.isLoading = false;
-					state.user = { email, nickname };
-				},
-			)
+			.addCase(naverLogin.fulfilled, (state, { payload }) => {
+				state.isLoading = false;
+				state.user = payload;
+			})
 			.addCase(naverLogin.rejected, (state, { payload }) => {
 				state.isLoading = false;
 				console.log(payload);
@@ -78,7 +75,7 @@ const authSlice = createSlice({
 			})
 			.addCase(googleLogin.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
-				state.user = payload.nickname;
+				state.user = payload;
 			})
 			.addCase(googleLogin.rejected, (state, { payload }) => {
 				state.isLoading = false;

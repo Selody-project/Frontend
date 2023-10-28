@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import customFetch from "@/components/Base/BaseAxios";
@@ -61,10 +62,10 @@ export const login = createAsyncThunk(
 
 export const naverLogin = createAsyncThunk(
 	"user/naverLogin",
-	async (accessToken, thunkAPI) => {
+	async ({ access_token }, thunkAPI) => {
 		try {
 			const response = await customFetch.post("/api/auth/naver", {
-				access_token: accessToken,
+				access_token,
 			});
 
 			if (response.statusText !== "OK") {
@@ -80,10 +81,10 @@ export const naverLogin = createAsyncThunk(
 
 export const googleLogin = createAsyncThunk(
 	"user/googleLogin",
-	async (googleInfo, thunkAPI) => {
+	async ({ access_token }, thunkAPI) => {
 		try {
 			const response = await customFetch.post("/api/auth/google", {
-				accessToken: googleInfo.credential,
+				access_token,
 			});
 
 			if (response.statusText !== "OK") {
