@@ -3,8 +3,10 @@ import { useDispatch } from "react-redux";
 
 import { useTheme } from "styled-components";
 
-import DeleteScheduleIcon from "@/assets/icon/ic-delete-schedule.svg";
-import EditScheduleIcon from "@/assets/icon/ic-edit-schedule.svg";
+import {
+	DeleteScheduleIcon,
+	EditScheduleIcon,
+} from "@/constants/iconConstants";
 import { UI_TYPE } from "@/constants/uiConstans";
 import { deleteSchedule } from "@/features/schedule/schedule-service";
 import { openScheduleEditModal } from "@/features/ui/ui-slice";

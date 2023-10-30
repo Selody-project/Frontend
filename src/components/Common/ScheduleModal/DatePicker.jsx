@@ -3,8 +3,7 @@ import ReactDatePicker from "react-datepicker";
 
 import { ko } from "date-fns/locale";
 
-import LeftArrowIcon from "@/assets/icon/ic-leftArrow.svg";
-import RightArrowIcon from "@/assets/icon/ic-rightArrow.svg";
+import { PreviousIcon, NextIcon } from "@/constants/iconConstants";
 
 import { CustomDatePickerComponents } from "./ScheduleModal.styles";
 
@@ -37,7 +36,7 @@ const CustomHeader = ({
 				type="button"
 			>
 				<span>
-					<LeftArrowIcon />
+					<PreviousIcon />
 				</span>
 			</button>
 			<button
@@ -47,7 +46,7 @@ const CustomHeader = ({
 				type="button"
 			>
 				<span>
-					<RightArrowIcon />
+					<NextIcon />
 				</span>
 			</button>
 		</CustomDatePickerComponents.CustomHeader>
