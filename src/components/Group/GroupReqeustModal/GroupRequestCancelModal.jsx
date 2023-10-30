@@ -13,7 +13,12 @@ const GroupRequestCancelModal = () => {
 	const theme = useTheme();
 
 	return (
-		<BaseModal hasTitle={false} hasClose={false} bgColor={theme.colors.white}>
+		<BaseModal
+			hasHeader={false}
+			hasTitle={false}
+			hasClose={false}
+			bgColor={theme.colors.white}
+		>
 			<ModalContentDiv>
 				<p>요청을 취소하시겠습니까?</p>
 			</ModalContentDiv>

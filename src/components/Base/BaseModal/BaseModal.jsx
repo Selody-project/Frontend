@@ -25,7 +25,14 @@ const Backdrop = () => {
 	);
 };
 
-const ModalContent = ({ title, children, hasTitle, hasClose, bgColor }) => {
+const ModalContent = ({
+	title,
+	children,
+	hasHeader,
+	hasTitle,
+	hasClose,
+	bgColor,
+}) => {
 	const dispatch = useDispatch();
 
 	const handleClose = () => {
@@ -34,10 +41,12 @@ const ModalContent = ({ title, children, hasTitle, hasClose, bgColor }) => {
 
 	return (
 		<ModalContentDiv bgColor={bgColor}>
-			<ModalHeaderDiv>
-				{hasTitle && <span>{title}</span>}
-				{hasClose && <CloseIcon onClick={handleClose} aria-label="close" />}
-			</ModalHeaderDiv>
+			{hasHeader && (
+				<ModalHeaderDiv>
+					{hasTitle && <span>{title}</span>}
+					{hasClose && <CloseIcon onClick={handleClose} aria-label="close" />}
+				</ModalHeaderDiv>
+			)}
 			{children}
 		</ModalContentDiv>
 	);
@@ -46,6 +55,7 @@ const ModalContent = ({ title, children, hasTitle, hasClose, bgColor }) => {
 const BaseModal = ({
 	title = null,
 	children,
+	hasHeader = true,
 	hasTitle = true,
 	hasClose = true,
 	bgColor,
@@ -58,6 +68,7 @@ const BaseModal = ({
 			{ReactDOM.createPortal(
 				<ModalContent
 					title={title}
+					hasHeader={hasHeader}
 					hasTitle={hasTitle}
 					hasClose={hasClose}
 					bgColor={bgColor}
