@@ -4,13 +4,19 @@ import { useDispatch } from "react-redux";
 import { useTheme } from "styled-components";
 
 import BaseModal from "@/components/Base/BaseModal/BaseModal";
+import { CancelGroupJoin } from "@/features/group/group-service";
 import { closeModal } from "@/features/ui/ui-slice";
 
 import { ModalContentDiv, ModalFooter } from "./GroupRequestCancelModal.styles";
 
-const GroupRequestCancelModal = () => {
+const GroupRequestCancelModal = ({ groupId }) => {
 	const dispatch = useDispatch();
 	const theme = useTheme();
+
+	const handleCancelGroupJoin = async () => {
+		dispatch(CancelGroupJoin(groupId));
+		dispatch(closeModal());
+	};
 
 	return (
 		<BaseModal
@@ -26,7 +32,9 @@ const GroupRequestCancelModal = () => {
 				<button type="button" onClick={() => dispatch(closeModal())}>
 					아니요
 				</button>
-				<button type="button">예</button>
+				<button type="button" onClick={handleCancelGroupJoin}>
+					예
+				</button>
 			</ModalFooter>
 		</BaseModal>
 	);

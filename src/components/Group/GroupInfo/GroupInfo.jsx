@@ -10,7 +10,7 @@ import {
 	OptionDiv,
 	OptionMenuDiv,
 } from "./GroupInfo.styles";
-import GroupRequestCancelModal from "../GroupReqeustModal/GroupRequestCancelModal";
+import GroupRequestCancelModal from "../GroupRequestCancelModal/GroupRequestCancelModal";
 
 const GroupInfo = ({ groupInfo, target, menu }) => {
 	const dispatch = useDispatch();
@@ -41,7 +41,9 @@ const GroupInfo = ({ groupInfo, target, menu }) => {
 									요청취소
 								</OptionMenuDiv>
 							)}
-							{openedModal === "REQUESTCANCEL" && <GroupRequestCancelModal />}
+							{openedModal === "REQUESTCANCEL" && (
+								<GroupRequestCancelModal groupId={info.groupId} />
+							)}
 						</OptionDiv>
 					)}
 					<img src={info.image} alt="groupImg" />
