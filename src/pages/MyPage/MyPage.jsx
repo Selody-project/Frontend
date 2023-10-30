@@ -111,7 +111,7 @@ const MyPage = () => {
 				tabIndex={tabIndex}
 				setTabIndex={setTabIndex}
 			/>
-			<GroupInfo groupInfo={group} target={target} />
+			<GroupInfo groupInfo={group} target={target} menu={tabIndex === 1} />
 		</ContainerMain>
 	);
 };

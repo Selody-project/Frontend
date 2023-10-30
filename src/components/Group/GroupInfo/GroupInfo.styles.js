@@ -15,6 +15,7 @@ export const GroupDiv = styled.div`
 	flex-direction: column;
 	align-items: center;
 	padding: 24px 0;
+	position: relative;
 
 	& > img {
 		width: 58px;
@@ -50,4 +51,26 @@ export const GroupDiv = styled.div`
 		font-weight: ${({ theme: { typography } }) => typography.weight.medium};
 		margin-top: 10px;
 	}
+`;
+
+export const OptionDiv = styled.div`
+	position: absolute;
+	right: 12px;
+	top: 12px;
+	cursor: pointer;
+`;
+
+export const OptionMenuDiv = styled.div`
+	width: 60px;
+	height: 30px;
+	z-index: 2;
+	background-color: ${({ theme: { colors } }) => colors.white};
+	border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: ${({ theme: { colors } }) => colors.error};
+	font-size: ${({ theme: { typography } }) => typography.size.s1};
+	font-weight: ${({ theme: { typography } }) => typography.weight.medium};
+	position: absolute;
 `;
