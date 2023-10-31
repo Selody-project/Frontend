@@ -21,11 +21,7 @@ import Repeat from "./Repeat";
 import RepeatDetail, { getRecurringString } from "./RepeatDetail";
 import {
 	TitleInput,
-	DateInput,
 	DetailTextarea,
-	DateDiv,
-	DateContainerDiv,
-	InputLabel,
 	FooterDiv,
 	SubmitButton,
 	ScheduleModalLayoutDiv,
@@ -113,9 +109,7 @@ const ScheduleModal = () => {
 	const [formValues, setFormValues] = useState(initialFormValues);
 	// value
 	const isEditMode = scheduleModalMode === SCHEDULE_MODAL_TYPE.EDIT;
-	const minStartDate = moment(
-		new Date(new Date().setMonth(new Date().getMonth() - 6)),
-	).format("YYYY-MM-DD");
+
 	// handle date change
 	const handleDateValueChange = (date, id) => {
 		const value = moment(date).format("YYYY-MM-DD");
@@ -174,14 +168,15 @@ const ScheduleModal = () => {
 		}
 	};
 	// handle time change
-	const handleTimeValueChange = (event) => {
-		const {
-			target: { value, id },
-		} = event;
+	const handleTimeValueChange = (value, id) => {
 		if (id === "startTime") {
 			setFormValues((prev) => ({
 				...prev,
 				startTime: value,
+				endTime:
+					prev.startDate === prev.endDate && value >= prev.endTime
+						? value
+						: prev.endTime,
 				isAllDay: calculateIsAllDay(
 					prev.startDate,
 					value,
@@ -461,8 +456,8 @@ const ScheduleModal = () => {
 					</AllDayCheckBoxDiv>
 				)}
 				{openedModal === UI_TYPE.SHARE_SCHEDULE ? (
-					<>
-						<InputLabel>일정 투표 종료일</InputLabel>
+					<div>
+						{/* <InputLabel>일정 투표 종료일</InputLabel>
 						<DateContainerDiv>
 							<DateDiv>
 								<DateInput
@@ -487,8 +482,8 @@ const ScheduleModal = () => {
 									}
 								/>
 							</DateDiv>
-						</DateContainerDiv>
-					</>
+						</DateContainerDiv> */}
+					</div>
 				) : (
 					<RepeatContainerDiv>
 						<Repeat
