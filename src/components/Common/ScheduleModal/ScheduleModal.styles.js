@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const ScheduleModalLayoutDiv = styled.div`
 	width: 100%;
@@ -76,37 +76,6 @@ export const DateDiv = styled.div`
 	display: flex;
 	gap: 15px;
 	width: 45%;
-`;
-
-const defaultDateInputStyle = css`
-	border: none;
-	display: block;
-	background: ${({ theme: { colors } }) => colors.bg_01};
-	height: 33px;
-	padding: 0 10px;
-	font-weight: ${({
-		theme: {
-			typography: { weight },
-		},
-	}) => weight.medium};
-	cursor: pointer;
-`;
-
-export const DateInput = styled.input`
-	${defaultDateInputStyle}
-	position: relative;
-	&[type="date"] {
-		width: 127px;
-	}
-	&[type="time"] {
-		width: 107px;
-	}
-	&::-webkit-calendar-picker-indicator {
-		cursor: pointer;
-		position: absolute;
-		opacity: 0;
-		width: 100%;
-	}
 `;
 
 const DatePickerDiv = styled.div`
@@ -208,11 +177,103 @@ const DatePickerDiv = styled.div`
 	}
 `;
 
+const TImePickerWrapperDiv = styled.div`
+	position: relative;
+`;
+
 const CustomInputButton = styled.button`
-	${defaultDateInputStyle}
-	width: 127px;
-	font-size: 13px;
+	position: relative;
+	border: none;
+	display: block;
+	background: ${({ theme: { colors } }) => colors.bg_01};
+	height: 33px;
+	font-size: ${({
+		theme: {
+			typography: { size },
+		},
+	}) => size.s2};
+	font-weight: ${({
+		theme: {
+			typography: { weight },
+		},
+	}) => weight.medium};
+	text-align: center;
+	cursor: pointer;
+	width: ${({ isTime }) => (isTime ? 107 : 127)}px;
 	font-family: inherit;
+`;
+
+const CustomTimePicker = styled.div`
+	position: absolute;
+	z-index: 101;
+	bottom: calc(100% + 7px);
+	left: ${({ isModalPositionTopLeft }) =>
+		isModalPositionTopLeft ? 0 : undefined};
+	right: ${({ isModalPositionTopLeft }) =>
+		!isModalPositionTopLeft ? 0 : undefined};
+	display: ${({ isOpen }) => !isOpen && "none"};
+	width: 198px;
+	height: 262px;
+	padding: 7px 16px;
+	box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+	-webkit-box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+	background-color: ${({ theme: { colors } }) => colors.white};
+	& > div:first-child {
+		margin-bottom: 20px;
+		display: flex;
+		gap: 8px;
+		height: 199px;
+		& > div {
+			flex: 1;
+			width: 50px;
+			height: 100%;
+			overflow: auto;
+			display: flex;
+			flex-direction: column;
+			gap: 8.5px;
+			overflow-y: scroll;
+			-ms-overflow-style: none; /* Internet Explorer 10+ */
+			scrollbar-width: none; /* Firefox */
+			&::-webkit-scrollbar {
+				display: none; /* Safari and Chrome */
+			}
+			& > button {
+				width: 100%;
+				height: 33px;
+				min-height: 33px;
+			}
+		}
+	}
+	& > div:last-child {
+		width: 100%;
+		height: 28px;
+		display: flex;
+		justify-content: flex-end;
+		& > button {
+			width: 73px;
+			height: 28px;
+		}
+	}
+	& button {
+		cursor: pointer;
+		text-align: center;
+		border-radius: 5px;
+		font-size: ${({
+			theme: {
+				typography: { size },
+			},
+		}) => size.s2};
+		&.selected,
+		&.confirm {
+			background-color: ${({ theme: { colors } }) => colors.primary};
+			color: ${({ theme: { colors } }) => colors.white};
+		}
+		&:disabled {
+			cursor: not-allowed;
+			color: ${({ theme: { colors } }) => colors.disabled_text};
+		}
+	}
 `;
 
 const CustomHeader = styled.header`
@@ -245,6 +306,12 @@ export const CustomDatePickerComponents = {
 	DatePickerDiv,
 	CustomInputButton,
 	CustomHeader,
+};
+
+export const CustomTimePickerComponents = {
+	CustomInputButton,
+	CustomTimePicker,
+	TImePickerWrapperDiv,
 };
 
 export const AllDayCheckBoxDiv = styled.div`
