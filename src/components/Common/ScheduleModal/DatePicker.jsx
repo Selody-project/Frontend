@@ -72,6 +72,7 @@ const DatePicker = ({ minDateStr, selectedStr, onChange }) => {
 
 	useEffect(() => {
 		setDateToChange(new Date(selectedStr));
+		prevDateRef.current = new Date(selectedStr);
 	}, [selectedStr]);
 
 	return (
