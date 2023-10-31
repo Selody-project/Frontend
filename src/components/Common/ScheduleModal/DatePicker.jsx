@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useState } from "react";
+import React, { forwardRef, useEffect, useRef, useState } from "react";
 import ReactDatePicker from "react-datepicker";
 
 import { ko } from "date-fns/locale";
@@ -69,6 +69,10 @@ const DatePicker = ({ minDateStr, selectedStr, onChange }) => {
 		prevDateRef.current = dateToChange;
 		datePickerRef.current.setOpen(false);
 	};
+
+	useEffect(() => {
+		setDateToChange(new Date(selectedStr));
+	}, [selectedStr]);
 
 	return (
 		<CustomDatePickerComponents.DatePickerDiv>
