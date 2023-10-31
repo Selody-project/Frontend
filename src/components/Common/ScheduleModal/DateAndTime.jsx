@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import moment from "moment";
 import PropTypes from "prop-types";
@@ -9,6 +9,13 @@ import {
 	DateContainerDiv,
 	InputLabel,
 } from "./ScheduleModal.styles";
+import TimePicker from "./TimePicker";
+
+const TIME_PICKER_TYPE = {
+	START: "start",
+	END: "end",
+	NONE: null,
+};
 
 const DateAndTime = ({
 	startDate,
@@ -21,6 +28,9 @@ const DateAndTime = ({
 	const minStartDate = moment(
 		new Date(new Date().setMonth(new Date().getMonth() - 6)),
 	).format("YYYY-MM-DD");
+	const [openedTimePicker, setOpenedTimePicker] = useState(
+		TIME_PICKER_TYPE.NONE,
+	);
 
 	return (
 		<>
@@ -34,11 +44,13 @@ const DateAndTime = ({
 						value={startDate}
 						onChange={onDateChange}
 					/>
-					<DateInput
-						id="startTime"
-						type="time"
-						value={startTime}
-						onChange={onTimeChange}
+					<TimePicker
+						initialValue={startTime}
+						selected={startTime}
+						onChange={(value) => onTimeChange(value, "startTime")}
+						isOpen={openedTimePicker === TIME_PICKER_TYPE.START}
+						onOpen={() => setOpenedTimePicker(TIME_PICKER_TYPE.START)}
+						onClose={() => setOpenedTimePicker(TIME_PICKER_TYPE.NONE)}
 					/>
 				</DateDiv>
 				~
@@ -51,12 +63,15 @@ const DateAndTime = ({
 						value={endDate}
 						onChange={onDateChange}
 					/>
-					<DateInput
-						id="endTime"
-						type="time"
+					<TimePicker
+						initialValue={endTime}
+						selected={endTime}
 						min={startDate === endDate ? startTime : undefined}
-						value={endTime}
-						onChange={onTimeChange}
+						onChange={(value) => onTimeChange(value, "endTime")}
+						isOpen={openedTimePicker === TIME_PICKER_TYPE.END}
+						onOpen={() => setOpenedTimePicker(TIME_PICKER_TYPE.END)}
+						onClose={() => setOpenedTimePicker(TIME_PICKER_TYPE.NONE)}
+						isModalPositionTopLeft={false}
 					/>
 				</DateDiv>
 			</DateContainerDiv>
