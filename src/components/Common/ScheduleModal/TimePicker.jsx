@@ -4,13 +4,18 @@ import { CustomTimePickerComponents } from "@/components/Common/ScheduleModal/Sc
 import useOutsideClick from "@/hooks/useOutsideClick";
 
 const TIME_STRING = ["오전", "오후"];
-const getHours = (isAM) =>
-	Array.from({ length: 12 }).map((_, index) => index + Number(!isAM));
+const getHours = (isAM) => {
+	const hours = Array.from({ length: 12 }).map((_, index) => index);
+	if (!isAM) {
+		hours[0] = 12;
+	}
+	return hours;
+};
 const MINUTES = Array.from({ length: 60 }).map(
 	(_, index) => `${index < 10 ? `0${index}` : index}`,
 );
 
-const getHoursString = (hours) => {
+const get12HoursString = (hours) => {
 	if (hours === 12) {
 		return 12;
 	}
@@ -18,6 +23,14 @@ const getHoursString = (hours) => {
 		return hours % 12;
 	}
 	return `0${hours % 12}`;
+};
+
+const get24hoursString = (isAM, hours) => {
+	hours += isAM ? 0 : 12;
+	if (hours < 10) {
+		return `0${hours}`;
+	}
+	return hours;
 };
 
 const TimePicker = ({
@@ -33,7 +46,7 @@ const TimePicker = ({
 
 	const initialTimeString =
 		selectedHours >= 12 ? TIME_STRING[1] : TIME_STRING[0];
-	const initialButtonText = `${initialTimeString} ${getHoursString(
+	const initialButtonText = `${initialTimeString} ${get12HoursString(
 		Number(selectedHours),
 	)}:${selectedMinutes}`;
 
@@ -60,7 +73,7 @@ const TimePicker = ({
 
 	const handleSubmitTime = () => {
 		onChange(
-			`${hours + (!isAM && hours < 12 ? 12 : 0)}:${
+			`${get24hoursString(isAM, hours)}:${
 				minutes < 10 ? `0${minutes}` : minutes
 			}`,
 		);
