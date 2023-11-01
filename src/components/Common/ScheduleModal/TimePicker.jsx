@@ -57,6 +57,7 @@ const TimePicker = ({
 	const [minutes, setMinutes] = useState(Number(selectedMinutes));
 
 	const timePickerRef = useRef();
+	const selectedButtonRefs = useRef([]);
 
 	const resetTimeValues = () => {
 		setIsAM(Number(selectedHours) < 12);
@@ -84,7 +85,12 @@ const TimePicker = ({
 
 	useEffect(() => {
 		resetTimeValues();
-	}, [selected]);
+		if (isOpen) {
+			selectedButtonRefs.current.forEach((el) => {
+				el.scrollIntoView(true);
+			});
+		}
+	}, [selected, isOpen]);
 
 	return (
 		<CustomTimePickerComponents.TImePickerWrapperDiv ref={timePickerRef}>
@@ -106,6 +112,13 @@ const TimePicker = ({
 							<button
 								key={str}
 								type="button"
+								ref={
+									(isAM && !index) || (!isAM && index)
+										? (el) => {
+												selectedButtonRefs.current[0] = el;
+										  }
+										: undefined
+								}
 								className={
 									(isAM && !index) || (!isAM && index) ? "selected" : undefined
 								}
@@ -121,7 +134,14 @@ const TimePicker = ({
 							<button
 								key={value}
 								type="button"
-								className={`${hours === value ? "selected" : ""}`}
+								ref={
+									hours === value
+										? (el) => {
+												selectedButtonRefs.current[1] = el;
+										  }
+										: undefined
+								}
+								className={hours === value ? "selected" : ""}
 								disabled={min && value < Number(min.substr(0, 2)) % 12}
 								onClick={() => setHours(value)}
 							>
@@ -134,7 +154,14 @@ const TimePicker = ({
 							<button
 								key={value}
 								type="button"
-								className={`${minutes === Number(value) ? "selected" : ""}`}
+								ref={
+									minutes === Number(value)
+										? (el) => {
+												selectedButtonRefs.current[2] = el;
+										  }
+										: undefined
+								}
+								className={minutes === Number(value) ? "selected" : ""}
 								disabled={
 									min &&
 									hours === min.substr(0, 2) % 12 &&
