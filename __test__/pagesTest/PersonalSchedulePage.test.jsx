@@ -194,70 +194,107 @@ describe("display components in ScheduleModal", () => {
 		render(<ScheduleModal />);
 
 		// initial render
-		const labelForToggleFreq = screen.queryByLabelText("반복 종료");
+		const labelForToggleFreq = screen.queryByRole("heading", {
+			name: "반복 종료",
+		});
 		expect(labelForToggleFreq).toBeNull();
 
-		const select = screen.queryByLabelText("반복 여부");
 		// DAILY
-		userEvent.selectOptions(select, "DAILY");
+		userEvent.click(screen.getByText("반복 안함"));
+		userEvent.click(screen.getByText("매일"));
 
-		expect(screen.queryByRole("option", { name: "매일" }).selected).toBe(true);
-		expect(screen.queryByLabelText("반복 종료")).not.toBeNull();
+		expect(screen.getByText("매일")).toBeInTheDocument();
+		expect(
+			screen.getByRole("heading", {
+				name: "반복 종료",
+			}),
+		).toBeInTheDocument();
 
 		// DAILY_N
-		userEvent.selectOptions(select, "DAILY_N");
+		userEvent.click(screen.getByText("매일"));
+		userEvent.click(screen.getByText("N일 간격"));
 
-		expect(screen.queryByRole("option", { name: "N일 간격" }).selected).toBe(
-			true,
-		);
-		expect(screen.queryByDisplayValue(1)).not.toBeNull();
-		expect(screen.queryByText("일 간격으로 반복합니다.")).not.toBeNull();
+		expect(screen.getByText("N일 간격")).toBeInTheDocument();
+		expect(
+			screen.getByRole("heading", {
+				name: "반복 종료",
+			}),
+		).toBeInTheDocument();
+		expect(screen.getByDisplayValue(1)).toBeInTheDocument();
+		expect(screen.getByText("일 간격으로 반복합니다.")).toBeInTheDocument();
 
 		// WEEKLY
-		userEvent.selectOptions(select, "WEEKLY");
+		userEvent.click(screen.getByText("N일 간격"));
+		userEvent.click(screen.getByText("매주"));
 
-		expect(screen.queryByRole("option", { name: "매주" }).selected).toBe(true);
-		expect(screen.queryByLabelText("반복 종료")).not.toBeNull();
-		expect(screen.queryByLabelText("월")).not.toBeNull();
+		expect(screen.getByText("매주")).toBeInTheDocument();
+		expect(
+			screen.getByRole("heading", {
+				name: "반복 종료",
+			}),
+		).toBeInTheDocument();
+		expect(screen.getByLabelText("월")).toBeInTheDocument();
 
 		// WEEKLY_N
-		userEvent.selectOptions(select, "WEEKLY_N");
+		userEvent.click(screen.getByText("매주"));
+		userEvent.click(screen.getByText("N주 간격"));
 
-		expect(screen.queryByRole("option", { name: "N주 간격" }).selected).toBe(
-			true,
-		);
-		expect(screen.queryByDisplayValue(1)).not.toBeNull();
-		expect(screen.queryByText("주 간격으로 반복합니다.")).not.toBeNull();
-		expect(screen.queryByLabelText("월")).not.toBeNull();
+		expect(screen.getByText("N주 간격")).toBeInTheDocument();
+		expect(
+			screen.getByRole("heading", {
+				name: "반복 종료",
+			}),
+		).toBeInTheDocument();
+		expect(screen.getByLabelText("월")).toBeInTheDocument();
+		expect(screen.getByDisplayValue(1)).toBeInTheDocument();
+		expect(screen.getByText("주 간격으로 반복합니다.")).toBeInTheDocument();
 
 		// MONTHLY
-		userEvent.selectOptions(select, "MONTHLY");
+		userEvent.click(screen.getByText("N주 간격"));
+		userEvent.click(screen.getByText("매월"));
 
-		expect(screen.queryByRole("option", { name: "매월" }).selected).toBe(true);
-		expect(screen.queryByLabelText("반복 종료")).not.toBeNull();
+		expect(screen.getByText("매월")).toBeInTheDocument();
+		expect(
+			screen.getByRole("heading", {
+				name: "반복 종료",
+			}),
+		).toBeInTheDocument();
 
 		// MONTHLY_N
-		userEvent.selectOptions(select, "MONTHLY_N");
+		userEvent.click(screen.getByText("매월"));
+		userEvent.click(screen.getByText("N개월 간격"));
 
-		expect(screen.queryByRole("option", { name: "N개월 간격" }).selected).toBe(
-			true,
-		);
-		expect(screen.queryByDisplayValue(1)).not.toBeNull();
-		expect(screen.queryByText("개월 간격으로 반복합니다.")).not.toBeNull();
+		expect(screen.getByText("N개월 간격")).toBeInTheDocument();
+		expect(
+			screen.getByRole("heading", {
+				name: "반복 종료",
+			}),
+		).toBeInTheDocument();
+		expect(screen.getByDisplayValue(1)).toBeInTheDocument();
+		expect(screen.getByText("개월 간격으로 반복합니다.")).toBeInTheDocument();
 
 		// YEARLY
-		userEvent.selectOptions(select, "YEARLY");
+		userEvent.click(screen.getByText("N개월 간격"));
+		userEvent.click(screen.getByText("매년"));
 
-		expect(screen.queryByRole("option", { name: "매년" }).selected).toBe(true);
-		expect(screen.queryByLabelText("반복 종료")).not.toBeNull();
+		expect(screen.getByText("매년")).toBeInTheDocument();
+		expect(
+			screen.getByRole("heading", {
+				name: "반복 종료",
+			}),
+		).toBeInTheDocument();
 
 		// YEARLY_N
-		userEvent.selectOptions(select, "YEARLY_N");
+		userEvent.click(screen.getByText("매년"));
+		userEvent.click(screen.getByText("N년 간격"));
 
-		expect(screen.queryByRole("option", { name: "N년 간격" }).selected).toBe(
-			true,
-		);
-		expect(screen.queryByDisplayValue(1)).not.toBeNull();
-		expect(screen.queryByText("년 간격으로 반복합니다.")).not.toBeNull();
+		expect(screen.getByText("N년 간격")).toBeInTheDocument();
+		expect(
+			screen.getByRole("heading", {
+				name: "반복 종료",
+			}),
+		).toBeInTheDocument();
+		expect(screen.getByDisplayValue(1)).toBeInTheDocument();
+		expect(screen.getByText("년 간격으로 반복합니다.")).toBeInTheDocument();
 	});
 });
