@@ -4,7 +4,25 @@ import PropTypes from "prop-types";
 
 import DatePicker from "@/components/Common/ScheduleModal/DatePicker";
 
-import { InputLabel, StyledSelect } from "./ScheduleModal.styles";
+import CustomSelect from "./CustomSelect/CustomSelect";
+import { LabelH3 } from "./ScheduleModal.styles";
+
+const FREQ_OPTIONS = [
+	{ value: "NONE", text: "반복 안함" },
+	{ value: "DAILY", text: "매일" },
+	{ value: "DAILY_N", text: "N일 간격" },
+	{ value: "WEEKLY", text: "매주" },
+	{ value: "WEEKLY_N", text: "N주 간격" },
+	{ value: "MONTHLY", text: "매월" },
+	{ value: "MONTHLY_N", text: "N개월 간격" },
+	{ value: "YEARLY", text: "매년" },
+	{ value: "YEARLY_N", text: "N년 간격" },
+];
+
+const UNTIL_OR_NOT_OPTIONS = [
+	{ value: "NO", text: "안 함" },
+	{ value: "YES", text: "날짜" },
+];
 
 const Repeat = ({
 	freq,
@@ -17,35 +35,26 @@ const Repeat = ({
 	return (
 		<div>
 			<div>
-				<InputLabel htmlFor="frequency">반복 여부</InputLabel>
-				<StyledSelect id="frequency" value={freq} onChange={onFreqChange}>
-					<option value="NONE">반복 안함</option>
-					<option value="DAILY">매일</option>
-					<option value="DAILY_N">N일 간격</option>
-					<option value="WEEKLY">매주</option>
-					<option value="WEEKLY_N">N주 간격</option>
-					<option value="MONTHLY">매월</option>
-					<option value="MONTHLY_N">N개월 간격</option>
-					<option value="YEARLY">매년</option>
-					<option value="YEARLY_N">N년 간격</option>
-				</StyledSelect>
+				<LabelH3>반복 여부</LabelH3>
+				<CustomSelect
+					value={freq}
+					onChange={onFreqChange}
+					options={FREQ_OPTIONS}
+				/>
 			</div>
 			{freq !== "NONE" && (
 				<>
 					<div>
-						<InputLabel htmlFor="untilOrNot">반복 종료</InputLabel>
-						<StyledSelect
-							id="untilOrNot"
+						<LabelH3>반복 종료</LabelH3>
+						<CustomSelect
 							value={until === "" ? "NO" : "YES"}
 							onChange={onToggleUntilOrNot}
-						>
-							<option value="NO">안 함</option>
-							<option value="YES">날짜</option>
-						</StyledSelect>
+							options={UNTIL_OR_NOT_OPTIONS}
+						/>
 					</div>
 					{until !== "" && (
 						<div>
-							<InputLabel htmlFor="until">반복 종료 날짜</InputLabel>
+							<LabelH3>반복 종료 날짜</LabelH3>
 							<DatePicker
 								id="until"
 								minDateStr={minUntil}
