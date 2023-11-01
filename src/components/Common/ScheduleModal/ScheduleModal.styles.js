@@ -48,7 +48,7 @@ export const DetailTextarea = styled.textarea`
 	}
 `;
 
-export const InputLabel = styled.label`
+export const LabelH3 = styled.h3`
 	color: ${({ theme: { colors } }) => colors.text_01};
 	font-size: ${({
 		theme: {
@@ -420,24 +420,6 @@ export const ByweekdayPickerDiv = styled.div`
 			color: ${({ theme: { colors } }) => colors.saturday};
 		}
 	}
-`;
-
-export const StyledSelect = styled.select`
-	all: unset;
-	cursor: pointer;
-	padding: 8px 12px;
-	background: url("data:image/svg+xml,%3Csvg width='12' height='6' viewBox='0 0 14 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L7 7L13 1' stroke='%23121127' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A")
-		no-repeat right 10px center;
-	border: 1px solid ${({ theme: { colors } }) => colors.disabled_text};
-	width: 196px;
-	height: 33px;
-	line-height: 15px;
-	font-size: ${({
-		theme: {
-			typography: { size },
-		},
-	}) => size.s2};
-	color: ${({ theme: { colors } }) => colors.text_03};
 `;
 
 export const FooterDiv = styled.div`

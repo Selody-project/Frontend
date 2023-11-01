@@ -4,7 +4,7 @@ import moment from "moment";
 import PropTypes from "prop-types";
 
 import DatePicker from "./DatePicker";
-import { DateDiv, DateContainerDiv, InputLabel } from "./ScheduleModal.styles";
+import { DateDiv, DateContainerDiv, LabelH3 } from "./ScheduleModal.styles";
 import TimePicker from "./TimePicker";
 
 const TIME_PICKER_TYPE = {
@@ -30,7 +30,7 @@ const DateAndTime = ({
 
 	return (
 		<>
-			<InputLabel htmlFor="startDate">날짜 및 시간</InputLabel>
+			<LabelH3>날짜 및 시간</LabelH3>
 			<DateContainerDiv>
 				<DateDiv>
 					<DatePicker
