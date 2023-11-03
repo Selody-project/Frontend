@@ -114,7 +114,9 @@ export const getSchedulesSummary = createAsyncThunk(
 			const data = await commonThunk(
 				{
 					method: "GET",
-					url: `/api/${!isGroup ? "user" : `group/${groupId}`}/calendar`,
+					url: `/api/${
+						!isGroup ? "user" : `group/${groupId}`
+					}/calendar/summary`,
 					params: {
 						startDateTime,
 						endDateTime,
