@@ -28,27 +28,25 @@ const CalendarContainer = ({ type }) => {
 	const [inviteInput, setInviteInput] = useState("");
 	const [invitationLink, setInvitationLink] = useState("");
 
-	const fullCalendarEvents = calendarSchedules.map((schedule) => {
-		if (schedule.recurrence) {
-			return {
-				id: schedule.id,
-				userId: schedule.userId,
-				daysOfWeek: schedule.byweekday,
-				startTime: new Date(schedule.startDateTime),
-				endDateTime: new Date(schedule.endDateTime),
-				startRecur: new Date(schedule.startRecur),
-				endRecur: new Date(schedule.until),
-			};
-		}
-
-		return {
-			id: schedule.id,
-			userId: schedule.userId,
-			title: schedule.title,
-			start: new Date(schedule.startDateTime),
-			end: new Date(schedule.endDateTime),
-		};
-	});
+	const fullCalendarEvents = calendarSchedules.map((schedule) =>
+		schedule.recurrence
+			? {
+					id: schedule.id,
+					userId: schedule.userId,
+					daysOfWeek: schedule.byweekday,
+					startTime: new Date(schedule.startDateTime),
+					endDateTime: new Date(schedule.endDateTime),
+					startRecur: new Date(schedule.startRecur),
+					endRecur: new Date(schedule.until),
+			  }
+			: {
+					id: schedule.id,
+					userId: schedule.userId,
+					title: schedule.title,
+					start: new Date(schedule.startDateTime),
+					end: new Date(schedule.endDateTime),
+			  },
+	);
 
 	const updateDateState = (year, month, week) => {
 		dispatch(setMonth(month));
