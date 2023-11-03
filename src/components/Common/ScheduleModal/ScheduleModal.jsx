@@ -223,7 +223,9 @@ const ScheduleModal = () => {
 				1,
 				Boolean(!prev.until),
 			),
-			byweekday: [new Date(prev.startDate).getDay()],
+			byweekday: value.startsWith("WEEKLY")
+				? [new Date(prev.startDate).getDay()]
+				: [],
 		}));
 	};
 	// handle interval change
