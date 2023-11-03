@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -93,6 +93,7 @@ const CustomCalendar = forwardRef(
 		const { year, month, week, currentView } = useSelector(
 			(state) => state.schedule,
 		);
+		const dispatch = useDispatch();
 
 		return (
 			<CustomCalendarDiv data-testid="calendar-container">
@@ -128,7 +129,7 @@ const CustomCalendar = forwardRef(
 					}
 					height={750}
 					eventClick={menuHandler}
-					datesSet={({ view: { type } }) => setCurrentView(type)}
+					datesSet={({ view: { type } }) => dispatch(setCurrentView(type))}
 				/>
 			</CustomCalendarDiv>
 		);
