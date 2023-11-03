@@ -7,7 +7,7 @@ import moment from "moment";
 import { useTheme } from "styled-components";
 
 import BaseModal from "@/components/Base/BaseModal/BaseModal";
-import { SCHEDULE_MODAL_TYPE, UI_TYPE } from "@/constants/uiConstans";
+import { SCHEDULE_MODAL_TYPE, UI_TYPE } from "@/constants/uiConstants";
 import {
 	createSchedule,
 	updateSchedule,

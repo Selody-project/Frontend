@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ScheduleModal from "@/components/Common/ScheduleModal/ScheduleModal.jsx";
 import ScheduleItem from "@/components/ScheduleItemList/ScheduleItem/ScheduleItem";
 import { ScheduleAddIcon } from "@/constants/iconConstants";
-import { UI_TYPE } from "@/constants/uiConstans";
+import { UI_TYPE } from "@/constants/uiConstants";
 import {
 	getSchedulesForTheWeek,
 	getTodaySchedules,

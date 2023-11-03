@@ -7,7 +7,7 @@ import {
 	DeleteScheduleIcon,
 	EditScheduleIcon,
 } from "@/constants/iconConstants";
-import { UI_TYPE } from "@/constants/uiConstans";
+import { UI_TYPE } from "@/constants/uiConstants";
 import { deleteSchedule } from "@/features/schedule/schedule-service";
 import { openScheduleEditModal } from "@/features/ui/ui-slice";
 import { checkIsAlldaySchedule } from "@/utils/calendarUtils";
