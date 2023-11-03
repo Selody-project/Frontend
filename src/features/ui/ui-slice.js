@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { SCHEDULE_MODAL_TYPE, UI_TYPE } from "@/constants/uiConstans";
+import { SCHEDULE_MODAL_TYPE, UI_TYPE } from "@/constants/uiConstants";
 
 const initialState = {
 	openedModal: null,
