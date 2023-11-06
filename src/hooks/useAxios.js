@@ -17,7 +17,7 @@ export const useAxios = (defaultParams) => {
 	};
 
 	const refetchWithParams = (params) => {
-		setAxiosParams(params);
+		setAxiosParams((prev) => ({ ...prev, ...params }));
 		setTrigger(Date.now());
 	};
 
