@@ -1,22 +1,6 @@
 import { useEffect, useState } from "react";
 
-import axios from "axios";
-
-export const customAxios = axios.create({
-	baseURL: "/back",
-	timeout: 3000,
-	withCredentials: true,
-});
-
-customAxios.interceptors.request.use(
-	(config) => config,
-	(error) => error.response,
-);
-
-customAxios.interceptors.response.use(
-	(response) => response,
-	(error) => error.response,
-);
+import customFetch from "@/components/Base/BaseAxios";
 
 export const useAxios = (defaultParams) => {
 	const [response, setResponse] = useState();
@@ -40,7 +24,7 @@ export const useAxios = (defaultParams) => {
 	const fetchData = async (params) => {
 		try {
 			setIsLoading(true);
-			const result = await customAxios.request(params);
+			const result = await customFetch.request(params);
 			setResponse(result);
 			setError();
 		} catch (err) {
