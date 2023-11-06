@@ -13,15 +13,23 @@ describe("SignUpPage Component", () => {
 	it("renders SignUpPage without crashing", () => {
 		render(<SignUpPage />);
 
-		expect(screen.getByTestId("email-input")).toBeInTheDocument();
-		expect(screen.getByTestId("nickname-input")).toBeInTheDocument();
-		expect(screen.getByTestId("password-input")).toBeInTheDocument();
-		expect(screen.getByTestId("password-check-input")).toBeInTheDocument();
 		expect(
-			screen.getByTestId("email-duplicate-check-button"),
+			screen.getByRole("textbox", { name: "email-input" }),
 		).toBeInTheDocument();
 		expect(
-			screen.getByTestId("nickname-duplicate-check-button"),
+			screen.getByRole("textbox", { name: "nickname-input" }),
+		).toBeInTheDocument();
+		expect(
+			screen.getByRole("textbox", { name: "password-input" }),
+		).toBeInTheDocument();
+		expect(
+			screen.getByRole("textbox", { name: "password-check-input" }),
+		).toBeInTheDocument();
+		expect(
+			screen.getByRole("button", { name: "email-duplicate-check-button" }),
+		).toBeInTheDocument();
+		expect(
+			screen.getByRole("button", { name: "nickname-duplicate-check-button" }),
 		).toBeInTheDocument();
 		expect(screen.getByText("회원가입")).toBeInTheDocument();
 	});
@@ -30,31 +38,42 @@ describe("SignUpPage Component", () => {
 	it("handles form interactions correctly", () => {
 		render(<SignUpPage />);
 
-		expect(screen.getByTestId("email-duplicate-check-button")).toBeDisabled();
-		fireEvent.change(screen.getByTestId("email-input"), {
+		expect(
+			screen.getByRole("button", { name: "email-duplicate-check-button" }),
+		).toBeDisabled();
+		fireEvent.change(screen.getByRole("textbox", { name: "email-input" }), {
 			target: { value: "test@example.com" },
 		});
-		expect(screen.getByTestId("email-input").value).toBe("test@example.com");
+		expect(screen.getByRole("textbox", { name: "email-input" }).value).toBe(
+			"test@example.com",
+		);
 
 		expect(
-			screen.getByTestId("nickname-duplicate-check-button"),
+			screen.getByRole("button", { name: "nickname-duplicate-check-button" }),
 		).toBeDisabled();
-		fireEvent.change(screen.getByTestId("nickname-input"), {
+		fireEvent.change(screen.getByRole("textbox", { name: "nickname-input" }), {
 			target: { value: "testuser" },
 		});
-		expect(screen.getByTestId("nickname-input").value).toBe("testuser");
+		expect(screen.getByRole("textbox", { name: "nickname-input" }).value).toBe(
+			"testuser",
+		);
 
-		fireEvent.change(screen.getByTestId("password-input"), {
+		fireEvent.change(screen.getByRole("textbox", { name: "password-input" }), {
 			target: { value: "password123" },
 		});
-		fireEvent.change(screen.getByTestId("password-check-input"), {
-			target: { value: "password123" },
-		});
+		fireEvent.change(
+			screen.getByRole("textbox", { name: "password-check-input" }),
+			{
+				target: { value: "password123" },
+			},
+		);
 
-		expect(screen.getByTestId("password-input").value).toBe("password123");
-		expect(screen.getByTestId("password-check-input").value).toBe(
+		expect(screen.getByRole("textbox", { name: "password-input" }).value).toBe(
 			"password123",
 		);
+		expect(
+			screen.getByRole("textbox", { name: "password-check-input" }).value,
+		).toBe("password123");
 	});
 
 	// 이메일 및 닉네임 중복 체크 함수가 정상적으로 호출되는지 테스트
@@ -66,14 +85,18 @@ describe("SignUpPage Component", () => {
 			.mockName("mockValidateDuplication");
 		mockValidateDuplication.mockResolvedValue({ payload: 200 });
 
-		fireEvent.click(screen.getByTestId("email-duplicate-check-button"));
+		fireEvent.click(
+			screen.getByRole("button", { name: "email-duplicate-check-button" }),
+		);
 		mockValidateDuplication({ type: "email", targetValue: "test@example.com" });
 		expect(mockValidateDuplication).toHaveBeenCalledWith({
 			type: "email",
 			targetValue: "test@example.com",
 		});
 
-		fireEvent.click(screen.getByTestId("nickname-duplicate-check-button"));
+		fireEvent.click(
+			screen.getByRole("button", { name: "nickname-duplicate-check-button" }),
+		);
 		mockValidateDuplication({ type: "nickname", targetValue: "testuser" });
 		expect(mockValidateDuplication).toHaveBeenCalledWith({
 			type: "nickname",

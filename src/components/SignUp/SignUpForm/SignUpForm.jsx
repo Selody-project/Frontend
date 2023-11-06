@@ -19,7 +19,7 @@ const inputObjList = [
 	{
 		key: "email",
 		label: "아이디 (이메일)",
-		testid: "email-input",
+		ariaLabel: "email-input",
 		type: "email",
 		placeholder: "이메일을 입력해주세요.",
 		hasButton: true,
@@ -27,7 +27,7 @@ const inputObjList = [
 	{
 		key: "nickname",
 		label: "어떤 이름을 사용하시겠어요?",
-		testid: "nickname-input",
+		ariaLabel: "nickname-input",
 		type: "text",
 		placeholder: "닉네임을 설정해주세요.",
 		hasButton: true,
@@ -35,7 +35,7 @@ const inputObjList = [
 	{
 		key: "password",
 		label: "비밀번호",
-		testid: "password-input",
+		ariaLabel: "password-input",
 		type: "password",
 		placeholder: "비밀번호를 설정해주세요.",
 		hasButton: false,
@@ -43,7 +43,7 @@ const inputObjList = [
 	{
 		key: "passwordCheck",
 		label: "비밀번호 확인",
-		testid: "password-check-input",
+		ariaLabel: "password-check-input",
 		type: "password",
 		placeholder: "비밀번호를 다시 입력해주세요.",
 		hasButton: false,
@@ -165,13 +165,14 @@ const SignUpForm = () => {
 	return (
 		<StyledSignUpForm onSubmit={handleSubmit}>
 			{inputObjList.map(
-				({ key, label, testid, type, placeholder, hasButton }, idx) => (
+				({ key, label, ariaLabel, type, placeholder, hasButton }, idx) => (
 					<InputContainerDiv key={key}>
 						<label htmlFor={key}>{label}</label>
 						<InputInnerDiv>
 							<Input
 								ref={(el) => (signUpRef.current[idx] = el)}
-								data-testid={testid}
+								role="textbox"
+								aria-label={ariaLabel}
 								type={type}
 								id={key}
 								name={key}
@@ -182,7 +183,8 @@ const SignUpForm = () => {
 							/>
 							{hasButton && (
 								<DuplicateCheckButton
-									data-testid={`${key}-duplicate-check-button`}
+									role="button"
+									aria-label={`${key}-duplicate-check-button`}
 									type="button"
 									disabled={
 										isLoading ||
