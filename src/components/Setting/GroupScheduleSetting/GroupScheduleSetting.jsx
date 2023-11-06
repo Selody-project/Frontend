@@ -31,7 +31,7 @@ const GroupScheduleSetting = () => {
 
 	return (
 		<ContainerDiv>
-			<h3>공유 일정 관리</h3>
+			<h3>내 그룹 관리</h3>
 			<ItemWrapDiv>
 				{/* eslint-disable-next-line no-nested-ternary */}
 				{isLoading ? (

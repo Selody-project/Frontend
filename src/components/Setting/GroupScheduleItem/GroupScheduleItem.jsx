@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import ToggleButton from "@/components/Common/ToggleButton/ToggleButton";
+import { OPTION_TYPE } from "@/constants/settingConstants";
 import { changeGroupOption } from "@/features/group/group-service";
 import {
 	selectGroupInfo,
@@ -17,7 +18,6 @@ import {
 	DividerHr,
 	GroupNameDiv,
 	LowerDiv,
-	TitleSpan,
 	ToggleDiv,
 	UpperDiv,
 } from "./GroupScheduleItem.style";
@@ -39,14 +39,16 @@ const GroupScheduleItem = ({
 
 	const handleClickToggle = async (type) => {
 		const targetOption =
-			type === "shareScheduleOption" ? shareScheduleOption : notificationOption;
+			type === OPTION_TYPE.SHARE_SCHEDULE
+				? shareScheduleOption
+				: notificationOption;
 		const status = targetOption === 1 ? 0 : 1;
 
 		const res = await dispatch(changeGroupOption({ groupId, type, status }));
 
 		if (res.payload === 200) {
 			dispatch(setRefetchUserGroup(true));
-			if (type === "shareScheduleOption") {
+			if (type === OPTION_TYPE.SHARE_SCHEDULE) {
 				setIsSharingEnabled((prev) => !prev);
 			} else {
 				setHasNotification((prev) => !prev);
@@ -80,18 +82,18 @@ const GroupScheduleItem = ({
 			<LowerDiv>
 				<ToggleDiv
 					onClick={() => {
-						handleClickToggle("shareScheduleOption");
+						handleClickToggle(OPTION_TYPE.SHARE_SCHEDULE);
 					}}
 				>
-					<TitleSpan>개인 일정 공유 여부</TitleSpan>
+					<span>개인 일정 공유 여부</span>
 					<ToggleButton isActive={isSharingEnabled} />
 				</ToggleDiv>
 				<ToggleDiv
 					onClick={() => {
-						handleClickToggle("notificationOption");
+						handleClickToggle(OPTION_TYPE.NOTIFICATION);
 					}}
 				>
-					<TitleSpan>알림</TitleSpan>
+					<span>알림</span>
 					<ToggleButton isActive={hasNotification} />
 				</ToggleDiv>
 			</LowerDiv>

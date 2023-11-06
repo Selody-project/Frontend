@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const ContainerDiv = styled.div`
 	border: 1px solid ${({ theme: { colors } }) => colors.disabled_text};
@@ -21,13 +21,9 @@ export const InfoDiv = styled.div`
 	display: flex;
 	align-items: center;
 	padding: 22px 0;
-
 	border-bottom: 1px solid #ededed;
-	${({ spaceBetween }) =>
-		spaceBetween &&
-		css`
-			justify-content: space-between;
-		`}
+	justify-content: ${({ spaceBetween }) =>
+		spaceBetween ? "space-between" : "flex-start"};
 
 	#profileImg {
 		display: none;

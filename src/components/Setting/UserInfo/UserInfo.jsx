@@ -76,12 +76,14 @@ const UserInfo = () => {
 					label="닉네임"
 					defaultValue={newNickname}
 					onChange={(e) => setNewNickname(e.target.value)}
+					gap={30}
 				/>
 				<CustomInput
 					label="아이디(이메일)"
 					type="email"
 					defaultValue={newEmail}
 					onChange={(e) => setNewEmail(e.target.value)}
+					gap={30}
 				/>
 			</InfoDiv>
 			<InfoDiv>

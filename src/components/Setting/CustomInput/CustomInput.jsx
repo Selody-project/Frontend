@@ -3,7 +3,7 @@ import React from "react";
 import { ContainerDiv, Input, LabelSpan } from "./CustomInput.style";
 
 const CustomInput = ({ label, ...inputProps }) => {
-	const { gap = 30 } = inputProps;
+	const { gap } = inputProps;
 
 	return (
 		<ContainerDiv gap={gap}>

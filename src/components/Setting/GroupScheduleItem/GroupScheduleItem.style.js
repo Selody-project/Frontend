@@ -91,5 +91,3 @@ export const ToggleDiv = styled.div`
 	gap: 48px;
 	cursor: pointer;
 `;
-
-export const TitleSpan = styled.span``;
