@@ -79,7 +79,7 @@ function LoginPage() {
 		}
 
 		if (naverAccessToken) {
-			dispatch(naverLogin(naverAccessToken));
+			dispatch(naverLogin({ access_token: naverAccessToken }));
 		}
 	}, [user]);
 
