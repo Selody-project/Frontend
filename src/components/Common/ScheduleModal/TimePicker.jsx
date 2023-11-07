@@ -4,14 +4,8 @@ import useOutsideClick from "@/hooks/useOutsideClick";
 
 import { CustomTimePickerComponents } from "./Picker.styles";
 
-const TIME_STRING = ["오전", "오후"];
-const getHours = (isAM) => {
-	const hours = Array.from({ length: 12 }).map((_, index) => index);
-	if (!isAM) {
-		hours[0] = 12;
-	}
-	return hours;
-};
+const IS_AM_OR_NOT = [true, false];
+const HOURS_12 = Array.from({ length: 12 }).map((_, index) => index);
 const MINUTES = Array.from({ length: 60 }).map(
 	(_, index) => `${index < 10 ? `0${index}` : index}`,
 );
@@ -45,8 +39,7 @@ const TimePicker = ({
 }) => {
 	const [selectedHours, selectedMinutes] = selected.split(":");
 
-	const initialTimeString =
-		selectedHours >= 12 ? TIME_STRING[1] : TIME_STRING[0];
+	const initialTimeString = selectedHours >= 12 ? "오후" : "오전";
 	const initialButtonText = `${initialTimeString} ${get12HoursString(
 		Number(selectedHours),
 	)}:${selectedMinutes}`;
@@ -62,7 +55,7 @@ const TimePicker = ({
 
 	const resetTimeValues = () => {
 		setIsAM(Number(selectedHours) < 12);
-		setHours(Number(selectedHours) === 12 ? 12 : Number(selectedHours) % 12);
+		setHours(Number(selectedHours) % 12);
 		setMinutes(Number(selectedMinutes));
 	};
 
@@ -82,7 +75,7 @@ const TimePicker = ({
 		onClose();
 	};
 
-	const isMinPM = min && Number(min.substr(0, 2)) >= 10;
+	const isMinPM = min && Number(min.substr(0, 2)) >= 12;
 
 	useEffect(() => {
 		resetTimeValues();
@@ -109,29 +102,31 @@ const TimePicker = ({
 			>
 				<div>
 					<div className="timeString">
-						{TIME_STRING.map((str, index) => (
+						{IS_AM_OR_NOT.map((isAMButton) => (
 							<button
-								key={str}
+								key={isAMButton}
 								type="button"
 								ref={
-									(isAM && !index) || (!isAM && index)
+									(isAM && isAMButton) || (!isAM && !isAMButton)
 										? (el) => {
 												selectedButtonRefs.current[0] = el;
 										  }
 										: undefined
 								}
 								className={
-									(isAM && !index) || (!isAM && index) ? "selected" : undefined
+									(isAM && isAMButton) || (!isAM && !isAMButton)
+										? "selected"
+										: undefined
 								}
-								disabled={isMinPM && !index}
-								onClick={() => setIsAM(!index)}
+								disabled={isMinPM && isAMButton}
+								onClick={() => setIsAM(isAMButton)}
 							>
-								{str}
+								{isAMButton ? "오전" : "오후"}
 							</button>
 						))}
 					</div>
 					<div className="hours">
-						{getHours(isAM).map((value) => (
+						{HOURS_12.map((value) => (
 							<button
 								key={value}
 								type="button"
@@ -143,10 +138,14 @@ const TimePicker = ({
 										: undefined
 								}
 								className={hours === value ? "selected" : ""}
-								disabled={min && value < Number(min.substr(0, 2)) % 12}
+								disabled={
+									min &&
+									isAM === min.substr(0, 2) < 12 &&
+									value < Number(min.substr(0, 2)) % 12
+								}
 								onClick={() => setHours(value)}
 							>
-								{value}
+								{!isAM && !value ? 12 : value}
 							</button>
 						))}
 					</div>
@@ -165,6 +164,7 @@ const TimePicker = ({
 								className={minutes === Number(value) ? "selected" : ""}
 								disabled={
 									min &&
+									isAM === min.substr(0, 2) < 12 &&
 									hours === min.substr(0, 2) % 12 &&
 									Number(value) < Number(min.substr(3, 2))
 								}
