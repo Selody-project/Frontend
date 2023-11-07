@@ -87,7 +87,7 @@ const TimePicker = ({
 	useEffect(() => {
 		resetTimeValues();
 		if (isOpen) {
-			selectedButtonRefs.current.forEach((el) => {
+			selectedButtonRefs.current?.forEach((el) => {
 				el.scrollIntoView(true);
 			});
 		}
