@@ -98,21 +98,7 @@ const ScheduleItemList = () => {
 				</TodoBody>
 			</ScheduleItemListLayoutAside>
 			{openedModal === UI_TYPE.PERSONAL_SCHEDULE && (
-				<ScheduleModal
-					type={openedModal}
-					initFormValues={{
-						title: "",
-						details: "",
-						startDate: "",
-						startTime: "",
-						endDate: "",
-						endTime: "",
-						untilDate: "",
-						untilTime: "",
-						repeat: "NONE",
-						notification: "NO",
-					}}
-				/>
+				<ScheduleModal type={openedModal} />
 			)}
 		</>
 	);
