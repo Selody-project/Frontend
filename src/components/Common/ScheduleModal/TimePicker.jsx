@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import { CustomTimePickerComponents } from "@/components/Common/ScheduleModal/ScheduleModal.styles";
 import useOutsideClick from "@/hooks/useOutsideClick";
+
+import { CustomTimePickerComponents } from "./Picker.styles";
 
 const TIME_STRING = ["오전", "오후"];
 const getHours = (isAM) => {

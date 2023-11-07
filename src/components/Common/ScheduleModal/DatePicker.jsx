@@ -5,7 +5,7 @@ import { ko } from "date-fns/locale";
 
 import { PreviousIcon, NextIcon } from "@/constants/iconConstants";
 
-import { CustomDatePickerComponents } from "./ScheduleModal.styles";
+import { CustomDatePickerComponents } from "./Picker.styles";
 
 const CustomInputButton = forwardRef(({ value, onClick }, ref) => {
 	return (

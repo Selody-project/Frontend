@@ -2,10 +2,9 @@ import React from "react";
 
 import PropTypes from "prop-types";
 
-import DatePicker from "@/components/Common/ScheduleModal/DatePicker";
-
-import CustomSelect from "./CustomSelect/CustomSelect";
-import { LabelH3 } from "./ScheduleModal.styles";
+import CustomSelect from "../CustomSelect/CustomSelect";
+import DatePicker from "../DatePicker";
+import { LabelH3 } from "../ScheduleModal.styles";
 
 const FREQ_OPTIONS = [
 	{ value: "NONE", text: "반복 안함" },
