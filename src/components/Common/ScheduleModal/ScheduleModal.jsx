@@ -16,17 +16,17 @@ import { closeModal, setIsLoading } from "@/features/ui/ui-slice";
 import { getSchedule } from "@/utils/calendarUtils";
 import { convertScheduleDataToFormValue } from "@/utils/convertSchedule";
 
-import DateAndTime from "./DateAndTime";
-import Repeat from "./Repeat";
-import RepeatDetail, { getRecurringString } from "./RepeatDetail";
+import DateAndTime from "./DateAndTime/DateAndTime";
+import Repeat from "./Repeat/Repeat";
+import RepeatDetail, { getRecurringString } from "./RepeatDetail/RepeatDetail";
 import {
+	ScheduleModalLayoutDiv,
 	TitleInput,
 	DetailTextarea,
+	AllDayCheckBoxDiv,
+	RepeatContainerDiv,
 	FooterDiv,
 	SubmitButton,
-	ScheduleModalLayoutDiv,
-	RepeatContainerDiv,
-	AllDayCheckBoxDiv,
 } from "./ScheduleModal.styles";
 
 const initialFormValues = {

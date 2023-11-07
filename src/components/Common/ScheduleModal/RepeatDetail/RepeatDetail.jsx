@@ -2,7 +2,7 @@ import React from "react";
 
 import PropTypes from "prop-types";
 
-import { ByweekdayPickerDiv } from "./ScheduleModal.styles";
+import { ByweekdayPickerDiv } from "./RepeatDetail.styles";
 
 const WEEK_STRING_PAIRS = [
 	["SU", "일"],
