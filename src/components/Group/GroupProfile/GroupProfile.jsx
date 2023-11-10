@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 import { useTheme } from "styled-components";
 
@@ -15,6 +16,7 @@ import {
 
 const GroupProfile = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 	const theme = useTheme();
+	const navigate = useNavigate();
 
 	return (
 		<ContainerDiv>
@@ -34,17 +36,17 @@ const GroupProfile = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 				</MiddleInnerDiv>
 			</MiddleDiv>
 			<BottomDiv>
-				{isGroupLeader && (
+				{/* eslint-disable-next-line no-nested-ternary */}
+				{isGroupLeader ? (
 					<ProfileButton
 						type="button"
 						bgColor={theme.colors.primary}
 						textColor={theme.colors.white}
+						onClick={() => navigate("/groupsetting")}
 					>
 						그룹 관리
 					</ProfileButton>
-				)}
-
-				{!isGroupLeader && isGroupMember ? (
+				) : isGroupMember ? (
 					<ProfileButton
 						type="button"
 						bgColor={theme.colors.white}

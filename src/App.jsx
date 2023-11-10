@@ -15,6 +15,7 @@ import {
 	CommunityPage,
 	GroupPage,
 	MyPage,
+	GroupLeaderPage,
 } from "@/pages";
 
 import { getCurrentUser } from "./features/auth/auth-service.js";
@@ -32,7 +33,8 @@ const router = createBrowserRouter([
 			{ path: "community", element: <CommunityPage /> },
 			{ path: "setting", element: <SettingPage /> },
 			{ path: "group/:id", element: <GroupPage /> },
-			{ path: "/mypage", element: <MyPage /> },
+			{ path: "groupsetting", element: <GroupLeaderPage /> },
+			{ path: "mypage", element: <MyPage /> },
 		],
 	},
 	{

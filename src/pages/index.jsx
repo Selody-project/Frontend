@@ -1,5 +1,6 @@
 import CommunityPage from "./CommunityPage/CommunityPage";
 import ErrorPage from "./ErrorPage/ErrorPage";
+import GroupLeaderPage from "./GroupPage/GroupLeaderPage/GroupLeaderPage";
 import GroupPage from "./GroupPage/GroupPage";
 import GroupSchedulePage from "./GroupSchedulePage";
 import LandingPage from "./LandingPage/LandingPage";
@@ -21,5 +22,6 @@ export {
 	SettingPage,
 	CommunityPage,
 	GroupPage,
+	GroupLeaderPage,
 	MyPage,
 };
