@@ -37,7 +37,7 @@ export const PickerDiv = styled.div`
 	position: absolute;
 	left: 0;
 	bottom: calc(100% + 7px);
-	padding: 0 8px;
+	padding: 8px 8px;
 	display: flex;
 	background-color: ${({ theme: { colors } }) => colors.white};
 	width: 100%;
