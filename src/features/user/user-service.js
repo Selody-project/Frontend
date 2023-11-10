@@ -6,7 +6,7 @@ export const inqueryUserGroup = createAsyncThunk(
 	"user/inqueryUserGroup",
 	async (thunkAPI) => {
 		const data = await commonThunk(
-			{ method: "GET", url: "/api/user/group" },
+			{ method: "GET", url: "/api/user/group", successCode: 200 },
 			thunkAPI,
 		);
 
@@ -18,7 +18,7 @@ export const inqueryRequestUserGroup = createAsyncThunk(
 	"user/inqueryRequestUserGroup",
 	async (thunkAPI) => {
 		const data = await commonThunk(
-			{ method: "GET", url: "/api/user/group/pending" },
+			{ method: "GET", url: "/api/user/group/pending", successCode: 200 },
 			thunkAPI,
 		);
 

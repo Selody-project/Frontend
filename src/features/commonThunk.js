@@ -1,20 +1,7 @@
 import customFetch from "@/components/Base/BaseAxios";
 
-const getSuccessCode = (method) => {
-	if (method === "GET") {
-		return 200;
-	}
-	if (method === "POST" || method === "PUT") {
-		return 201;
-	}
-	if (method === "DELETE") {
-		return 204;
-	}
-	throw new Error("올바른 HTTP method가 아닙니다.");
-};
-
 const commonThunk = async (
-	{ method, url, params = undefined, data = undefined, ...rest },
+	{ method, url, successCode, params = undefined, data = undefined, ...rest },
 	thunkAPI,
 ) => {
 	try {
@@ -25,11 +12,14 @@ const commonThunk = async (
 			data,
 			...rest,
 		});
-		if (response.status !== getSuccessCode(method)) {
+		if (response.status !== successCode) {
 			throw response.data;
 		}
 		return response.data;
 	} catch (error) {
+		if (error.response) {
+			return thunkAPI.rejectWithValue(error.response.data);
+		}
 		return thunkAPI.rejectWithValue(error.message);
 	}
 };
