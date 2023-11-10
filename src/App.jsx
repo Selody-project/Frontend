@@ -33,7 +33,7 @@ const router = createBrowserRouter([
 			{ path: "community", element: <CommunityPage /> },
 			{ path: "setting", element: <SettingPage /> },
 			{ path: "group/:id", element: <GroupPage /> },
-			{ path: "groupsetting", element: <GroupLeaderPage /> },
+			{ path: "group/:id/leader", element: <GroupLeaderPage /> },
 			{ path: "mypage", element: <MyPage /> },
 		],
 	},

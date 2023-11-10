@@ -1,5 +1,5 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { useTheme } from "styled-components";
 
@@ -17,6 +17,18 @@ import {
 const GroupProfile = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 	const theme = useTheme();
 	const navigate = useNavigate();
+
+	const locate = useLocation();
+
+	const [management, setManagement] = useState(false);
+
+	useEffect(() => {
+		if (locate.pathname.includes("leader")) {
+			setManagement(true);
+		} else {
+			setManagement(false);
+		}
+	});
 
 	return (
 		<ContainerDiv>
@@ -37,12 +49,34 @@ const GroupProfile = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 			</MiddleDiv>
 			<BottomDiv>
 				{/* eslint-disable-next-line no-nested-ternary */}
-				{isGroupLeader ? (
+				{management ? (
+					<>
+						<ProfileButton
+							type="button"
+							bgColor={theme.colors.primary}
+							textColor={theme.colors.white}
+						>
+							링크 생성하기
+						</ProfileButton>
+						<ProfileButton
+							type="button"
+							bgColor={theme.colors.white}
+							textColor={theme.colors.primary}
+						>
+							그룹장 위임
+						</ProfileButton>
+					</>
+				) : // eslint-disable-next-line no-nested-ternary
+				isGroupLeader ? (
 					<ProfileButton
 						type="button"
 						bgColor={theme.colors.primary}
 						textColor={theme.colors.white}
-						onClick={() => navigate("/groupsetting")}
+						onClick={() =>
+							navigate(
+								`/group/${groupInfo?.information?.group?.groupId}/leader`,
+							)
+						}
 					>
 						그룹 관리
 					</ProfileButton>
