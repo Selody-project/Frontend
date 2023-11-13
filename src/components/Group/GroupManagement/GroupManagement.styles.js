@@ -41,3 +41,35 @@ export const TitleButton = styled.button`
 	font-weight: ${({ theme: { typography } }) => typography.weight.semibold};
 	cursor: pointer;
 `;
+
+export const InfoDiv = styled.div`
+	margin-top: 40px;
+	display: flex;
+	align-items: center;
+	gap: 36px;
+
+	& > h3 {
+		color: ${({ theme: { colors } }) => colors.text_01};
+		font-weight: ${({ theme: { typography } }) => typography.weight.medium};
+	}
+
+	& > img {
+		width: 80px;
+		height: 80px;
+		border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
+		border-radius: 50%;
+		object-fit: cover;
+	}
+
+	& > label {
+		color: ${({ theme: { colors } }) => colors.disabled_text};
+		font-size: 14px;
+		font-weight: ${({ theme: { typography } }) => typography.weight.medium};
+		text-decoration: underline;
+		cursor: pointer;
+	}
+
+	& > input {
+		display: none;
+	}
+`;
