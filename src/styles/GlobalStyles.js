@@ -130,11 +130,6 @@ const GlobalStyles = createGlobalStyle`${css`
 		padding: 0;
 		box-sizing: border-box;
 		line-height: 1;
-
-		#root {
-			max-width: 1440px;
-			margin: 0 auto;
-		}
 	}
 
 	a {
