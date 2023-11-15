@@ -7,8 +7,10 @@ import { LandingPageContainer } from "./LandingPage.styles";
 
 const LandingPage = () => (
 	<LandingPageContainer>
-		<LandingHeader />
-		<LandingMain />
+		<div className="max-layout">
+			<LandingHeader />
+			<LandingMain />
+		</div>
 	</LandingPageContainer>
 );
 
