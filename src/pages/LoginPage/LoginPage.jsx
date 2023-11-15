@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import Logo from "@/assets/img/img-selody-logo/3x.png";
+import SelodyLogo from "@/components/Common/SelodyLogo";
 import LoginForm from "@/components/Login/LoginForm/LoginForm";
 import Google from "@/components/sign/Google";
 import Naver from "@/components/sign/Naver";
@@ -33,7 +33,7 @@ function LoginPage() {
 	return (
 		<ContainerDiv>
 			<LeftSideDiv>
-				<img src={Logo} alt="logo" />
+				<SelodyLogo size={196} />
 				<h1>
 					Selody<span>.</span>
 				</h1>

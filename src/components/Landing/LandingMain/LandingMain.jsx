@@ -4,7 +4,7 @@ import { TypeAnimation } from "react-type-animation";
 
 import { motion } from "framer-motion";
 
-import { SelodyLogoIcon } from "@/constants/iconConstants";
+import SelodyLogo from "@/components/Common/SelodyLogo";
 
 import { LandingMainContainerDiv } from "./LandingMain.styles";
 
@@ -23,7 +23,7 @@ const LandingMain = () => {
 	return (
 		<LandingMainContainerDiv>
 			<motion.div className="logo" animate={bounceAnimation}>
-				<SelodyLogoIcon width="250" height="250" />
+				<SelodyLogo size={250} />
 			</motion.div>
 			<div className="content">
 				<motion.h2
