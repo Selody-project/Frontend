@@ -1,8 +1,9 @@
 import React from "react";
 
+import Landing from "@/components/Landing/Landing";
+import LandingHeader from "@/components/Landing/LandingHeader";
+
 import { LandingPageContainer } from "./LandingPage.styles";
-import LandingHeader from "../../components/Header/LandingHeader";
-import Landing from "../../components/Home/Landing";
 
 const LandingPage = () => (
 	<LandingPageContainer>
