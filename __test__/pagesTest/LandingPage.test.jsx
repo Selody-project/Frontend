@@ -18,7 +18,7 @@ describe("Landing", () => {
 		expect(screen.getByRole("link", { name: "시작하기" })).toBeInTheDocument();
 		expect(
 			screen.getByRole("heading", {
-				name: "Selody와 함께 그룹 일정 공유 및 관리를 해보세요 !",
+				name: "Selody와 함께 그룹 일정 공유 및 관리를 해보세요!",
 			}),
 		).toBeInTheDocument();
 	});
