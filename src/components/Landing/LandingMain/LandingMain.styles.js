@@ -38,7 +38,6 @@ export const LandingMainContainerDiv = styled.div`
 			height: 59px;
 			background-color: ${({ theme: { colors } }) => colors.white};
 			border-radius: 5px;
-			text-align: center;
 			font-size: ${({
 				theme: {
 					typography: { size },
@@ -51,6 +50,13 @@ export const LandingMainContainerDiv = styled.div`
 			}) => weight.regular};
 			color: ${({ theme: { colors } }) => colors.primary_light};
 			cursor: pointer;
+			& > a {
+				display: inline-block;
+				width: 100%;
+				height: 100%;
+				line-height: 59px;
+				text-align: center;
+			}
 		}
 	}
 	@media (max-width: 768px) {
