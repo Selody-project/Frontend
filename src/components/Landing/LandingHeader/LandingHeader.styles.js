@@ -1,49 +1,28 @@
 import styled from "styled-components";
 
 export const LandingHeaderContainerDiv = styled.div`
-	margin-top: -1rem;
+	margin: 0 40px;
+	margin-top: 24px;
 	display: flex;
-	align-items: center;
 	justify-content: space-between;
-	padding: 2rem 2rem 0 2rem;
-	height: 5rem;
-	max-width: 100vw;
-
-	a {
-		text-decoration: none;
+	align-items: center;
+	color: ${({ theme: { colors } }) => colors.white};
+	font-family: Montserrat;
+	font-weight: ${({
+		theme: {
+			typography: { weight },
+		},
+	}) => weight.bold};
+	& > .logo {
+		font-size: 50px;
 	}
-
-	h1 {
-		font-size: 2.5rem;
-		color: #ffffff;
-	}
-
-	.menu {
-		a {
-			color: #ffffff;
-			margin: 0 1rem;
-			padding-bottom: 0.5rem;
-			font-size: 1.15rem;
-			font-weight: 500;
-			text-transform: uppercase;
-			transition: all 0.3s;
-			border-bottom: 2px solid transparent;
-			&:hover {
-				color: #ffffff;
-				border-color: #ffffff;
-			}
-		}
-	}
-
-	.auth-btn {
-		a {
-			font-size: 1.25rem;
-			font-weight: 700;
-			color: #ffffff;
-			transition: all 0.3s;
-			&:hover {
-				color: #ffffff;
-			}
-		}
+	& > .login {
+		width: 81px;
+		height: 29px;
+		font-size: ${({
+			theme: {
+				typography: { size },
+			},
+		}) => size.m2};
 	}
 `;
