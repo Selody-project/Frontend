@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 
-import { links } from "../../utils/links";
-
 const LandingHeader = () => (
 	<Wrapper>
 		<motion.h1
@@ -15,19 +13,6 @@ const LandingHeader = () => (
 		>
 			Selody
 		</motion.h1>
-		<div className="menu">
-			<motion.ul
-				initial={{ opacity: 0 }}
-				animate={{ opacity: 1 }}
-				transition={{ delay: 0.5 }}
-			>
-				{links.map((link) => (
-					<Link to={link.route} key={link.name}>
-						{link.name}
-					</Link>
-				))}
-			</motion.ul>
-		</div>
 		<div className="auth-btn">
 			<motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
 				<Link to="/login">Login</Link>
