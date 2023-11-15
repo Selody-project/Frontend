@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const LandingHeaderContainerDiv = styled.div`
-	margin: 0 40px;
 	margin-top: 24px;
 	display: flex;
 	justify-content: space-between;
