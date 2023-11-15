@@ -5,6 +5,8 @@ import ReactTypingEffect from "react-typing-effect";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 
+import { SelodyLogoIcon } from "@/constants/iconConstants";
+
 const Landing = () => {
 	const bounceAnimation = {
 		scale: [1, 1.1, 1],
@@ -20,7 +22,7 @@ const Landing = () => {
 	return (
 		<Wrapper>
 			<motion.div className="left" animate={bounceAnimation}>
-				<img src="/logo.svg" alt="logo" />
+				<SelodyLogoIcon />
 			</motion.div>
 			<div className="right">
 				<motion.h1
