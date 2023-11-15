@@ -7,7 +7,7 @@ import styled from "styled-components";
 
 import { SelodyLogoIcon } from "@/constants/iconConstants";
 
-const Landing = () => {
+const LandingMain = () => {
 	const bounceAnimation = {
 		scale: [1, 1.1, 1],
 		transition: {
@@ -22,7 +22,7 @@ const Landing = () => {
 	return (
 		<Wrapper>
 			<motion.div className="left" animate={bounceAnimation}>
-				<SelodyLogoIcon />
+				<SelodyLogoIcon width="250" height="250" />
 			</motion.div>
 			<div className="right">
 				<motion.h1
@@ -125,4 +125,4 @@ const Wrapper = styled.div`
 	}
 `;
 
-export default Landing;
+export default LandingMain;
