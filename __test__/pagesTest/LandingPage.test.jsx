@@ -12,7 +12,7 @@ describe("Landing", () => {
 		render(<LandingPage />);
 		// 텍스트 존재 확인
 		expect(
-			screen.getByRole("heading", { name: /selody$/i }),
+			screen.getByRole("heading", { name: /selody.$/i }),
 		).toBeInTheDocument();
 		expect(screen.getByRole("link", { name: /login/i })).toBeInTheDocument();
 		expect(screen.getByRole("link", { name: "시작하기" })).toBeInTheDocument();
