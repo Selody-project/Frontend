@@ -1,57 +1,62 @@
 import styled from "styled-components";
 
 export const LandingMainContainerDiv = styled.div`
+	height: calc(100vh - 74px);
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: calc(100vh - 4rem);
-	color: #fff;
-
-	.left {
-		flex: 1;
+	gap: 101px;
+	color: ${({ theme: { colors } }) => colors.white};
+	& > .content {
 		display: flex;
-		justify-content: center;
-		align-items: center;
-
-		img {
-			width: 50%;
-			max-width: 100%;
+		flex-direction: column;
+		font-weight: ${({
+			theme: {
+				typography: { weight },
+			},
+		}) => weight.semibold};
+		& > .heading2 {
+			font-size: ${({
+				theme: {
+					typography: { size },
+				},
+			}) => size.l2};
+		}
+		& > .typing {
+			margin-top: 30px;
+			display: flex;
+			flex-direction: column;
+			font-size: ${({
+				theme: {
+					typography: { size },
+				},
+			}) => size.m2};
+		}
+		& > .startBtn {
+			margin-top: 40px;
+			width: 174px;
+			height: 59px;
+			background-color: ${({ theme: { colors } }) => colors.white};
+			border-radius: 5px;
+			text-align: center;
+			font-size: ${({
+				theme: {
+					typography: { size },
+				},
+			}) => size.m1};
+			font-weight: ${({
+				theme: {
+					typography: { weight },
+				},
+			}) => weight.regular};
+			color: ${({ theme: { colors } }) => colors.primary_light};
+			cursor: pointer;
 		}
 	}
-
-	.right {
-		flex: 1;
-		padding: 50px;
-		font-family: "Poppins", sans-serif;
-
-		h1 {
-			font-size: 2.5rem;
-			margin-bottom: 2rem;
-			line-height: 1.3;
-		}
-
-		.typing-animation {
-			font-size: 1.25rem;
-			margin-bottom: 4rem;
-			// height: 150px;
-			line-height: 1.3;
-			height: 3.75rem;
-			// overflow: hidden;
-		}
-
-		.auth-btn {
-			font-size: 1.25rem;
-			color: #6c55fe;
-			background-color: #fff;
-			padding: 1rem 2rem;
-			border-radius: 0.25rem;
-			transition: background-color 0.3s ease, color 0.3s ease;
-			text-decoration: none;
-
-			&:hover {
-				color: #fff;
-				background-color: #6c55fe;
-			}
+	@media (max-width: 768px) {
+		flex-direction: column;
+		& > .content {
+			align-items: center;
 		}
 	}
 `;
