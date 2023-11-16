@@ -24,7 +24,7 @@ export const TabsAside = styled.aside`
 
 export const TabsDiv = styled.div`
 	position: sticky;
-	top: 250px;
+	top: 320px;
 `;
 
 export const TabDiv = styled.div`

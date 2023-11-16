@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 import {
@@ -25,6 +25,10 @@ const SettingPage = () => {
 	const [selectedTabIdx, setSelectedTabIdx] = useState(0);
 
 	const selectedTabList = [<ProfileTab />, <PasswordTab />, <WithdrawalTab />];
+
+	useEffect(() => {
+		window.scrollTo({ top: 0 });
+	}, [selectedTabIdx]);
 
 	return (
 		<>
