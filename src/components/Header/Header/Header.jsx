@@ -30,9 +30,7 @@ const Header = () => {
 	const dispatch = useDispatch();
 
 	const profileRef = useRef();
-	const profileDropdownRef = useRef();
 	const notiRef = useRef();
-	const notiDropdownRef = useRef();
 
 	const isSchedule = path === "/" || path === "/share";
 	const isFeed = path === "/community" || path === "mypage";
@@ -42,28 +40,29 @@ const Header = () => {
 	const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
 	const [isNotiDropdownOpen, setIsNotiDropdownOpen] = useState(false);
 
-	const handleDropdown = (e) => {
-		if (
-			isProfileDropdownOpen &&
-			!profileDropdownRef.current.contains(e.target)
-		) {
-			setIsProfileDropdownOpen(false);
-		} else if (profileRef.current.contains(e.target)) {
-			setIsProfileDropdownOpen(true);
-		}
+	const handleProfileDropdown = (e) => {
+		const { target } = e;
 
-		if (isNotiDropdownOpen && !notiDropdownRef.current.contains(e.target)) {
+		if (isProfileDropdownOpen && !profileRef.current.contains(target)) {
+			setIsProfileDropdownOpen(false);
+		}
+	};
+
+	const handleNotiDropdown = (e) => {
+		const { target } = e;
+
+		if (isNotiDropdownOpen && !notiRef.current.contains(target)) {
 			setIsNotiDropdownOpen(false);
-		} else if (notiRef.current.contains(e.target)) {
-			setIsNotiDropdownOpen(true);
 		}
 	};
 
 	useEffect(() => {
-		window.addEventListener("click", handleDropdown);
+		window.addEventListener("click", handleProfileDropdown);
+		window.addEventListener("click", handleNotiDropdown);
 
 		return () => {
-			window.removeEventListener("click", handleDropdown);
+			window.removeEventListener("click", handleProfileDropdown);
+			window.removeEventListener("click", handleNotiDropdown);
 		};
 	});
 
@@ -103,22 +102,26 @@ const Header = () => {
 						그룹 만들기
 					</GroupCreateButton>
 					<NotificationDiv>
-						<NotificationButton ref={notiRef}>
+						<NotificationButton
+							ref={notiRef}
+							onClick={() => {
+								setIsNotiDropdownOpen(!isNotiDropdownOpen);
+							}}
+						>
 							<NotificationIcon />
 						</NotificationButton>
-						{isNotiDropdownOpen && (
-							<NotificationDropdown ref={notiDropdownRef} />
-						)}
+						{isNotiDropdownOpen && <NotificationDropdown />}
 					</NotificationDiv>
 					<ProfileDiv>
 						<ProfileImg
 							ref={profileRef}
 							src="https://yt3.ggpht.com/ytc/AOPolaSlb8-cH_rN_lZDD1phXr7aHFpoOqMVoepaGuTm=s48-c-k-c0x00ffffff-no-rj"
 							alt="user-profile"
+							onClick={() => {
+								setIsProfileDropdownOpen(!isProfileDropdownOpen);
+							}}
 						/>
-						{isProfileDropdownOpen && (
-							<ProfileDropdown ref={profileDropdownRef} />
-						)}
+						{isProfileDropdownOpen && <ProfileDropdown />}
 					</ProfileDiv>
 				</RightDiv>
 				{openedModal === "CREATE_GROUP" && <GroupCreateModal />}
