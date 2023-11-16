@@ -76,7 +76,7 @@ export const TabButton = styled.button`
 	font-weight: ${({ isActive }) => (isActive ? "600" : "500")};
 	border-bottom: ${({ isActive, theme: { colors } }) =>
 		isActive ? `2px solid ${colors.primary}` : 0};
-	padding: 10px 8px 8px;
+	padding: 10px 0;
 
 	&:hover {
 		color: ${({ theme }) => theme.colors.primary};
@@ -123,7 +123,7 @@ export const NotificationDiv = styled.div`
 `;
 
 export const NotificationButton = styled.button`
-	margin: 0 24px;
+	margin: 0 16px;
 	cursor: pointer;
 	border-radius: 50%;
 	width: 40px;

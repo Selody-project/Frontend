@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const MenuWrapDiv = styled.div`
 	position: absolute;
 	top: calc(100% + 16px);
-	right: -100%;
+	right: calc(-100% - 24px);
 	z-index: 99;
 `;
 
