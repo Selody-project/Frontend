@@ -105,6 +105,7 @@ export const ModalContentDiv = styled.div`
 	font-size: 24px;
 	font-weight: ${({ theme }) => theme.typography.weight.medium};
 	padding: 88px 160px;
+	white-space: nowrap;
 `;
 
 export const ModalFooter = styled.footer`

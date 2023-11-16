@@ -22,7 +22,7 @@ const SettingPage = () => {
 	const { openedModal } = useSelector((state) => state.ui);
 	const { groupInfo, isLoading } = useSelector((state) => state.group);
 
-	const [selectedTab, setSelectedTab] = useState(0);
+	const [selectedTabIdx, setSelectedTabIdx] = useState(0);
 
 	const selectedTabList = [<ProfileTab />, <PasswordTab />, <WithdrawalTab />];
 
@@ -33,28 +33,28 @@ const SettingPage = () => {
 					<TabsDiv>
 						<TabDiv
 							data-testid="profileTab"
-							isSelected={selectedTab === 0}
-							onClick={() => setSelectedTab(0)}
+							isSelected={selectedTabIdx === 0}
+							onClick={() => setSelectedTabIdx(0)}
 						>
 							프로필
 						</TabDiv>
 						<TabDiv
 							data-testid="passwordTab"
-							isSelected={selectedTab === 1}
-							onClick={() => setSelectedTab(1)}
+							isSelected={selectedTabIdx === 1}
+							onClick={() => setSelectedTabIdx(1)}
 						>
 							비밀번호
 						</TabDiv>
 						<TabDiv
 							data-testid="withdrawalTab"
-							isSelected={selectedTab === 2}
-							onClick={() => setSelectedTab(2)}
+							isSelected={selectedTabIdx === 2}
+							onClick={() => setSelectedTabIdx(2)}
 						>
 							회원 탈퇴
 						</TabDiv>
 					</TabsDiv>
 				</TabsAside>
-				<MainSection>{selectedTabList[selectedTab]}</MainSection>
+				<MainSection>{selectedTabList[selectedTabIdx]}</MainSection>
 			</ContainerDiv>
 			{openedModal === "DELETE_GROUP" && (
 				<GroupDeleteModal groupInfo={groupInfo} isLoading={isLoading} />

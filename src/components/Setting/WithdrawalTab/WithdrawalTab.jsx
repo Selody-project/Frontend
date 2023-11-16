@@ -22,7 +22,7 @@ const WithdrawalTab = () => {
 
 	const [isAgree, setIsAgree] = useState(false);
 
-	const handleClickWithdrawal = async () => {
+	const handleClickWithdrawal = () => {
 		dispatch(withdrawMembership());
 		dispatch(closeModal());
 	};
