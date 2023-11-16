@@ -17,7 +17,7 @@ const initialState = {
 	groupList: [],
 	isLoading: false,
 	groupInfo: null,
-	refetchUserGroup: true,
+	isUserGroupRefetching: true,
 };
 
 const groupSlice = createSlice({
@@ -31,7 +31,7 @@ const groupSlice = createSlice({
 			state.groupInfo = payload;
 		},
 		setRefetchUserGroup: (state, { payload }) => {
-			state.refetchUserGroup = payload;
+			state.isUserGroupRefetching = payload;
 		},
 	},
 	extraReducers: (bulider) => {
