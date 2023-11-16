@@ -1,4 +1,4 @@
 export const OPTION_TYPE = {
-	SHARE_SCHEDULE: "SHARE_SCHEDULE_OPTION",
-	NOTIFICATION: "NOTIFICATION_OPTION",
+	SHARE_SCHEDULE: "shareScheduleOption",
+	NOTIFICATION: "notificationOption",
 };

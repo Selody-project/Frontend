@@ -44,15 +44,17 @@ const GroupScheduleItem = ({
 				: notificationOption;
 		const status = targetOption === 1 ? 0 : 1;
 
-		const res = await dispatch(changeGroupOption({ groupId, type, status }));
-
-		if (res.payload === 200) {
+		try {
+			await dispatch(changeGroupOption({ groupId, type, status })).unwrap();
 			dispatch(setRefetchUserGroup(true));
 			if (type === OPTION_TYPE.SHARE_SCHEDULE) {
 				setIsSharingEnabled((prev) => !prev);
 			} else {
 				setHasNotification((prev) => !prev);
 			}
+		} catch (e) {
+			// eslint-disable-next-line no-console
+			console.error(e);
 		}
 	};
 

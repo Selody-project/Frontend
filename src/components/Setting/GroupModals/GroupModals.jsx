@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
@@ -33,10 +34,12 @@ export const GroupDeleteModal = ({ groupInfo, isLoading }) => {
 	const dispatch = useDispatch();
 
 	const handleClickDelete = async () => {
-		const response = await dispatch(deleteGroup(groupId));
-		if (response.payload.status === 204) {
+		try {
+			await dispatch(deleteGroup(groupId)).unwrap();
 			dispatch(closeModal());
 			dispatch(setRefetchUserGroup(true));
+		} catch (e) {
+			console.error(e);
 		}
 	};
 
@@ -95,10 +98,12 @@ export const GroupDelegateModal = ({ groupInfo, isGroupLoading }) => {
 	);
 
 	const handleClickDelegate = async () => {
-		const res = await dispatch(delegateGroup({ groupId, selectedMemberId }));
-		if (res.payload.status === 204) {
+		try {
+			await dispatch(delegateGroup({ groupId, selectedMemberId })).unwrap();
 			dispatch(closeModal());
 			dispatch(setRefetchUserGroup(true));
+		} catch (e) {
+			console.error(e);
 		}
 	};
 
@@ -153,10 +158,12 @@ export const GroupLeaveModal = ({ groupInfo, isLoading }) => {
 	const dispatch = useDispatch();
 
 	const handleClickLeave = async () => {
-		const response = await dispatch(leaveGroup(groupId));
-		if (response.payload.status === 204) {
+		try {
+			await dispatch(leaveGroup(groupId)).unwrap();
 			dispatch(closeModal());
 			dispatch(setRefetchUserGroup(true));
+		} catch (e) {
+			console.error(e);
 		}
 	};
 
