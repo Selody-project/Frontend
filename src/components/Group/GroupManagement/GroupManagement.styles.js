@@ -8,7 +8,7 @@ export const ContainerDiv = styled.div`
 `;
 
 export const InnerDiv = styled.div`
-	padding: 40px 30px;
+	padding: 40px;
 
 	& > ul {
 		display: flex;
@@ -32,6 +32,12 @@ export const InnerDiv = styled.div`
 			}
 		}
 	}
+
+	& > hr {
+		margin: 40px 0 0 0;
+		border: none;
+		border-top: 1px solid ${({ theme: { colors } }) => colors.btn_02};
+	}
 `;
 
 export const TitleButton = styled.button`
@@ -51,7 +57,7 @@ export const InfoDiv = styled.div`
 	& > h3 {
 		color: ${({ theme: { colors } }) => colors.text_01};
 		font-weight: ${({ theme: { typography } }) => typography.weight.medium};
-		width: 50px;
+		width: 56px;
 	}
 
 	& > img {
@@ -71,7 +77,7 @@ export const InfoDiv = styled.div`
 	}
 
 	& > textarea {
-		width: 745px;
+		width: calc(100% - 110px);
 		height: 84px;
 		background-color: ${({ theme: { colors } }) => colors.bg_01};
 		border: 0;
@@ -94,16 +100,49 @@ export const InfoInput = styled.input`
 	}
 `;
 
-export const PublicDiv = styled.div`
-	margin-top: 40px;
-	display: flex;
-	align-items: center;
-	gap: 30px;
+export const ToggleButtonDiv = styled.div``;
 
-	& > h3 {
-		color: ${({ theme: { colors } }) => colors.text_01};
-		font-weight: ${({ theme: { typography } }) => typography.weight.medium};
+export const SaveButtonDiv = styled.div`
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 40px;
+`;
+
+export const SaveButton = styled.button`
+	padding: 12px 28px;
+	background-color: ${({ theme: { colors } }) => colors.primary_light};
+	border-radius: 5px;
+	color: ${({ theme: { colors } }) => colors.white};
+	font-size: 15px;
+	font-weight: ${({ theme: { typography } }) => typography.weight.semibold};
+	cursor: pointer;
+
+	&:disabled {
+		background-color: ${({ theme: { colors } }) => colors.disabled_text};
+		cursor: not-allowed;
 	}
 `;
 
-export const ButtonDiv = styled.div``;
+export const BottomButtonDiv = styled.div`
+	margin-top: 40px;
+	display: flex;
+	gap: 26px;
+`;
+
+export const ExitButton = styled.button`
+	width: 150px;
+	padding: 12px 0;
+	text-align: center;
+	border: 1px solid ${({ theme: { colors } }) => colors.primary_light};
+	border-radius: 5px;
+	color: ${({ theme: { colors } }) => colors.primary_light};
+	font-size: 15px;
+	font-weight: ${({ theme: { typography } }) => typography.weight.semibold};
+	box-sizing: border-box;
+`;
+
+export const DeleteButton = styled(ExitButton)`
+	background-color: ${({ theme: { colors } }) => colors.sunday};
+	color: ${({ theme: { colors } }) => colors.white};
+	border: none;
+`;

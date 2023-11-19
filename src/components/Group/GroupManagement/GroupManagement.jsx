@@ -15,8 +15,12 @@ import {
 	InfoDiv,
 	ProfileInput,
 	InfoInput,
-	PublicDiv,
-	ButtonDiv,
+	ToggleButtonDiv,
+	SaveButtonDiv,
+	SaveButton,
+	BottomButtonDiv,
+	ExitButton,
+	DeleteButton,
 } from "./GroupManagement.styles";
 
 const GroupManagement = () => {
@@ -82,12 +86,20 @@ const GroupManagement = () => {
 					<h3>소개글</h3>
 					<textarea defaultValue={groupDetailInfo?.description} />
 				</InfoDiv>
-				<PublicDiv>
+				<InfoDiv>
 					<h3>공개여부</h3>
-					<ButtonDiv onClick={() => handleClickToggle()}>
+					<ToggleButtonDiv onClick={() => handleClickToggle()}>
 						<ToggleButton isActive={isPublicClick} />
-					</ButtonDiv>
-				</PublicDiv>
+					</ToggleButtonDiv>
+				</InfoDiv>
+				<SaveButtonDiv>
+					<SaveButton>변경 정보 저장하기</SaveButton>
+				</SaveButtonDiv>
+				<hr />
+				<BottomButtonDiv>
+					<ExitButton>그룹 나가기</ExitButton>
+					<DeleteButton>그룹 삭제</DeleteButton>
+				</BottomButtonDiv>
 			</InnerDiv>
 		</ContainerDiv>
 	);
