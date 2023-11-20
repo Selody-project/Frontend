@@ -91,6 +91,7 @@ export const ExitButton = styled.button`
 	font-size: 15px;
 	font-weight: ${({ theme: { typography } }) => typography.weight.semibold};
 	box-sizing: border-box;
+	cursor: pointer;
 `;
 
 export const DeleteButton = styled(ExitButton)`

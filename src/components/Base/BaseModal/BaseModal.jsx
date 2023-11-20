@@ -10,8 +10,9 @@ import useScrollLock from "@/hooks/useScrollLock.jsx";
 
 import {
 	BackdropWrapper,
-	ModalContentDiv,
+	IconButton,
 	ModalHeaderDiv,
+	ModalWrapper,
 } from "./BaseModal.style.js";
 
 const Backdrop = () => {
@@ -25,14 +26,7 @@ const Backdrop = () => {
 	);
 };
 
-const ModalContent = ({
-	title,
-	children,
-	hasHeader,
-	hasTitle,
-	hasClose,
-	bgColor,
-}) => {
+const Modal = ({ title, children, hasClose, style }) => {
 	const dispatch = useDispatch();
 
 	const handleClose = () => {
@@ -40,41 +34,30 @@ const ModalContent = ({
 	};
 
 	return (
-		<ModalContentDiv bgColor={bgColor}>
-			{hasHeader && (
-				<ModalHeaderDiv>
-					{hasTitle && <span>{title}</span>}
-					{hasClose && <CloseIcon onClick={handleClose} aria-label="close" />}
-				</ModalHeaderDiv>
-			)}
+		<ModalWrapper style={style}>
+			<ModalHeaderDiv>
+				<span>{title}</span>
+				{hasClose && (
+					<IconButton onClick={handleClose} aria-label="close">
+						<CloseIcon />
+					</IconButton>
+				)}
+			</ModalHeaderDiv>
 			{children}
-		</ModalContentDiv>
+		</ModalWrapper>
 	);
 };
 
-const BaseModal = ({
-	title = null,
-	children,
-	hasHeader = true,
-	hasTitle = true,
-	hasClose = true,
-	bgColor,
-}) => {
+const BaseModal = ({ title = null, children, hasClose = true, style }) => {
 	useScrollLock();
 
 	return (
 		<>
 			{ReactDOM.createPortal(<Backdrop />, document.getElementById("backdrop"))}
 			{ReactDOM.createPortal(
-				<ModalContent
-					title={title}
-					hasHeader={hasHeader}
-					hasTitle={hasTitle}
-					hasClose={hasClose}
-					bgColor={bgColor}
-				>
+				<Modal title={title} hasClose={hasClose} style={style}>
 					{children}
-				</ModalContent>,
+				</Modal>,
 				document.getElementById("modal"),
 			)}
 		</>
@@ -83,11 +66,9 @@ const BaseModal = ({
 
 BaseModal.propTypes = {
 	children: PropTypes.node.isRequired,
-	bgColor: PropTypes.string.isRequired,
 };
-ModalContent.propTypes = {
+Modal.propTypes = {
 	children: PropTypes.node.isRequired,
-	bgColor: PropTypes.string.isRequired,
 };
 
 export default BaseModal;

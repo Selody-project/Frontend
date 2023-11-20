@@ -7,7 +7,9 @@ import {
 	getGroupInfo,
 	changeGroupPublic,
 } from "@/features/group/group-service";
+import { openModal } from "@/features/ui/ui-slice";
 
+import GroupDeleteModal from "./GroupDeleteModal";
 import {
 	InfoDiv,
 	ProfileInput,
@@ -23,7 +25,8 @@ import {
 const GroupLeaderProfile = () => {
 	const dispatch = useDispatch();
 
-	const groupDetailInfo = useSelector((state) => state.group.groupDetailInfo);
+	const { groupDetailInfo, isLoading } = useSelector((state) => state.group);
+	const { openedModal } = useSelector((state) => state.ui);
 
 	const defaultProfileImg = groupDetailInfo?.image ?? DefaultProfile;
 	const isPublicGroup = groupDetailInfo?.isPublicGroup;
@@ -75,8 +78,18 @@ const GroupLeaderProfile = () => {
 			<hr />
 			<BottomButtonDiv>
 				<ExitButton>그룹 나가기</ExitButton>
-				<DeleteButton>그룹 삭제</DeleteButton>
+				<DeleteButton
+					onClick={() => dispatch(openModal({ type: "DELETE_GROUP" }))}
+				>
+					그룹 삭제
+				</DeleteButton>
 			</BottomButtonDiv>
+			{openedModal === "DELETE_GROUP" && (
+				<GroupDeleteModal
+					groupDetailInfo={groupDetailInfo}
+					isLoading={isLoading}
+				/>
+			)}
 		</>
 	);
 };
