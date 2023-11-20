@@ -86,6 +86,10 @@ export const AccessLevelUl = styled.ul`
 				${({ theme: { colors } }) => colors.disabled_text};
 		}
 
+		&:hover {
+			background-color: ${({ theme: { colors } }) => colors.bg_01};
+		}
+
 		& > svg {
 			width: 10px;
 			margin-left: 12px;
