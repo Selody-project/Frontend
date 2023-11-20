@@ -36,6 +36,8 @@ export const MemberLi = styled.li`
 	align-items: center;
 	color: ${({ theme: { colors }, red }) =>
 		red ? colors.sunday : colors.text_03};
+	position: relative;
+	cursor: ${({ click }) => (click ? "pointer" : "default")};
 
 	& > img {
 		width: 42px;
@@ -58,4 +60,35 @@ export const MemberLi = styled.li`
 	}
 `;
 
-export const MemberDiv = styled.div``;
+export const AccessLevelUl = styled.ul`
+	width: 105px;
+	height: 80px;
+	position: absolute;
+	top: 10px;
+	left: calc(100% + 6px);
+	z-index: 50;
+	box-sizing: border-box;
+	background-color: ${({ theme: { colors } }) => colors.white};
+
+	& > li {
+		color: #4b4b4b;
+		font-size: 12px;
+		font-weight: ${({ theme: { typography } }) => typography.weight.medium};
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		height: 20px;
+		border: 1px solid ${({ theme: { colors } }) => colors.disabled_text};
+		border-bottom: none;
+
+		&:last-of-type {
+			border-bottom: 1px solid
+				${({ theme: { colors } }) => colors.disabled_text};
+		}
+
+		& > svg {
+			width: 10px;
+			margin-left: 12px;
+		}
+	}
+`;
