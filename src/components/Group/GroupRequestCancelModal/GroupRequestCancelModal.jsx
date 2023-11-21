@@ -1,17 +1,19 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 
-import { useTheme } from "styled-components";
-
 import BaseModal from "@/components/Base/BaseModal/BaseModal";
 import { changeRequestGroupJoin } from "@/features/group/group-service";
 import { closeModal } from "@/features/ui/ui-slice";
 
 import { ModalContentDiv, ModalFooter } from "./GroupRequestCancelModal.styles";
 
+const modalStyle = {
+	padding: "20px",
+	backgroundColor: "white",
+};
+
 const GroupRequestCancelModal = ({ groupId }) => {
 	const dispatch = useDispatch();
-	const theme = useTheme();
 
 	const handleCancelGroupJoin = async () => {
 		dispatch(changeRequestGroupJoin(groupId));
@@ -19,12 +21,7 @@ const GroupRequestCancelModal = ({ groupId }) => {
 	};
 
 	return (
-		<BaseModal
-			hasHeader={false}
-			hasTitle={false}
-			hasClose={false}
-			bgColor={theme.colors.white}
-		>
+		<BaseModal style={modalStyle}>
 			<ModalContentDiv>
 				<p>요청을 취소하시겠습니까?</p>
 			</ModalContentDiv>
