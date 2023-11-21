@@ -31,6 +31,11 @@ export const LandingMainContainerDiv = styled.div`
 					typography: { size },
 				},
 			}) => size.m2};
+			font-weight: ${({
+				theme: {
+					typography: { weight },
+				},
+			}) => weight.medium};
 		}
 		& > .startBtn {
 			margin-top: 40px;
@@ -43,11 +48,6 @@ export const LandingMainContainerDiv = styled.div`
 					typography: { size },
 				},
 			}) => size.m1};
-			font-weight: ${({
-				theme: {
-					typography: { weight },
-				},
-			}) => weight.regular};
 			color: ${({ theme: { colors } }) => colors.primary_light};
 			cursor: pointer;
 			& > a {
