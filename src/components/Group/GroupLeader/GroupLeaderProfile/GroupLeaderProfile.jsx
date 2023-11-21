@@ -10,6 +10,7 @@ import {
 import { openModal } from "@/features/ui/ui-slice";
 
 import GroupDeleteModal from "./GroupDeleteModal";
+import GroupExitModal from "./GroupExitModal";
 import {
 	InfoDiv,
 	ProfileInput,
@@ -77,13 +78,16 @@ const GroupLeaderProfile = () => {
 			</SaveButtonDiv>
 			<hr />
 			<BottomButtonDiv>
-				<ExitButton>그룹 나가기</ExitButton>
+				<ExitButton onClick={() => dispatch(openModal({ type: "EXIT_GROUP" }))}>
+					그룹 나가기
+				</ExitButton>
 				<DeleteButton
 					onClick={() => dispatch(openModal({ type: "DELETE_GROUP" }))}
 				>
 					그룹 삭제
 				</DeleteButton>
 			</BottomButtonDiv>
+			{openedModal === "EXIT_GROUP" && <GroupExitModal />}
 			{openedModal === "DELETE_GROUP" && (
 				<GroupDeleteModal
 					groupDetailInfo={groupDetailInfo}
