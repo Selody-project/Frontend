@@ -19,6 +19,22 @@ const bounceAnimation = {
 	},
 };
 
+const TAG_TO_ANIMATE = {
+	HEADING: "heading",
+	BUTTON: "button",
+};
+
+const getAnimation = (tag) => ({
+	initial: {
+		opacity: 0,
+		y: tag === TAG_TO_ANIMATE.HEADING ? -50 : 50,
+	},
+	animate: { opacity: 1, y: 0 },
+	transition: {
+		delay: tag === TAG_TO_ANIMATE.HEADING ? 0.2 : 3.8,
+	},
+});
+
 const LandingMain = () => {
 	return (
 		<LandingMainContainerDiv>
@@ -28,9 +44,7 @@ const LandingMain = () => {
 			<div className="content">
 				<motion.h2
 					className="heading2"
-					initial={{ opacity: 0, y: -50 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ delay: 0.2 }}
+					{...getAnimation(TAG_TO_ANIMATE.HEADING)}
 				>
 					Selody와 함께 그룹 일정을 공유하고 관리하자!
 				</motion.h2>
@@ -55,9 +69,7 @@ const LandingMain = () => {
 				</div>
 				<motion.button
 					className="startBtn"
-					initial={{ opacity: 0, y: 50 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ delay: 3.8 }}
+					{...getAnimation(TAG_TO_ANIMATE.BUTTON)}
 				>
 					<Link to="/login" className="auth-btn">
 						시작하기
