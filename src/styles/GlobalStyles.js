@@ -132,6 +132,11 @@ const GlobalStyles = createGlobalStyle`${css`
 		line-height: 1;
 	}
 
+	#root {
+		max-width: 1440px;
+		margin: 0 auto;
+	}
+
 	a {
 		text-decoration: none;
 		color: inherit;
