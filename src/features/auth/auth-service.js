@@ -1,8 +1,6 @@
 /* eslint-disable camelcase */
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import customFetch from "@/components/Base/BaseAxios";
-
 import commonThunk from "../commonThunk";
 
 export const validateDuplication = createAsyncThunk(
@@ -116,38 +114,48 @@ export const getCurrentUser = createAsyncThunk(
 
 export const updateUserProfile = createAsyncThunk(
 	"user/updateUserProfile",
-	async ({ nickname }, thunkAPI) => {
-		try {
-			const response = await customFetch.patch(`/api/user/profile`, {
-				nickname,
-			});
-
-			if (response.statusText !== "OK") {
-				throw response.data;
-			}
-
-			return response.data;
-		} catch (error) {
-			return thunkAPI.rejectWithValue(error.message);
-		}
+	async (formdata, thunkAPI) => {
+		const response = await commonThunk(
+			{
+				method: "PATCH",
+				url: `/api/user/profile`,
+				data: formdata,
+				successCode: 200,
+				headers: { "Content-Type": "multipart/form-data" },
+			},
+			thunkAPI,
+		);
+		return response;
 	},
 );
 
 export const updateUserPassword = createAsyncThunk(
 	"user/updateUserPassword",
-	async ({ password }, thunkAPI) => {
-		try {
-			const response = await customFetch.patch(`/api/user/profile/password`, {
-				password,
-			});
+	async (data, thunkAPI) => {
+		const response = await commonThunk(
+			{
+				method: "PATCH",
+				url: `/api/user/profile/password`,
+				data,
+				successCode: 200,
+			},
+			thunkAPI,
+		);
+		return response;
+	},
+);
 
-			if (response.statusText !== "OK") {
-				throw response.data;
-			}
-
-			return response.data;
-		} catch (error) {
-			return thunkAPI.rejectWithValue(error.message);
-		}
+export const withdrawMembership = createAsyncThunk(
+	"user/withdrawal",
+	async (_, thunkAPI) => {
+		const data = await commonThunk(
+			{
+				method: "DELETE",
+				url: `/api/auth/withdrawal`,
+				successCode: 204,
+			},
+			thunkAPI,
+		);
+		return data;
 	},
 );

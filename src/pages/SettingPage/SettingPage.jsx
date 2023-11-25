@@ -1,49 +1,78 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
-import { Box, Tab, Tabs, Container } from "@mui/material";
+import {
+	GroupDelegateModal,
+	GroupDeleteModal,
+	GroupLeaveModal,
+} from "@/components/Setting/GroupModals/GroupModals";
+import PasswordTab from "@/components/Setting/PasswordTab/PasswordTab";
+import ProfileTab from "@/components/Setting/ProfileTab";
+import WithdrawalTab from "@/components/Setting/WithdrawalTab/WithdrawalTab";
 
-import PasswordUpdate from "../../components/Setting/PasswordUpdate";
-import ProfileSettings from "../../components/Setting/ProfileSettings";
-import SharedSettings from "../../components/Setting/SharedSettings";
-import { getCurrentUser } from "../../features/auth/auth-service";
+import {
+	ContainerDiv,
+	MainSection,
+	TabLi,
+	TabsAside,
+	TabsUl,
+} from "./SettingPage.style";
 
 const SettingPage = () => {
-	const [selectedTab, setSelectedTab] = useState(0);
-	const { user } = useSelector((state) => state.auth);
-	const dispatch = useDispatch();
+	const { openedModal } = useSelector((state) => state.ui);
+	const { groupInfo, isLoading } = useSelector((state) => state.group);
+
+	const [selectedTabIdx, setSelectedTabIdx] = useState(0);
+
+	const selectedTabList = [<ProfileTab />, <PasswordTab />, <WithdrawalTab />];
 
 	useEffect(() => {
-		if (typeof user !== "object") {
-			dispatch(getCurrentUser());
-		}
-	}, []);
-
-	const handleChange = (event, newValue) => {
-		setSelectedTab(newValue);
-	};
+		window.scrollTo({ top: 0 });
+	}, [selectedTabIdx]);
 
 	return (
-		<Container>
-			<Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-				<Tabs
-					variant="fullWidth"
-					value={selectedTab}
-					onChange={handleChange}
-					textColor="secondary"
-					indicatorColor="secondary"
-					sx={{ "& .MuiTab-root": { fontWeight: "bold" } }}
-				>
-					<Tab label="프로필 및 계정 관리" />
-					<Tab label="공유일정 및 채팅관리" />
-					<Tab label="비밀번호 변경" id="PasswordUpdate" />
-				</Tabs>
-			</Box>
-			{selectedTab === 0 && <ProfileSettings userInfo={user} />}
-			{selectedTab === 1 && <SharedSettings />}
-			{selectedTab === 2 && <PasswordUpdate />}
-		</Container>
+		<>
+			<ContainerDiv>
+				<TabsAside>
+					<TabsUl>
+						<TabLi
+							role="tab"
+							aria-label="profileTab"
+							isSelected={selectedTabIdx === 0}
+							onClick={() => setSelectedTabIdx(0)}
+						>
+							프로필
+						</TabLi>
+						<TabLi
+							role="tab"
+							aria-label="passwordTab"
+							isSelected={selectedTabIdx === 1}
+							onClick={() => setSelectedTabIdx(1)}
+						>
+							비밀번호
+						</TabLi>
+						<TabLi
+							role="tab"
+							aria-label="withdrawalTab"
+							isSelected={selectedTabIdx === 2}
+							onClick={() => setSelectedTabIdx(2)}
+						>
+							회원 탈퇴
+						</TabLi>
+					</TabsUl>
+				</TabsAside>
+				<MainSection>{selectedTabList[selectedTabIdx]}</MainSection>
+			</ContainerDiv>
+			{openedModal === "DELETE_GROUP" && (
+				<GroupDeleteModal groupInfo={groupInfo} isLoading={isLoading} />
+			)}
+			{openedModal === "DELEGATE_GROUP" && (
+				<GroupDelegateModal groupInfo={groupInfo} isGroupLoading={isLoading} />
+			)}
+			{openedModal === "LEAVE_GROUP" && (
+				<GroupLeaveModal groupInfo={groupInfo} isGroupLoading={isLoading} />
+			)}
+		</>
 	);
 };
-
 export default SettingPage;

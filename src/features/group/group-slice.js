@@ -8,12 +8,16 @@ import {
 	getGroupList,
 	updateGroup,
 	leaveGroup,
+	delegateGroup,
+	changeGroupOption,
 } from "./group-service.js";
 
 const initialState = {
 	group: null,
 	groupList: [],
 	isLoading: false,
+	groupInfo: null,
+	isUserGroupRefetching: true,
 };
 
 const groupSlice = createSlice({
@@ -22,6 +26,12 @@ const groupSlice = createSlice({
 	reducers: {
 		selectGroup: (state, { payload }) => {
 			state.group = payload;
+		},
+		selectGroupInfo: (state, { payload }) => {
+			state.groupInfo = payload;
+		},
+		setRefetchUserGroup: (state, { payload }) => {
+			state.isUserGroupRefetching = payload;
 		},
 	},
 	extraReducers: (bulider) => {
@@ -51,10 +61,22 @@ const groupSlice = createSlice({
 			})
 			.addCase(deleteGroup.fulfilled, (state) => {
 				state.isLoading = false;
-				toast.success("그룹을 삭제하는데 성공하였습니다.");
+				toast.success("그룹을 삭제했습니다.");
 			})
-			.addCase(deleteGroup.rejected, (state) => {
+			.addCase(deleteGroup.rejected, (state, { payload }) => {
 				state.isLoading = false;
+				toast.error(payload.error);
+			})
+			.addCase(delegateGroup.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(delegateGroup.fulfilled, (state) => {
+				state.isLoading = false;
+				toast.success("그룹장 위임이 완료되었습니다.");
+			})
+			.addCase(delegateGroup.rejected, (state, { payload }) => {
+				state.isLoading = false;
+				toast.error(payload.error);
 			})
 			.addCase(updateGroup.pending, (state) => {
 				state.isLoading = true;
@@ -73,12 +95,24 @@ const groupSlice = createSlice({
 				state.isLoading = false;
 				toast.success("그룹을 탈퇴하였습니다.");
 			})
-			.addCase(leaveGroup.rejected, (state) => {
+			.addCase(leaveGroup.rejected, (state, { payload }) => {
 				state.isLoading = false;
+				toast.error(payload.error);
+			})
+			.addCase(changeGroupOption.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(changeGroupOption.fulfilled, (state) => {
+				state.isLoading = false;
+			})
+			.addCase(changeGroupOption.rejected, (state, { payload }) => {
+				state.isLoading = false;
+				toast.error(payload.error);
 			});
 	},
 });
 
-export const { selectGroup } = groupSlice.actions;
+export const { selectGroup, selectGroupInfo, setRefetchUserGroup } =
+	groupSlice.actions;
 
 export default groupSlice.reducer;

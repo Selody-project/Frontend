@@ -10,6 +10,7 @@ import {
 	googleLogin,
 	updateUserProfile,
 	updateUserPassword,
+	withdrawMembership,
 } from "./auth-service.js";
 
 const initialState = {
@@ -33,14 +34,11 @@ const authSlice = createSlice({
 			.addCase(signup.pending, (state) => {
 				state.isLoading = true;
 			})
-			.addCase(
-				signup.fulfilled,
-				(state, { payload: { email, nickname, userId, provider, snsId } }) => {
-					state.isLoading = false;
-					state.user = { email, nickname, userId, provider, snsId };
-					toast.success(`환영합니다! ${state.user.nickname}님`);
-				},
-			)
+			.addCase(signup.fulfilled, (state, { payload }) => {
+				state.isLoading = false;
+				state.user = payload;
+				toast.success(`환영합니다! ${state.user.nickname}님`);
+			})
 			.addCase(signup.rejected, (state, payload) => {
 				state.isLoading = false;
 				toast.error(payload.error);
@@ -49,13 +47,10 @@ const authSlice = createSlice({
 			.addCase(login.pending, (state) => {
 				state.isLoading = true;
 			})
-			.addCase(
-				login.fulfilled,
-				(state, { payload: { email, nickname, userId, provider, snsId } }) => {
-					state.isLoading = false;
-					state.user = { email, nickname, userId, provider, snsId };
-				},
-			)
+			.addCase(login.fulfilled, (state, { payload }) => {
+				state.isLoading = false;
+				state.user = payload;
+			})
 			.addCase(login.rejected, (state, { payload }) => {
 				state.isLoading = false;
 				toast.error(payload.error);
@@ -106,35 +101,49 @@ const authSlice = createSlice({
 				state.user = payload;
 			})
 			.addCase(getCurrentUser.rejected, (state, { payload }) => {
-				state.isLoading = false;
-				console.log(payload);
+				state.userLoading = false;
+				toast.error(payload.error);
 			})
 			// 유저 프로필 수정
 			.addCase(updateUserProfile.pending, (state) => {
 				state.isLoading = true;
 			})
-			.addCase(updateUserProfile.fulfilled, (state, { payload }) => {
-				state.isLoading = false;
-				state.user = payload;
-				toast.success("프로필이 수정되었습니다.");
-			})
+			.addCase(
+				updateUserProfile.fulfilled,
+				(state, { payload: { email, nickname, profileImage } }) => {
+					state.isLoading = false;
+					state.user = { ...state.user, email, nickname, profileImage };
+					toast.success("프로필이 수정되었습니다.");
+				},
+			)
 			.addCase(updateUserProfile.rejected, (state, { payload }) => {
 				state.isLoading = false;
-				console.log(payload);
-				toast.error(payload);
+				toast.error(payload.error);
 			})
 			// 유저 비밀번호 수정
 			.addCase(updateUserPassword.pending, (state) => {
 				state.isLoading = true;
 			})
-			.addCase(updateUserPassword.fulfilled, (state, { payload }) => {
+			.addCase(updateUserPassword.fulfilled, (state) => {
 				state.isLoading = false;
 				toast.success("비밀번호가 수정되었습니다.");
 			})
 			.addCase(updateUserPassword.rejected, (state, { payload }) => {
 				state.isLoading = false;
-				console.log(payload);
-				toast.error(payload);
+				toast.error(payload.error);
+			})
+			// 회원 탈퇴
+			.addCase(withdrawMembership.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(withdrawMembership.fulfilled, (state) => {
+				state.isLoading = false;
+				state.user = null;
+				toast.success("회원 탈퇴가 완료되었습니다.");
+			})
+			.addCase(withdrawMembership.rejected, (state, { payload }) => {
+				state.isLoading = false;
+				toast.error(payload.error);
 			});
 	},
 });

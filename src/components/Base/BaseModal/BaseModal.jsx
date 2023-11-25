@@ -26,7 +26,7 @@ const Backdrop = () => {
 	);
 };
 
-const Modal = ({ title, children, bg }) => {
+const Modal = ({ title, children, hasClose, style }) => {
 	const dispatch = useDispatch();
 
 	const handleClose = () => {
@@ -34,26 +34,28 @@ const Modal = ({ title, children, bg }) => {
 	};
 
 	return (
-		<ModalWrapper style={{ backgroundColor: bg }}>
+		<ModalWrapper style={style}>
 			<ModalHeaderDiv>
 				<span>{title}</span>
-				<IconButton onClick={handleClose} aria-label="close">
-					<CloseIcon />
-				</IconButton>
+				{hasClose && (
+					<IconButton onClick={handleClose} aria-label="close">
+						<CloseIcon />
+					</IconButton>
+				)}
 			</ModalHeaderDiv>
 			{children}
 		</ModalWrapper>
 	);
 };
 
-const BaseModal = ({ title = null, children, bg }) => {
+const BaseModal = ({ title = null, children, hasClose = true, style }) => {
 	useScrollLock();
 
 	return (
 		<>
 			{ReactDOM.createPortal(<Backdrop />, document.getElementById("backdrop"))}
 			{ReactDOM.createPortal(
-				<Modal title={title} bg={bg}>
+				<Modal title={title} hasClose={hasClose} style={style}>
 					{children}
 				</Modal>,
 				document.getElementById("modal"),
@@ -64,11 +66,9 @@ const BaseModal = ({ title = null, children, bg }) => {
 
 BaseModal.propTypes = {
 	children: PropTypes.node.isRequired,
-	bg: PropTypes.string.isRequired,
 };
 Modal.propTypes = {
 	children: PropTypes.node.isRequired,
-	bg: PropTypes.string.isRequired,
 };
 
 export default BaseModal;
