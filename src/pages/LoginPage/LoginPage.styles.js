@@ -24,7 +24,7 @@ export const LeftSideDiv = styled.div`
 		padding: 0;
 		font-family: "Montserrat";
 		font-size: 50px;
-		font-weight: ${({ theme }) => theme.typography.weight.bold};
+		font-weight: ${({ theme: { typography } }) => typography.weight.bold};
 		color: ${({ theme: { colors } }) => colors.text_01};
 		line-height: normal;
 		filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
@@ -38,7 +38,7 @@ export const LeftSideDiv = styled.div`
 		font-family: "Spoqa Han Sans Neo";
 		font-style: normal;
 		font-size: 28px;
-		font-weight: ${({ theme }) => theme.typography.weight.medium};
+		font-weight: ${({ theme: { typography } }) => typography.weight.medium};
 		line-height: normal;
 
 		color: ${({ theme: { colors } }) => colors.text_01};
@@ -89,7 +89,7 @@ export const SocialLoginBtnContainerDiv = styled.div`
 
 	& > span {
 		font-size: 12px;
-		color: ${({ theme }) => theme.colors.disabled_text};
+		color: ${({ theme: { colors } }) => colors.disabled_text};
 		opacity: 0.7;
 	}
 `;

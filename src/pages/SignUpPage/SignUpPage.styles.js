@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
 export const ContainerDiv = styled.div`
-	padding: 80px;
-	padding-bottom: 0;
+	padding: 80px 80px 0;
 `;
 
 export const ContentContainerDiv = styled.div`
@@ -25,7 +24,7 @@ export const LogoContainerDiv = styled.div`
 	gap: 8px;
 	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 	font-family: "Montserrat";
-	font-weight: ${({ theme }) => theme.typography.weight.bold};
+	font-weight: ${({ theme: { typography } }) => typography.weight.bold};
 	font-size: 45px;
 	line-height: normal;
 	color: ${({ theme: { colors } }) => colors.text_01};
@@ -34,7 +33,7 @@ export const LogoContainerDiv = styled.div`
 	& > h1 {
 		margin: 0;
 		& > span {
-			color: ${(props) => props.theme.colors.primary};
+			color: ${({ theme: { colors } }) => colors.primary};
 		}
 	}
 `;
@@ -45,14 +44,14 @@ export const LeftTextDiv = styled.div`
 	line-height: normal;
 
 	& > h3 {
-		font-weight: ${({ theme }) => theme.typography.weight.extrabold};
+		font-weight: ${({ theme: { typography } }) => typography.weight.extrabold};
 		font-size: 40px;
-		color: ${(props) => props.theme.colors.primary};
+		color: ${({ theme: { colors } }) => colors.primary};
 	}
 
 	& > h4 {
 		margin-top: 16px;
-		font-weight: ${({ theme }) => theme.typography.weight.bold};
+		font-weight: ${({ theme: { typography } }) => typography.weight.bold};
 		font-size: 20px;
 		color: ${({ theme: { colors } }) => colors.text_01};
 	}
