@@ -42,8 +42,7 @@ const authSlice = createSlice({
 			})
 			.addCase(signup.rejected, (state, payload) => {
 				state.isLoading = false;
-				console.log(payload);
-				toast.error(payload);
+				toast.error(payload.error);
 			})
 			// 로그인
 			.addCase(login.pending, (state) => {
@@ -55,7 +54,7 @@ const authSlice = createSlice({
 			})
 			.addCase(login.rejected, (state, { payload }) => {
 				state.isLoading = false;
-				console.log(payload);
+				toast.error(payload.error);
 			})
 			// naver 로그인
 			.addCase(naverLogin.pending, (state) => {
@@ -67,7 +66,7 @@ const authSlice = createSlice({
 			})
 			.addCase(naverLogin.rejected, (state, { payload }) => {
 				state.isLoading = false;
-				console.log(payload);
+				toast.error(payload.error);
 			})
 			// google 로그인
 			.addCase(googleLogin.pending, (state) => {
@@ -79,7 +78,7 @@ const authSlice = createSlice({
 			})
 			.addCase(googleLogin.rejected, (state, { payload }) => {
 				state.isLoading = false;
-				console.log(payload);
+				toast.error(payload.error);
 			})
 			// 로그아웃
 			.addCase(logout.pending, (state) => {
@@ -92,7 +91,7 @@ const authSlice = createSlice({
 			})
 			.addCase(logout.rejected, (state, { payload }) => {
 				state.userLoading = false;
-				console.log(payload);
+				toast.error(payload.error);
 			})
 			// 유저 쿠키 토큰 확인
 			.addCase(getCurrentUser.pending, (state) => {

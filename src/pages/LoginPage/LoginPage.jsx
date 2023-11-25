@@ -65,11 +65,7 @@ function LoginPage() {
 
 		if (!validate()) return;
 
-		const response = await dispatch(login({ email, password }));
-
-		if (response.error) {
-			toast.error("이메일 또는 비밀번호가 잘못되었습니다.");
-		}
+		await dispatch(login({ email, password }));
 	};
 
 	useEffect(() => {
