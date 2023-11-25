@@ -23,10 +23,6 @@ const authSlice = createSlice({
 	name: "auth",
 	initialState,
 	reducers: {
-		logoutHandler: (state) => {
-			state.user = null;
-			toast.success("로그아웃에 성공하셨습니다.");
-		},
 		setEdit: (state, { payload }) => {
 			state.edit = payload;
 		},
@@ -47,7 +43,7 @@ const authSlice = createSlice({
 			)
 			.addCase(signup.rejected, (state, payload) => {
 				state.isLoading = false;
-				toast.error(payload);
+				toast.error(payload.error);
 			})
 			// 로그인
 			.addCase(login.pending, (state) => {
@@ -60,9 +56,9 @@ const authSlice = createSlice({
 					state.user = { email, nickname, userId, provider, snsId };
 				},
 			)
-			.addCase(login.rejected, (state) => {
+			.addCase(login.rejected, (state, { payload }) => {
 				state.isLoading = false;
-				toast.error("이메일 또는 비밀번호가 잘못되었습니다.");
+				toast.error(payload.error);
 			})
 			// naver 로그인
 			.addCase(naverLogin.pending, (state) => {
@@ -70,11 +66,11 @@ const authSlice = createSlice({
 			})
 			.addCase(naverLogin.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
-				state.user = payload.nickname;
+				state.user = payload;
 			})
 			.addCase(naverLogin.rejected, (state, { payload }) => {
 				state.isLoading = false;
-				console.log(payload);
+				toast.error(payload.error);
 			})
 			// google 로그인
 			.addCase(googleLogin.pending, (state) => {
@@ -82,11 +78,11 @@ const authSlice = createSlice({
 			})
 			.addCase(googleLogin.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
-				state.user = payload.nickname;
+				state.user = payload;
 			})
 			.addCase(googleLogin.rejected, (state, { payload }) => {
 				state.isLoading = false;
-				console.log(payload);
+				toast.error(payload.error);
 			})
 			// 로그아웃
 			.addCase(logout.pending, (state) => {
@@ -98,16 +94,16 @@ const authSlice = createSlice({
 				toast.success("로그아웃에 성공하였습니다.");
 			})
 			.addCase(logout.rejected, (state, { payload }) => {
-				state.isLoading = false;
-				console.log(payload);
+				state.userLoading = false;
+				toast.error(payload.error);
 			})
 			// 유저 쿠키 토큰 확인
 			.addCase(getCurrentUser.pending, (state) => {
 				state.isLoading = true;
 			})
 			.addCase(getCurrentUser.fulfilled, (state, { payload }) => {
-				state.isLoading = false;
-				state.user = payload?.user;
+				state.userLoading = false;
+				state.user = payload;
 			})
 			.addCase(getCurrentUser.rejected, (state, { payload }) => {
 				state.isLoading = false;
@@ -143,6 +139,6 @@ const authSlice = createSlice({
 	},
 });
 
-export const { logoutHandler, setEdit } = authSlice.actions;
+export const { setEdit } = authSlice.actions;
 
 export default authSlice.reducer;

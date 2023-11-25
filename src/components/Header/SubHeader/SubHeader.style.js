@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const SubHeaderDiv = styled.div`
-	display: ${({ isNotiTabOpen }) => (isNotiTabOpen ? "block" : "none")};
+	display: none;
 	position: absolute;
 	top: 100%;
 	z-index: 2;
@@ -31,8 +31,4 @@ export const SubTabUl = styled.ul`
 		color: ${({ theme }) => theme.colors.primary};
 		font-weight: 600;
 	}
-`;
-
-export const NotificationButton = styled.button`
-	cursor: pointer;
 `;

@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-export const ContainerDiv = styled.div``;
-
 export const MenuWrapDiv = styled.div`
 	position: absolute;
 	top: calc(100% + 24px);
