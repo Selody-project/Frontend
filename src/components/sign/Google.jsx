@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 
 import { useGoogleLogin } from "@react-oauth/google";
 
-import GoogleLogo from "@/assets/icon/ic-google-logo.svg";
+import { GoogleLogoIcon } from "@/constants/iconConstants";
 import { googleLogin } from "@/features/auth/auth-service";
 
 const Google = () => {
@@ -25,7 +25,7 @@ const Google = () => {
 			data-testid="google-login"
 			onClick={loginWithGoogle}
 		>
-			<GoogleLogo />
+			<GoogleLogoIcon />
 		</button>
 	);
 };

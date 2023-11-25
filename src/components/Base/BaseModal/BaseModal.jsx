@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 
 import PropTypes from "prop-types";
 
-import CloseIcon from "@/assets/icon/ic-close.svg";
+import { CloseIcon } from "@/constants/iconConstants.js";
 import { closeModal } from "@/features/ui/ui-slice.js";
 import useScrollLock from "@/hooks/useScrollLock.jsx";
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-import DropdownBubble from "@/assets/icon/ic-notification-dropdown.svg";
+import { NotificationDropdownBubbleIcon } from "@/constants/iconConstants";
 
 import {
 	DropdownWrapDiv,
@@ -52,7 +52,7 @@ const NotificationDropdown = () => {
 
 	return (
 		<MenuWrapDiv>
-			<DropdownBubble />
+			<NotificationDropdownBubbleIcon />
 			<DropdownWrapDiv>
 				<HeaderDiv>
 					<h3>알림</h3>
