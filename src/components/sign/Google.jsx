@@ -1,16 +1,31 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 
-import GoogleLogo from "@/assets/icon/ic-google-logo.svg";
+import { useGoogleLogin } from "@react-oauth/google";
+
+import { GoogleLogoIcon } from "@/constants/iconConstants";
+import { googleLogin } from "@/features/auth/auth-service";
 
 const Google = () => {
-	// const responseGoogle = (response) => {
-	// 	dispatchFn(googleLogin(response));
-	// };
+	const dispatch = useDispatch();
+
+	const loginWithGoogle = useGoogleLogin({
+		onSuccess: (response) => {
+			dispatch(googleLogin(response));
+		},
+		onError: (response) => {
+			dispatch(googleLogin(response));
+		},
+	});
 
 	return (
-		<button type="button" id="google-login" data-testid="google-login">
-			<GoogleLogo />
-			{/* <GoogleLogin onSuccess={responseGoogle} onFailure={responseGoogle} /> */}
+		<button
+			type="button"
+			id="google-login"
+			data-testid="google-login"
+			onClick={loginWithGoogle}
+		>
+			<GoogleLogoIcon />
 		</button>
 	);
 };

@@ -84,10 +84,15 @@ export const SocialLoginBtnContainerDiv = styled.div`
 	& > button {
 		width: 52px;
 		height: 52px;
+<<<<<<< HEAD
 		margin-bottom: 8px;
+=======
+		cursor: pointer;
+>>>>>>> 2c38f58f57d4777289446ed6444a9f0c9ad4e049
 	}
 
 	& > span {
+		margin-top: 8px;
 		font-size: 12px;
 		color: ${({ theme: { colors } }) => colors.disabled_text};
 		opacity: 0.7;
