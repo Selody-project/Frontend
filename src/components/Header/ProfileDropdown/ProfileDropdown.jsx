@@ -1,15 +1,14 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+// import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 import DropdownBubble from "@/assets/icon/ic-profile-dropdown.svg";
-import { logout } from "@/features/auth/auth-service";
+// import { logout } from "@/features/auth/auth-service";
 
 import { ItemButton, MenuUl, MenuWrapDiv } from "./ProfileDropdown.style";
 
 const ProfileDropdown = () => {
-	const dispatch = useDispatch();
-	const navigate = useNavigate();
+	// const dispatch = useDispatch();
 
 	return (
 		<MenuWrapDiv>
@@ -22,9 +21,7 @@ const ProfileDropdown = () => {
 				</li>
 				<hr />
 				<li>
-					<ItemButton onClick={() => dispatch(logout(navigate))}>
-						로그아웃
-					</ItemButton>
+					<ItemButton>로그아웃</ItemButton>
 				</li>
 			</MenuUl>
 		</MenuWrapDiv>

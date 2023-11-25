@@ -29,5 +29,10 @@ export default ({ mode }) => {
 				"@": path.resolve(__dirname, "./src"),
 			},
 		},
+		define: {
+			"process.env.VITE_NAVER_CLIENT_ID": JSON.stringify(
+				env.VITE_NAVER_CLIENT_ID,
+			),
+		},
 	});
 };

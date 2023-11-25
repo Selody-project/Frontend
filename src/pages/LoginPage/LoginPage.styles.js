@@ -185,11 +185,11 @@ export const SocialLoginBtnContainerDiv = styled.div`
 	& > button {
 		width: 52px;
 		height: 52px;
-		margin-bottom: 8px;
 		cursor: pointer;
 	}
 
 	& > span {
+		margin-top: 8px;
 		font-size: 12px;
 		color: ${({ theme }) => theme.colors.disabled_02};
 		opacity: 0.7;

@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import Logo from "@/assets/img/img-selody-logo/3x.png";
 import Google from "@/components/sign/Google";
 import Naver from "@/components/sign/Naver";
 import { login, naverLogin } from "@/features/auth/auth-service.js";
-import useNaver from "@/hooks/useNaver.jsx";
 
 import {
 	ContainerDiv,
@@ -28,7 +27,9 @@ function LoginPage() {
 	const dispatchFn = useDispatch();
 	const navigate = useNavigate();
 
-	const naverInfo = useNaver();
+	const naverAccessToken = new URLSearchParams(useLocation().hash).get(
+		"#access_token",
+	);
 
 	const { user } = useSelector((state) => state.auth);
 
@@ -73,12 +74,12 @@ function LoginPage() {
 
 	useEffect(() => {
 		if (user) {
-			toast.success(`안녕하세요! ${user}님`);
+			toast.success(`안녕하세요! ${user.nickname}님`);
 			navigate("/");
 		}
 
-		if (naverInfo.accessToken) {
-			dispatchFn(naverLogin(naverInfo));
+		if (naverAccessToken) {
+			dispatchFn(naverLogin(naverAccessToken));
 		}
 	}, [user]);
 

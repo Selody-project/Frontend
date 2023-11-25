@@ -61,11 +61,10 @@ export const login = createAsyncThunk(
 
 export const naverLogin = createAsyncThunk(
 	"user/naverLogin",
-	// eslint-disable-next-line no-unused-vars
-	async ({ accessToken, navigate }, thunkAPI) => {
+	async (accessToken, thunkAPI) => {
 		try {
 			const response = await customFetch.post("/api/auth/naver", {
-				accessToken,
+				access_token: accessToken,
 			});
 
 			if (response.statusText !== "OK") {
@@ -98,23 +97,21 @@ export const googleLogin = createAsyncThunk(
 	},
 );
 
-export const logout = createAsyncThunk(
-	"user/logout",
-	async (navigate, thunkAPI) => {
-		try {
-			const response = await customFetch.delete("/api/auth/logout");
+export const logout = createAsyncThunk("user/logout", async (_, thunkAPI) => {
+	try {
+		const response = await customFetch.delete("/api/auth/logout");
 
-			if (response.status !== 200) {
-				throw response.data;
-			}
-			navigate("/login");
-
-			return response.data;
-		} catch (error) {
-			return thunkAPI.rejectWithValue(error.message);
+		if (response.status !== 200) {
+			throw response.data;
 		}
-	},
-);
+
+		localStorage.removeItem("com.naver.nid.access_token");
+		localStorage.removeItem("com.naver.nid.oauth.state_token");
+		return response.status;
+	} catch (error) {
+		return thunkAPI.rejectWithValue(error.message);
+	}
+});
 
 export const getCurrentUser = createAsyncThunk(
 	"user/getCurrentUser",
