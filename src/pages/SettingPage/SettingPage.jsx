@@ -13,9 +13,9 @@ import WithdrawalTab from "@/components/Setting/WithdrawalTab/WithdrawalTab";
 import {
 	ContainerDiv,
 	MainSection,
-	TabDiv,
+	TabLi,
 	TabsAside,
-	TabsDiv,
+	TabsUl,
 } from "./SettingPage.style";
 
 const SettingPage = () => {
@@ -34,29 +34,32 @@ const SettingPage = () => {
 		<>
 			<ContainerDiv>
 				<TabsAside>
-					<TabsDiv>
-						<TabDiv
-							data-testid="profileTab"
+					<TabsUl>
+						<TabLi
+							role="tab"
+							aria-label="profileTab"
 							isSelected={selectedTabIdx === 0}
 							onClick={() => setSelectedTabIdx(0)}
 						>
 							프로필
-						</TabDiv>
-						<TabDiv
-							data-testid="passwordTab"
+						</TabLi>
+						<TabLi
+							role="tab"
+							aria-label="passwordTab"
 							isSelected={selectedTabIdx === 1}
 							onClick={() => setSelectedTabIdx(1)}
 						>
 							비밀번호
-						</TabDiv>
-						<TabDiv
-							data-testid="withdrawalTab"
+						</TabLi>
+						<TabLi
+							role="tab"
+							aria-label="withdrawalTab"
 							isSelected={selectedTabIdx === 2}
 							onClick={() => setSelectedTabIdx(2)}
 						>
 							회원 탈퇴
-						</TabDiv>
-					</TabsDiv>
+						</TabLi>
+					</TabsUl>
 				</TabsAside>
 				<MainSection>{selectedTabList[selectedTabIdx]}</MainSection>
 			</ContainerDiv>

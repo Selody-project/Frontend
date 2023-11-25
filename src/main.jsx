@@ -5,12 +5,12 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { ThemeProvider } from "styled-components";
 
 import App from "@/App";
-import { store } from "@/store";
+import { setupStore } from "@/store";
 import GlobalStyles from "@/styles/GlobalStyles";
 import lightTheme from "@/styles/theme";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-	<Provider store={store}>
+	<Provider store={setupStore()}>
 		<GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
 			<ThemeProvider theme={lightTheme}>
 				<GlobalStyles />

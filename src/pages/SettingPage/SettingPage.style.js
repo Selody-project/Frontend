@@ -22,12 +22,12 @@ export const TabsAside = styled.aside`
 	}
 `;
 
-export const TabsDiv = styled.div`
+export const TabsUl = styled.ul`
 	position: sticky;
 	top: 320px;
 `;
 
-export const TabDiv = styled.div`
+export const TabLi = styled.li`
 	display: flex;
 	justify-content: center;
 	align-items: center;

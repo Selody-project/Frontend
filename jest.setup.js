@@ -8,14 +8,21 @@ import { render as rtlRender } from "@testing-library/react";
 import { ThemeProvider } from "styled-components";
 
 import { server } from "./__test__/__mocks__/msw/server.js";
-import { store } from "./src/store/index.js";
+import { setupStore } from "./src/store/index.js";
 import lightTheme from "./src/styles/theme.js";
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
-const render = (ui, { ...options } = {}) => {
+export const render = (
+	ui,
+	{
+		preloadedState = {},
+		store = setupStore(preloadedState),
+		...renderOptions
+	} = {},
+) => {
 	const Wrapper = ({ children }) => (
 		<GoogleOAuthProvider clientId="379597382111-vo2ht0r8a3d0ais7v12q7777lu48al1a.apps.googleusercontent.com">
 			<Provider store={store}>
@@ -25,8 +32,7 @@ const render = (ui, { ...options } = {}) => {
 			</Provider>
 		</GoogleOAuthProvider>
 	);
-	return rtlRender(ui, { wrapper: Wrapper, ...options });
+	return { store, ...rtlRender(ui, { wrapper: Wrapper, ...renderOptions }) };
 };
 
 export * from "@testing-library/react";
-export { render };
