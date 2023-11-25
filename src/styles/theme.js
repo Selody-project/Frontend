@@ -11,9 +11,13 @@ const lightTheme = {
 		bg_03: "#434343",
 		btn_01: "#262626",
 		btn_02: "#C9CCD7",
+		btn_03: "#C4BAFE",
+		btn_04: "#4C2FFF",
+		btn_05: "#3515FA",
 		white: "#FFFFFF",
 		saturday: "#85A0FF",
 		sunday: "#FF9797",
+		error: "#C20000",
 	},
 	spacing: {
 		padding: {
