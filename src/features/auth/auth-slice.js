@@ -101,8 +101,8 @@ const authSlice = createSlice({
 				state.user = payload;
 			})
 			.addCase(getCurrentUser.rejected, (state, { payload }) => {
-				state.isLoading = false;
-				console.log(payload);
+				state.userLoading = false;
+				toast.error(payload.error);
 			})
 			// 유저 프로필 수정
 			.addCase(updateUserProfile.pending, (state) => {
@@ -118,14 +118,13 @@ const authSlice = createSlice({
 			)
 			.addCase(updateUserProfile.rejected, (state, { payload }) => {
 				state.isLoading = false;
-				const { error } = payload.response.data;
-				toast.error(error);
+				toast.error(payload.error);
 			})
 			// 유저 비밀번호 수정
 			.addCase(updateUserPassword.pending, (state) => {
 				state.isLoading = true;
 			})
-			.addCase(updateUserPassword.fulfilled, (state, { payload }) => {
+			.addCase(updateUserPassword.fulfilled, (state) => {
 				state.isLoading = false;
 				toast.success("비밀번호가 수정되었습니다.");
 			})

@@ -1,8 +1,6 @@
 /* eslint-disable camelcase */
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import customFetch from "@/components/Base/BaseAxios";
-
 import commonThunk from "../commonThunk";
 
 export const validateDuplication = createAsyncThunk(
@@ -117,54 +115,47 @@ export const getCurrentUser = createAsyncThunk(
 export const updateUserProfile = createAsyncThunk(
 	"user/updateUserProfile",
 	async (formdata, thunkAPI) => {
-		try {
-			const response = await customFetch.patch(`/api/user/profile`, formdata, {
+		const response = await commonThunk(
+			{
+				method: "PATCH",
+				url: `/api/user/profile`,
+				data: formdata,
+				successCode: 200,
 				headers: { "Content-Type": "multipart/form-data" },
-			});
-
-			if (response.statusText !== "OK") {
-				throw response.data;
-			}
-			return response.data;
-		} catch (error) {
-			return thunkAPI.rejectWithValue(error);
-		}
+			},
+			thunkAPI,
+		);
+		return response;
 	},
 );
 
 export const updateUserPassword = createAsyncThunk(
 	"user/updateUserPassword",
 	async (data, thunkAPI) => {
-		try {
-			const response = await customFetch.patch(
-				`/api/user/profile/password`,
+		const response = await commonThunk(
+			{
+				method: "PATCH",
+				url: `/api/user/profile/password`,
 				data,
-			);
-
-			if (response.status !== 200) {
-				throw response.data;
-			}
-
-			return response.data;
-		} catch (error) {
-			return thunkAPI.rejectWithValue(error.response.data);
-		}
+				successCode: 200,
+			},
+			thunkAPI,
+		);
+		return response;
 	},
 );
 
 export const withdrawMembership = createAsyncThunk(
 	"user/withdrawal",
 	async (_, thunkAPI) => {
-		try {
-			const response = await customFetch.delete(`/api/auth/withdrawal`);
-
-			if (response.status !== 204) {
-				throw response.data;
-			}
-
-			return response.data;
-		} catch (error) {
-			return thunkAPI.rejectWithValue(error.response.data);
-		}
+		const data = await commonThunk(
+			{
+				method: "DELETE",
+				url: `/api/auth/withdrawal`,
+				successCode: 204,
+			},
+			thunkAPI,
+		);
+		return data;
 	},
 );
