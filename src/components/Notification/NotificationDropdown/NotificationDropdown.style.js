@@ -1,11 +1,9 @@
 import styled from "styled-components";
 
-export const ContainerDiv = styled.div``;
-
 export const MenuWrapDiv = styled.div`
 	position: absolute;
-	top: calc(100% + 90px);
-	left: 36px;
+	top: calc(100% + 16px);
+	right: -100%;
 	z-index: 99;
 `;
 
