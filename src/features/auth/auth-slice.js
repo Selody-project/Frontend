@@ -100,7 +100,7 @@ const authSlice = createSlice({
 			})
 			.addCase(getCurrentUser.fulfilled, (state, { payload }) => {
 				state.userLoading = false;
-				state.user = payload?.user;
+				state.user = payload;
 			})
 			.addCase(getCurrentUser.rejected, (state, { payload }) => {
 				state.userLoading = false;

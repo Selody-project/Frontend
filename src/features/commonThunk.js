@@ -1,7 +1,7 @@
 import customFetch from "@/components/Base/BaseAxios";
 
 const commonThunk = async (
-	{ method, url, successCode, params = undefined, data = undefined, ...rest },
+	{ method, url, params = undefined, data = undefined, successCode, ...rest },
 	thunkAPI,
 ) => {
 	try {
