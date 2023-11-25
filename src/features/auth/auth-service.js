@@ -134,19 +134,20 @@ export const updateUserProfile = createAsyncThunk(
 
 export const updateUserPassword = createAsyncThunk(
 	"user/updateUserPassword",
-	async ({ password }, thunkAPI) => {
+	async (data, thunkAPI) => {
 		try {
-			const response = await customFetch.patch(`/api/user/profile/password`, {
-				password,
-			});
+			const response = await customFetch.patch(
+				`/api/user/profile/password`,
+				data,
+			);
 
-			if (response.statusText !== "OK") {
+			if (response.status !== 200) {
 				throw response.data;
 			}
 
 			return response.data;
 		} catch (error) {
-			return thunkAPI.rejectWithValue(error.message);
+			return thunkAPI.rejectWithValue(error.response.data);
 		}
 	},
 );

@@ -42,7 +42,7 @@ describe("SettingPage Component", () => {
 		);
 
 		expect(getByTestId("profileTab")).toBeInTheDocument();
+		expect(getByTestId("passwordTab")).toBeInTheDocument();
 		expect(getByTestId("withdrawalTab")).toBeInTheDocument();
-		// expect(getByText("비밀번호 변경")).toBeInTheDocument();
 	});
 });

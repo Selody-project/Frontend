@@ -161,8 +161,7 @@ const authSlice = createSlice({
 			})
 			.addCase(updateUserPassword.rejected, (state, { payload }) => {
 				state.isLoading = false;
-				console.log(payload);
-				toast.error(payload);
+				toast.error(payload.error);
 			})
 			// 회원 탈퇴
 			.addCase(withdrawMembership.pending, (state) => {

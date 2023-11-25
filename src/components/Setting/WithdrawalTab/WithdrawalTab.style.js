@@ -8,7 +8,7 @@ export const ContainerDiv = styled.div`
 	line-height: normal;
 
 	& > h3 {
-		font-size: 24px;
+		font-size: 20px;
 		font-weight: ${({
 			theme: {
 				typography: { weight },

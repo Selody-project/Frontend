@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+import PasswordTab from "@/components/Setting/PasswordTab/PasswordTab";
 import ProfileTab from "@/components/Setting/ProfileTab";
 import WithdrawalTab from "@/components/Setting/WithdrawalTab/WithdrawalTab";
 
@@ -14,6 +15,8 @@ import {
 const SettingPage = () => {
 	const [selectedTab, setSelectedTab] = useState(0);
 
+	const selectedTabList = [<ProfileTab />, <PasswordTab />, <WithdrawalTab />];
+
 	return (
 		<ContainerDiv>
 			<TabsAside>
@@ -26,27 +29,22 @@ const SettingPage = () => {
 						프로필
 					</TabDiv>
 					<TabDiv
-						data-testid="withdrawalTab"
+						data-testid="passwordTab"
 						isSelected={selectedTab === 1}
 						onClick={() => setSelectedTab(1)}
+					>
+						비밀번호
+					</TabDiv>
+					<TabDiv
+						data-testid="withdrawalTab"
+						isSelected={selectedTab === 2}
+						onClick={() => setSelectedTab(2)}
 					>
 						회원 탈퇴
 					</TabDiv>
 				</TabsDiv>
 			</TabsAside>
-			<MainSection>
-				{selectedTab === 0 ? (
-					<>
-						<h1>설정</h1>
-						<ProfileTab />
-					</>
-				) : (
-					<>
-						<h1>회원 탈퇴</h1>
-						<WithdrawalTab />
-					</>
-				)}
-			</MainSection>
+			<MainSection>{selectedTabList[selectedTab]}</MainSection>
 		</ContainerDiv>
 	);
 };
