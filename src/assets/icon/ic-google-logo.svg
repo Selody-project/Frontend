@@ -6,14 +6,7 @@
 	xmlns="http://www.w3.org/2000/svg"
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 >
-<circle
-		cx="28.5"
-		cy="28.5"
-		r="28.35"
-		fill="url(#pattern0)"
-		stroke="black"
-		stroke-width="0.3"
-	/>
+<circle cx="28.5" cy="28.5" r="28.35" fill="url(#pattern0)" />
 <defs>
 <pattern
 			id="pattern0"

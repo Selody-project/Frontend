@@ -16,7 +16,7 @@ import {
 } from "@/pages";
 
 import { getCurrentUser } from "./features/auth/auth-service.js";
-
+import PublicRoute from "./pages/PublicRoute.jsx";
 import "react-toastify/dist/ReactToastify.css";
 
 const router = createBrowserRouter([
@@ -31,16 +31,23 @@ const router = createBrowserRouter([
 			{ path: "setting", element: <SettingPage /> },
 		],
 	},
-	{ path: "/landing", element: <LandingPage /> },
-	{ path: "/login", element: <LoginPage /> },
-	{ path: "/signup", element: <SignUpPage /> },
+	{
+		path: "/",
+		element: <PublicRoute />,
+		errorElement: <ErrorPage />,
+		children: [
+			{ path: "landing", element: <LandingPage /> },
+			{ path: "login", element: <LoginPage /> },
+			{ path: "signup", element: <SignUpPage /> },
+		],
+	},
 ]);
 
 export default function App() {
-	const dispatchFn = useDispatch();
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatchFn(getCurrentUser());
+		dispatch(getCurrentUser());
 	}, []);
 
 	return (

@@ -2,23 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import customFetch from "@/components/Base/BaseAxios";
 
-export const validateDuplication = createAsyncThunk(
-	"user/validateDuplication",
-	async ({ type, targetValue }, thunkAPI) => {
-		try {
-			const response = await customFetch.post("/api/auth/join", {
-				[type]: targetValue,
-			});
-			if (response.status === 409) {
-				throw response.data;
-			}
-			return response.status;
-		} catch (error) {
-			return thunkAPI.rejectWithValue(error.message);
-		}
-	},
-);
-
 export const signup = createAsyncThunk(
 	"user/signup",
 	async ({ email, nickname, password }, thunkAPI) => {
@@ -54,7 +37,7 @@ export const login = createAsyncThunk(
 
 			return response.data;
 		} catch (error) {
-			return thunkAPI.rejectWithValue(error.message);
+			return thunkAPI.rejectWithValue(error);
 		}
 	},
 );

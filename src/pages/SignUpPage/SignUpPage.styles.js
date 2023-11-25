@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
 export const ContainerDiv = styled.div`
-	padding: 80px;
-	padding-bottom: 0;
+	padding: 80px 80px 0;
 `;
 
 export const ContentContainerDiv = styled.div`
@@ -12,9 +11,12 @@ export const ContentContainerDiv = styled.div`
 
 export const LeftSideDiv = styled.div`
 	flex: 1;
+	margin-top: 28px;
 `;
 
-export const RightSideDiv = styled(LeftSideDiv)``;
+export const RightSideDiv = styled.div`
+	flex: 1;
+`;
 
 export const LogoContainerDiv = styled.div`
 	display: flex;
@@ -22,16 +24,16 @@ export const LogoContainerDiv = styled.div`
 	gap: 8px;
 	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 	font-family: "Montserrat";
-	font-weight: 700;
+	font-weight: ${({ theme: { typography } }) => typography.weight.bold};
 	font-size: 45px;
 	line-height: normal;
-	color: black;
-	margin-bottom: 90px;
+	color: ${({ theme: { colors } }) => colors.text_01};
+	margin-bottom: 80px;
 
 	& > h1 {
 		margin: 0;
 		& > span {
-			color: ${(props) => props.theme.colors.primary};
+			color: ${({ theme: { colors } }) => colors.primary};
 		}
 	}
 `;
@@ -39,18 +41,18 @@ export const LogoContainerDiv = styled.div`
 export const LeftTextDiv = styled.div`
 	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 	font-family: "Montserrat";
+	line-height: normal;
 
 	& > h3 {
-		font-weight: 800;
+		font-weight: ${({ theme: { typography } }) => typography.weight.extrabold};
 		font-size: 40px;
-		line-height: 49px;
-		color: #6c55fe;
+		color: ${({ theme: { colors } }) => colors.primary};
 	}
 
 	& > h4 {
-		font-weight: 700;
+		margin-top: 16px;
+		font-weight: ${({ theme: { typography } }) => typography.weight.bold};
 		font-size: 20px;
-		line-height: 24px;
-		color: #000000;
+		color: ${({ theme: { colors } }) => colors.text_01};
 	}
 `;
