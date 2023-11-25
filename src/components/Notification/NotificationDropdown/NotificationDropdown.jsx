@@ -1,9 +1,8 @@
-import React, { forwardRef } from "react";
+import React from "react";
 
 import DropdownBubble from "@/assets/icon/ic-notification-dropdown.svg";
 
 import {
-	ContainerDiv,
 	DropdownWrapDiv,
 	MenuWrapDiv,
 	HeaderDiv,
@@ -11,7 +10,7 @@ import {
 } from "./NotificationDropdown.style";
 import NotificationItem from "../NotificationItem/NotificationItem";
 
-const NotificationDropdown = forwardRef((_, dropdownRef) => {
+const NotificationDropdown = () => {
 	const mockItems = [
 		{
 			id: 1,
@@ -52,27 +51,25 @@ const NotificationDropdown = forwardRef((_, dropdownRef) => {
 	];
 
 	return (
-		<ContainerDiv>
-			<MenuWrapDiv ref={dropdownRef}>
-				<DropdownBubble />
-				<DropdownWrapDiv>
-					<HeaderDiv>
-						<h3>알림</h3>
-					</HeaderDiv>
-					<BodyDiv>
-						{mockItems.map(({ id, groupName, time, text }) => (
-							<NotificationItem
-								key={id}
-								groupName={groupName}
-								time={time}
-								text={text}
-							/>
-						))}
-					</BodyDiv>
-				</DropdownWrapDiv>
-			</MenuWrapDiv>
-		</ContainerDiv>
+		<MenuWrapDiv>
+			<DropdownBubble />
+			<DropdownWrapDiv>
+				<HeaderDiv>
+					<h3>알림</h3>
+				</HeaderDiv>
+				<BodyDiv>
+					{mockItems.map(({ id, groupName, time, text }) => (
+						<NotificationItem
+							key={id}
+							groupName={groupName}
+							time={time}
+							text={text}
+						/>
+					))}
+				</BodyDiv>
+			</DropdownWrapDiv>
+		</MenuWrapDiv>
 	);
-});
+};
 
 export default NotificationDropdown;

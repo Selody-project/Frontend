@@ -76,7 +76,7 @@ export const TabButton = styled.button`
 	font-weight: ${({ isActive }) => (isActive ? "600" : "500")};
 	border-bottom: ${({ isActive, theme: { colors } }) =>
 		isActive ? `2px solid ${colors.primary}` : 0};
-	padding: 10px 8px 8px;
+	padding: 10px 0;
 
 	&:hover {
 		color: ${({ theme }) => theme.colors.primary};
@@ -90,26 +90,24 @@ export const GroupCreateButton = styled.button`
 	border: 1px solid ${({ theme }) => theme.colors.primary};
 	border-radius: 100px;
 	padding: 12px 36px;
-	background-color: white;
+	background-color: ${({ theme }) => theme.colors.white};
 	color: ${({ theme }) => theme.colors.primary};
 	font-size: 13px;
 	font-family: Inter;
 	font-weight: 700;
-	box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+	box-shadow: 0px 4px 2px 0px rgba(0, 0, 0, 0.25);
 
 	&:hover {
-		box-shadow: 0px 4px 2px 0px rgba(0, 0, 0, 0.25);
+		background-color: ${({ theme }) => theme.colors.bg_02};
 	}
 
 	&:active {
-		box-shadow: 0px 4px 2px 0px rgba(0, 0, 0, 0.25);
-		background-color: #ccc4ff;
+		background-color: ${({ theme }) => `${theme.colors.bg_03}30`};
 	}
 `;
 
 export const ProfileDiv = styled.div`
 	position: relative;
-	margin-left: 28px;
 `;
 
 export const ProfileImg = styled.img`
@@ -118,4 +116,24 @@ export const ProfileImg = styled.img`
 	height: 60px;
 	border-radius: 50%;
 	object-fit: contain;
+`;
+
+export const NotificationDiv = styled.div`
+	position: relative;
+`;
+
+export const NotificationButton = styled.button`
+	margin: 0 16px;
+	cursor: pointer;
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	text-align: center;
+
+	&:hover {
+		background-color: ${({ theme }) => theme.colors.bg_02};
+	}
+	&:active {
+		background-color: ${({ theme }) => `${theme.colors.btn_01}30`};
+	}
 `;
