@@ -27,9 +27,6 @@ const MyGroup = () => {
 	const [widthGap, setWidthGap] = useState(0);
 
 	const handleNextButton = () => {
-		const maxWidth = childRef?.current?.clientWidth;
-		const width = parentRef?.current?.clientWidth;
-		setWidthGap(maxWidth - width);
 		setCurrentWidth((nextWidth) => nextWidth + 200);
 	};
 
@@ -40,11 +37,17 @@ const MyGroup = () => {
 	};
 
 	useEffect(() => {
+		const maxWidth = childRef?.current?.clientWidth;
+		const width = parentRef?.current?.clientWidth;
+		setWidthGap(maxWidth - width);
+	});
+
+	useEffect(() => {
 		dispatch(inqueryUserGroup());
 	}, []);
 
 	useEffect(() => {
-		if (currentWidth > widthGap) {
+		if (widthGap && currentWidth > widthGap) {
 			setDisableNextButton(true);
 		} else {
 			setDisableNextButton(false);
