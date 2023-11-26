@@ -20,7 +20,6 @@ import {
 
 const initialState = {
 	groupInfo: null,
-	groupInfoDetail: null,
 	groupRequestMemberList: [],
 	isLoading: false,
 	isUserGroupRefetching: true,

@@ -9,7 +9,6 @@ import GroupMember from "@/components/Group/GroupMember/GroupMember";
 import GroupProfile from "@/components/Group/GroupProfile/GroupProfile";
 import GroupTitle from "@/components/Group/GroupTitle/GroupTitle";
 import {
-	getGroupInfoDetail,
 	getGroupInfo,
 	getGroupRequestMemberList,
 } from "@/features/group/group-service";
@@ -32,7 +31,6 @@ const GroupPage = () => {
 	const [isGroupMember, setIsGroupMember] = useState(false);
 
 	useEffect(() => {
-		dispatch(getGroupInfoDetail(param.id));
 		dispatch(getGroupInfo(param.id));
 		dispatch(getGroupRequestMemberList(param.id));
 		dispatch(inqueryUserGroup());
