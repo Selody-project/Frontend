@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-// import { useSelector } from "react-redux";
 
-import CrownIcon from "@/assets/icon/ic-crown.svg";
-import CommentIcon from "@/assets/icon/ic-feed-comment.svg";
-import HeartIcon from "@/assets/icon/ic-feed-heart.svg";
-import OptionThreeDotIcon from "@/assets/icon/ic-feed-option.svg";
-import ShareIcon from "@/assets/icon/ic-feed-share.svg";
 import SampleImg from "@/assets/img/feed/img-group-sample-01.jpeg";
+import {
+	CrownIcon,
+	CommentIcon,
+	HeartIcon,
+	OptionThreeDotIcon,
+} from "@/constants/iconConstants";
 
 import {
 	FeedSection,
@@ -19,6 +19,7 @@ import {
 	IconDiv,
 	IconItemDiv,
 } from "./GroupFeed.styles";
+// import { useSelector } from "react-redux";
 
 const mockItems = [
 	{
@@ -88,10 +89,6 @@ const GroupFeed = () => {
 							<IconItemDiv>
 								<CommentIcon />
 								<span>2</span>
-							</IconItemDiv>
-							<IconItemDiv>
-								<ShareIcon />
-								<span>3</span>
 							</IconItemDiv>
 						</IconDiv>
 					</BottomDiv>

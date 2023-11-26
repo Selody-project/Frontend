@@ -1,7 +1,6 @@
 import React from "react";
 
-import AddIcon from "@/assets/icon/ic-group-add.svg";
-import SampleImg from "@/assets/img/feed/img-group-sample-01.jpeg";
+import { AddIcon } from "@/constants/iconConstants";
 
 import {
 	ContainerDiv,
@@ -15,7 +14,7 @@ const GroupProfile = ({ groupInfo, isGroupMember }) => {
 	return (
 		<ContainerDiv>
 			<TopDiv>
-				<img src={SampleImg} alt="sampleimg" />
+				<img src={groupInfo?.information.group.image} alt="groupImg" />
 				<h3>{groupInfo?.information.group.name}</h3>
 				<p>{groupInfo?.information.group.description}</p>
 			</TopDiv>

@@ -1,6 +1,6 @@
 import React from "react";
 
-import SecretIcon from "@/assets/icon/ic-secret.svg";
+import { SecretIcon } from "@/constants/iconConstants";
 
 import { SecretSection } from "./SecretFeed.styles";
 

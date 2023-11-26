@@ -1,9 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 
-import RequestCheckIcon from "@/assets/icon/ic-request-check.svg";
-import RequestCloseIcon from "@/assets/icon/ic-request-close.svg";
-import SampleImg from "@/assets/img/feed/img-group-sample-01.jpeg";
+import { RequestCheckIcon, RequestCloseIcon } from "@/constants/iconConstants";
 import {
 	approveGroupJoin,
 	rejectGroupJoin,
@@ -34,7 +32,7 @@ const MemberRequestList = ({ requestMemberList, groupId }) => {
 				<MemberUl>
 					{requestMemberList.map((info) => (
 						<li key={info.member.userId}>
-							<img src={SampleImg} alt="sampleImg" />
+							<img src={info.member.image} alt="memberImg" />
 							<h4>{info.member.nickname}</h4>
 							<ButtonDiv>
 								<ButtonInnerDiv

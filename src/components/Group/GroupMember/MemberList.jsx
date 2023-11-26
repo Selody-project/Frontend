@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import Option from "@/assets/icon/ic-feed-option.svg";
-import SampleImg from "@/assets/img/feed/img-group-sample-01.jpeg";
+import { OptionThreeDotIcon } from "@/constants/iconConstants";
 import { deleteGroupMember } from "@/features/group/group-service";
 
 import {
@@ -33,10 +32,10 @@ const MemberList = ({ groupId }) => {
 			<MemberUl>
 				{groupInfo?.information.memberInfo.map((info) => (
 					<li key={info.userId}>
-						<img src={SampleImg} alt="sampleImg" />
+						<img src={info.image} alt="memberImg" />
 						<h4>{info.nickname}</h4>
 						<button type="button">
-							<Option
+							<OptionThreeDotIcon
 								onClick={() => {
 									handleOption(info.userId);
 								}}

@@ -1,8 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-import SampleImg from "@/assets/img/feed/img-group-sample-01.jpeg";
-
 import {
 	MemberInnerDiv,
 	MemberH3,
@@ -22,7 +20,7 @@ const GroupMember = ({ requestMemberList, groupId }) => {
 					<MemberH3>내 프로필</MemberH3>
 					<MemberUl>
 						<li>
-							<img src={SampleImg} alt="sampleImg" />
+							<img src={user?.profileImage} alt="profileImg" />
 							<h4>{user?.nickname}</h4>
 						</li>
 					</MemberUl>
