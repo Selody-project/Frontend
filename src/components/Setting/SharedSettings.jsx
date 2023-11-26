@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
@@ -18,11 +18,6 @@ import {
 	getInvitation,
 	groupJoin,
 } from "@/features/group/group-invite-service.js";
-import {
-	getGroupList,
-	// deleteGroup,
-	// leaveGroup,
-} from "@/features/group/group-service";
 
 import {
 	UserInfoContainer,
@@ -51,9 +46,9 @@ const SharedSettings = () => {
 		setInviteCode(e.target.value);
 	};
 
-	useEffect(() => {
-		dispatch(getGroupList());
-	}, []);
+	// useEffect(() => {
+	// 	dispatch(getGroupList());
+	// }, []);
 
 	const handleClickOpenDelegate = (group) => {
 		setCurrentGroup(group);

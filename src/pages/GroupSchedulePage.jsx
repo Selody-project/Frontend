@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
 
 import styled from "styled-components";
 
-import { getGroupList } from "@/features/group/group-service.js";
+// import { getGroupList } from "@/features/group/group-service.js";
 
 import CalendarContainer from "../components/Common/CalendarContainer.jsx";
 import ShareTodoList from "../components/SharePage/ShareTodoList/ShareTodoList";
@@ -16,11 +15,11 @@ const MainContainer = styled.main`
 `;
 
 const GroupSchedulePage = () => {
-	const dispatch = useDispatch();
+	// const dispatch = useDispatch();
 
-	useEffect(() => {
-		dispatch(getGroupList());
-	}, []);
+	// useEffect(() => {
+	// 	dispatch(getGroupList());
+	// }, []);
 
 	return (
 		<MainContainer>
