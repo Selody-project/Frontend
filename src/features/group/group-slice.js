@@ -16,9 +16,10 @@ import {
 
 const initialState = {
 	group: null,
+	groupInfo: null,
+	groupInfoDetail: null,
 	groupList: [],
 	isLoading: false,
-	groupInfo: null,
 	isUserGroupRefetching: true,
 };
 
@@ -26,14 +27,20 @@ const groupSlice = createSlice({
 	name: "group",
 	initialState,
 	reducers: {
-		selectGroup: (state, { payload }) => {
-			state.group = payload;
+		groupInfo: (state, { payload }) => {
+			state.groupInfo = payload;
 		},
 		selectGroupInfo: (state, { payload }) => {
 			state.groupInfo = payload;
 		},
 		setRefetchUserGroup: (state, { payload }) => {
 			state.isUserGroupRefetching = payload;
+		},
+		groupInfoDetail: (state, { payload }) => {
+			state.groupInfoDetail = payload;
+		},
+		viewGroupList: (state, { payload }) => {
+			state.groupList = payload;
 		},
 	},
 	extraReducers: (bulider) => {
@@ -53,7 +60,7 @@ const groupSlice = createSlice({
 			})
 			.addCase(getGroupInfo.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
-				state.group = payload;
+				state.groupInfo = payload;
 			})
 			.addCase(getGroupInfo.rejected, (state) => {
 				state.isLoading = false;
@@ -63,7 +70,7 @@ const groupSlice = createSlice({
 			})
 			.addCase(getGroupInfoDetail.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
-				state.group = payload;
+				state.groupInfoDetail = payload;
 			})
 			.addCase(getGroupInfoDetail.rejected, (state) => {
 				state.isLoading = false;

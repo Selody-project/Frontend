@@ -4,12 +4,12 @@ import customFetch from "@/components/Base/BaseAxios";
 
 import commonThunk from "../commonThunk";
 
-export const getGroupInfoDetail = createAsyncThunk(
-	"group/getGroupInfoDetail",
-	async (id, thunkAPI) => {
+export const getGroupInfo = createAsyncThunk(
+	"group/getGroupInfo",
+	async (groupId, thunkAPI) => {
 		try {
-			const response = await customFetch.get(`/api/group/${id}/info`, {
-				id,
+			const response = await customFetch.get(`/api/group/${groupId}/info`, {
+				groupId,
 			});
 			if (response.status !== 200) {
 				throw response.data;
@@ -24,12 +24,12 @@ export const getGroupInfoDetail = createAsyncThunk(
 	},
 );
 
-export const getGroupInfo = createAsyncThunk(
-	"group/getGroupInfo",
+export const getGroupInfoDetail = createAsyncThunk(
+	"group/getGroupInfoDetail",
 	async (groupId, thunkAPI) => {
 		try {
 			const response = await customFetch.get(`/api/group/${groupId}`, {
-				id: groupId,
+				groupId,
 			});
 			if (response.status !== 200) {
 				throw response.data;
@@ -46,17 +46,22 @@ export const getGroupInfo = createAsyncThunk(
 
 export const createGroup = createAsyncThunk(
 	"group/createGroup",
-	async (groupName, thunkAPI) => {
-		const response = await commonThunk(
-			{
-				method: "POST",
-				url: "/api/group",
-				data: { name: groupName },
-				successCode: 200,
-			},
-			thunkAPI,
-		);
-		return response;
+	async ({ groupName, groupDescription }, thunkAPI) => {
+		try {
+			const response = await customFetch.post("/api/group", {
+				groupName,
+				groupDescription,
+			});
+			if (response.status !== 200) {
+				throw response.data;
+			}
+			return response.data;
+		} catch (error) {
+			if (error.response) {
+				return thunkAPI.rejectWithValue(error.response.data);
+			}
+			return thunkAPI.rejectWithValue(error.message);
+		}
 	},
 );
 
