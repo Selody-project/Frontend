@@ -10,11 +10,12 @@ import {
 	leaveGroup,
 	delegateGroup,
 	changeGroupOption,
+	getGroupInfo,
+	getGroupInfoDetail,
 } from "./group-service.js";
 
 const initialState = {
 	group: null,
-	groupList: [],
 	isLoading: false,
 	groupInfo: null,
 	isUserGroupRefetching: true,
@@ -46,12 +47,32 @@ const groupSlice = createSlice({
 			.addCase(createGroup.rejected, (state) => {
 				state.isLoading = false;
 			})
+			.addCase(getGroupInfo.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(getGroupInfo.fulfilled, (state, { payload }) => {
+				state.isLoading = false;
+				state.group = payload;
+			})
+			.addCase(getGroupInfo.rejected, (state) => {
+				state.isLoading = false;
+			})
+			.addCase(getGroupInfoDetail.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(getGroupInfoDetail.fulfilled, (state, { payload }) => {
+				state.isLoading = false;
+				state.group = payload;
+			})
+			.addCase(getGroupInfoDetail.rejected, (state) => {
+				state.isLoading = false;
+			})
 			.addCase(getGroupList.pending, (state) => {
 				state.isLoading = true;
 			})
 			.addCase(getGroupList.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
-				state.groupList = payload.groupList;
+				state.group = payload.group;
 			})
 			.addCase(getGroupList.rejected, (state) => {
 				state.isLoading = false;

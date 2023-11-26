@@ -1,6 +1,48 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+import customFetch from "@/components/Base/BaseAxios";
+
 import commonThunk from "../commonThunk";
+
+export const getGroupInfoDetail = createAsyncThunk(
+	"group/getGroupInfoDetail",
+	async (groupId, thunkAPI) => {
+		try {
+			const response = await customFetch.get(`/api/group/${groupId}/info`, {
+				id: groupId,
+			});
+			if (response.status !== 200) {
+				throw response.data;
+			}
+			return response.data;
+		} catch (error) {
+			if (error.response) {
+				return thunkAPI.rejectWithValue(error.response.data);
+			}
+			return thunkAPI.rejectWithValue(error.message);
+		}
+	},
+);
+
+export const getGroupInfo = createAsyncThunk(
+	"group/getGroupInfo",
+	async (groupId, thunkAPI) => {
+		try {
+			const response = await customFetch.get(`/api/group/${groupId}`, {
+				id: groupId,
+			});
+			if (response.status !== 200) {
+				throw response.data;
+			}
+			return response.data;
+		} catch (error) {
+			if (error.response) {
+				return thunkAPI.rejectWithValue(error.response.data);
+			}
+			return thunkAPI.rejectWithValue(error.message);
+		}
+	},
+);
 
 export const createGroup = createAsyncThunk(
 	"group/createGroup",

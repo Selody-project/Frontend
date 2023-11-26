@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import AddIcon from "@/assets/icon/ic-group-add.svg";
 import SampleImg from "@/assets/img/feed/img-group-sample-01.jpeg";
+import { getGroupInfoDetail } from "@/features/group/group-service";
 
 import {
 	ContainerDiv,
@@ -13,12 +15,21 @@ import {
 
 const GroupProfile = () => {
 	const inGroup = false;
+	const dispatchFn = useDispatch();
+	const group = useSelector((state) => state.group.group);
+
+	useEffect(() => {
+		// dispatchFn(createGroup("testGroup111"));
+		dispatchFn(getGroupInfoDetail(2));
+	}, []);
+
+	// console.log(group);
 
 	return (
 		<ContainerDiv>
 			<TopDiv>
 				<img src={SampleImg} alt="sampleimg" />
-				<h3>CodeCrafters</h3>
+				<h3>{group?.name}</h3>
 				<p>
 					당신의 개발 열정을 키우고 함께
 					<br />
@@ -27,11 +38,11 @@ const GroupProfile = () => {
 			</TopDiv>
 			<MiddleDiv>
 				<MiddleInnerDiv>
-					<h3>21</h3>
+					<h3>{group?.member}</h3>
 					<h4>그룹원</h4>
 				</MiddleInnerDiv>
 				<MiddleInnerDiv>
-					<h3>1,240</h3>
+					<h3>{group?.feed}</h3>
 					<h4>작성된 피드</h4>
 				</MiddleInnerDiv>
 			</MiddleDiv>
