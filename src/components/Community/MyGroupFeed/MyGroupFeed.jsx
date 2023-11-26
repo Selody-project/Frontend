@@ -6,9 +6,13 @@ import {
 	CommentIcon,
 	HeartIcon,
 	OptionThreeDotIcon,
-	// HeartClickIcon,
+	HeartClickIcon,
 } from "@/constants/iconConstants";
-import { getUserGroupPost } from "@/features/post/post-service";
+import {
+	dislikeGroupPost,
+	getUserGroupPost,
+	likeGroupPost,
+} from "@/features/post/post-service";
 import useObserver from "@/hooks/useObserver";
 import { useTimeStamp } from "@/hooks/useTimeStamp";
 
@@ -40,6 +44,14 @@ const MyGroupFeed = () => {
 	const handleOption = (num) =>
 		setOptionMenuOpenedFeedIndex((prev) => (prev === num ? null : num));
 
+	const handleLikeClick = (isLike, groupId, postId) => {
+		if (!isLike) {
+			dispatch(likeGroupPost({ groupId, postId }));
+		} else {
+			dispatch(dislikeGroupPost({ groupId, postId }));
+		}
+	};
+
 	useEffect(() => {
 		const dispatchGetUserGroupPost = async () => {
 			await dispatch(getUserGroupPost(lastRecordId));
@@ -48,6 +60,8 @@ const MyGroupFeed = () => {
 			dispatchGetUserGroupPost();
 		}
 	}, [isObserving, dispatch]);
+
+	// console.log(userGroupPost);
 
 	return (
 		<ContainerDiv>
@@ -81,8 +95,12 @@ const MyGroupFeed = () => {
 					<BottomDiv>
 						<p>{post.content}</p>
 						<IconDiv>
-							<IconItemDiv>
-								<HeartIcon />
+							<IconItemDiv
+								onClick={() => {
+									handleLikeClick(post.isLiked, post.groupId, post.postId);
+								}}
+							>
+								{post.isLiked ? <HeartClickIcon /> : <HeartIcon />}
 								<span>{post.likesCount}</span>
 							</IconItemDiv>
 							<IconItemDiv>

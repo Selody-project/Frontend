@@ -31,3 +31,33 @@ export const getUserGroupPost = createAsyncThunk(
 		return data;
 	},
 );
+
+export const likeGroupPost = createAsyncThunk(
+	"post/likeGroupPost",
+	async ({ groupId, postId }, thunkAPI) => {
+		const data = await commonThunk(
+			{
+				method: "POST",
+				url: `/api/group/${groupId}/post/${postId}/like`,
+				successCode: 201,
+			},
+			thunkAPI,
+		);
+		return data;
+	},
+);
+
+export const dislikeGroupPost = createAsyncThunk(
+	"post/dislikeGroupPost",
+	async ({ groupId, postId }, thunkAPI) => {
+		const data = await commonThunk(
+			{
+				method: "DELETE",
+				url: `/api/group/${groupId}/post/${postId}/like`,
+				successCode: 204,
+			},
+			thunkAPI,
+		);
+		return data;
+	},
+);
