@@ -1,27 +1,21 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import commonThunk from "../commonThunk";
+import customFetch from "@/components/Base/BaseAxios";
 
 export const inqueryUserGroup = createAsyncThunk(
 	"user/inqueryUserGroup",
 	async (thunkAPI) => {
-		const data = await commonThunk(
-			{ method: "GET", url: "/api/user/group", successCode: 200 },
-			thunkAPI,
-		);
-
-		return data;
-	},
-);
-
-export const inqueryRequestUserGroup = createAsyncThunk(
-	"user/inqueryRequestUserGroup",
-	async (thunkAPI) => {
-		const data = await commonThunk(
-			{ method: "GET", url: "/api/user/group/pending", successCode: 200 },
-			thunkAPI,
-		);
-
-		return data;
+		try {
+			const response = await customFetch.get("/api/user/group");
+			if (response.status !== 200) {
+				throw response.data;
+			}
+			return response.data;
+		} catch (error) {
+			if (error.response) {
+				return thunkAPI.rejectWithValue(error.response.data);
+			}
+			return thunkAPI.rejectWithValue(error.message);
+		}
 	},
 );

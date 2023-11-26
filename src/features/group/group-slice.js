@@ -1,31 +1,43 @@
 import { toast } from "react-toastify";
 
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf, isAllOf } from "@reduxjs/toolkit";
 
 import {
-	createGroup,
-	deleteGroup,
-	getGroupList,
 	updateGroup,
 	leaveGroup,
 	delegateGroup,
 	changeGroupOption,
+	searchGroup,
+	createGroup,
+	deleteGroup,
+	getGroupList,
+	getGroupInfo,
+	getGroupRequestMemberList,
+	approveGroupJoin,
+	rejectGroupJoin,
+	deleteGroupMember,
+	cancelGroupJoin,
 } from "./group-service.js";
 
 const initialState = {
 	group: null,
 	groupList: [],
+	lastRecordId: 0,
+	searchLastRecordId: 0,
+	searchGroupList: [],
 	isLoading: false,
 	groupInfo: null,
+	groupRequestMemberList: [],
 	isUserGroupRefetching: true,
+	isPublicGroup: null,
 };
 
 const groupSlice = createSlice({
 	name: "group",
 	initialState,
 	reducers: {
-		selectGroup: (state, { payload }) => {
-			state.group = payload;
+		groupInfo: (state, { payload }) => {
+			state.groupInfo = payload;
 		},
 		selectGroupInfo: (state, { payload }) => {
 			state.groupInfo = payload;
@@ -33,81 +45,156 @@ const groupSlice = createSlice({
 		setRefetchUserGroup: (state, { payload }) => {
 			state.isUserGroupRefetching = payload;
 		},
+		groupInfoDetail: (state, { payload }) => {
+			state.groupInfoDetail = payload;
+		},
+		viewGroupList: (state, { payload }) => {
+			state.groupList = payload;
+		},
 	},
 	extraReducers: (bulider) => {
 		bulider
-			.addCase(createGroup.pending, (state) => {
-				state.isLoading = true;
+			.addMatcher(
+				isAnyOf(
+					searchGroup.pending,
+					createGroup.pending,
+					getGroupList.pending,
+					deleteGroup.pending,
+					updateGroup.pending,
+					leaveGroup.pending,
+					cancelGroupJoin.pending,
+					deleteGroupMember.pending,
+					approveGroupJoin.pending,
+					rejectGroupJoin.pending,
+					getGroupRequestMemberList.pending,
+					getGroupInfo.pending,
+					getGroupList.pending,
+					deleteGroup.pending,
+					delegateGroup.pending,
+					updateGroup.pending,
+					leaveGroup.pending,
+					changeGroupOption.pending,
+					// createGroup.pending,
+				),
+				(state) => {
+					state.isLoading = true;
+				},
+			)
+			.addMatcher(
+				isAnyOf(
+					searchGroup.rejected,
+					createGroup.rejected,
+					getGroupList.rejected,
+					deleteGroup.rejected,
+					updateGroup.rejected,
+					leaveGroup.rejected,
+					cancelGroupJoin.rejected,
+					deleteGroupMember.rejected,
+					approveGroupJoin.rejected,
+					rejectGroupJoin.rejected,
+					getGroupRequestMemberList.rejected,
+					getGroupInfo.rejected,
+					getGroupList.rejected,
+					deleteGroup.rejected,
+					updateGroup.rejected,
+					leaveGroup.rejected,
+					changeGroupOption.rejected,
+					createGroup.rejected,
+				),
+				(state, { payload }) => {
+					state.isLoading = false;
+					toast.error(payload.error);
+				},
+			)
+			.addMatcher(isAllOf(searchGroup.fulfilled), (state, { payload }) => {
+				state.isLoading = false;
+				payload.groups.forEach((groupInfo) => {
+					state.searchGroupList.push(groupInfo);
+				});
+				state.searchLastRecordId =
+					payload.groups[payload.groups.length - 1].groupId;
 			})
-			.addCase(createGroup.fulfilled, (state) => {
+			.addMatcher(isAllOf(createGroup.fulfilled), (state) => {
 				state.isLoading = false;
 				toast.success("그룹 생성에 성공하셨습니다!");
 			})
-			.addCase(createGroup.rejected, (state) => {
+			.addMatcher(isAllOf(getGroupList.fulfilled), (state, { payload }) => {
 				state.isLoading = false;
+				payload.groups.forEach((groupInfo) => {
+					state.groupList.push(groupInfo);
+				});
+				state.lastRecordId = payload.groups[payload.groups.length - 1].groupId;
 			})
-			.addCase(getGroupList.pending, (state) => {
-				state.isLoading = true;
-			})
-			.addCase(getGroupList.fulfilled, (state, { payload }) => {
+			.addMatcher(isAllOf(deleteGroup.fulfilled), (state) => {
 				state.isLoading = false;
-				state.groupList = payload.groupList;
+				toast.success("그룹을 삭제하는데 성공하였습니다.");
 			})
-			.addCase(getGroupList.rejected, (state) => {
-				state.isLoading = false;
-			})
-			.addCase(deleteGroup.pending, (state) => {
-				state.isLoading = true;
-			})
-			.addCase(deleteGroup.fulfilled, (state) => {
-				state.isLoading = false;
-				toast.success("그룹을 삭제했습니다.");
-			})
-			.addCase(deleteGroup.rejected, (state, { payload }) => {
-				state.isLoading = false;
-				toast.error(payload.error);
-			})
-			.addCase(delegateGroup.pending, (state) => {
-				state.isLoading = true;
-			})
-			.addCase(delegateGroup.fulfilled, (state) => {
-				state.isLoading = false;
-				toast.success("그룹장 위임이 완료되었습니다.");
-			})
-			.addCase(delegateGroup.rejected, (state, { payload }) => {
-				state.isLoading = false;
-				toast.error(payload.error);
-			})
-			.addCase(updateGroup.pending, (state) => {
-				state.isLoading = true;
-			})
-			.addCase(updateGroup.fulfilled, (state) => {
-				state.isLoading = false;
-				toast.success("그룹리더 변경에 성공하였습니다.");
-			})
-			.addCase(updateGroup.rejected, (state) => {
-				state.isLoading = false;
-			})
-			.addCase(leaveGroup.pending, (state) => {
-				state.isLoading = true;
-			})
-			.addCase(leaveGroup.fulfilled, (state) => {
+			.addMatcher(isAllOf(leaveGroup.fulfilled), (state) => {
 				state.isLoading = false;
 				toast.success("그룹을 탈퇴하였습니다.");
 			})
-			.addCase(leaveGroup.rejected, (state, { payload }) => {
+			.addMatcher(isAllOf(updateGroup.fulfilled), (state) => {
 				state.isLoading = false;
-				toast.error(payload.error);
+				toast.success("그룹리더 변경에 성공하였습니다.");
 			})
-			.addCase(changeGroupOption.pending, (state) => {
-				state.isLoading = true;
-			})
-			.addCase(changeGroupOption.fulfilled, (state) => {
+			.addMatcher(isAllOf(deleteGroupMember.fulfilled), (state) => {
 				state.isLoading = false;
+				toast.success("그룹원 내보내기 완료");
 			})
-			.addCase(changeGroupOption.rejected, (state, { payload }) => {
+			.addMatcher(isAllOf(approveGroupJoin.fulfilled), (state) => {
 				state.isLoading = false;
-				toast.error(payload.error);
+				toast.success("그룹 가입 신청 수락 완료");
+			})
+			.addMatcher(isAllOf(rejectGroupJoin.fulfilled), (state) => {
+				state.isLoading = false;
+				toast.success("그룹 가입 신청 거절 완료");
+			})
+			.addMatcher(
+				isAllOf(getGroupRequestMemberList.fulfilled),
+				(state, { payload }) => {
+					state.isLoading = false;
+					state.groupRequestMemberList = payload;
+				},
+			)
+			.addMatcher(isAllOf(getGroupInfo.fulfilled), (state, { payload }) => {
+				state.isLoading = false;
+				state.groupInfoDetail = payload;
+				state.isPublicGroup = payload.information.group.isPublicGroup;
+			})
+			.addMatcher(isAllOf(getGroupList.fulfilled), (state, { payload }) => {
+				state.isLoading = false;
+				state.groupList = payload;
+			})
+			.addMatcher(isAllOf(deleteGroup.fulfilled), (state) => {
+				state.isLoading = false;
+				toast.success("그룹을 삭제했습니다");
+			})
+			.addMatcher(isAllOf(delegateGroup.fulfilled), (state) => {
+				state.isLoading = false;
+				toast.success("그룹장 위임이 완료되었습니다.");
+			})
+			.addMatcher(isAllOf(updateGroup.fulfilled), (state) => {
+				state.isLoading = false;
+				toast.success("그룹리더 변경에 성공하였습니다.");
+			})
+			.addMatcher(isAllOf(leaveGroup.fulfilled), (state) => {
+				state.isLoading = false;
+				toast.success("그룹을 탈퇴하였습니다.");
+			})
+			.addMatcher(
+				isAllOf(changeGroupOption.fulfilled),
+				(state, { payload }) => {
+					state.isLoading = false;
+					state.isPublicGroup = payload.information.group.isPublicGroup;
+				},
+			)
+			.addMatcher(isAllOf(cancelGroupJoin.fulfilled), (state) => {
+				state.isLoading = false;
+				toast.success("그룹 신청 취소 완료");
+			})
+			.addMatcher(isAllOf(createGroup.fulfilled), (state) => {
+				state.isLoading = false;
+				toast.success("그룹 생성에 성공하였습니다.");
 			});
 	},
 });
