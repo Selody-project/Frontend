@@ -16,13 +16,22 @@ import {
 const GroupProfile = () => {
 	const inGroup = true;
 	const dispatchFn = useDispatch();
+
 	const group = useSelector((state) => state.group.group);
+	// const groupList = useSelector((state) => state.group.groupList);
 
 	useEffect(() => {
-		// dispatchFn(createGroup("testGroup111"));
+		// dispatchFn(
+		// 	createGroup({
+		// 		name: "testGroup112131",
+		// 		description: "그룹 description 테스트123123",
+		// 	}),
+		// );
+		// dispatchFn(getGroupList(2));
 		dispatchFn(getGroupInfoDetail(2));
 	}, []);
 
+	// console.log(groupList);
 	// console.log(group);
 
 	return (

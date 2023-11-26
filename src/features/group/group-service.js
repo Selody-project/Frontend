@@ -6,10 +6,10 @@ import commonThunk from "../commonThunk";
 
 export const getGroupInfoDetail = createAsyncThunk(
 	"group/getGroupInfoDetail",
-	async (groupId, thunkAPI) => {
+	async (id, thunkAPI) => {
 		try {
-			const response = await customFetch.get(`/api/group/${groupId}/info`, {
-				id: groupId,
+			const response = await customFetch.get(`/api/group/${id}/info`, {
+				id,
 			});
 			if (response.status !== 200) {
 				throw response.data;
@@ -62,16 +62,19 @@ export const createGroup = createAsyncThunk(
 
 export const getGroupList = createAsyncThunk(
 	"group/getGroupList",
-	async (_, thunkAPI) => {
-		const response = await commonThunk(
-			{
-				method: "GET",
-				url: "/api/group",
-				successCode: 200,
-			},
-			thunkAPI,
-		);
-		return response;
+	async (pageNum, thunkAPI) => {
+		try {
+			const response = await customFetch.get(`/api/group?page=${pageNum}`);
+			if (response.status !== 200) {
+				throw response.data;
+			}
+			return response.data;
+		} catch (error) {
+			if (error.response) {
+				return thunkAPI.rejectWithValue(error.response.data);
+			}
+			return thunkAPI.rejectWithValue(error.message);
+		}
 	},
 );
 

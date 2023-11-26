@@ -16,6 +16,7 @@ import {
 
 const initialState = {
 	group: null,
+	groupList: [],
 	isLoading: false,
 	groupInfo: null,
 	isUserGroupRefetching: true,
@@ -72,7 +73,7 @@ const groupSlice = createSlice({
 			})
 			.addCase(getGroupList.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
-				state.group = payload.group;
+				state.groupList = payload;
 			})
 			.addCase(getGroupList.rejected, (state) => {
 				state.isLoading = false;
