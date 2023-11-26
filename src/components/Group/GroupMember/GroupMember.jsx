@@ -34,7 +34,7 @@ const GroupMember = () => {
 				</MemberUl>
 			</MemberDiv>
 			<MemberDiv>
-				<MemberH3 list="member">그룹원</MemberH3>
+				<MemberH3>그룹원</MemberH3>
 				<MemberUl list="member">
 					{groupInfoDetail?.memberInfo.map((info) => (
 						<li key={info.userId}>

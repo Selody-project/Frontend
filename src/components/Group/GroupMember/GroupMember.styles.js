@@ -16,7 +16,6 @@ export const MemberDiv = styled.div`
 export const MemberH3 = styled.h3`
 	color: ${({ theme: { colors } }) => colors.text_01};
 	font-family: Inter;
-	font-size: ${(props) => (props.list === "member" ? "20px" : "15px")};
 `;
 
 export const MemberUl = styled.ul`
