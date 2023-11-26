@@ -13,6 +13,7 @@ import {
 	GroupSchedulePage,
 	SettingPage,
 	CommunityPage,
+	GroupPage,
 } from "@/pages";
 
 import { getCurrentUser } from "./features/auth/auth-service.js";
@@ -39,6 +40,7 @@ const router = createBrowserRouter([
 			{ path: "landing", element: <LandingPage /> },
 			{ path: "login", element: <LoginPage /> },
 			{ path: "signup", element: <SignUpPage /> },
+			{ path: "group", element: <GroupPage /> },
 		],
 	},
 ]);

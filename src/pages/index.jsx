@@ -1,5 +1,6 @@
 import CommunityPage from "./CommunityPage/CommunityPage";
 import ErrorPage from "./ErrorPage/ErrorPage";
+import GroupPage from "./GroupPage/GroupPage";
 import GroupSchedulePage from "./GroupSchedulePage";
 import LandingPage from "./LandingPage";
 import LoginPage from "./LoginPage/LoginPage";
@@ -18,4 +19,5 @@ export {
 	GroupSchedulePage,
 	SettingPage,
 	CommunityPage,
+	GroupPage,
 };
