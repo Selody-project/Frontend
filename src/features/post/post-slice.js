@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 import { createSlice, isAllOf, isAnyOf } from "@reduxjs/toolkit";
 
 import {
@@ -5,6 +7,7 @@ import {
 	getUserGroupPost,
 	likeGroupPost,
 	dislikeGroupPost,
+	deleteGroupPost,
 } from "./post-service";
 
 const initialState = {
@@ -26,6 +29,7 @@ const postSlice = createSlice({
 					getUserGroupPost.pending,
 					likeGroupPost.pending,
 					dislikeGroupPost.pending,
+					deleteGroupPost.pending,
 				),
 				(state) => {
 					state.isLoading = true;
@@ -37,6 +41,7 @@ const postSlice = createSlice({
 					getUserGroupPost.rejected,
 					likeGroupPost.rejected,
 					dislikeGroupPost.rejected,
+					deleteGroupPost.pending,
 				),
 				(state) => {
 					state.isLoading = false;
@@ -58,6 +63,10 @@ const postSlice = createSlice({
 			})
 			.addMatcher(isAllOf(dislikeGroupPost.fulfilled), (state) => {
 				state.isLoading = false;
+			})
+			.addMatcher(isAllOf(deleteGroupPost.fulfilled), (state) => {
+				state.isLoading = false;
+				toast.success("글을 삭제하는데 성공하였습니다.");
 			});
 	},
 });

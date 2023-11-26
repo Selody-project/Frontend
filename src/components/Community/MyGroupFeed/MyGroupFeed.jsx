@@ -9,6 +9,7 @@ import {
 	HeartClickIcon,
 } from "@/constants/iconConstants";
 import {
+	deleteGroupPost,
 	dislikeGroupPost,
 	getUserGroupPost,
 	likeGroupPost,
@@ -52,6 +53,12 @@ const MyGroupFeed = () => {
 		}
 	};
 
+	const deletePost = (isMine, groupId, postId) => {
+		if (isMine) {
+			dispatch(deleteGroupPost({ groupId, postId }));
+		}
+	};
+
 	useEffect(() => {
 		const dispatchGetUserGroupPost = async () => {
 			await dispatch(getUserGroupPost(lastRecordId));
@@ -76,8 +83,19 @@ const MyGroupFeed = () => {
 						{optionMenuOpenedFeedIndex === post.postId && (
 							<OptionMenuDiv>
 								<ul>
-									<li>수정</li>
-									<li>삭제</li>
+									<li>
+										<button type="button">수정</button>
+									</li>
+									<li>
+										<button
+											type="button"
+											onClick={() => {
+												deletePost(post.isMine, post.groupId, post.postId);
+											}}
+										>
+											삭제
+										</button>
+									</li>
 								</ul>
 							</OptionMenuDiv>
 						)}

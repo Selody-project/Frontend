@@ -61,3 +61,18 @@ export const dislikeGroupPost = createAsyncThunk(
 		return data;
 	},
 );
+
+export const deleteGroupPost = createAsyncThunk(
+	"post/deleteGroupPost",
+	async ({ groupId, postId }, thunkAPI) => {
+		const data = await commonThunk(
+			{
+				method: "DELETE",
+				url: `/api/group/${groupId}/post/${postId}`,
+				successCode: 204,
+			},
+			thunkAPI,
+		);
+		return data;
+	},
+);
