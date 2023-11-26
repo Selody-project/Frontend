@@ -2,6 +2,50 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import commonThunk from "../commonThunk";
 
+export const searchGroup = createAsyncThunk(
+	"group/searchGroup",
+	async ({ keyword, recordId }, thunkAPI) => {
+		const data = await commonThunk(
+			{
+				method: "GET",
+				url: `api/group/search?keyword=${keyword}&last_record_id=${recordId}`,
+			},
+			200,
+			thunkAPI,
+		);
+		return data;
+	},
+);
+
+export const createGroup = createAsyncThunk(
+	"group/createGroup",
+	async (formdata, thunkAPI) => {
+		const data = await commonThunk(
+			{
+				method: "POST",
+				url: "/api/group",
+				data: formdata,
+				headers: { "Content-Type": "multipart/form-data" },
+			},
+			200,
+			thunkAPI,
+		);
+		return data;
+	},
+);
+
+export const getGroupList = createAsyncThunk(
+	"group/getGroupList",
+	async (recordId, thunkAPI) => {
+		const data = await commonThunk(
+			{ method: "GET", url: `/api/group/list?last_record_id=${recordId}` },
+			200,
+			thunkAPI,
+		);
+		return data;
+	},
+);
+
 export const getGroupInfo = createAsyncThunk(
 	"group/getGroupInfo",
 	async (groupId, thunkAPI) => {
