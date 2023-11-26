@@ -37,7 +37,7 @@ const GroupPage = () => {
 	}, []);
 
 	useEffect(() => {
-		userGroup?.groupList?.forEach((info) => {
+		userGroup?.forEach((info) => {
 			if (info.groupId === Number(param.id)) {
 				setIsGroupMember(true);
 			}
