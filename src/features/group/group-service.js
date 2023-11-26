@@ -49,17 +49,6 @@ export const getGroupList = createAsyncThunk(
 	},
 );
 
-export const getGroupInfo = createAsyncThunk(
-	"group/getGroupInfo",
-	async (groupId, thunkAPI) => {
-		const data = await commonThunk(
-			{ method: "GET", url: `/api/group/${groupId}`, successCode: 200 },
-			thunkAPI,
-		);
-		return data;
-	},
-);
-
 export const deleteGroupMember = createAsyncThunk(
 	"group/deleteGroupMember",
 	async ({ groupId, userId }, thunkAPI) => {
@@ -120,8 +109,8 @@ export const getGroupRequestMemberList = createAsyncThunk(
 	},
 );
 
-export const getGroupInfoDetail = createAsyncThunk(
-	"group/getGroupInfoDetail",
+export const getGroupInfo = createAsyncThunk(
+	"group/getGroupInfo",
 	async (groupId, thunkAPI) => {
 		const data = await commonThunk(
 			{ method: "GET", url: `/api/group/${groupId}` },
@@ -207,5 +196,20 @@ export const changeGroupOption = createAsyncThunk(
 			thunkAPI,
 		);
 		return response;
+	},
+);
+
+export const cancelGroupJoin = createAsyncThunk(
+	"group/cancelGroupJoin",
+	async (groupId, thunkAPI) => {
+		const data = await commonThunk(
+			{
+				method: "POST",
+				url: `/api/group/${groupId}/members/request`,
+				successCode: 200,
+			},
+			thunkAPI,
+		);
+		return data;
 	},
 );

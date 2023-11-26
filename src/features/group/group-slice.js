@@ -3,8 +3,6 @@ import { toast } from "react-toastify";
 import { createSlice, isAnyOf, isAllOf } from "@reduxjs/toolkit";
 
 import {
-	// createGroup,
-	// getGroupList,
 	updateGroup,
 	leaveGroup,
 	delegateGroup,
@@ -14,12 +12,11 @@ import {
 	deleteGroup,
 	getGroupList,
 	getGroupInfo,
-	getGroupInfoDetail,
 	getGroupRequestMemberList,
 	approveGroupJoin,
 	rejectGroupJoin,
 	deleteGroupMember,
-	// CancelGroupJoin,
+	cancelGroupJoin,
 } from "./group-service.js";
 
 const initialState = {
@@ -65,15 +62,13 @@ const groupSlice = createSlice({
 					deleteGroup.pending,
 					updateGroup.pending,
 					leaveGroup.pending,
-					getGroupInfo.pending,
-					// CancelGroupJoin.pending,
+					cancelGroupJoin.pending,
 					deleteGroupMember.pending,
 					approveGroupJoin.pending,
 					rejectGroupJoin.pending,
 					getGroupRequestMemberList.pending,
 					getGroupInfo.pending,
-					getGroupInfoDetail.pending,
-					// getGroupList.pending,
+					getGroupList.pending,
 					deleteGroup.pending,
 					delegateGroup.pending,
 					updateGroup.pending,
@@ -93,20 +88,18 @@ const groupSlice = createSlice({
 					deleteGroup.rejected,
 					updateGroup.rejected,
 					leaveGroup.rejected,
-					getGroupInfo.rejected,
-					// CancelGroupJoin.rejected,
+					cancelGroupJoin.rejected,
 					deleteGroupMember.rejected,
 					approveGroupJoin.rejected,
 					rejectGroupJoin.rejected,
 					getGroupRequestMemberList.rejected,
 					getGroupInfo.rejected,
-					getGroupInfoDetail.rejected,
-					// getGroupList.rejected,
+					getGroupList.rejected,
 					deleteGroup.rejected,
 					updateGroup.rejected,
 					leaveGroup.rejected,
 					changeGroupOption.rejected,
-					// createGroup.rejected,
+					createGroup.rejected,
 				),
 				(state, { payload }) => {
 					state.isLoading = false;
@@ -165,20 +158,13 @@ const groupSlice = createSlice({
 			)
 			.addMatcher(isAllOf(getGroupInfo.fulfilled), (state, { payload }) => {
 				state.isLoading = false;
-				state.groupInfo = payload;
+				state.groupInfoDetail = payload;
+				state.isPublicGroup = payload.information.group.isPublicGroup;
 			})
-			.addMatcher(
-				isAllOf(getGroupInfoDetail.fulfilled),
-				(state, { payload }) => {
-					state.isLoading = false;
-					state.groupInfoDetail = payload;
-					state.isPublicGroup = payload.information.group.isPublicGroup;
-				},
-			)
-			// .addMatcher(isAllOf(getGroupList.fulfilled), (state, { payload }) => {
-			// 	state.isLoading = false;
-			// 	state.groupList = payload;
-			// })
+			.addMatcher(isAllOf(getGroupList.fulfilled), (state, { payload }) => {
+				state.isLoading = false;
+				state.groupList = payload;
+			})
 			.addMatcher(isAllOf(deleteGroup.fulfilled), (state) => {
 				state.isLoading = false;
 				toast.success("그룹을 삭제했습니다");
@@ -201,15 +187,15 @@ const groupSlice = createSlice({
 					state.isLoading = false;
 					state.isPublicGroup = payload.information.group.isPublicGroup;
 				},
-			);
-		// .addMatcher(isAllOf(CancelGroupJoin.fulfilled), (state) => {
-		// 	state.isLoading = false;
-		// 	toast.success("그룹 신청 취소 완료");
-		// });
-		// .addMatcher(isAllOf(createGroup.fulfilled), (state) => {
-		// 	state.isLoading = false;
-		// 	toast.success("그룹 생성에 성공하였습니다.");
-		// });
+			)
+			.addMatcher(isAllOf(cancelGroupJoin.fulfilled), (state) => {
+				state.isLoading = false;
+				toast.success("그룹 신청 취소 완료");
+			})
+			.addMatcher(isAllOf(createGroup.fulfilled), (state) => {
+				state.isLoading = false;
+				toast.success("그룹 생성에 성공하였습니다.");
+			});
 	},
 });
 
