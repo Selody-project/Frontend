@@ -30,7 +30,7 @@ const router = createBrowserRouter([
 			{ path: "share", element: <GroupSchedulePage /> },
 			{ path: "community", element: <CommunityPage /> },
 			{ path: "setting", element: <SettingPage /> },
-			{ path: "group", element: <GroupPage /> },
+			{ path: "group/:id", element: <GroupPage /> },
 		],
 	},
 	{

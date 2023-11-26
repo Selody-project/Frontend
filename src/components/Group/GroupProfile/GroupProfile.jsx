@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import AddIcon from "@/assets/icon/ic-group-add.svg";
 import SampleImg from "@/assets/img/feed/img-group-sample-01.jpeg";
-import { getGroupInfo } from "@/features/group/group-service";
+import { inqueryUserGroup } from "@/features/user/user-service";
 
 import {
 	ContainerDiv,
@@ -13,26 +14,25 @@ import {
 	BottomDiv,
 } from "./GroupProfile.styles";
 
-const GroupProfile = () => {
-	const inGroup = true;
+const GroupProfile = ({ groupInfo }) => {
+	const param = useParams();
 	const dispatch = useDispatch();
 
-	const groupInfo = useSelector((state) => state.group.groupInfo);
+	const userGroup = useSelector((state) => state.user.userGroupList);
 
-	// const groupList = useSelector((state) => state.group.groupList);
+	const [isGroupMember, setIsGroupMember] = useState(false);
 
 	useEffect(() => {
-		// dispatch(
-		// 	createGroup({
-		// 		name: "testGroup112131",
-		// 		description: "그룹 description 테스트123123",
-		// 	}),
-		// );
-		// dispatch(getGroupList(2));
-
-		// 추후 유저 그룹 조회 api를 통해 group id를 받아오고 해당 group id로 파라미터 수정
-		dispatch(getGroupInfo(21));
+		dispatch(inqueryUserGroup());
 	}, []);
+
+	useEffect(() => {
+		userGroup?.groupList?.forEach((info) => {
+			if (info.groupId === Number(param.id)) {
+				setIsGroupMember(true);
+			}
+		});
+	}, [userGroup]);
 
 	return (
 		<ContainerDiv>
@@ -53,7 +53,7 @@ const GroupProfile = () => {
 			</MiddleDiv>
 			<BottomDiv>
 				<button type="button">
-					{inGroup ? (
+					{isGroupMember ? (
 						"그룹 나가기"
 					) : (
 						<>
