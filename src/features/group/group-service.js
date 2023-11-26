@@ -19,7 +19,6 @@ export const deleteGroupMember = createAsyncThunk(
 	async ({ groupId, userId }, thunkAPI) => {
 		const data = await commonThunk(
 			{ method: "DELETE", url: `api/group/${groupId}/members/${userId}` },
-			204,
 			thunkAPI,
 		);
 		return data;
@@ -31,7 +30,6 @@ export const rejectGroupJoin = createAsyncThunk(
 	async ({ groupId, userId }, thunkAPI) => {
 		const data = await commonThunk(
 			{ method: "POST", url: `api/group/${groupId}/members/${userId}/reject` },
-			200,
 			thunkAPI,
 		);
 		return data;
@@ -43,7 +41,6 @@ export const approveGroupJoin = createAsyncThunk(
 	async ({ groupId, userId }, thunkAPI) => {
 		const data = await commonThunk(
 			{ method: "POST", url: `api/group/${groupId}/members/${userId}/approve` },
-			200,
 			thunkAPI,
 		);
 		return data;
@@ -55,7 +52,6 @@ export const getGroupRequestMemberList = createAsyncThunk(
 	async (groupId, thunkAPI) => {
 		const data = await commonThunk(
 			{ method: "GET", url: `/api/group/${groupId}/members/request` },
-			200,
 			thunkAPI,
 		);
 		return data;
