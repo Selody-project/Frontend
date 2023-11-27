@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import Logo from "@/assets/img/img-selody-logo/1x.png";
+import SelodyLogo from "@/components/Common/SelodyLogo";
 import SignUpForm from "@/components/SignUp/SignUpForm/SignUpForm";
 
 import {
@@ -28,7 +28,7 @@ const SignUpPage = () => {
 	return (
 		<ContainerDiv>
 			<LogoContainerDiv>
-				<img src={Logo} alt="logo" />
+				<SelodyLogo size={80} />
 				<h1>
 					Selody<span>.</span>
 				</h1>

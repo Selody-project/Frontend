@@ -2,7 +2,7 @@ import CommunityPage from "./CommunityPage/CommunityPage";
 import ErrorPage from "./ErrorPage/ErrorPage";
 import GroupPage from "./GroupPage/GroupPage";
 import GroupSchedulePage from "./GroupSchedulePage";
-import LandingPage from "./LandingPage";
+import LandingPage from "./LandingPage/LandingPage";
 import LoginPage from "./LoginPage/LoginPage";
 import PersonalSchedulePage from "./PersonalSchedulePage";
 import Root from "./Root";

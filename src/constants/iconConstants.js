@@ -14,6 +14,7 @@ import RequestCloseIcon from "@/assets/icon/ic-request-close.svg";
 import RightArrowIcon from "@/assets/icon/ic-right-arrow.svg";
 import SearchIcon from "@/assets/icon/ic-search.svg";
 import SecretIcon from "@/assets/icon/ic-secret.svg";
+import SelodyLogoIcon from "@/assets/icon/ic-selody-logo.svg";
 
 export {
 	SearchIcon,
@@ -32,4 +33,5 @@ export {
 	GoogleLogoIcon,
 	NotificationDropdownBubbleIcon,
 	ProfileDropdownBubbleIcon,
+	SelodyLogoIcon,
 };

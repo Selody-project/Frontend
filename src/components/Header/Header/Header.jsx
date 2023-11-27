@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useLocation } from "react-router-dom";
 
 import NotificationIcon from "@/assets/icon/ic-notification.svg";
-import Logo from "@/assets/img/img-selody-logo/1x.png";
+import SelodyLogo from "@/components/Common/SelodyLogo";
 import NotificationDropdown from "@/components/Notification/NotificationDropdown/NotificationDropdown";
 import { openModal } from "@/features/ui/ui-slice";
 
@@ -72,7 +72,7 @@ const Header = () => {
 				<LeftDiv>
 					<NavLink to="/">
 						<LogoDiv>
-							<img src={Logo} alt="logo" />
+							<SelodyLogo size={48} />
 							<h1>
 								Selody<span>.</span>
 							</h1>
