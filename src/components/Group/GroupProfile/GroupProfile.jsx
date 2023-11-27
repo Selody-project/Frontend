@@ -15,6 +15,7 @@ import {
 	BottomDiv,
 	ProfileButton,
 } from "./GroupProfile.styles";
+import CreateGroupLink from "../GroupLeader/CreateGroupLink/CreateGroupLink";
 import GroupDelegateModal from "../GroupLeader/GroupLeaderProfile/GroupDelegateModal";
 
 const GroupProfile = ({ groupInfo, isGroupMember, isGroupLeader }) => {
@@ -65,6 +66,7 @@ const GroupProfile = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 						>
 							링크 생성하기
 						</ProfileButton>
+						<CreateGroupLink />
 						<ProfileButton
 							type="button"
 							bgColor={theme.colors.white}

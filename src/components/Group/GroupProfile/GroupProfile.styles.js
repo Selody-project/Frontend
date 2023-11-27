@@ -97,18 +97,7 @@ export const BottomDiv = styled.div`
 	align-items: center;
 	gap: 12px;
 	padding: 26px 0;
-
-	/* & > button {
-		border: 1px solid ${({ theme: { colors } }) => colors.primary};
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background-color: transparent;
-		width: 282px;
-		height: 48px;
-		color: ${({ theme: { colors } }) => colors.primary};
-		font-size: 18px;
-	} */
+	position: relative;
 `;
 
 export const ProfileButton = styled.button`
