@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import BaseModal from "@/components/Base/BaseModal/BaseModal";
 import { withdrawMembership } from "@/features/auth/auth-service";
-import { closeModal, openModal } from "@/features/ui/ui-slice";
+import { closeModal, openWithdrawModal } from "@/features/ui/ui-slice";
 
 import {
 	AgreeLabel,
@@ -54,7 +54,7 @@ const WithdrawalTab = () => {
 			</AgreeLabel>
 			<ButtonWrapDiv>
 				<WithdrawalButton
-					onClick={() => dispatch(openModal({ type: "WITHDRAW" }))}
+					onClick={() => dispatch(openWithdrawModal())}
 					disabled={!isAgree}
 				>
 					탈퇴하기

@@ -10,7 +10,7 @@ import {
 	leaveGroup,
 } from "@/features/group/group-service";
 import { setRefetchUserGroup } from "@/features/group/group-slice";
-import { closeModal, openModal } from "@/features/ui/ui-slice";
+import { closeModal, openDelegateGroupModal } from "@/features/ui/ui-slice";
 import { useAxios } from "@/hooks/useAxios";
 
 import {
@@ -63,7 +63,7 @@ export const GroupDeleteModal = ({ groupInfo, isLoading }) => {
 					<p>아니면 이런 방법은 어떠세요?</p>
 					<button
 						type="button"
-						onClick={() => dispatch(openModal({ type: "DELEGATE_GROUP" }))}
+						onClick={() => dispatch(openDelegateGroupModal())}
 					>
 						다음 사람에게 위임
 					</button>
