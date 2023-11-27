@@ -48,7 +48,3 @@ export const UploadButton = styled.button`
 	font-size: ${({ theme: { typography } }) => typography.size.s2};
 	font-weight: ${({ theme: { typography } }) => typography.weight.medium};
 `;
-
-export const UploadDiv = styled.div`
-	margin-bottom: 72px;
-`;
