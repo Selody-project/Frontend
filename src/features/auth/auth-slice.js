@@ -89,7 +89,7 @@ const authSlice = createSlice({
 				toast.success("로그아웃에 성공하였습니다.");
 			})
 			.addCase(logout.rejected, (state, { payload }) => {
-				state.userLoading = false;
+				state.isLoading = false;
 				toast.error(payload.error);
 			})
 			// 유저 쿠키 토큰 확인
@@ -97,11 +97,11 @@ const authSlice = createSlice({
 				state.isLoading = true;
 			})
 			.addCase(getCurrentUser.fulfilled, (state, { payload }) => {
-				state.userLoading = false;
+				state.isLoading = false;
 				state.user = payload;
 			})
 			.addCase(getCurrentUser.rejected, (state, { payload }) => {
-				state.userLoading = false;
+				state.isLoading = false;
 				toast.error(payload.error);
 			})
 			// 유저 프로필 수정
