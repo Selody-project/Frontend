@@ -16,6 +16,7 @@ export const GroupDiv = styled.div`
 	align-items: center;
 	padding: 24px 0;
 	position: relative;
+	cursor: pointer;
 
 	& > img {
 		width: 58px;

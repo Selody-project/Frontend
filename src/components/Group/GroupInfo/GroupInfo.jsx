@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { OptionThreeDotIcon } from "@/constants/iconConstants";
 import { openModal } from "@/features/ui/ui-slice";
@@ -16,6 +17,8 @@ const GroupInfo = ({ groupInfo, target, menu }) => {
 	const dispatch = useDispatch();
 	const { openedModal } = useSelector((state) => state.ui);
 
+	const navigate = useNavigate();
+
 	const [optionMenuOpenedFeedIndex, setOptionMenuOpenedFeedIndex] =
 		useState(null);
 
@@ -26,7 +29,12 @@ const GroupInfo = ({ groupInfo, target, menu }) => {
 	return (
 		<ContainerDiv>
 			{groupInfo?.map((info) => (
-				<GroupDiv key={info.groupId}>
+				<GroupDiv
+					key={info.groupId}
+					onClick={() => {
+						navigate(`/group/${info.groupId}`);
+					}}
+				>
 					{menu && (
 						<OptionDiv>
 							<OptionThreeDotIcon
