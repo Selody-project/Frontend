@@ -42,6 +42,18 @@ const uiSlice = createSlice({
 		openCreateGroupModal: (state) => {
 			state.openedModal = UI_TYPE.CREATE_GROUP;
 		},
+		openDeleteGroupModal: (state) => {
+			state.openedModal = UI_TYPE.DELETE_GROUP;
+		},
+		openDelegateGroupModal: (state) => {
+			state.openedModal = UI_TYPE.DELEGATE_GROUP;
+		},
+		openLeaveGroupModal: (state) => {
+			state.openedModal = UI_TYPE.LEAVE_GROUP;
+		},
+		openWithdrawModal: (state) => {
+			state.openedModal = UI_TYPE.WITHDRAW;
+		},
 		closeModal: () => {
 			return initialState;
 		},
@@ -60,6 +72,10 @@ export const {
 	openCreateGroupModal,
 	closeModal,
 	setIsLoading,
+	openDeleteGroupModal,
+	openDelegateGroupModal,
+	openLeaveGroupModal,
+	openWithdrawModal,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;

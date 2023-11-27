@@ -3,12 +3,17 @@ import { useDispatch } from "react-redux";
 
 import ToggleButton from "@/components/Common/ToggleButton/ToggleButton";
 import { OPTION_TYPE } from "@/constants/settingConstants";
+import { UI_TYPE } from "@/constants/uiConstants";
 import { changeGroupOption } from "@/features/group/group-service";
 import {
 	selectGroupInfo,
 	setRefetchUserGroup,
 } from "@/features/group/group-slice";
-import { openModal } from "@/features/ui/ui-slice";
+import {
+	openDelegateGroupModal,
+	openDeleteGroupModal,
+	openLeaveGroupModal,
+} from "@/features/ui/ui-slice";
 
 import {
 	Button,
@@ -33,7 +38,13 @@ const GroupScheduleItem = ({
 	const [hasNotification, setHasNotification] = useState(notificationOption);
 
 	const handleModal = (type) => {
-		dispatch(openModal({ type }));
+		if (type === UI_TYPE.DELETE_GROUP) {
+			dispatch(openDeleteGroupModal());
+		} else if (type === UI_TYPE.DELEGATE_GROUP) {
+			dispatch(openDelegateGroupModal());
+		} else if (type === UI_TYPE.LEAVE_GROUP) {
+			dispatch(openLeaveGroupModal());
+		}
 		dispatch(selectGroupInfo({ groupId, name }));
 	};
 
@@ -68,15 +79,19 @@ const GroupScheduleItem = ({
 				<ButtonWrapDiv>
 					{isOwner ? (
 						<>
-							<DelegateButton onClick={() => handleModal("DELEGATE_GROUP")}>
+							<DelegateButton
+								onClick={() => handleModal(UI_TYPE.DELEGATE_GROUP)}
+							>
 								다른 사람에게 위임
 							</DelegateButton>
-							<Button onClick={() => handleModal("DELETE_GROUP")}>
+							<Button onClick={() => handleModal(UI_TYPE.DELETE_GROUP)}>
 								그룹 삭제
 							</Button>
 						</>
 					) : (
-						<Button onClick={() => handleModal("LEAVE_GROUP")}>나가기</Button>
+						<Button onClick={() => handleModal(UI_TYPE.LEAVE_GROUP)}>
+							나가기
+						</Button>
 					)}
 				</ButtonWrapDiv>
 			</UpperDiv>
