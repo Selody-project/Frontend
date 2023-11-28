@@ -10,7 +10,7 @@ import {
 	TextDiv,
 } from "./CreateGroupLink.styles";
 
-const CreateGroupLink = ({ groupId }) => {
+const CreateGroupLink = ({ groupId, setIsCreateLinkClick }) => {
 	const dispatch = useDispatch();
 
 	const groupInviteLink = useSelector(
@@ -36,7 +36,9 @@ const CreateGroupLink = ({ groupId }) => {
 			</TopDiv>
 			<MiddleDiv>
 				<TextDiv>{inviteLink ? groupInviteLink : "링크"}</TextDiv>
-				<button type="button">확인</button>
+				<button type="button" onClick={() => setIsCreateLinkClick(false)}>
+					확인
+				</button>
 			</MiddleDiv>
 			<h3>* 24시간이 지나거나 새로 생성 시 기존 코드는 만료됩니다.</h3>
 		</ContainerDiv>

@@ -24,6 +24,8 @@ const GroupProfile = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 	const { openedModal } = useSelector((state) => state.ui);
 	const { groupDetailInfo, isLoading } = useSelector((state) => state.group);
 
+	const [isCreateLinkClick, setIsCreateLinkClick] = useState(false);
+
 	const theme = useTheme();
 	const navigate = useNavigate();
 	const locate = useLocation();
@@ -63,10 +65,16 @@ const GroupProfile = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 							type="button"
 							bgColor={theme.colors.primary}
 							textColor={theme.colors.white}
+							onClick={() => setIsCreateLinkClick(true)}
 						>
 							링크 생성하기
 						</ProfileButton>
-						<CreateGroupLink groupId={groupInfo?.information?.group.groupId} />
+						{isCreateLinkClick && (
+							<CreateGroupLink
+								groupId={groupInfo?.information?.group.groupId}
+								setIsCreateLinkClick={setIsCreateLinkClick}
+							/>
+						)}
 						<ProfileButton
 							type="button"
 							bgColor={theme.colors.white}
