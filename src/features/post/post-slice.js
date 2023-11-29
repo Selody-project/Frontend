@@ -57,8 +57,6 @@ const postSlice = createSlice({
 					state.allGroupPost.push(postInfo);
 				});
 				state.lastRecordId = payload.feed[payload.feed.length - 1].postId;
-				console.log(payload);
-				console.log(state.lastRecordId);
 			})
 			.addMatcher(isAllOf(getGroupPost.fulfilled), (state, { payload }) => {
 				state.isLoading = false;

@@ -49,11 +49,11 @@ export const getUserGroupPost = createAsyncThunk(
 
 export const likeGroupPost = createAsyncThunk(
 	"post/likeGroupPost",
-	async ({ groupId, postId }, thunkAPI) => {
+	async ({ postGroupId, postId }, thunkAPI) => {
 		const data = await commonThunk(
 			{
 				method: "POST",
-				url: `/api/group/${groupId}/post/${postId}/like`,
+				url: `/api/group/${postGroupId}/post/${postId}/like`,
 				successCode: 201,
 			},
 			thunkAPI,
@@ -64,11 +64,11 @@ export const likeGroupPost = createAsyncThunk(
 
 export const dislikeGroupPost = createAsyncThunk(
 	"post/dislikeGroupPost",
-	async ({ groupId, postId }, thunkAPI) => {
+	async ({ postGroupId, postId }, thunkAPI) => {
 		const data = await commonThunk(
 			{
 				method: "DELETE",
-				url: `/api/group/${groupId}/post/${postId}/like`,
+				url: `/api/group/${postGroupId}/post/${postId}/like`,
 				successCode: 204,
 			},
 			thunkAPI,
@@ -79,11 +79,11 @@ export const dislikeGroupPost = createAsyncThunk(
 
 export const deleteGroupPost = createAsyncThunk(
 	"post/deleteGroupPost",
-	async ({ groupId, postId }, thunkAPI) => {
+	async ({ postGroupId, postId }, thunkAPI) => {
 		const data = await commonThunk(
 			{
 				method: "DELETE",
-				url: `/api/group/${groupId}/post/${postId}`,
+				url: `/api/group/${postGroupId}/post/${postId}`,
 				successCode: 204,
 			},
 			thunkAPI,

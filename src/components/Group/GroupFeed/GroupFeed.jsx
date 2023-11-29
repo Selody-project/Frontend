@@ -6,8 +6,14 @@ import {
 	CommentIcon,
 	HeartIcon,
 	OptionThreeDotIcon,
+	HeartClickIcon,
 } from "@/constants/iconConstants";
-import { getGroupAllPost } from "@/features/post/post-service";
+import {
+	getGroupAllPost,
+	deleteGroupPost,
+	dislikeGroupPost,
+	likeGroupPost,
+} from "@/features/post/post-service";
 import useObserver from "@/hooks/useObserver";
 import { useTimeStamp } from "@/hooks/useTimeStamp";
 
@@ -33,10 +39,25 @@ const GroupFeed = ({ groupId }) => {
 		useState(null);
 
 	const target = useRef(null);
+
 	const isObserving = useObserver(target, { threshold: 0.3 });
 
 	const handleOption = (num) =>
 		setOptionMenuOpenedFeedIndex((prev) => (prev === num ? null : num));
+
+	const handleLikeClick = (isLike, postGroupId, postId) => {
+		if (!isLike) {
+			dispatch(likeGroupPost({ postGroupId, postId }));
+		} else {
+			dispatch(dislikeGroupPost({ postGroupId, postId }));
+		}
+	};
+
+	const deletePost = (isMine, postGroupId, postId) => {
+		if (isMine) {
+			dispatch(deleteGroupPost({ postGroupId, postId }));
+		}
+	};
 
 	useEffect(() => {
 		const dispatchGetGroupAllPost = async () => {
@@ -60,8 +81,19 @@ const GroupFeed = ({ groupId }) => {
 						{optionMenuOpenedFeedIndex === post.postId && (
 							<OptionMenuDiv>
 								<ul>
-									<li>수정</li>
-									<li>삭제</li>
+									<li>
+										<button type="button">수정</button>
+									</li>
+									<li>
+										<button
+											type="button"
+											onClick={() => {
+												deletePost(post.isMine, groupId, post.postId);
+											}}
+										>
+											삭제
+										</button>
+									</li>
 								</ul>
 							</OptionMenuDiv>
 						)}
@@ -79,8 +111,12 @@ const GroupFeed = ({ groupId }) => {
 					<BottomDiv>
 						<p>{post.content}</p>
 						<IconDiv>
-							<IconItemDiv>
-								<HeartIcon />
+							<IconItemDiv
+								onClick={() => {
+									handleLikeClick(post.isLiked, groupId, post.postId);
+								}}
+							>
+								{post.isLiked ? <HeartClickIcon /> : <HeartIcon />}
 								<span>{post.likesCount}</span>
 							</IconItemDiv>
 							<IconItemDiv>

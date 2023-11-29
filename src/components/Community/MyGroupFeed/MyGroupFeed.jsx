@@ -18,8 +18,8 @@ import useObserver from "@/hooks/useObserver";
 import { useTimeStamp } from "@/hooks/useTimeStamp";
 
 import {
-	ContainerDiv,
-	FeedDiv,
+	FeedSection,
+	FeedArticle,
 	OptionDiv,
 	OptionMenuDiv,
 	TopDiv,
@@ -35,27 +35,27 @@ const MyGroupFeed = () => {
 	const userGroupPost = useSelector((state) => state.post.userGroupPost);
 	const lastRecordId = useSelector((state) => state.post.lastRecordId);
 
+	const [optionMenuOpenedFeedIndex, setOptionMenuOpenedFeedIndex] =
+		useState(null);
+
 	const target = useRef(null);
 
 	const isObserving = useObserver(target, { threshold: 0.3 });
 
-	const [optionMenuOpenedFeedIndex, setOptionMenuOpenedFeedIndex] =
-		useState(null);
-
 	const handleOption = (num) =>
 		setOptionMenuOpenedFeedIndex((prev) => (prev === num ? null : num));
 
-	const handleLikeClick = (isLike, groupId, postId) => {
+	const handleLikeClick = (isLike, postGroupId, postId) => {
 		if (!isLike) {
-			dispatch(likeGroupPost({ groupId, postId }));
+			dispatch(likeGroupPost({ postGroupId, postId }));
 		} else {
-			dispatch(dislikeGroupPost({ groupId, postId }));
+			dispatch(dislikeGroupPost({ postGroupId, postId }));
 		}
 	};
 
-	const deletePost = (isMine, groupId, postId) => {
+	const deletePost = (isMine, postGroupId, postId) => {
 		if (isMine) {
-			dispatch(deleteGroupPost({ groupId, postId }));
+			dispatch(deleteGroupPost({ postGroupId, postId }));
 		}
 	};
 
@@ -69,9 +69,9 @@ const MyGroupFeed = () => {
 	}, [isObserving, dispatch]);
 
 	return (
-		<ContainerDiv>
+		<FeedSection>
 			{userGroupPost?.map((post) => (
-				<FeedDiv key={post.postId}>
+				<FeedArticle key={post.postId}>
 					<OptionDiv>
 						<OptionThreeDotIcon
 							onClick={() => {
@@ -125,10 +125,10 @@ const MyGroupFeed = () => {
 							</IconItemDiv>
 						</IconDiv>
 					</BottomDiv>
-				</FeedDiv>
+				</FeedArticle>
 			))}
 			<div ref={target} />
-		</ContainerDiv>
+		</FeedSection>
 	);
 };
 

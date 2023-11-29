@@ -107,4 +107,21 @@ export const IconItemDiv = styled.div`
 	& > span {
 		font-size: 10px;
 	}
+
+	& > svg {
+		padding: 2px;
+	}
+
+	&:hover {
+		color: ${({ theme: { colors } }) => colors.primary};
+
+		& > svg {
+			background-color: ${({ theme: { colors } }) => colors.bg_01};
+			border-radius: 50%;
+
+			& > g > path {
+				stroke: ${({ theme: { colors } }) => colors.primary};
+			}
+		}
+	}
 `;

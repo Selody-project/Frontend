@@ -10,4 +10,5 @@ export const GroupMain = styled.main`
 export const FeedDiv = styled.div`
 	display: flex;
 	flex-direction: column;
+	width: 100%;
 `;
