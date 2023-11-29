@@ -20,7 +20,7 @@ const commonThunk = async (
 		if (error.response) {
 			return thunkAPI.rejectWithValue(error.response.data);
 		}
-		return thunkAPI.rejectWithValue(error.message);
+		return thunkAPI.rejectWithValue(error);
 	}
 };
 
