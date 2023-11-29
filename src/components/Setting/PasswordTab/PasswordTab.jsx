@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { toast } from "react-toastify";
 
 import { updateUserPassword } from "@/features/auth/auth-service";
 
@@ -12,14 +11,14 @@ import {
 } from "./PasswordTab.style";
 import CustomInput from "../CustomInput/CustomInput";
 
+const initFormValue = {
+	currentPassword: "",
+	newPassword: "",
+	newPasswordCheck: "",
+};
+
 const PasswordTab = () => {
 	const dispatch = useDispatch();
-
-	const initFormValue = {
-		currentPassword: "",
-		newPassword: "",
-		newPasswordCheck: "",
-	};
 
 	const [formValue, setFormValue] = useState(initFormValue);
 
@@ -36,24 +35,10 @@ const PasswordTab = () => {
 		setFormValue(changed);
 	};
 
-	const validatePassword = () => {
-		if (newPassword !== newPasswordCheck) {
-			toast.error("새 비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
-			return false;
-		}
-
-		if (newPassword.length < 10) {
-			toast.error("비밀번호는 10자 이상이어야 합니다.");
-			return false;
-		}
-
-		return true;
-	};
-
 	const onSave = async () => {
-		if (!validatePassword()) return;
-
-		await dispatch(updateUserPassword({ currentPassword, newPassword }));
+		await dispatch(
+			updateUserPassword({ currentPassword, newPassword, newPasswordCheck }),
+		);
 	};
 
 	return (
