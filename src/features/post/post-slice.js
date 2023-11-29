@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { createSlice, isAllOf, isAnyOf } from "@reduxjs/toolkit";
 
 import {
+	getGroupAllPost,
 	getGroupPost,
 	getUserGroupPost,
 	likeGroupPost,
@@ -12,6 +13,7 @@ import {
 
 const initialState = {
 	groupPost: null,
+	allGroupPost: [],
 	userGroupPost: [],
 	lastRecordId: 0,
 	isLoading: false,
@@ -25,6 +27,7 @@ const postSlice = createSlice({
 		bulider
 			.addMatcher(
 				isAnyOf(
+					getGroupAllPost.pending,
 					getGroupPost.pending,
 					getUserGroupPost.pending,
 					likeGroupPost.pending,
@@ -37,6 +40,7 @@ const postSlice = createSlice({
 			)
 			.addMatcher(
 				isAnyOf(
+					getGroupAllPost.rejected,
 					getGroupPost.rejected,
 					getUserGroupPost.rejected,
 					likeGroupPost.rejected,
@@ -47,6 +51,15 @@ const postSlice = createSlice({
 					state.isLoading = false;
 				},
 			)
+			.addMatcher(isAllOf(getGroupAllPost.fulfilled), (state, { payload }) => {
+				state.isLoading = false;
+				payload.feed.forEach((postInfo) => {
+					state.allGroupPost.push(postInfo);
+				});
+				state.lastRecordId = payload.feed[payload.feed.length - 1].postId;
+				console.log(payload);
+				console.log(state.lastRecordId);
+			})
 			.addMatcher(isAllOf(getGroupPost.fulfilled), (state, { payload }) => {
 				state.isLoading = false;
 				state.groupPost = payload;

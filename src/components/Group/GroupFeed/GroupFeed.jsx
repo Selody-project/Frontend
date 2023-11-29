@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import SampleImg from "@/assets/img/feed/img-group-sample-01.jpeg";
 import {
 	CrownIcon,
 	CommentIcon,
 	HeartIcon,
 	OptionThreeDotIcon,
 } from "@/constants/iconConstants";
+import { getGroupAllPost } from "@/features/post/post-service";
+import useObserver from "@/hooks/useObserver";
+import { useTimeStamp } from "@/hooks/useTimeStamp";
 
 import {
 	FeedSection,
@@ -19,46 +22,42 @@ import {
 	IconDiv,
 	IconItemDiv,
 } from "./GroupFeed.styles";
-// import { useSelector } from "react-redux";
 
-const mockItems = [
-	{
-		id: 1,
-		owner: "그룹리더",
-		time: "15분전",
-		description:
-			"오늘은 개발 스터디 그룹에서 알고리즘 대회에 참가했어! 문제를 풀면서서로 도움을 주고 받으며 즐거운 시간을 보냈어. 성장하는 모습을 느낄수 있어 뿌듯해",
-		leader: true,
-	},
-	{
-		id: 2,
-		owner: "그룹원",
-		time: "43분전",
-		description:
-			"오늘은 개발 스터디 그룹에서 알고리즘 대회에 참가했어! 문제를 풀면서서로 도움을 주고 받으며 즐거운 시간을 보냈어. 성장하는 모습을 느낄수 있어 뿌듯해2222",
-		leader: false,
-	},
-];
+const GroupFeed = ({ groupId }) => {
+	const dispatch = useDispatch();
 
-const GroupFeed = () => {
+	const allGroupPost = useSelector((state) => state.post.allGroupPost);
+	const recordId = useSelector((state) => state.post.lastRecordId);
+
 	const [optionMenuOpenedFeedIndex, setOptionMenuOpenedFeedIndex] =
 		useState(null);
+
+	const target = useRef(null);
+	const isObserving = useObserver(target, { threshold: 0.3 });
 
 	const handleOption = (num) =>
 		setOptionMenuOpenedFeedIndex((prev) => (prev === num ? null : num));
 
+	useEffect(() => {
+		const dispatchGetGroupAllPost = async () => {
+			await dispatch(getGroupAllPost({ groupId, recordId })).unwrap();
+		};
+		if (isObserving) {
+			dispatchGetGroupAllPost();
+		}
+	}, [isObserving, dispatch]);
+
 	return (
 		<FeedSection>
-			{/* 추후 Feed Landing에서 컴포넌트 가져와서 변경 */}
-			{mockItems.map((info) => (
-				<FeedArticle key={info.id}>
+			{allGroupPost?.map((post) => (
+				<FeedArticle key={post.postId}>
 					<OptionDiv>
 						<OptionThreeDotIcon
 							onClick={() => {
-								handleOption(info.id);
+								handleOption(post.postId);
 							}}
 						/>
-						{optionMenuOpenedFeedIndex === info.id && (
+						{optionMenuOpenedFeedIndex === post.postId && (
 							<OptionMenuDiv>
 								<ul>
 									<li>수정</li>
@@ -68,32 +67,31 @@ const GroupFeed = () => {
 						)}
 					</OptionDiv>
 					<TopDiv>
-						<img src={SampleImg} alt="sampleimg" />
+						<img src={post.authorImage} alt="postImg" />
 						<InfoDiv>
 							<h3>
-								{info.owner}
-								{info.leader && <CrownIcon />}
+								{post.author}
+								{post.leader && <CrownIcon />}
 							</h3>
-							<h4>{info.time}</h4>
+							<h4>{useTimeStamp(post.createdAt)}</h4>
 						</InfoDiv>
 					</TopDiv>
 					<BottomDiv>
-						<p>{info.description}</p>
-
+						<p>{post.content}</p>
 						<IconDiv>
-							{/* 추후 api 연결 후 매핑 고려해볼 예정 */}
 							<IconItemDiv>
 								<HeartIcon />
-								<span>12</span>
+								<span>{post.likesCount}</span>
 							</IconItemDiv>
 							<IconItemDiv>
 								<CommentIcon />
-								<span>2</span>
+								<span>{post.commentCount}</span>
 							</IconItemDiv>
 						</IconDiv>
 					</BottomDiv>
 				</FeedArticle>
 			))}
+			<div ref={target} />
 		</FeedSection>
 	);
 };

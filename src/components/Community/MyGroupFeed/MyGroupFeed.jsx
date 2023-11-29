@@ -61,14 +61,12 @@ const MyGroupFeed = () => {
 
 	useEffect(() => {
 		const dispatchGetUserGroupPost = async () => {
-			await dispatch(getUserGroupPost(lastRecordId));
+			await dispatch(getUserGroupPost(lastRecordId)).unwrap();
 		};
 		if (isObserving) {
 			dispatchGetUserGroupPost();
 		}
 	}, [isObserving, dispatch]);
-
-	// console.log(userGroupPost);
 
 	return (
 		<ContainerDiv>
@@ -101,7 +99,7 @@ const MyGroupFeed = () => {
 						)}
 					</OptionDiv>
 					<TopDiv>
-						<img src={post.image} alt="postImg" />
+						<img src={post.authorImage} alt="postImg" />
 						<InfoDiv>
 							<h3>
 								{post.author}

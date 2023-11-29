@@ -2,6 +2,21 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import commonThunk from "../commonThunk";
 
+export const getGroupAllPost = createAsyncThunk(
+	"post/getGroupAllPost",
+	async ({ groupId, recordId }, thunkAPI) => {
+		const data = await commonThunk(
+			{
+				method: "GET",
+				url: `/api/group/${groupId}/post?last_record_id=${recordId}`,
+				successCode: 200,
+			},
+			thunkAPI,
+		);
+		return data;
+	},
+);
+
 export const getGroupPost = createAsyncThunk(
 	"post/getGroupPost",
 	async ({ groupId, postId }, thunkAPI) => {

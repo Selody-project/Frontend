@@ -67,7 +67,7 @@ const GroupPage = () => {
 					<FeedDiv>
 						{isGroupMember && <UploadFeed />}
 						<GroupTitle />
-						<GroupFeed />
+						<GroupFeed groupId={param.id} />
 					</FeedDiv>
 
 					{isGroupMember && (
