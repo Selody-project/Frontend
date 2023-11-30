@@ -7,7 +7,7 @@ import Header from "@/components/Header/Header/Header";
 const Root = () => {
 	const { isLoading, user } = useSelector((state) => state.auth);
 
-	if (isLoading) {
+	if (isLoading && !user) {
 		return <p>Loading,,,</p>;
 	}
 	if (!user) {
