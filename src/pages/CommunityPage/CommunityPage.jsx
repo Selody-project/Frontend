@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import GroupSearch from "@/components/Community/GroupSearch/GroupSearch";
-import MyGroup from "@/components/Community/MyGroup/MyGroup";
-import MyGroupFeed from "@/components/Community/MyGroupFeed/MyGroupFeed";
+import GroupSearch from "@/components/Group/GroupSearch/GroupSearch";
+import MyGroup from "@/components/Group/MyGroup/MyGroup";
+import MyGroupFeed from "@/components/Group/MyGroupFeed/MyGroupFeed";
 import Tab from "@/components/Tab/Tab";
 import { SearchIcon } from "@/constants/iconConstants";
 import { TAB_OPTION_TYPE, TAB_OPTION_TITLE } from "@/constants/tabConstants";
