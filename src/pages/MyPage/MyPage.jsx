@@ -33,6 +33,7 @@ const MyPage = () => {
 		(state) => state.user.userRequestGroupList,
 	);
 	const lastRecordId = useSelector((state) => state.group.lastRecordId);
+	const isEnd = useSelector((state) => state.group.isEnd);
 
 	const [group, setGroup] = useState([]);
 	const [tabIndex, setTabIndex] = useState(0);
@@ -60,7 +61,7 @@ const MyPage = () => {
 			await dispatch(getGroupList(lastRecordId));
 		};
 
-		if (isObserving) {
+		if (isObserving && !isEnd) {
 			dispatchGetGroupList();
 		}
 	}, [isObserving, dispatch]);

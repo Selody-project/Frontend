@@ -9,6 +9,7 @@ const GroupSearch = ({ onSearch, searchGroupList }) => {
 	const dispatch = useDispatch();
 	const groupList = useSelector((state) => state.group.groupList);
 	const lastRecordId = useSelector((state) => state.group.lastRecordId);
+	const isEnd = useSelector((state) => state.group.isEnd);
 
 	const [group, setGroup] = useState([]);
 
@@ -21,7 +22,7 @@ const GroupSearch = ({ onSearch, searchGroupList }) => {
 			await dispatch(getGroupList(lastRecordId));
 		};
 
-		if (isObserving) {
+		if (isObserving && !isEnd) {
 			dispatchGetGroupList();
 		}
 	}, [isObserving, dispatch]);
