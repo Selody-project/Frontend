@@ -45,8 +45,9 @@ const GroupDelegateModal = ({ groupDetailInfo, groupMember }) => {
 		}
 	};
 
-	console.log(groupMember);
-	console.log(selectedMemberId);
+	const memberList = groupMember.filter(
+		(info) => info.userId !== groupDetailInfo?.leader,
+	);
 
 	return (
 		<BaseModal style={modalStyle}>
@@ -61,7 +62,7 @@ const GroupDelegateModal = ({ groupDetailInfo, groupMember }) => {
 						방장 권한이 해당 사용자에게 넘어갑니다.
 					</p>
 					<SelectWrapDiv>
-						{groupMember.map((info) => (
+						{memberList.map((info) => (
 							<SelectBox
 								key={info.userId}
 								name={info.nickname}
