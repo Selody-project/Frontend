@@ -1,18 +1,18 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
 import Header from "@/components/Header/Header/Header";
 
 const Root = () => {
-	const { userLoading } = useSelector((state) => state.auth);
+	const { isLoading, user } = useSelector((state) => state.auth);
 
-	if (userLoading) {
+	if (isLoading && !user) {
 		return <p>Loading,,,</p>;
 	}
-	// if (!user) {
-	// 	return <Navigate to="/landing" />;
-	// }
+	if (!user) {
+		return <Navigate to="/landing" />;
+	}
 
 	return (
 		<>
