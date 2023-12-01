@@ -34,7 +34,7 @@ const GroupLeader = ({ groupId }) => {
 					</li>
 				</TitleUl>
 				{menu === "그룹 프로필" ? (
-					<GroupLeaderProfile />
+					<GroupLeaderProfile groupId={groupId} />
 				) : (
 					<GroupLeaderManagement groupId={groupId} />
 				)}

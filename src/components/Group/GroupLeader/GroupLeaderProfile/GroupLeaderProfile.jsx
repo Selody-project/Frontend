@@ -24,7 +24,7 @@ import {
 	DeleteButton,
 } from "./GroupLeaderProfile.styles";
 
-const GroupLeaderProfile = () => {
+const GroupLeaderProfile = ({ groupId }) => {
 	const dispatch = useDispatch();
 
 	const { groupDetailInfo, isLoading } = useSelector((state) => state.group);
@@ -50,7 +50,6 @@ const GroupLeaderProfile = () => {
 
 	const handleClickSave = () => {
 		const formdata = new FormData();
-		const groupId = groupDetailInfo?.groupId;
 		const data = {
 			name: newName,
 			description: newDescription,
@@ -65,7 +64,6 @@ const GroupLeaderProfile = () => {
 	};
 
 	const handleClickToggle = async () => {
-		const groupId = groupDetailInfo?.groupId;
 		const status = !isPublicGroup;
 
 		try {
@@ -88,7 +86,7 @@ const GroupLeaderProfile = () => {
 	};
 
 	useEffect(() => {
-		dispatch(getGroupInfo(groupDetailInfo?.groupId));
+		dispatch(getGroupInfo(groupId));
 	}, []);
 
 	return (
