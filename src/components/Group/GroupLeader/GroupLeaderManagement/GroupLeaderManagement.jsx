@@ -10,7 +10,10 @@ import {
 	AdminIcon,
 	OwnerIcon,
 } from "@/constants/iconConstants";
-import { getGroupMemberList } from "@/features/group/group-service";
+import {
+	getGroupMemberList,
+	changeAccessLevel,
+} from "@/features/group/group-service";
 
 import AccessInfo from "./AccessInfo";
 import {
@@ -51,8 +54,12 @@ const GroupLeaderManagement = ({ groupId }) => {
 		}
 	};
 
-	const handelAccessChange = (num) =>
+	const handleAccessChange = (num) =>
 		setIsAccessChangeOpenIndex((prev) => (prev === num ? null : num));
+
+	const handleChangeLevelClick = (userId, accessLevel) => {
+		dispatch(changeAccessLevel({ groupId, userId, accessLevel }));
+	};
 
 	useEffect(() => {
 		window.addEventListener("click", handleAccessInfo);
@@ -115,7 +122,7 @@ const GroupLeaderManagement = ({ groupId }) => {
 					</MemberLi>
 					<MemberLi
 						onClick={() => {
-							handelAccessChange(memberInfo.member.userId);
+							handleAccessChange(memberInfo.member.userId);
 						}}
 						click
 					>
@@ -150,8 +157,18 @@ const GroupLeaderManagement = ({ groupId }) => {
 							<AccessLevelUl>
 								{accessData.map((data) => (
 									<li key={data.id}>
-										{data.icon}
-										{data.id}
+										<button
+											type="button"
+											onClick={() => {
+												handleChangeLevelClick(
+													memberInfo.member.userId,
+													data.id,
+												);
+											}}
+										>
+											{data.icon}
+											{data.id}
+										</button>
 									</li>
 								))}
 							</AccessLevelUl>

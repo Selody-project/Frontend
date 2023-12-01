@@ -71,17 +71,6 @@ export const AccessLevelUl = styled.ul`
 	background-color: ${({ theme: { colors } }) => colors.white};
 
 	& > li {
-		color: #4b4b4b;
-		background-color: inherit;
-		font-size: 12px;
-		font-weight: ${({ theme: { typography } }) => typography.weight.medium};
-		display: flex;
-		align-items: center;
-		gap: 12px;
-		height: 20px;
-		border: 1px solid ${({ theme: { colors } }) => colors.disabled_text};
-		border-bottom: none;
-
 		&:last-of-type {
 			border-bottom: 1px solid
 				${({ theme: { colors } }) => colors.disabled_text};
@@ -91,9 +80,23 @@ export const AccessLevelUl = styled.ul`
 			background-color: ${({ theme: { colors } }) => colors.bg_01};
 		}
 
-		& > svg {
-			width: 10px;
-			margin-left: 12px;
+		& > button {
+			width: 100%;
+			color: #4b4b4b;
+			background-color: inherit;
+			font-size: 12px;
+			font-weight: ${({ theme: { typography } }) => typography.weight.medium};
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			height: 20px;
+			border: 1px solid ${({ theme: { colors } }) => colors.disabled_text};
+			border-bottom: none;
+
+			& > svg {
+				width: 10px;
+				margin-left: 12px;
+			}
 		}
 	}
 `;
