@@ -57,6 +57,10 @@ export const MemberLi = styled.li`
 			width: 10px;
 			margin-right: 4px;
 		}
+
+		& > button {
+			cursor: pointer;
+		}
 	}
 `;
 

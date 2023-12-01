@@ -13,6 +13,7 @@ import {
 import {
 	getGroupMemberList,
 	changeAccessLevel,
+	deleteGroupMember,
 } from "@/features/group/group-service";
 
 import AccessInfo from "./AccessInfo";
@@ -59,6 +60,10 @@ const GroupLeaderManagement = ({ groupId }) => {
 
 	const handleChangeLevelClick = (userId, accessLevel) => {
 		dispatch(changeAccessLevel({ groupId, userId, accessLevel }));
+	};
+
+	const deleteMember = (userId) => {
+		dispatch(deleteGroupMember({ groupId, userId }));
 	};
 
 	useEffect(() => {
@@ -175,7 +180,16 @@ const GroupLeaderManagement = ({ groupId }) => {
 						)}
 					</MemberLi>
 					<MemberLi red>
-						<span>내보내기</span>
+						<span>
+							<button
+								type="button"
+								onClick={() => {
+									deleteMember(memberInfo.member.userId);
+								}}
+							>
+								내보내기
+							</button>
+						</span>
 					</MemberLi>
 				</MemberUl>
 			))}
