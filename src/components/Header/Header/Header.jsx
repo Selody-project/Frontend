@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 import NotificationIcon from "@/assets/icon/ic-notification.svg";
 import DefaultProfile from "@/assets/img/img-default-profile.png";
@@ -32,6 +32,8 @@ const Header = () => {
 
 	const profileRef = useRef();
 	const notiRef = useRef();
+
+	const navigate = useNavigate();
 
 	const isSchedule = path === "/" || path === "/share";
 	const isFeed = path === "/community" || path === "mypage";
@@ -84,13 +86,21 @@ const Header = () => {
 					</NavLink>
 					<TabUl>
 						<li>
-							<TabButton isActive={isSchedule} type="button">
+							<TabButton
+								isActive={isSchedule}
+								type="button"
+								onClick={() => navigate("/")}
+							>
 								일정
 							</TabButton>
 							<SubHeader tab="schedule" />
 						</li>
 						<li>
-							<TabButton isActive={isFeed} type="button">
+							<TabButton
+								isActive={isFeed}
+								type="button"
+								onClick={() => navigate("/community")}
+							>
 								FEED IN SELODY
 							</TabButton>
 							<SubHeader tab="feed" />
