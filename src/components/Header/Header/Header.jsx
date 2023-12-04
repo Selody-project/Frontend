@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useLocation } from "react-router-dom";
 
 import NotificationIcon from "@/assets/icon/ic-notification.svg";
+import DefaultProfile from "@/assets/img/img-default-profile.png";
 import SelodyLogo from "@/components/Common/SelodyLogo";
 import NotificationDropdown from "@/components/Notification/NotificationDropdown/NotificationDropdown";
 import { openModal } from "@/features/ui/ui-slice";
@@ -36,9 +37,12 @@ const Header = () => {
 	const isFeed = path === "/community" || path === "mypage";
 
 	const { openedModal } = useSelector((state) => state.ui);
+	const { user } = useSelector((state) => state.auth);
 
 	const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
 	const [isNotiDropdownOpen, setIsNotiDropdownOpen] = useState(false);
+
+	const initProfileImg = user?.profileImage ?? DefaultProfile;
 
 	const handleProfileDropdown = (e) => {
 		const { target } = e;
@@ -115,7 +119,7 @@ const Header = () => {
 					<ProfileDiv>
 						<ProfileImg
 							ref={profileRef}
-							src="https://yt3.ggpht.com/ytc/AOPolaSlb8-cH_rN_lZDD1phXr7aHFpoOqMVoepaGuTm=s48-c-k-c0x00ffffff-no-rj"
+							src={initProfileImg}
 							alt="user-profile"
 							onClick={() => {
 								setIsProfileDropdownOpen(!isProfileDropdownOpen);
