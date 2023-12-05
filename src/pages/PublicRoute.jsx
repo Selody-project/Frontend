@@ -4,9 +4,9 @@ import { Navigate, Outlet } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const PublicRoute = () => {
-	const { userLoading, user } = useSelector((state) => state.auth);
+	const { isLoading, user } = useSelector((state) => state.auth);
 
-	if (userLoading) {
+	if (isLoading) {
 		return <p>Loading,,,</p>;
 	}
 

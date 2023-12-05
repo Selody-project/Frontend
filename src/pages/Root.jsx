@@ -7,9 +7,10 @@ import Header from "@/components/Header/Header/Header";
 const Root = () => {
 	const { isLoading, user } = useSelector((state) => state.auth);
 
-	if (isLoading && !user) {
+	if (isLoading) {
 		return <p>Loading,,,</p>;
 	}
+
 	if (!user) {
 		return <Navigate to="/landing" />;
 	}
