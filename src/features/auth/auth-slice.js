@@ -102,7 +102,6 @@ const authSlice = createSlice({
 			})
 			.addCase(getCurrentUser.rejected, (state, { payload }) => {
 				state.isLoading = false;
-				toast.error(payload.error);
 			})
 			// 유저 프로필 수정
 			.addCase(updateUserProfile.pending, (state) => {
