@@ -15,7 +15,7 @@ import {
 
 const initialState = {
 	user: null,
-	isLoading: false,
+	isLoading: true,
 	token: null,
 	edit: false,
 };
