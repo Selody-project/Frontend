@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useTheme } from "styled-components";
+
 import { AddIcon } from "@/constants/iconConstants";
 
 import {
@@ -8,9 +10,12 @@ import {
 	MiddleDiv,
 	MiddleInnerDiv,
 	BottomDiv,
+	ProfileButton,
 } from "./GroupProfile.styles";
 
-const GroupProfile = ({ groupInfo, isGroupMember }) => {
+const GroupProfile = ({ groupInfo, isGroupMember, isGroupLeader }) => {
+	const theme = useTheme();
+
 	return (
 		<ContainerDiv>
 			<TopDiv>
@@ -29,16 +34,36 @@ const GroupProfile = ({ groupInfo, isGroupMember }) => {
 				</MiddleInnerDiv>
 			</MiddleDiv>
 			<BottomDiv>
-				<button type="button">
-					{isGroupMember ? (
-						"그룹 나가기"
-					) : (
+				{isGroupLeader && (
+					<ProfileButton
+						type="button"
+						bgColor={theme.colors.primary}
+						textColor={theme.colors.white}
+					>
+						그룹 관리
+					</ProfileButton>
+				)}
+
+				{!isGroupLeader && isGroupMember ? (
+					<ProfileButton
+						type="button"
+						bgColor={theme.colors.white}
+						textColor={theme.colors.primary}
+					>
+						그룹 나가기
+					</ProfileButton>
+				) : (
+					<ProfileButton
+						type="button"
+						bgColor={theme.colors.white}
+						textColor={theme.colors.primary}
+					>
 						<>
 							<AddIcon />
 							그룹 참여 요청
 						</>
-					)}
-				</button>
+					</ProfileButton>
+				)}
 			</BottomDiv>
 		</ContainerDiv>
 	);

@@ -98,7 +98,7 @@ export const BottomDiv = styled.div`
 	gap: 12px;
 	padding: 26px 0;
 
-	& > button {
+	/* & > button {
 		border: 1px solid ${({ theme: { colors } }) => colors.primary};
 		display: flex;
 		align-items: center;
@@ -108,5 +108,19 @@ export const BottomDiv = styled.div`
 		height: 48px;
 		color: ${({ theme: { colors } }) => colors.primary};
 		font-size: 18px;
-	}
+	} */
+`;
+
+export const ProfileButton = styled.button`
+	border: 1px solid ${({ theme: { colors } }) => colors.primary};
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: ${({ bgColor }) => bgColor};
+	width: 282px;
+	height: 48px;
+	color: ${({ textColor }) => textColor};
+	font-weight: ${({ theme: { typography } }) => typography.weight.medium};
+	font-size: 18px;
+	cursor: pointer;
 `;

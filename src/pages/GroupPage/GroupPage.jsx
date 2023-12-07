@@ -21,20 +21,29 @@ const GroupPage = () => {
 
 	const isPublicGroup = useSelector((state) => state.group.isPublicGroup);
 	const groupInfo = useSelector((state) => state.group.groupInfo);
+	const leaderId = useSelector((state) => state.group.groupLeaderId);
 	const requestMemberList = useSelector(
 		(state) => state.group.groupRequestMemberList,
 	);
 	const userGroup = useSelector((state) => state.user.userGroupList);
+	const { user } = useSelector((state) => state.auth);
 
 	const param = useParams();
 
 	const [isGroupMember, setIsGroupMember] = useState(false);
+	const [isGroupLeader, setIsGroupLeader] = useState(false);
 
 	useEffect(() => {
 		dispatch(getGroupInfo(param.id));
 		dispatch(getGroupRequestMemberList(param.id));
 		dispatch(inqueryUserGroup());
 	}, []);
+
+	useEffect(() => {
+		if (user.userId === leaderId) {
+			setIsGroupLeader(true);
+		}
+	});
 
 	useEffect(() => {
 		userGroup?.forEach((info) => {
@@ -46,7 +55,11 @@ const GroupPage = () => {
 
 	return (
 		<GroupMain>
-			<GroupProfile groupInfo={groupInfo} isGroupMember={isGroupMember} />
+			<GroupProfile
+				groupInfo={groupInfo}
+				isGroupMember={isGroupMember}
+				isGroupLeader={isGroupLeader}
+			/>
 			{!isPublicGroup && !isGroupMember ? (
 				<SecretFeed />
 			) : (
