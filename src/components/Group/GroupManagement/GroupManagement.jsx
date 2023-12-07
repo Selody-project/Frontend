@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import DefaultProfile from "@/assets/img/img-selody-logo/3x.png";
 import ToggleButton from "@/components/Common/ToggleButton/ToggleButton";
@@ -19,25 +19,24 @@ import {
 	ButtonDiv,
 } from "./GroupManagement.styles";
 
-const GroupManagement = ({ groupDetailInfo }) => {
+const GroupManagement = () => {
 	const dispatch = useDispatch();
 
+	const groupDetailInfo = useSelector((state) => state.group.groupDetailInfo);
+
 	const defaultProfileImg = groupDetailInfo?.image ?? DefaultProfile;
-
-	const [menu, setMenu] = useState("그룹 프로필");
-
-	// const groupId = groupDetailInfo?.groupId;
 	const isPublicGroup = groupDetailInfo?.isPublicGroup;
 
-	const handleClickToggle = () => {
-		const status = false;
+	const [menu, setMenu] = useState("그룹 프로필");
+	const [isPublicClick, setIsPublicClick] = useState(isPublicGroup);
 
-		const groupId = 85;
+	const handleClickToggle = async () => {
+		const groupId = groupDetailInfo?.groupId;
+		const status = !isPublicGroup;
 
 		try {
-			dispatch(changeGroupPublic({ groupId, status }));
-			// dispatch(setRefetchUserGroup(true));
-			// setIsPublicGroup((prev) => !prev);
+			await dispatch(changeGroupPublic({ groupId, status })).unwrap();
+			setIsPublicClick(!isPublicClick);
 		} catch (e) {
 			// eslint-disable-next-line no-console
 			console.error(e);
@@ -86,7 +85,7 @@ const GroupManagement = ({ groupDetailInfo }) => {
 				<PublicDiv>
 					<h3>공개여부</h3>
 					<ButtonDiv onClick={() => handleClickToggle()}>
-						<ToggleButton isActive={isPublicGroup} />
+						<ToggleButton isActive={isPublicClick} />
 					</ButtonDiv>
 				</PublicDiv>
 			</InnerDiv>
