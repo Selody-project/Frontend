@@ -3,11 +3,11 @@ import styled from "styled-components";
 export const GroupDiv = styled.div`
 	display: flex;
 	flex-direction: column;
+	font-family: Inter;
 
 	& > h3 {
-		font-family: Inter;
 		font-size: 18px;
-		font-weight: 600;
+		font-weight: ${({ theme: { typography } }) => typography.weight.semibold};
 	}
 `;
 
@@ -25,10 +25,8 @@ export const ItemDiv = styled.div`
 	gap: 8px;
 
 	& > h4 {
-		color: #2f2f2f;
-		font-family: Inter;
+		color: ${({ theme: { colors } }) => colors.text_02};
 		font-size: 12px;
-		font-weight: 400;
 		text-align: center;
 	}
 `;
@@ -36,7 +34,7 @@ export const ItemDiv = styled.div`
 export const CircleDiv = styled.div`
 	width: 62px;
 	height: 62px;
-	background-color: #dedede;
+	background-color: ${({ theme: { colors } }) => colors.btn_02};
 	border-radius: 50%;
 	display: flex;
 	justify-content: center;
@@ -47,6 +45,6 @@ export const CircleDiv = styled.div`
 		height: 56px;
 		border-radius: 50%;
 		object-fit: cover;
-		border: 1px solid #fff;
+		border: 1px solid ${({ theme: { colors } }) => colors.white};
 	}
 `;
