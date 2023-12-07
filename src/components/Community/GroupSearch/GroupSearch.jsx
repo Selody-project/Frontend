@@ -9,10 +9,10 @@ const GroupSearch = ({ onSearch, searchGroupList }) => {
 
 	const [group, setGroup] = useState([]);
 
-	const groupList = useSelector((state) => state.group.groupList);
+	const groupList = useSelector((state) => state.group.groupList.groups);
 
 	useEffect(() => {
-		dispatch(getGroupList(1));
+		dispatch(getGroupList(32));
 	}, []);
 
 	useEffect(() => {
