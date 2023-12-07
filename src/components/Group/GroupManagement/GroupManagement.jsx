@@ -1,41 +1,52 @@
-import React, { useState } from "react";
-// import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 import DefaultProfile from "@/assets/img/img-selody-logo/3x.png";
+import ToggleButton from "@/components/Common/ToggleButton/ToggleButton";
+import {
+	getGroupInfo,
+	changeGroupPublic,
+} from "@/features/group/group-service";
 
 import {
 	ContainerDiv,
 	InnerDiv,
 	TitleButton,
 	InfoDiv,
+	ProfileInput,
+	InfoInput,
+	PublicDiv,
+	ButtonDiv,
 } from "./GroupManagement.styles";
 
-const GroupManagement = () => {
-	// const dispatch = useDispatch();
+const GroupManagement = ({ groupDetailInfo }) => {
+	const dispatch = useDispatch();
 
-	// const groupInfo = useSelector(
-	// 	(state) => state.group.groupInfo?.information.group,
-	// );
-
-	// const { name, description, image, isPublicGroup } = groupInfo;
-	// const defaultProfileImg = image ?? DefaultProfile;
+	const defaultProfileImg = groupDetailInfo?.image ?? DefaultProfile;
 
 	const [menu, setMenu] = useState("그룹 프로필");
 
-	// const [newName, setNewName] = useState(name);
-	// const [newDescription, setNewDescription] = useState(description);
-	// const [newProfileImg, setNewProfileImg] = useState(image);
-	// const [newIsPublicGroup, setNewIsPublicGroup] = useState(isPublicGroup);
+	// const groupId = groupDetailInfo?.groupId;
+	const isPublicGroup = groupDetailInfo?.isPublicGroup;
 
-	// const handleChangeImg = (e) => {
-	// 	const file = e.target.files[0];
-	// 	const reader = new FileReader();
+	const handleClickToggle = () => {
+		const status = false;
 
-	// 	reader.readAsDataURL(file);
-	// 	reader.onloadend = () => {};
-	// };
+		const groupId = 85;
 
-	// console.log(name, description, image, isPublicGroup);
+		try {
+			dispatch(changeGroupPublic({ groupId, status }));
+			// dispatch(setRefetchUserGroup(true));
+			// setIsPublicGroup((prev) => !prev);
+		} catch (e) {
+			// eslint-disable-next-line no-console
+			console.error(e);
+		}
+	};
+
+	useEffect(() => {
+		dispatch(getGroupInfo(85));
+	}, []);
 
 	return (
 		<ContainerDiv>
@@ -60,10 +71,24 @@ const GroupManagement = () => {
 				</ul>
 				<InfoDiv>
 					<h3>프로필</h3>
-					<img src={DefaultProfile} alt="DefaultProfile" />
+					<img src={defaultProfileImg} alt="DefaultProfile" />
 					<label htmlFor="profileImg">이미지 재선택</label>
-					<input type="file" id="profileImg" />
+					<ProfileInput type="file" id="profileImg" />
 				</InfoDiv>
+				<InfoDiv>
+					<h3>이름</h3>
+					<InfoInput type="text" defaultValue={groupDetailInfo?.name} />
+				</InfoDiv>
+				<InfoDiv>
+					<h3>소개글</h3>
+					<textarea defaultValue={groupDetailInfo?.description} />
+				</InfoDiv>
+				<PublicDiv>
+					<h3>공개여부</h3>
+					<ButtonDiv onClick={() => handleClickToggle()}>
+						<ToggleButton isActive={isPublicGroup} />
+					</ButtonDiv>
+				</PublicDiv>
 			</InnerDiv>
 		</ContainerDiv>
 	);

@@ -27,6 +27,7 @@ const initialState = {
 	searchGroupList: [],
 	isLoading: false,
 	groupInfo: null,
+	groupDetailInfo: null,
 	groupRequestMemberList: [],
 	isUserGroupRefetching: true,
 	isPublicGroup: null,
@@ -162,6 +163,7 @@ const groupSlice = createSlice({
 				state.groupInfoDetail = payload;
 				state.isPublicGroup = payload.information.group.isPublicGroup;
 				state.groupLeaderId = payload.information.leaderInfo.userId;
+				state.groupDetailInfo = payload.information.group;
 			})
 			.addMatcher(isAllOf(getGroupList.fulfilled), (state, { payload }) => {
 				state.isLoading = false;

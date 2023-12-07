@@ -212,3 +212,19 @@ export const cancelGroupJoin = createAsyncThunk(
 		return data;
 	},
 );
+
+export const changeGroupPublic = createAsyncThunk(
+	"group/changeGroupPublic",
+	async ({ groupId, status }, thunkAPI) => {
+		const data = await commonThunk(
+			{
+				method: "PATCH",
+				url: `/api/group/${groupId}/public`,
+				data: { isPublicGroup: status },
+				successCode: 200,
+			},
+			thunkAPI,
+		);
+		return data;
+	},
+);

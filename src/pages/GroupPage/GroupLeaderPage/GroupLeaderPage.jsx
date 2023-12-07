@@ -16,6 +16,7 @@ const GroupLeaderPage = () => {
 	const dispatch = useDispatch();
 
 	const groupInfo = useSelector((state) => state.group.groupInfo);
+	const groupDetailInfo = useSelector((state) => state.group.groupDetailInfo);
 
 	const param = useParams();
 
@@ -28,7 +29,7 @@ const GroupLeaderPage = () => {
 	return (
 		<GroupMain>
 			<GroupProfile groupInfo={groupInfo} isGroupMember isGroupLeader />
-			<GroupManagement />
+			<GroupManagement groupDetailInfo={groupDetailInfo} />
 		</GroupMain>
 	);
 };

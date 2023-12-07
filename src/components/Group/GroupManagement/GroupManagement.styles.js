@@ -46,11 +46,12 @@ export const InfoDiv = styled.div`
 	margin-top: 40px;
 	display: flex;
 	align-items: center;
-	gap: 36px;
+	gap: 30px;
 
 	& > h3 {
 		color: ${({ theme: { colors } }) => colors.text_01};
 		font-weight: ${({ theme: { typography } }) => typography.weight.medium};
+		width: 50px;
 	}
 
 	& > img {
@@ -69,7 +70,40 @@ export const InfoDiv = styled.div`
 		cursor: pointer;
 	}
 
-	& > input {
-		display: none;
+	& > textarea {
+		width: 745px;
+		height: 84px;
+		background-color: ${({ theme: { colors } }) => colors.bg_01};
+		border: 0;
+		padding: 12px;
 	}
 `;
+
+export const ProfileInput = styled.input`
+	display: none;
+`;
+
+export const InfoInput = styled.input`
+	width: 280px;
+	background-color: ${({ theme: { colors } }) => colors.bg_01};
+	border: 0;
+	padding: 12px;
+
+	&:focus {
+		outline: 1px solid ${({ theme: { colors } }) => colors.primary};
+	}
+`;
+
+export const PublicDiv = styled.div`
+	margin-top: 40px;
+	display: flex;
+	align-items: center;
+	gap: 30px;
+
+	& > h3 {
+		color: ${({ theme: { colors } }) => colors.text_01};
+		font-weight: ${({ theme: { typography } }) => typography.weight.medium};
+	}
+`;
+
+export const ButtonDiv = styled.div``;
