@@ -228,3 +228,19 @@ export const changeGroupPublic = createAsyncThunk(
 		return data;
 	},
 );
+
+export const updateGroupProfile = createAsyncThunk(
+	"group/updateGroupProfile",
+	async ({ formdata, groupId }, thunkAPI) => {
+		const data = await commonThunk(
+			{
+				method: "PUT",
+				url: `/api/group/${groupId}`,
+				data: formdata,
+				successCode: 200,
+			},
+			thunkAPI,
+		);
+		return data;
+	},
+);

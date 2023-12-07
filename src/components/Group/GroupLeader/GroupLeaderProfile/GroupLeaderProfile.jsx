@@ -6,6 +6,7 @@ import ToggleButton from "@/components/Common/ToggleButton/ToggleButton";
 import {
 	getGroupInfo,
 	changeGroupPublic,
+	updateGroupProfile,
 } from "@/features/group/group-service";
 import { openModal } from "@/features/ui/ui-slice";
 
@@ -34,6 +35,35 @@ const GroupLeaderProfile = () => {
 
 	const [isPublicClick, setIsPublicClick] = useState(isPublicGroup);
 
+	const [profileObj, setProfileObj] = useState();
+	const [newProfileImg, setNewProfileImg] = useState(defaultProfileImg);
+	const [newName, setNewName] = useState(groupDetailInfo?.name);
+	const [newDescription, setNewDescription] = useState(
+		groupDetailInfo?.description,
+	);
+
+	const isSaveEnabled =
+		(newName !== groupDetailInfo?.name ||
+			newDescription !== groupDetailInfo?.description ||
+			newProfileImg !== defaultProfileImg) &&
+		newName.trim();
+
+	const handleClickSave = () => {
+		const formdata = new FormData();
+		const groupId = groupDetailInfo?.groupId;
+		const data = {
+			name: newName,
+			description: newDescription,
+		};
+		formdata.append("data", JSON.stringify(data));
+
+		if (newProfileImg !== defaultProfileImg) {
+			formdata.append("image", profileObj);
+		}
+
+		dispatch(updateGroupProfile({ formdata, groupId }));
+	};
+
 	const handleClickToggle = async () => {
 		const groupId = groupDetailInfo?.groupId;
 		const status = !isPublicGroup;
@@ -47,6 +77,16 @@ const GroupLeaderProfile = () => {
 		}
 	};
 
+	const handleChangeImg = (e) => {
+		const file = e.target.files[0];
+		const reader = new FileReader();
+		reader.readAsDataURL(file);
+		reader.onloadend = () => {
+			setNewProfileImg(reader.result);
+			setProfileObj(file);
+		};
+	};
+
 	useEffect(() => {
 		dispatch(getGroupInfo(85));
 	}, []);
@@ -55,17 +95,24 @@ const GroupLeaderProfile = () => {
 		<>
 			<InfoDiv>
 				<h3>프로필</h3>
-				<img src={defaultProfileImg} alt="DefaultProfile" />
+				<img src={newProfileImg} alt="DefaultProfile" />
 				<label htmlFor="profileImg">이미지 재선택</label>
-				<ProfileInput type="file" id="profileImg" />
+				<ProfileInput type="file" id="profileImg" onChange={handleChangeImg} />
 			</InfoDiv>
 			<InfoDiv>
 				<h3>이름</h3>
-				<InfoInput type="text" defaultValue={groupDetailInfo?.name} />
+				<InfoInput
+					type="text"
+					defaultValue={newName}
+					onChange={(e) => setNewName(e.target.value)}
+				/>
 			</InfoDiv>
 			<InfoDiv>
 				<h3>소개글</h3>
-				<textarea defaultValue={groupDetailInfo?.description} />
+				<textarea
+					defaultValue={newDescription}
+					onChange={(e) => setNewDescription(e.target.value)}
+				/>
 			</InfoDiv>
 			<InfoDiv>
 				<h3>공개여부</h3>
@@ -74,7 +121,9 @@ const GroupLeaderProfile = () => {
 				</ToggleButtonDiv>
 			</InfoDiv>
 			<SaveButtonDiv>
-				<SaveButton>변경 정보 저장하기</SaveButton>
+				<SaveButton disabled={!isSaveEnabled} onClick={handleClickSave}>
+					변경 정보 저장하기
+				</SaveButton>
 			</SaveButtonDiv>
 			<hr />
 			<BottomButtonDiv>

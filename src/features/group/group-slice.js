@@ -17,6 +17,9 @@ import {
 	rejectGroupJoin,
 	deleteGroupMember,
 	cancelGroupJoin,
+	// changeRequestGroupJoin,
+	changeGroupPublic,
+	updateGroupProfile,
 } from "./group-service.js";
 
 const initialState = {
@@ -77,6 +80,8 @@ const groupSlice = createSlice({
 					leaveGroup.pending,
 					changeGroupOption.pending,
 					// createGroup.pending,
+					changeGroupPublic.pending,
+					updateGroupProfile.pending,
 				),
 				(state) => {
 					state.isLoading = true;
@@ -102,6 +107,8 @@ const groupSlice = createSlice({
 					leaveGroup.rejected,
 					changeGroupOption.rejected,
 					createGroup.rejected,
+					changeGroupPublic.rejected,
+					updateGroupProfile.rejected,
 				),
 				(state, { payload }) => {
 					state.isLoading = false;
@@ -199,7 +206,22 @@ const groupSlice = createSlice({
 			.addMatcher(isAllOf(createGroup.fulfilled), (state) => {
 				state.isLoading = false;
 				toast.success("그룹 생성에 성공하였습니다.");
-			});
+			})
+			.addMatcher(
+				isAllOf(changeGroupPublic.fulfilled),
+				(state, { payload }) => {
+					state.isLoading = false;
+					toast.error(payload.error);
+				},
+			)
+			.addMatcher(
+				isAllOf(updateGroupProfile.fulfilled),
+				(state, { payload: { name, description, image } }) => {
+					state.isLoading = false;
+					state.groupInfo = { ...state.groupInfo, name, description, image };
+					toast.success("그룹 정보가 수정되었습니다");
+				},
+			);
 	},
 });
 
