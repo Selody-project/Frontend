@@ -15,6 +15,8 @@ export const TitleLi = styled.li`
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	position: relative;
+	cursor: ${({ click }) => (click ? "pointer" : "default")};
 
 	& > svg {
 		margin-left: 2px;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import TestImg from "@/assets/img/bg_02.png";
 import {
@@ -7,6 +7,7 @@ import {
 	AccessArrowIcon,
 } from "@/constants/iconConstants";
 
+import AccessLevelDropdown from "./AccessLevelDropdown";
 import {
 	TitleUl,
 	TitleLi,
@@ -15,6 +16,26 @@ import {
 } from "./GroupLeaderManagement.styles";
 
 const GroupLeaderManagement = () => {
+	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+	const dropdownRef = useRef();
+
+	const handleDropdown = (e) => {
+		const target = e;
+
+		if (isDropdownOpen && !dropdownRef.current.contains(target)) {
+			setIsDropdownOpen(false);
+		}
+	};
+
+	useEffect(() => {
+		window.addEventListener("click", handleDropdown);
+
+		return () => {
+			window.removeEventListener("click", handleDropdown);
+		};
+	});
+
 	return (
 		<>
 			<TitleUl>
@@ -23,9 +44,16 @@ const GroupLeaderManagement = () => {
 				<TitleLi>댓글 내역</TitleLi>
 				<TitleLi>공감 내역</TitleLi>
 				<TitleLi>가입 날짜</TitleLi>
-				<TitleLi>
+				<TitleLi
+					ref={dropdownRef}
+					onClick={() => {
+						setIsDropdownOpen(!isDropdownOpen);
+					}}
+					click
+				>
 					멤버 권한
 					<InfoIcon />
+					{isDropdownOpen && <AccessLevelDropdown />}
 				</TitleLi>
 				<TitleLi red>내보내기</TitleLi>
 			</TitleUl>
