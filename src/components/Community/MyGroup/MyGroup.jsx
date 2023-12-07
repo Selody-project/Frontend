@@ -20,8 +20,8 @@ const MyGroup = () => {
 			<h3>내 그룹</h3>
 			<ListDiv>
 				{userGroup.groupList?.map((info) => (
-					<a href={`/group/${info.groupId}`}>
-						<ItemDiv key={info.groupId}>
+					<a href={`/group/${info.groupId}`} key={info.groupId}>
+						<ItemDiv>
 							<CircleDiv>
 								<img src={SampleImg} alt="sampleimg" />
 							</CircleDiv>
