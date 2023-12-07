@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import SearchIcon from "@/assets/icon/ic-search.svg";
 import GroupSearch from "@/components/Community/GroupSearch/GroupSearch";
 import MyGroup from "@/components/Community/MyGroup/MyGroup";
 import MyGroupFeed from "@/components/Community/MyGroupFeed/MyGroupFeed";
 import Tab from "@/components/Tab/Tab";
+import { SearchIcon } from "@/constants/iconConstants";
 import { TAB_OPTION_TYPE, TAB_OPTION_TITLE } from "@/constants/tabConstants";
 import { searchGroup } from "@/features/group/group-service";
 

@@ -2,9 +2,9 @@ import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import IntroductionEditIcon from "@/assets/icon/ic-introduction-edit.svg";
 import GroupInfo from "@/components/Group/GroupInfo/GroupInfo";
 import Tab from "@/components/Tab/Tab";
+import { IntroductionEditIcon } from "@/constants/iconConstants";
 import { TAB_OPTION_TITLE, TAB_OPTION_TYPE } from "@/constants/tabConstants";
 import { getGroupList } from "@/features/group/group-service";
 import {

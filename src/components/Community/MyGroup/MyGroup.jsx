@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import LeftArrowIcon from "@/assets/icon/ic-left-arrow.svg";
-import RightArrowIcon from "@/assets/icon/ic-right-arrow.svg";
+import { LeftArrowIcon, RightArrowIcon } from "@/constants/iconConstants";
 import { inqueryUserGroup } from "@/features/user/user-service";
 
 import {

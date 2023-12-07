@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import CrownIcon from "@/assets/icon/ic-crown.svg";
-import CommentIcon from "@/assets/icon/ic-feed-comment.svg";
-import HeartIcon from "@/assets/icon/ic-feed-heart.svg";
-import OptionThreeDotIcon from "@/assets/icon/ic-feed-option.svg";
+import {
+	CrownIcon,
+	CommentIcon,
+	HeartIcon,
+	OptionThreeDotIcon,
+} from "@/constants/iconConstants";
 import { getUserGroupPost } from "@/features/post/post-service";
 import useObserver from "@/hooks/useObserver";
 import { useTimeStamp } from "@/hooks/useTimeStamp";
