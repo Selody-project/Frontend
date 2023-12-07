@@ -22,7 +22,7 @@ export const FeddTitleDiv = styled.div`
 	}
 `;
 
-export const Button = styled.button`
+export const TabButton = styled.button`
 	color: ${({ disabled, theme: { colors } }) =>
 		disabled ? colors.text_01 : colors.disabled_text};
 	font-size: 18px;
@@ -49,5 +49,13 @@ export const Input = styled.input`
 		font-size: 15px;
 		letter-spacing: 0.5px;
 		line-height: 24px;
+	}
+`;
+
+export const SearchButton = styled.button`
+	cursor: pointer;
+
+	&:disabled {
+		cursor: not-allowed;
 	}
 `;
