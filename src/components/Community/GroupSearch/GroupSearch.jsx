@@ -1,19 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import GroupInfo from "@/components/Group/GroupInfo/GroupInfo";
 import { getGroupList } from "@/features/group/group-service";
+import useObserver from "@/hooks/useObserver";
 
 const GroupSearch = ({ onSearch, searchGroupList }) => {
 	const dispatch = useDispatch();
+	const groupList = useSelector((state) => state.group.groupList);
 
 	const [group, setGroup] = useState([]);
 
-	const groupList = useSelector((state) => state.group.groupList.groups);
+	const lastRecordId = useSelector((state) => state.group.lastRecordId);
+
+	const target = useRef(null);
+
+	const isObserving = useObserver(target, { threshold: 0.3 });
 
 	useEffect(() => {
-		dispatch(getGroupList(32));
-	}, []);
+		const dispatchGetGroupList = async () => {
+			await dispatch(getGroupList(lastRecordId));
+		};
+
+		if (isObserving) {
+			dispatchGetGroupList();
+		}
+	}, [isObserving, dispatch]);
 
 	useEffect(() => {
 		if (onSearch) {
@@ -23,7 +35,7 @@ const GroupSearch = ({ onSearch, searchGroupList }) => {
 		}
 	});
 
-	return <GroupInfo groupInfo={group} />;
+	return <GroupInfo groupInfo={group} target={target} />;
 };
 
 export default GroupSearch;

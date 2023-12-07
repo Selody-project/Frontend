@@ -4,7 +4,7 @@ import SampleImg from "@/assets/img/feed/img-group-sample-01.jpeg";
 
 import { ContainerDiv, GroupDiv } from "./GroupInfo.styles";
 
-const GroupInfo = ({ groupInfo }) => {
+const GroupInfo = ({ groupInfo, target }) => {
 	return (
 		<ContainerDiv>
 			{groupInfo?.map((info) => (
@@ -15,6 +15,7 @@ const GroupInfo = ({ groupInfo }) => {
 					<h4>{info.member}명의 그룹원</h4>
 				</GroupDiv>
 			))}
+			<div ref={target} style={{ height: "30px" }} />
 		</ContainerDiv>
 	);
 };
