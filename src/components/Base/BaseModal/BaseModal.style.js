@@ -30,4 +30,5 @@ export const IconButton = styled.button`
 	position: absolute;
 	top: 20px;
 	right: 20px;
+	display: flex;
 `;
