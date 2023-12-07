@@ -11,7 +11,7 @@ import {
 import { getCurrentWeek, getFirstDateOfWeek } from "@/utils/calendarUtils";
 
 import { CalendarContainerDiv } from "./CalendarContainer.styles";
-import CustomCalendar from "./CustomCalendar";
+import CustomCalendar from "./CustomCalendar/CustomCalendar";
 import InviteUser from "../../SharePage/InviteUser";
 
 const CalendarContainer = ({ type }) => {
