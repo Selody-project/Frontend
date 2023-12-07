@@ -1,19 +1,28 @@
-import { format, formatDistanceToNowStrict } from "date-fns";
-import { ko } from "date-fns/locale";
+export const useTimeStamp = (timestamp) => {
+	const timeElapsed = Math.floor((new Date() - new Date(timestamp)) / 1000);
 
-export const useTimeStamp = (date) => {
-	const now = new Date();
-	const givenDate = new Date(date);
-	const diff = now - givenDate;
-	if (diff < 1000 * 60) {
-		return "방금 전";
+	if (timeElapsed < 60) {
+		return `방금 전`;
 	}
-	if (diff < 1000 * 60 * 60 * 24 * 7) {
-		const distanceString = formatDistanceToNowStrict(givenDate, {
-			addSuffix: true,
-			locale: ko,
-		});
-		return distanceString;
+	if (timeElapsed < 60 * 60) {
+		const minutes = Math.floor(timeElapsed / 60);
+		return `${minutes}분 전`;
 	}
-	return format(givenDate, "YYYY년 M월 D일");
+	if (timeElapsed < 60 * 60 * 24) {
+		const hours = Math.floor(timeElapsed / (60 * 60));
+		return `${hours}시간 전`;
+	}
+	if (timeElapsed < 60 * 60 * 24 * 7) {
+		const days = Math.floor(timeElapsed / (60 * 60 * 24));
+		return `${days}일 전`;
+	}
+	if (timeElapsed < 60 * 60 * 24 * 7 * 4) {
+		const weeks = Math.floor(timeElapsed / (60 * 60 * 24 * 7));
+		return `${weeks}주 전`;
+	}
+	if (timeElapsed < 60 * 60 * 24 * 7 * 4 * 2) {
+		const months = Math.floor(timeElapsed / (60 * 60 * 24 * 7 * 4));
+		return `${months}달 전`;
+	}
+	return new Date(timestamp).toISOString().slice(0, 10);
 };
