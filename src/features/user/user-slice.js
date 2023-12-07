@@ -26,6 +26,4 @@ const userSlice = createSlice({
 	},
 });
 
-export const { inqueryGroup } = userSlice.actions;
-
 export default userSlice.reducer;
