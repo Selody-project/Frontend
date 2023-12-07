@@ -1,9 +1,12 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
-import { SubHeaderDiv, SubTabUl } from "./SubHeader.style";
+import { SubHeaderDiv, SubTabUl, TabButton } from "./SubHeader.style";
 
 const SubHeader = ({ tab }) => {
+	const navigate = useNavigate();
+	const location = useLocation();
+
 	const listItems =
 		tab === "schedule"
 			? [
@@ -17,15 +20,15 @@ const SubHeader = ({ tab }) => {
 
 	return (
 		<SubHeaderDiv>
-			<SubTabUl>
+			<SubTabUl role="tablist">
 				{listItems.map(({ path, title }) => (
-					<li key={title}>
-						<NavLink
-							to={path}
-							className={({ isActive }) => (isActive ? "isActive" : "")}
+					<li key={title} role="tab">
+						<TabButton
+							onClick={() => navigate(path)}
+							isActive={location.pathname.includes(path)}
 						>
 							{title}
-						</NavLink>
+						</TabButton>
 					</li>
 				))}
 			</SubTabUl>

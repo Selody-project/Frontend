@@ -84,21 +84,16 @@ const Header = () => {
 							</h1>
 						</LogoDiv>
 					</NavLink>
-					<TabUl>
-						<li>
-							<TabButton
-								isActive={isSchedule}
-								type="button"
-								onClick={() => navigate("/")}
-							>
+					<TabUl role="tablist">
+						<li role="tab">
+							<TabButton isActive={isSchedule} onClick={() => navigate("/")}>
 								일정
 							</TabButton>
 							<SubHeader tab="schedule" />
 						</li>
-						<li>
+						<li role="tab">
 							<TabButton
 								isActive={isFeed}
-								type="button"
 								onClick={() => navigate("/community")}
 							>
 								FEED IN SELODY

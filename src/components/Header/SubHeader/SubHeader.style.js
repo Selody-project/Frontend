@@ -21,14 +21,10 @@ export const SubTabUl = styled.ul`
 	line-height: normal;
 	gap: 48px;
 	margin-top: 60px;
+	white-space: nowrap;
+`;
 
-	& > li {
-		white-space: nowrap;
-		cursor: pointer;
-	}
-
-	.isActive {
-		color: ${({ theme }) => theme.colors.primary};
-		font-weight: 600;
-	}
+export const TabButton = styled.button`
+	cursor: pointer;
+	color: ${({ isActive, theme: { colors } }) => isActive && colors.primary};
 `;
