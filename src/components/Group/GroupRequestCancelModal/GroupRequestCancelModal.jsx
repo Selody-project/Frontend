@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useTheme } from "styled-components";
 
 import BaseModal from "@/components/Base/BaseModal/BaseModal";
-import { CancelGroupJoin } from "@/features/group/group-service";
+import { changeRequestGroupJoin } from "@/features/group/group-service";
 import { closeModal } from "@/features/ui/ui-slice";
 
 import { ModalContentDiv, ModalFooter } from "./GroupRequestCancelModal.styles";
@@ -14,7 +14,7 @@ const GroupRequestCancelModal = ({ groupId }) => {
 	const theme = useTheme();
 
 	const handleCancelGroupJoin = async () => {
-		dispatch(CancelGroupJoin(groupId));
+		dispatch(changeRequestGroupJoin(groupId));
 		dispatch(closeModal());
 	};
 
