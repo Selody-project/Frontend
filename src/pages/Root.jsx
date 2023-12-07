@@ -12,7 +12,7 @@ const Root = () => {
 	}
 
 	if (!user) {
-		return <Navigate to="/landing" />;
+		return <Navigate to="/" />;
 	}
 
 	return (

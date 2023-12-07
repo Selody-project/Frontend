@@ -26,7 +26,7 @@ const router = createBrowserRouter([
 		element: <Root />,
 		errorElement: <ErrorPage />,
 		children: [
-			{ index: true, element: <PersonalSchedulePage /> },
+			{ path: "personal", element: <PersonalSchedulePage /> },
 			{ path: "share", element: <GroupSchedulePage /> },
 			{ path: "community", element: <CommunityPage /> },
 			{ path: "setting", element: <SettingPage /> },
@@ -38,7 +38,7 @@ const router = createBrowserRouter([
 		element: <PublicRoute />,
 		errorElement: <ErrorPage />,
 		children: [
-			{ path: "landing", element: <LandingPage /> },
+			{ index: true, element: <LandingPage /> },
 			{ path: "login", element: <LoginPage /> },
 			{ path: "signup", element: <SignUpPage /> },
 		],

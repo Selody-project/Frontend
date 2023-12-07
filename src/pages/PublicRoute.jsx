@@ -14,7 +14,7 @@ const PublicRoute = () => {
 		toast.success(`안녕하세요! ${user.nickname}님`);
 	}
 
-	return user ? <Navigate to="/" /> : <Outlet />;
+	return user ? <Navigate to="/personal" /> : <Outlet />;
 };
 
 export default PublicRoute;
