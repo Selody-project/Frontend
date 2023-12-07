@@ -77,7 +77,7 @@ const MyGroupFeed = () => {
 							</IconItemDiv>
 							<IconItemDiv>
 								<CommentIcon />
-								<span>2</span>
+								<span>{post.commentCount}</span>
 							</IconItemDiv>
 						</IconDiv>
 					</BottomDiv>

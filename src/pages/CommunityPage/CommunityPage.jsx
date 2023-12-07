@@ -27,6 +27,10 @@ const CommunityPage = () => {
 
 	const searchGroupList = useSelector((state) => state.group.searchGroupList);
 
+	const searchLastRecordId = useSelector(
+		(state) => state.group.searchLastRecordId,
+	);
+
 	const handleSearchInput = (e) => {
 		setSearchKeyword(e.target.value);
 
@@ -36,7 +40,9 @@ const CommunityPage = () => {
 	};
 
 	const handleSearchClick = () => {
-		dispatch(searchGroup(searchKeyword));
+		dispatch(
+			searchGroup({ keyword: searchKeyword, recordId: searchLastRecordId }),
+		);
 		setOnSearch(true);
 	};
 
