@@ -15,7 +15,7 @@ import {
 
 const initialState = {
 	user: null,
-	isLoading: false,
+	isLoading: true,
 	token: null,
 	edit: false,
 };
@@ -102,7 +102,6 @@ const authSlice = createSlice({
 			})
 			.addCase(getCurrentUser.rejected, (state, { payload }) => {
 				state.isLoading = false;
-				toast.error(payload.error);
 			})
 			// 유저 프로필 수정
 			.addCase(updateUserProfile.pending, (state) => {

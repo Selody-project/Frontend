@@ -10,6 +10,7 @@ const Root = () => {
 	if (isLoading && !user) {
 		return <p>Loading,,,</p>;
 	}
+
 	if (!user) {
 		return <Navigate to="/landing" />;
 	}
