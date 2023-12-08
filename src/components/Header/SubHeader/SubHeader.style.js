@@ -10,21 +10,3 @@ export const SubHeaderDiv = styled.div`
 		display: block;
 	}
 `;
-
-export const SubTabUl = styled.ul`
-	display: flex;
-	align-items: center;
-	color: ${({ theme }) => theme.colors.text_01};
-	font-family: Inter;
-	font-size: 16px;
-	font-weight: 500;
-	line-height: normal;
-	gap: 48px;
-	margin-top: 60px;
-	white-space: nowrap;
-`;
-
-export const TabButton = styled.button`
-	cursor: pointer;
-	color: ${({ isActive, theme: { colors } }) => isActive && colors.primary};
-`;

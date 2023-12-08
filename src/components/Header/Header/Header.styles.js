@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-import { SubHeaderDiv } from "../SubHeader/SubHeader.style";
-
 export const ContainerHeader = styled.header`
 	position: sticky;
 	top: 0px;
@@ -46,40 +44,6 @@ export const LogoDiv = styled.div`
 		& > span {
 			color: ${({ theme }) => theme.colors.primary};
 		}
-	}
-`;
-
-export const TabUl = styled.ul`
-	margin-left: 48px;
-	display: flex;
-	align-items: center;
-	gap: 48px;
-	font-size: 16px;
-	font-family: Poppins;
-	font-weight: 500;
-	line-height: 180%;
-	position: relative;
-
-	& > li {
-		height: 48px;
-	}
-
-	& > li:hover ${SubHeaderDiv} {
-		display: block;
-	}
-`;
-
-export const TabButton = styled.button`
-	cursor: pointer;
-	color: ${({ isActive, theme: { colors } }) =>
-		isActive ? colors.primary : colors.text_02};
-	font-weight: ${({ isActive }) => (isActive ? "600" : "500")};
-	border-bottom: ${({ isActive, theme: { colors } }) =>
-		isActive ? `2px solid ${colors.primary}` : 0};
-	padding: 10px 0;
-
-	&:hover {
-		color: ${({ theme }) => theme.colors.primary};
 	}
 `;
 

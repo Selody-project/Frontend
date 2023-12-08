@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import NotificationIcon from "@/assets/icon/ic-notification.svg";
 import DefaultProfile from "@/assets/img/img-default-profile.png";
+import Tab from "@/components/Base/Tab/Tab";
 import SelodyLogo from "@/components/Common/SelodyLogo";
 import NotificationDropdown from "@/components/Notification/NotificationDropdown/NotificationDropdown";
 import { HEADER_TAB_TYPE } from "@/constants/tabConstants";
@@ -11,13 +12,11 @@ import { openModal } from "@/features/ui/ui-slice";
 
 import {
 	LogoDiv,
-	TabUl,
 	LeftDiv,
 	RightDiv,
 	GroupCreateButton,
 	ProfileImg,
 	ProfileDiv,
-	TabButton,
 	ContainerHeader,
 	WrapDiv,
 	NotificationDiv,
@@ -25,18 +24,12 @@ import {
 } from "./Header.styles";
 import GroupCreateModal from "../GroupCreateModal/GroupCreateModal";
 import ProfileDropdown from "../ProfileDropdown/ProfileDropdown";
-import SubHeader from "../SubHeader/SubHeader";
 
 const Header = () => {
 	const dispatch = useDispatch();
 
 	const profileRef = useRef();
 	const notiRef = useRef();
-
-	const navigate = useNavigate();
-
-	const location = useLocation();
-	const path = location.pathname;
 
 	const { openedModal } = useSelector((state) => state.ui);
 	const { user } = useSelector((state) => state.auth);
@@ -84,19 +77,7 @@ const Header = () => {
 							</h1>
 						</LogoDiv>
 					</NavLink>
-					<TabUl role="tablist">
-						{HEADER_TAB_TYPE.map(({ id, title, link, link2, subHeader }) => (
-							<li key={id} role="tab">
-								<TabButton
-									isActive={path.includes(link) || path.includes(link2)}
-									onClick={() => navigate(link)}
-								>
-									{title}
-								</TabButton>
-								<SubHeader tabData={subHeader} />
-							</li>
-						))}
-					</TabUl>
+					<Tab data={HEADER_TAB_TYPE} name="header" />
 				</LeftDiv>
 				<RightDiv>
 					<GroupCreateButton
