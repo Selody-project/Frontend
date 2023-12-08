@@ -90,6 +90,18 @@ const getTimeFormat = ({ date: { hour } }) => {
 	return `${hour < 10 ? `0${hour}` : hour}`;
 };
 
+const getDayHeaderContentInTimeGridWeek = (props) => {
+	const { date, text, isToday } = props;
+	return (
+		<>
+			<div>{text.substr(text.length - 2, 1)}</div>
+			<div className={`dateNum ${isToday ? "today" : ""}`}>
+				{date.getDate()}
+			</div>
+		</>
+	);
+};
+
 const CustomCalendar = forwardRef(
 	(
 		{
@@ -175,11 +187,11 @@ const CustomCalendar = forwardRef(
 						center: "dayGridMonth,timeGridWeek",
 						end: "",
 					}}
-					// views={{
-					// 	timeGridWeek: {
-					// 		dayHeaderContent: getDayHeaderContentInTimeGridWeek,
-					// 	},
-					// }}
+					views={{
+						timeGridWeek: {
+							dayHeaderContent: getDayHeaderContentInTimeGridWeek,
+						},
+					}}
 					buttonText={{
 						month: "월별",
 						week: "리스트",
