@@ -8,6 +8,7 @@ import { inqueryUserGroup } from "@/features/user/user-service";
 import {
 	GroupDiv,
 	Div,
+	InnerDiv,
 	LeftButton,
 	RightButton,
 	ItemDiv,
@@ -69,7 +70,7 @@ const MyGroup = () => {
 						<LeftArrowIcon />
 					</LeftButton>
 				)}
-				<ul
+				<InnerDiv
 					style={{
 						transform:
 							currentWidth > widthGap
@@ -78,19 +79,21 @@ const MyGroup = () => {
 					}}
 					ref={childRef}
 				>
-					<li>
+					<ul>
 						{userGroup?.map((info) => (
-							<Link to={`/group/${info.groupId}`} key={info.groupId}>
-								<ItemDiv>
-									<CircleDiv>
-										<img src={info.image} alt="groupImg" />
-									</CircleDiv>
-									<h4>{info.name}</h4>
-								</ItemDiv>
-							</Link>
+							<li>
+								<Link to={`/group/${info.groupId}`} key={info.groupId}>
+									<ItemDiv>
+										<CircleDiv>
+											<img src={info.image} alt="groupImg" />
+										</CircleDiv>
+										<h4>{info.name}</h4>
+									</ItemDiv>
+								</Link>
+							</li>
 						))}
-					</li>
-				</ul>
+					</ul>
+				</InnerDiv>
 				{!disableNextButton && (
 					<RightButton onClick={handleNextButton} disabled={disableNextButton}>
 						<RightArrowIcon />

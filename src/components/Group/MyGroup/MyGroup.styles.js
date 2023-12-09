@@ -14,16 +14,18 @@ export const GroupDiv = styled.div`
 export const Div = styled.div`
 	overflow: hidden;
 	position: relative;
+`;
+
+export const InnerDiv = styled.div`
+	display: inline-block;
+	transition: all 0.3s ease-out;
 
 	& > ul {
-		display: inline-block;
-		transition: all 0.3s ease-out;
+		display: flex;
+		gap: 26px;
+		margin-top: 30px;
 
 		& > li {
-			display: flex;
-			flex-direction: row;
-			margin-top: 30px;
-			gap: 26px;
 			cursor: pointer;
 		}
 	}
