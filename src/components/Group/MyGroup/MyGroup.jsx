@@ -81,8 +81,8 @@ const MyGroup = () => {
 				>
 					<ul>
 						{userGroup?.map((info) => (
-							<li>
-								<Link to={`/group/${info.groupId}`} key={info.groupId}>
+							<li key={info.groupId}>
+								<Link to={`/group/${info.groupId}`}>
 									<ItemDiv>
 										<CircleDiv>
 											<img src={info.image} alt="groupImg" />

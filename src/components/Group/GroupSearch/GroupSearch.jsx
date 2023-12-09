@@ -11,7 +11,7 @@ const GroupSearch = ({ onSearch, searchGroupList }) => {
 	const lastRecordId = useSelector((state) => state.group.lastRecordId);
 	const isEnd = useSelector((state) => state.group.isEnd);
 
-	const [group, setGroup] = useState([]);
+	const [groups, setGroups] = useState([]);
 
 	const target = useRef(null);
 
@@ -29,13 +29,13 @@ const GroupSearch = ({ onSearch, searchGroupList }) => {
 
 	useEffect(() => {
 		if (onSearch) {
-			setGroup(searchGroupList);
+			setGroups(searchGroupList);
 		} else {
-			setGroup(groupList);
+			setGroups(groupList);
 		}
 	});
 
-	return <GroupInfo groupInfo={group} target={target} />;
+	return <GroupInfo groupInfo={groups} target={target} />;
 };
 
 export default GroupSearch;
