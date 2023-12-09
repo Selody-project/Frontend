@@ -27,8 +27,10 @@ import {
 const GroupLeaderProfile = ({ groupId }) => {
 	const dispatch = useDispatch();
 
-	const { groupDetailInfo, isLoading } = useSelector((state) => state.group);
+	const { groupInfo, isLoading } = useSelector((state) => state.group);
 	const { openedModal } = useSelector((state) => state.ui);
+
+	const groupDetailInfo = groupInfo?.information.group;
 
 	const defaultProfileImg = groupDetailInfo?.image ?? DefaultProfile;
 	const isPublicGroup = groupDetailInfo?.isPublicGroup;

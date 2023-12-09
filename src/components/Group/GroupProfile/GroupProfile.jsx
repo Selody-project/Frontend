@@ -22,7 +22,9 @@ const GroupProfile = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 	const dispatch = useDispatch();
 
 	const { openedModal } = useSelector((state) => state.ui);
-	const { groupDetailInfo, isLoading } = useSelector((state) => state.group);
+	const { isLoading } = useSelector((state) => state.group);
+
+	const groupDetailInfo = groupInfo?.information.group;
 
 	const [isCreateLinkClick, setIsCreateLinkClick] = useState(false);
 

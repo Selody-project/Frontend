@@ -35,9 +35,6 @@ const initialState = {
 	groupInfo: null,
 	groupRequestMemberList: [],
 	isUserGroupRefetching: true,
-	isPublicGroup: null,
-	groupLeaderId: null,
-	groupDetailInfo: null,
 	groupInviteLink: null,
 	groupMemberList: null,
 	isEnd: false,
@@ -168,9 +165,6 @@ const groupSlice = createSlice({
 			.addMatcher(isAllOf(getGroupInfo.fulfilled), (state, { payload }) => {
 				state.isLoading = false;
 				state.groupInfo = payload;
-				state.isPublicGroup = payload.information.group.isPublicGroup;
-				state.groupLeaderId = payload.information.leaderInfo.userId;
-				state.groupDetailInfo = payload.information.group;
 			})
 			.addMatcher(isAllOf(changeRequestGroupJoin.fulfilled), (state) => {
 				state.isLoading = false;
@@ -195,13 +189,9 @@ const groupSlice = createSlice({
 				state.isLoading = false;
 				toast.success("그룹 신청 취소 완료");
 			})
-			.addMatcher(
-				isAllOf(changeGroupOption.fulfilled),
-				(state, { payload }) => {
-					state.isLoading = false;
-					state.isPublicGroup = payload.information.group.isPublicGroup;
-				},
-			)
+			.addMatcher(isAllOf(changeGroupOption.fulfilled), (state) => {
+				state.isLoading = false;
+			})
 			.addMatcher(isAllOf(delegateGroup.fulfilled), (state) => {
 				state.isLoading = false;
 				toast.success("그룹장 위임이 완료되었습니다.");

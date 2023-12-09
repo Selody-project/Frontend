@@ -19,11 +19,8 @@ import { GroupMain, FeedDiv } from "./GroupPage.styles";
 const GroupPage = () => {
 	const dispatch = useDispatch();
 
-	const isPublicGroup = useSelector((state) => state.group.isPublicGroup);
-	const groupInfo = useSelector((state) => state.group.groupInfo);
-	const leaderId = useSelector((state) => state.group.groupLeaderId);
-	const requestMemberList = useSelector(
-		(state) => state.group.groupRequestMemberList,
+	const { groupInfo, groupRequestMemberList } = useSelector(
+		(state) => state.group,
 	);
 	const userGroup = useSelector((state) => state.user.userGroupList);
 	const { user } = useSelector((state) => state.auth);
@@ -32,6 +29,9 @@ const GroupPage = () => {
 
 	const [isGroupMember, setIsGroupMember] = useState(false);
 	const [isGroupLeader, setIsGroupLeader] = useState(false);
+
+	const isPublicGroup = groupInfo?.information.group.isPublicGroup;
+	const leaderId = groupInfo?.information.leaderInfo.userId;
 
 	useEffect(() => {
 		dispatch(getGroupInfo(param.id));
@@ -43,7 +43,7 @@ const GroupPage = () => {
 		if (user.userId === leaderId) {
 			setIsGroupLeader(true);
 		}
-	});
+	}, [leaderId]);
 
 	useEffect(() => {
 		userGroup?.forEach((info) => {
@@ -72,7 +72,7 @@ const GroupPage = () => {
 
 					{isGroupMember && (
 						<GroupMember
-							requestMemberList={requestMemberList}
+							requestMemberList={groupRequestMemberList}
 							groupId={param.id}
 						/>
 					)}
