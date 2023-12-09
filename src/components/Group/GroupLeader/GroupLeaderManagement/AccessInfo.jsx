@@ -16,7 +16,6 @@ const AccessInfo = () => {
 						<TextDiv>
 							<h3>{data.id}</h3>
 							<h4>{data.text}</h4>
-							<h4>{data.text2}</h4>
 						</TextDiv>
 					</li>
 				))}

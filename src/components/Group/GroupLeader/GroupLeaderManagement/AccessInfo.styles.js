@@ -36,5 +36,6 @@ export const TextDiv = styled.div`
 	& > h4 {
 		color: ${({ theme: { colors } }) => colors.disabled_text};
 		font-size: 8px;
+		white-space: pre-line;
 	}
 `;
