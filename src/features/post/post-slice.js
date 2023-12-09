@@ -16,7 +16,7 @@ const initialState = {
 	allGroupPost: [],
 	userGroupPost: [],
 	lastRecordId: 0,
-	isLoading: false,
+	isLoading: true,
 	isEnd: false,
 };
 

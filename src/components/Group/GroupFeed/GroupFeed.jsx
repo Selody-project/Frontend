@@ -32,8 +32,7 @@ import {
 const GroupFeed = ({ groupId }) => {
 	const dispatch = useDispatch();
 
-	const allGroupPost = useSelector((state) => state.post.allGroupPost);
-	const recordId = useSelector((state) => state.post.lastRecordId);
+	const { allGroupPost, lastRecordId } = useSelector((state) => state.post);
 
 	const [optionMenuOpenedFeedIndex, setOptionMenuOpenedFeedIndex] =
 		useState(null);
@@ -61,7 +60,7 @@ const GroupFeed = ({ groupId }) => {
 
 	useEffect(() => {
 		const dispatchGetGroupAllPost = async () => {
-			await dispatch(getGroupAllPost({ groupId, recordId })).unwrap();
+			await dispatch(getGroupAllPost({ groupId, lastRecordId })).unwrap();
 		};
 		if (isObserving) {
 			dispatchGetGroupAllPost();
