@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { LeftArrowIcon, RightArrowIcon } from "@/constants/iconConstants";
-import { inqueryUserGroup } from "@/features/user/user-service";
+import { getUserGroups } from "@/features/user/user-service";
 
 import {
 	GroupDiv,
@@ -45,7 +45,7 @@ const MyGroup = () => {
 	});
 
 	useEffect(() => {
-		dispatch(inqueryUserGroup());
+		dispatch(getUserGroups());
 	}, []);
 
 	useEffect(() => {

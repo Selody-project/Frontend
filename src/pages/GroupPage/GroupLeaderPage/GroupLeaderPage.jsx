@@ -8,7 +8,7 @@ import {
 	getGroupInfo,
 	getGroupRequestMemberList,
 } from "@/features/group/group-service";
-import { inqueryUserGroup } from "@/features/user/user-service";
+import { getUserGroups } from "@/features/user/user-service";
 
 import { GroupMain } from "./GroupLeaderPage.styles";
 
@@ -22,7 +22,7 @@ const GroupLeaderPage = () => {
 	useEffect(() => {
 		dispatch(getGroupInfo(param.id));
 		dispatch(getGroupRequestMemberList(param.id));
-		dispatch(inqueryUserGroup());
+		dispatch(getUserGroups());
 	}, []);
 
 	return (

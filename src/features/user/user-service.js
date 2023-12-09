@@ -2,8 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import commonThunk from "../commonThunk";
 
-export const inqueryUserGroup = createAsyncThunk(
-	"user/inqueryUserGroup",
+export const getUserGroups = createAsyncThunk(
+	"user/getUserGroups",
 	async (thunkAPI) => {
 		const data = await commonThunk(
 			{ method: "GET", url: "/api/user/group", successCode: 200 },
@@ -14,8 +14,8 @@ export const inqueryUserGroup = createAsyncThunk(
 	},
 );
 
-export const inqueryRequestUserGroup = createAsyncThunk(
-	"user/inqueryRequestUserGroup",
+export const getRequestUserGroups = createAsyncThunk(
+	"user/getRequestUserGroups",
 	async (thunkAPI) => {
 		const data = await commonThunk(
 			{ method: "GET", url: "/api/user/group/pending", successCode: 200 },

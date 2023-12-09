@@ -1,11 +1,11 @@
 import { createSlice, isAnyOf, isAllOf } from "@reduxjs/toolkit";
 
-import { inqueryUserGroup, inqueryRequestUserGroup } from "./user-service";
+import { getUserGroups, getRequestUserGroups } from "./user-service";
 
 const initialState = {
 	userGroupList: [],
 	userRequestGroupList: [],
-	isUserGroupFetching: false,
+	isUserGroupFetching: true,
 };
 
 const userSlice = createSlice({
@@ -15,23 +15,23 @@ const userSlice = createSlice({
 	extraReducers: (builder) => {
 		builder
 			.addMatcher(
-				isAnyOf(inqueryUserGroup.pending, inqueryRequestUserGroup),
+				isAnyOf(getUserGroups.pending, getRequestUserGroups),
 				(state) => {
 					state.isUserGroupFetching = true;
 				},
 			)
 			.addMatcher(
-				isAnyOf(inqueryUserGroup.rejected, inqueryRequestUserGroup.rejected),
+				isAnyOf(getUserGroups.rejected, getRequestUserGroups.rejected),
 				(state) => {
 					state.isUserGroupFetching = false;
 				},
 			)
-			.addMatcher(isAllOf(inqueryUserGroup.fulfilled), (state, { payload }) => {
+			.addMatcher(isAllOf(getUserGroups.fulfilled), (state, { payload }) => {
 				state.isUserGroupFetching = false;
 				state.userGroupList = payload;
 			})
 			.addMatcher(
-				isAllOf(inqueryRequestUserGroup.fulfilled),
+				isAllOf(getRequestUserGroups.fulfilled),
 				(state, { payload }) => {
 					state.isUserGroupFetching = false;
 					state.userRequestGroupList = payload;

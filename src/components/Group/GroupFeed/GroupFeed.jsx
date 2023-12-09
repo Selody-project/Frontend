@@ -9,9 +9,9 @@ import {
 	HeartClickIcon,
 } from "@/constants/iconConstants";
 import {
-	getGroupAllPost,
+	getGroupAllPosts,
 	deleteGroupPost,
-	dislikeGroupPost,
+	cancelLikeGroupPost,
 	likeGroupPost,
 } from "@/features/post/post-service";
 import useObserver from "@/hooks/useObserver";
@@ -48,7 +48,7 @@ const GroupFeed = ({ groupId }) => {
 		if (!isLiked) {
 			dispatch(likeGroupPost({ postGroupId, postId }));
 		} else {
-			dispatch(dislikeGroupPost({ postGroupId, postId }));
+			dispatch(cancelLikeGroupPost({ postGroupId, postId }));
 		}
 	};
 
@@ -59,11 +59,11 @@ const GroupFeed = ({ groupId }) => {
 	};
 
 	useEffect(() => {
-		const dispatchGetGroupAllPost = async () => {
-			await dispatch(getGroupAllPost({ groupId, lastRecordId })).unwrap();
+		const dispatchgetGroupAllPosts = async () => {
+			await dispatch(getGroupAllPosts({ groupId, lastRecordId })).unwrap();
 		};
 		if (isObserving) {
-			dispatchGetGroupAllPost();
+			dispatchgetGroupAllPosts();
 		}
 	}, [isObserving, dispatch]);
 

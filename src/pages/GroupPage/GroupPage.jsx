@@ -12,7 +12,7 @@ import {
 	getGroupInfo,
 	getGroupRequestMemberList,
 } from "@/features/group/group-service";
-import { inqueryUserGroup } from "@/features/user/user-service";
+import { getUserGroups } from "@/features/user/user-service";
 
 import { GroupMain, FeedDiv } from "./GroupPage.styles";
 
@@ -36,7 +36,7 @@ const GroupPage = () => {
 	useEffect(() => {
 		dispatch(getGroupInfo(param.id));
 		dispatch(getGroupRequestMemberList(param.id));
-		dispatch(inqueryUserGroup());
+		dispatch(getUserGroups());
 	}, []);
 
 	useEffect(() => {

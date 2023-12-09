@@ -2,8 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import commonThunk from "../commonThunk";
 
-export const getGroupAllPost = createAsyncThunk(
-	"post/getGroupAllPost",
+export const getGroupAllPosts = createAsyncThunk(
+	"post/getGroupAllPosts",
 	async ({ groupId, lastRecordId }, thunkAPI) => {
 		const data = await commonThunk(
 			{
@@ -17,8 +17,8 @@ export const getGroupAllPost = createAsyncThunk(
 	},
 );
 
-export const getGroupPost = createAsyncThunk(
-	"post/getGroupPost",
+export const getGroupPosts = createAsyncThunk(
+	"post/getGroupPosts",
 	async ({ groupId, postId }, thunkAPI) => {
 		const data = await commonThunk(
 			{
@@ -32,8 +32,8 @@ export const getGroupPost = createAsyncThunk(
 	},
 );
 
-export const getUserGroupPost = createAsyncThunk(
-	"post/getUserGroupPost",
+export const getUserGroupPosts = createAsyncThunk(
+	"post/getUserGroupPosts",
 	async (recordId, thunkAPI) => {
 		const data = await commonThunk(
 			{
@@ -62,8 +62,8 @@ export const likeGroupPost = createAsyncThunk(
 	},
 );
 
-export const dislikeGroupPost = createAsyncThunk(
-	"post/dislikeGroupPost",
+export const cancelLikeGroupPost = createAsyncThunk(
+	"post/cancelLikeGroupPost",
 	async ({ postGroupId, postId }, thunkAPI) => {
 		const data = await commonThunk(
 			{

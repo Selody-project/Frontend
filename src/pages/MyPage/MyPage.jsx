@@ -8,8 +8,8 @@ import { IntroductionEditIcon } from "@/constants/iconConstants";
 import { TAB_OPTION_TITLE, TAB_OPTION_TYPE } from "@/constants/tabConstants";
 import { getGroupList } from "@/features/group/group-service";
 import {
-	inqueryUserGroup,
-	inqueryRequestUserGroup,
+	getUserGroups,
+	getRequestUserGroups,
 } from "@/features/user/user-service";
 import useObserver from "@/hooks/useObserver";
 
@@ -46,8 +46,8 @@ const MyPage = () => {
 	const isObserving = useObserver(target, { threshold: 0.3 });
 
 	useEffect(() => {
-		dispatch(inqueryUserGroup());
-		dispatch(inqueryRequestUserGroup());
+		dispatch(getUserGroups());
+		dispatch(getRequestUserGroups());
 
 		if (auth.introduction === "") {
 			setIntroduction("소개글을 입력해주세요.");

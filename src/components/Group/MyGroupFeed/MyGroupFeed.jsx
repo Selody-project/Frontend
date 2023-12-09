@@ -10,8 +10,8 @@ import {
 } from "@/constants/iconConstants";
 import {
 	deleteGroupPost,
-	dislikeGroupPost,
-	getUserGroupPost,
+	cancelLikeGroupPost,
+	getUserGroupPosts,
 	likeGroupPost,
 } from "@/features/post/post-service";
 import useObserver from "@/hooks/useObserver";
@@ -49,7 +49,7 @@ const MyGroupFeed = () => {
 		if (!isLike) {
 			dispatch(likeGroupPost({ postGroupId, postId }));
 		} else {
-			dispatch(dislikeGroupPost({ postGroupId, postId }));
+			dispatch(cancelLikeGroupPost({ postGroupId, postId }));
 		}
 	};
 
@@ -60,11 +60,11 @@ const MyGroupFeed = () => {
 	};
 
 	useEffect(() => {
-		const dispatchGetUserGroupPost = async () => {
-			await dispatch(getUserGroupPost(lastRecordId)).unwrap();
+		const dispatchGetUserGroupPosts = async () => {
+			await dispatch(getUserGroupPosts(lastRecordId)).unwrap();
 		};
 		if (isObserving) {
-			dispatchGetUserGroupPost();
+			dispatchGetUserGroupPosts();
 		}
 	}, [isObserving, dispatch]);
 

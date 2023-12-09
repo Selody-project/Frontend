@@ -3,11 +3,11 @@ import { toast } from "react-toastify";
 import { createSlice, isAllOf, isAnyOf } from "@reduxjs/toolkit";
 
 import {
-	getGroupAllPost,
-	getGroupPost,
-	getUserGroupPost,
+	getGroupAllPosts,
+	getGroupPosts,
+	getUserGroupPosts,
 	likeGroupPost,
-	dislikeGroupPost,
+	cancelLikeGroupPost,
 	deleteGroupPost,
 } from "./post-service";
 
@@ -28,11 +28,11 @@ const postSlice = createSlice({
 		bulider
 			.addMatcher(
 				isAnyOf(
-					getGroupAllPost.pending,
-					getGroupPost.pending,
-					getUserGroupPost.pending,
+					getGroupAllPosts.pending,
+					getGroupPosts.pending,
+					getUserGroupPosts.pending,
 					likeGroupPost.pending,
-					dislikeGroupPost.pending,
+					cancelLikeGroupPost.pending,
 					deleteGroupPost.pending,
 				),
 				(state) => {
@@ -41,18 +41,18 @@ const postSlice = createSlice({
 			)
 			.addMatcher(
 				isAnyOf(
-					getGroupAllPost.rejected,
-					getGroupPost.rejected,
-					getUserGroupPost.rejected,
+					getGroupAllPosts.rejected,
+					getGroupPosts.rejected,
+					getUserGroupPosts.rejected,
 					likeGroupPost.rejected,
-					dislikeGroupPost.rejected,
+					cancelLikeGroupPost.rejected,
 					deleteGroupPost.pending,
 				),
 				(state) => {
 					state.isLoading = false;
 				},
 			)
-			.addMatcher(isAllOf(getGroupAllPost.fulfilled), (state, { payload }) => {
+			.addMatcher(isAllOf(getGroupAllPosts.fulfilled), (state, { payload }) => {
 				state.isLoading = false;
 				payload.feed.forEach((postInfo) => {
 					state.allGroupPost.push(postInfo);
@@ -60,22 +60,25 @@ const postSlice = createSlice({
 				state.lastRecordId = payload.feed[payload.feed.length - 1].postId;
 				state.isEnd = payload.isEnd;
 			})
-			.addMatcher(isAllOf(getGroupPost.fulfilled), (state, { payload }) => {
+			.addMatcher(isAllOf(getGroupPosts.fulfilled), (state, { payload }) => {
 				state.isLoading = false;
 				state.groupPost = payload;
 			})
-			.addMatcher(isAllOf(getUserGroupPost.fulfilled), (state, { payload }) => {
-				state.isLoading = false;
-				payload.feed.forEach((postInfo) => {
-					state.userGroupPost.push(postInfo);
-				});
-				state.lastRecordId = payload.feed[payload.feed.length - 1].postId;
-				state.isEnd = payload.isEnd;
-			})
+			.addMatcher(
+				isAllOf(getUserGroupPosts.fulfilled),
+				(state, { payload }) => {
+					state.isLoading = false;
+					payload.feed.forEach((postInfo) => {
+						state.userGroupPost.push(postInfo);
+					});
+					state.lastRecordId = payload.feed[payload.feed.length - 1].postId;
+					state.isEnd = payload.isEnd;
+				},
+			)
 			.addMatcher(isAllOf(likeGroupPost.fulfilled), (state) => {
 				state.isLoading = false;
 			})
-			.addMatcher(isAllOf(dislikeGroupPost.fulfilled), (state) => {
+			.addMatcher(isAllOf(cancelLikeGroupPost.fulfilled), (state) => {
 				state.isLoading = false;
 			})
 			.addMatcher(isAllOf(deleteGroupPost.fulfilled), (state) => {
