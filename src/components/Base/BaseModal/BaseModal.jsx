@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 
 import { CloseIcon } from "@/constants/iconConstants.js";
 import { closeModal } from "@/features/ui/ui-slice.js";
-import useScrollLock from "@/hooks/useScrollLock.jsx";
+import useScrollLock from "@/hooks/useScrollLock";
 
 import {
 	BackdropWrapper,

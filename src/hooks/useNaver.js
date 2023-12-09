@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import useQuery from "./useQuery.jsx";
+import useQuery from "./useQuery";
 
 const useNaver = () => {
 	const query = useQuery();
