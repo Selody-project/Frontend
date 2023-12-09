@@ -5,7 +5,7 @@ import DefaultProfile from "@/assets/img/img-selody-logo/3x.png";
 import ToggleButton from "@/components/Common/ToggleButton/ToggleButton";
 import {
 	getGroupInfo,
-	changeGroupPublic,
+	changeGroupPublicOption,
 	updateGroupProfile,
 } from "@/features/group/group-service";
 import { openModal } from "@/features/ui/ui-slice";
@@ -66,10 +66,10 @@ const GroupLeaderProfile = ({ groupId }) => {
 	};
 
 	const handleClickToggle = async () => {
-		const status = !isPublicGroup;
+		const isPublic = !isPublicGroup;
 
 		try {
-			await dispatch(changeGroupPublic({ groupId, status })).unwrap();
+			await dispatch(changeGroupPublicOption({ groupId, isPublic })).unwrap();
 			setIsPublicClick(!isPublicClick);
 		} catch (e) {
 			// eslint-disable-next-line no-console

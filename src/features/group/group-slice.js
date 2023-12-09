@@ -18,7 +18,7 @@ import {
 	deleteGroupMember,
 	cancelGroupJoin,
 	changeRequestGroupJoin,
-	changeGroupPublic,
+	changeGroupPublicOption,
 	updateGroupProfile,
 	createGroupInviteLink,
 	getGroupMemberList,
@@ -73,7 +73,7 @@ const groupSlice = createSlice({
 					delegateGroup.pending,
 					changeGroupOption.pending,
 					changeRequestGroupJoin.pending,
-					changeGroupPublic.pending,
+					changeGroupPublicOption.pending,
 					updateGroupProfile.pending,
 					createGroupInviteLink.pending,
 					getGroupMemberList.pending,
@@ -100,7 +100,7 @@ const groupSlice = createSlice({
 					delegateGroup.rejected,
 					changeGroupOption.rejected,
 					changeRequestGroupJoin.rejected,
-					changeGroupPublic.rejected,
+					changeGroupPublicOption.rejected,
 					updateGroupProfile.rejected,
 					createGroupInviteLink.rejected,
 					getGroupMemberList.rejected,
@@ -171,7 +171,7 @@ const groupSlice = createSlice({
 				toast.success("그룹 신청 취소 완료");
 			})
 			.addMatcher(
-				isAllOf(changeGroupPublic.fulfilled),
+				isAllOf(changeGroupPublicOption.fulfilled),
 				(state, { payload }) => {
 					state.isLoading = false;
 					toast.error(payload.error);
