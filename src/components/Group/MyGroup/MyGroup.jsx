@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 import { LeftArrowIcon, RightArrowIcon } from "@/constants/iconConstants";
 import { inqueryUserGroup } from "@/features/user/user-service";
@@ -82,14 +83,14 @@ const MyGroup = () => {
 				>
 					<li>
 						{userGroup?.map((info) => (
-							<a href={`/group/${info.groupId}`} key={info.groupId}>
+							<Link to={`/group/${info.groupId}`} key={info.groupId}>
 								<ItemDiv>
 									<CircleDiv>
 										<img src={info.image} alt="groupImg" />
 									</CircleDiv>
 									<h4>{info.name}</h4>
 								</ItemDiv>
-							</a>
+							</Link>
 						))}
 					</li>
 				</ul>
