@@ -46,7 +46,7 @@ const CommunityPage = () => {
 		setOnSearch(true);
 	};
 
-	const handleSearchKeyPress = (event) => {
+	const handleSearchKeyDown = (event) => {
 		if (event.key === "Enter") {
 			handleSearchClick();
 		}
@@ -69,7 +69,7 @@ const CommunityPage = () => {
 						<Input
 							placeholder="다른 그룹을 탐색해보세요."
 							onChange={handleSearchInput}
-							onKeyPress={handleSearchKeyPress}
+							onKeyDown={handleSearchKeyDown}
 						/>
 						<SearchButton onClick={handleSearchClick}>
 							<SearchIcon />

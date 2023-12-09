@@ -22,7 +22,7 @@ import {
 	BottomButtonDiv,
 	ExitButton,
 	DeleteButton,
-} from "./GroupLeaderProfile.styles";
+} from "./GroupManagementProfile.styles";
 
 const GroupLeaderProfile = ({ groupId }) => {
 	const dispatch = useDispatch();

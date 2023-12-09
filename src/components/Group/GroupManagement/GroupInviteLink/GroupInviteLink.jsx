@@ -8,9 +8,9 @@ import {
 	TopDiv,
 	MiddleDiv,
 	TextDiv,
-} from "./CreateGroupLink.styles";
+} from "./GroupInviteLink.styles";
 
-const CreateGroupLink = ({ groupId, setIsCreateLinkClick }) => {
+const GroupInviteLink = ({ groupId, setIsCreateLinkClick }) => {
 	const dispatch = useDispatch();
 
 	const groupInviteLink = useSelector(
@@ -45,4 +45,4 @@ const CreateGroupLink = ({ groupId, setIsCreateLinkClick }) => {
 	);
 };
 
-export default CreateGroupLink;
+export default GroupInviteLink;

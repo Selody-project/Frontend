@@ -2,9 +2,13 @@ import React from "react";
 
 import { InnerDropdownIcon } from "@/constants/iconConstants";
 
-import { ContainerDiv, TitleDiv, ContentDiv } from "./InnerDropdown.styles";
+import {
+	ContainerDiv,
+	TitleDiv,
+	ContentDiv,
+} from "./AccessLevelOptions.styles";
 
-const InnerDropdown = () => {
+const AccessLevelOptions = () => {
 	return (
 		<ContainerDiv>
 			<InnerDropdownIcon />
@@ -64,4 +68,4 @@ const InnerDropdown = () => {
 	);
 };
 
-export default InnerDropdown;
+export default AccessLevelOptions;

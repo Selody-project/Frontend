@@ -28,7 +28,7 @@ const GroupInfo = ({ groupInfo, target, menu }) => {
 
 	return (
 		<ContainerDiv>
-			{groupInfo?.map((info) => (
+			{groupInfo.map((info) => (
 				<GroupDiv
 					key={info.groupId}
 					onClick={() => {

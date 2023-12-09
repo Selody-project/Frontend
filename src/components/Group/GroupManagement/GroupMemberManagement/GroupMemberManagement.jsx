@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { accessData } from "@/constants/accessConstants";
+import { ACCESS_LEVEL_DATA } from "@/constants/accessConstants";
 import {
 	InfoIcon,
 	ViewerIcon,
@@ -16,23 +16,24 @@ import {
 	deleteGroupMember,
 } from "@/features/group/group-service";
 
-import AccessInfo from "./AccessInfo";
+import AccessLevelInfo from "./AccessLevelInfo";
+import InnerDropdown from "./AccessLevelOptions";
 import {
 	TitleUl,
 	TitleLi,
 	MemberUl,
 	MemberLi,
 	AccessLevelUl,
-} from "./GroupLeaderManagement.styles";
-import InnerDropdown from "./InnerDropdown";
+} from "./GroupMemberManagement.styles";
 
-const GroupLeaderManagement = ({ groupId }) => {
+const GroupMemberManagement = ({ groupId }) => {
 	const dispatch = useDispatch();
 
 	const memberList = useSelector((state) => state.group.groupMemberList);
 
 	const [isAccessInfoOpen, setIsAccessInfoOpen] = useState(false);
-	const [isInnerDropdownOpen, setIsInnerDropdownOpen] = useState(false);
+	const [isAccessLevelOptionsOpen, setisAccessLevelOptionsOpen] =
+		useState(false);
 
 	const [isAccessChangeOpenIndex, setIsAccessChangeOpenIndex] = useState(null);
 
@@ -50,8 +51,11 @@ const GroupLeaderManagement = ({ groupId }) => {
 	const handleDropdown = (e) => {
 		const { target } = e;
 
-		if (isInnerDropdownOpen && !innerDropdownRef.current.contains(target)) {
-			setIsInnerDropdownOpen(false);
+		if (
+			isAccessLevelOptionsOpen &&
+			!innerDropdownRef.current.contains(target)
+		) {
+			setisAccessLevelOptionsOpen(false);
 		}
 	};
 
@@ -97,7 +101,7 @@ const GroupLeaderManagement = ({ groupId }) => {
 				>
 					멤버 권한
 					<InfoIcon />
-					{isAccessInfoOpen && <AccessInfo />}
+					{isAccessInfoOpen && <AccessLevelInfo />}
 				</TitleLi>
 				<TitleLi red>내보내기</TitleLi>
 			</TitleUl>
@@ -112,12 +116,12 @@ const GroupLeaderManagement = ({ groupId }) => {
 					<MemberLi
 						ref={innerDropdownRef}
 						onClick={() => {
-							setIsInnerDropdownOpen(!isInnerDropdownOpen);
+							setisAccessLevelOptionsOpen(!isAccessLevelOptionsOpen);
 						}}
 						click
 					>
 						<span>1</span>
-						{isInnerDropdownOpen && <InnerDropdown />}
+						{isAccessLevelOptionsOpen && <InnerDropdown />}
 					</MemberLi>
 					<MemberLi>
 						<span>4</span>
@@ -160,19 +164,19 @@ const GroupLeaderManagement = ({ groupId }) => {
 						)}
 						{isAccessChangeOpenIndex === memberInfo.member.userId && (
 							<AccessLevelUl>
-								{accessData.map((data) => (
-									<li key={data.id}>
+								{ACCESS_LEVEL_DATA.map((data) => (
+									<li key={data.accessLevel}>
 										<button
 											type="button"
 											onClick={() => {
 												handleChangeLevelClick(
 													memberInfo.member.userId,
-													data.id,
+													data.accessLevel,
 												);
 											}}
 										>
 											{data.icon}
-											{data.id}
+											{data.accessLevel}
 										</button>
 									</li>
 								))}
@@ -197,4 +201,4 @@ const GroupLeaderManagement = ({ groupId }) => {
 	);
 };
 
-export default GroupLeaderManagement;
+export default GroupMemberManagement;

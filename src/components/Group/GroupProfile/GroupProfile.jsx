@@ -15,8 +15,8 @@ import {
 	BottomDiv,
 	ProfileButton,
 } from "./GroupProfile.styles";
-import CreateGroupLink from "../GroupLeader/CreateGroupLink/CreateGroupLink";
-import GroupDelegateModal from "../GroupLeader/GroupLeaderProfile/GroupDelegateModal";
+import CreateGroupLink from "../GroupManagement/GroupInviteLink/GroupInviteLink";
+import GroupDelegateModal from "../GroupManagement/GroupManagementProfile/GroupDelegateModal";
 
 const GroupProfile = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 	const dispatch = useDispatch();

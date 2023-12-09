@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import GroupLeader from "@/components/Group/GroupLeader/GroupLeader";
+import GroupManagement from "@/components/Group/GroupManagement/GroupManagement";
 import GroupProfile from "@/components/Group/GroupProfile/GroupProfile";
 import {
 	getGroupInfo,
@@ -28,7 +28,7 @@ const GroupLeaderPage = () => {
 	return (
 		<GroupMain>
 			<GroupProfile groupInfo={groupInfo} isGroupMember isGroupLeader />
-			<GroupLeader groupId={param.id} />
+			<GroupManagement groupId={param.id} />
 		</GroupMain>
 	);
 };

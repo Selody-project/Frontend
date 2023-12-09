@@ -98,7 +98,10 @@ const GroupFeed = ({ groupId }) => {
 						)}
 					</OptionDiv>
 					<TopDiv>
-						<img src={post.authorImage} alt="postImg" />
+						<img
+							src={post.authorImage}
+							alt={`${post.author}님의 프로필 이미지`}
+						/>
 						<InfoDiv>
 							<h3>
 								{post.author}
