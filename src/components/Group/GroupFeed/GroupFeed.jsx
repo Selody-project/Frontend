@@ -44,8 +44,8 @@ const GroupFeed = ({ groupId }) => {
 	const handleOption = (num) =>
 		setOptionMenuOpenedFeedIndex((prev) => (prev === num ? null : num));
 
-	const handleLikeClick = (isLike, postGroupId, postId) => {
-		if (!isLike) {
+	const handleLikeClick = (isLiked, postGroupId, postId) => {
+		if (!isLiked) {
 			dispatch(likeGroupPost({ postGroupId, postId }));
 		} else {
 			dispatch(dislikeGroupPost({ postGroupId, postId }));

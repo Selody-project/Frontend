@@ -57,8 +57,4 @@ export const Input = styled.input`
 
 export const SearchButton = styled.button`
 	cursor: pointer;
-
-	&:disabled {
-		cursor: not-allowed;
-	}
 `;
