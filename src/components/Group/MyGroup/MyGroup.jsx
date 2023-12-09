@@ -8,8 +8,8 @@ import { inqueryUserGroup } from "@/features/user/user-service";
 import {
 	GroupDiv,
 	Div,
-	LeftButtonDiv,
-	RightButtonDiv,
+	LeftButton,
+	RightButton,
 	ItemDiv,
 	CircleDiv,
 } from "./MyGroup.styles";
@@ -65,12 +65,9 @@ const MyGroup = () => {
 			<h3>내 그룹</h3>
 			<Div ref={parentRef}>
 				{!disablePrevButton && (
-					<LeftButtonDiv
-						onClick={handlePrevButton}
-						disabled={disablePrevButton}
-					>
+					<LeftButton onClick={handlePrevButton} disabled={disablePrevButton}>
 						<LeftArrowIcon />
-					</LeftButtonDiv>
+					</LeftButton>
 				)}
 				<ul
 					style={{
@@ -95,12 +92,9 @@ const MyGroup = () => {
 					</li>
 				</ul>
 				{!disableNextButton && (
-					<RightButtonDiv
-						onClick={handleNextButton}
-						disabled={disableNextButton}
-					>
+					<RightButton onClick={handleNextButton} disabled={disableNextButton}>
 						<RightArrowIcon />
-					</RightButtonDiv>
+					</RightButton>
 				)}
 			</Div>
 		</GroupDiv>

@@ -29,16 +29,17 @@ export const Div = styled.div`
 	}
 `;
 
-export const LeftButtonDiv = styled.div`
+export const LeftButton = styled.button`
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	position: absolute;
 	top: 44%;
 	z-index: 2;
+	cursor: pointer;
 `;
 
-export const RightButtonDiv = styled(LeftButtonDiv)`
+export const RightButton = styled(LeftButton)`
 	right: 0;
 `;
 
