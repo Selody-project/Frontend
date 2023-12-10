@@ -11,7 +11,7 @@ import {
 import {
 	deleteGroupPost,
 	cancelLikeGroupPost,
-	getUserGroupPosts,
+	getMyGroupPosts,
 	likeGroupPost,
 } from "@/features/post/post-service";
 import useObserver from "@/hooks/useObserver";
@@ -32,8 +32,7 @@ import {
 const MyGroupFeed = () => {
 	const dispatch = useDispatch();
 
-	const userGroupPost = useSelector((state) => state.post.userGroupPost);
-	const lastRecordId = useSelector((state) => state.post.lastRecordId);
+	const { myGroupPosts, lastRecordId } = useSelector((state) => state.post);
 
 	const [optionMenuOpenedFeedIndex, setOptionMenuOpenedFeedIndex] =
 		useState(null);
@@ -60,17 +59,17 @@ const MyGroupFeed = () => {
 	};
 
 	useEffect(() => {
-		const dispatchGetUserGroupPosts = async () => {
-			await dispatch(getUserGroupPosts(lastRecordId)).unwrap();
+		const dispatchGetMyGroupPosts = async () => {
+			await dispatch(getMyGroupPosts(lastRecordId)).unwrap();
 		};
 		if (isObserving) {
-			dispatchGetUserGroupPosts();
+			dispatchGetMyGroupPosts();
 		}
 	}, [isObserving, dispatch]);
 
 	return (
 		<FeedSection>
-			{userGroupPost?.map((post) => (
+			{myGroupPosts?.map((post) => (
 				<FeedArticle key={post.postId}>
 					<OptionDiv>
 						<OptionThreeDotIcon

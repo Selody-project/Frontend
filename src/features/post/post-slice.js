@@ -5,16 +5,16 @@ import { createSlice, isAllOf, isAnyOf } from "@reduxjs/toolkit";
 import {
 	getGroupAllPosts,
 	getGroupPosts,
-	getUserGroupPosts,
+	getMyGroupPosts,
 	likeGroupPost,
 	cancelLikeGroupPost,
 	deleteGroupPost,
 } from "./post-service";
 
 const initialState = {
-	groupPost: null,
+	currentGroupPost: null,
 	allGroupPosts: [],
-	userGroupPost: [],
+	myGroupPosts: [],
 	lastRecordId: 0,
 	isLoading: true,
 	isEnd: false,
@@ -30,7 +30,7 @@ const postSlice = createSlice({
 				isAnyOf(
 					getGroupAllPosts.pending,
 					getGroupPosts.pending,
-					getUserGroupPosts.pending,
+					getMyGroupPosts.pending,
 					likeGroupPost.pending,
 					cancelLikeGroupPost.pending,
 					deleteGroupPost.pending,
@@ -43,7 +43,7 @@ const postSlice = createSlice({
 				isAnyOf(
 					getGroupAllPosts.rejected,
 					getGroupPosts.rejected,
-					getUserGroupPosts.rejected,
+					getMyGroupPosts.rejected,
 					likeGroupPost.rejected,
 					cancelLikeGroupPost.rejected,
 					deleteGroupPost.pending,
@@ -62,19 +62,16 @@ const postSlice = createSlice({
 			})
 			.addMatcher(isAllOf(getGroupPosts.fulfilled), (state, { payload }) => {
 				state.isLoading = false;
-				state.groupPost = payload;
+				state.currentGroupPost = payload;
 			})
-			.addMatcher(
-				isAllOf(getUserGroupPosts.fulfilled),
-				(state, { payload }) => {
-					state.isLoading = false;
-					payload.feed.forEach((postInfo) => {
-						state.userGroupPost.push(postInfo);
-					});
-					state.lastRecordId = payload.feed[payload.feed.length - 1].postId;
-					state.isEnd = payload.isEnd;
-				},
-			)
+			.addMatcher(isAllOf(getMyGroupPosts.fulfilled), (state, { payload }) => {
+				state.isLoading = false;
+				payload.feed.forEach((postInfo) => {
+					state.myGroupPosts.push(postInfo);
+				});
+				state.lastRecordId = payload.feed[payload.feed.length - 1].postId;
+				state.isEnd = payload.isEnd;
+			})
 			.addMatcher(isAllOf(likeGroupPost.fulfilled), (state) => {
 				state.isLoading = false;
 			})

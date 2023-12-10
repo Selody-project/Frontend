@@ -16,7 +16,7 @@ import {
 } from "./MyGroup.styles";
 
 const MyGroup = () => {
-	const userGroup = useSelector((state) => state.user.userGroupList);
+	const userGroupList = useSelector((state) => state.user.userGroupList);
 	const dispatch = useDispatch();
 
 	const childRef = useRef(null);
@@ -80,7 +80,7 @@ const MyGroup = () => {
 					ref={childRef}
 				>
 					<ul>
-						{userGroup?.map((info) => (
+						{userGroupList?.map((info) => (
 							<li key={info.groupId}>
 								<Link to={`/group/${info.groupId}`}>
 									<ItemDiv>

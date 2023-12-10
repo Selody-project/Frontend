@@ -26,16 +26,16 @@ import {
 const MyPage = () => {
 	const dispatch = useDispatch();
 
-	const userGroup = useSelector((state) => state.user.userGroupList);
 	const auth = useSelector((state) => state.auth.user);
-	const groupList = useSelector((state) => state.group.groupList);
-	const userRequestGroup = useSelector(
-		(state) => state.user.userRequestGroupList,
-	);
-	const lastRecordId = useSelector((state) => state.group.lastRecordId);
-	const isEnd = useSelector((state) => state.group.isEnd);
 
-	const [group, setGroup] = useState([]);
+	const { groupList, lastRecordId, isEnd } = useSelector(
+		(state) => state.group,
+	);
+	const { userGroupList, userRequestGroupList } = useSelector(
+		(state) => state.user,
+	);
+
+	const [groups, setGroups] = useState([]);
 	const [tabIndex, setTabIndex] = useState(0);
 	const [introduction, setIntroduction] = useState("");
 
@@ -67,12 +67,12 @@ const MyPage = () => {
 	}, [isObserving, dispatch]);
 
 	useEffect(() => {
-		if (userGroup?.length === 0) {
-			setGroup(groupList);
+		if (userGroupList?.length === 0) {
+			setGroups(groupList);
 		} else if (tabIndex) {
-			setGroup(userRequestGroup);
+			setGroups(userRequestGroupList);
 		} else {
-			setGroup(userGroup);
+			setGroups(userGroupList);
 		}
 	});
 
@@ -112,7 +112,7 @@ const MyPage = () => {
 				tabIndex={tabIndex}
 				setTabIndex={setTabIndex}
 			/>
-			<GroupInfo groupInfo={group} target={target} menu={tabIndex === 1} />
+			<GroupInfo groupInfo={groups} target={target} menu={tabIndex === 1} />
 		</ContainerMain>
 	);
 };
