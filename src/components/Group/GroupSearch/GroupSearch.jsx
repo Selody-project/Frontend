@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import GroupInfo from "@/components/Group/GroupInfo/GroupInfo";
+import GroupInfoList from "@/components/Group/GroupInfoList/GroupInfoList";
 import { getGroupList } from "@/features/group/group-service";
 import useObserver from "@/hooks/useObserver";
 
@@ -35,7 +35,7 @@ const GroupSearch = ({ onSearch, searchGroupList }) => {
 		}
 	});
 
-	return <GroupInfo groupInfo={groups} target={target} />;
+	return <GroupInfoList groups={groups} scrollRef={target} />;
 };
 
 export default GroupSearch;

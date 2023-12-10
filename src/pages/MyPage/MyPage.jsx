@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import GroupInfo from "@/components/Group/GroupInfo/GroupInfo";
+import GroupInfoList from "@/components/Group/GroupInfoList/GroupInfoList";
 import Tab from "@/components/Tab/Tab";
 import { IntroductionEditIcon } from "@/constants/iconConstants";
 import { TAB_OPTION_TITLE, TAB_OPTION_TYPE } from "@/constants/tabConstants";
@@ -112,7 +112,11 @@ const MyPage = () => {
 				tabIndex={tabIndex}
 				setTabIndex={setTabIndex}
 			/>
-			<GroupInfo groupInfo={groups} target={target} menu={tabIndex === 1} />
+			<GroupInfoList
+				groups={groups}
+				scrollRef={target}
+				index={tabIndex === 1}
+			/>
 		</ContainerMain>
 	);
 };

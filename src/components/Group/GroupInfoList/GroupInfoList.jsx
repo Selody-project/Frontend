@@ -10,10 +10,10 @@ import {
 	GroupDiv,
 	OptionDiv,
 	OptionMenuDiv,
-} from "./GroupInfo.styles";
+} from "./GroupInfoList.styles";
 import GroupRequestCancelModal from "../GroupRequestCancelModal/GroupRequestCancelModal";
 
-const GroupInfo = ({ groupInfo, target, menu }) => {
+const GroupInfoList = ({ groups, scrollRef, index }) => {
 	const dispatch = useDispatch();
 	const { openedModal } = useSelector((state) => state.ui);
 
@@ -28,14 +28,14 @@ const GroupInfo = ({ groupInfo, target, menu }) => {
 
 	return (
 		<ContainerDiv>
-			{groupInfo.map((info) => (
+			{groups.map((info) => (
 				<GroupDiv
 					key={info.groupId}
 					onClick={() => {
 						navigate(`/group/${info.groupId}`);
 					}}
 				>
-					{menu && (
+					{index && (
 						<OptionDiv>
 							<OptionThreeDotIcon
 								onClick={() => {
@@ -60,9 +60,9 @@ const GroupInfo = ({ groupInfo, target, menu }) => {
 					<h4>{info.member}명의 그룹원</h4>
 				</GroupDiv>
 			))}
-			<div ref={target} />
+			<div ref={scrollRef} />
 		</ContainerDiv>
 	);
 };
 
-export default GroupInfo;
+export default GroupInfoList;
