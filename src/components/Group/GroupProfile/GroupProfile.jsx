@@ -15,7 +15,7 @@ import {
 	BottomDiv,
 	ProfileButton,
 } from "./GroupProfile.styles";
-import CreateGroupLink from "../GroupManagement/GroupInviteLink/GroupInviteLink";
+import GroupInviteLink from "../GroupManagement/GroupInviteLink/GroupInviteLink";
 import GroupDelegateModal from "../GroupManagement/GroupManagementProfile/GroupDelegateModal";
 
 const GroupProfile = ({ groupInfo, isGroupMember, isGroupLeader }) => {
@@ -24,15 +24,14 @@ const GroupProfile = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 	const { openedModal } = useSelector((state) => state.ui);
 	const { isLoading } = useSelector((state) => state.group);
 
-	const groupDetailInfo = groupInfo?.information.group;
-
-	const [isCreateLinkClick, setIsCreateLinkClick] = useState(false);
-
 	const theme = useTheme();
 	const navigate = useNavigate();
 	const locate = useLocation();
 
+	const [isGroupInviteLinkOpen, setIsGroupInviteLinkOpen] = useState(false);
 	const [management, setManagement] = useState(false);
+
+	const groupDetailInfo = groupInfo?.information.group;
 
 	useEffect(() => {
 		if (locate.pathname.includes("leader")) {
@@ -67,16 +66,17 @@ const GroupProfile = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 							type="button"
 							bgColor={theme.colors.primary}
 							textColor={theme.colors.white}
-							onClick={() => setIsCreateLinkClick(true)}
+							onClick={() => setIsGroupInviteLinkOpen(true)}
 						>
 							링크 생성하기
+							{isGroupInviteLinkOpen && (
+								<GroupInviteLink
+									groupId={groupInfo?.information?.group.groupId}
+									onClose={() => setIsGroupInviteLinkOpen(false)}
+								/>
+							)}
 						</ProfileButton>
-						{isCreateLinkClick && (
-							<CreateGroupLink
-								groupId={groupInfo?.information?.group.groupId}
-								setIsCreateLinkClick={setIsCreateLinkClick}
-							/>
-						)}
+
 						<ProfileButton
 							type="button"
 							bgColor={theme.colors.white}

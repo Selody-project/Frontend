@@ -7,9 +7,10 @@ export const ContainerDiv = styled.div`
 	background-color: ${({ theme: { colors } }) => colors.white};
 	padding: 20px;
 	position: absolute;
-	top: 78px;
-	left: 50px;
+	top: calc(100% + 4px);
+	left: 0;
 	box-sizing: border-box;
+	z-index: 1;
 
 	& > h3 {
 		color: ${({ theme: { colors } }) => colors.text_02};

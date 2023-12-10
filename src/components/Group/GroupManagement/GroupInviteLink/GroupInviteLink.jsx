@@ -10,7 +10,7 @@ import {
 	TextDiv,
 } from "./GroupInviteLink.styles";
 
-const GroupInviteLink = ({ groupId, setIsCreateLinkClick }) => {
+const GroupInviteLink = ({ groupId, onClose }) => {
 	const dispatch = useDispatch();
 
 	const groupInviteLink = useSelector(
@@ -36,7 +36,7 @@ const GroupInviteLink = ({ groupId, setIsCreateLinkClick }) => {
 			</TopDiv>
 			<MiddleDiv>
 				<TextDiv>{inviteLink ? groupInviteLink : "링크"}</TextDiv>
-				<button type="button" onClick={() => setIsCreateLinkClick(false)}>
+				<button type="button" onClick={() => onClose(false)}>
 					확인
 				</button>
 			</MiddleDiv>
