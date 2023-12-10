@@ -32,7 +32,7 @@ import {
 const GroupFeed = ({ groupId }) => {
 	const dispatch = useDispatch();
 
-	const { allGroupPost, lastRecordId } = useSelector((state) => state.post);
+	const { allGroupPosts, lastRecordId } = useSelector((state) => state.post);
 
 	const [optionMenuOpenedFeedIndex, setOptionMenuOpenedFeedIndex] =
 		useState(null);
@@ -52,10 +52,8 @@ const GroupFeed = ({ groupId }) => {
 		}
 	};
 
-	const deletePost = (isMine, postGroupId, postId) => {
-		if (isMine) {
-			dispatch(deleteGroupPost({ postGroupId, postId }));
-		}
+	const deletePost = (postGroupId, postId) => {
+		dispatch(deleteGroupPost({ postGroupId, postId }));
 	};
 
 	useEffect(() => {
@@ -69,7 +67,7 @@ const GroupFeed = ({ groupId }) => {
 
 	return (
 		<FeedSection>
-			{allGroupPost?.map((post) => (
+			{allGroupPosts?.map((post) => (
 				<FeedArticle key={post.postId}>
 					<OptionDiv>
 						<OptionThreeDotIcon
@@ -77,7 +75,7 @@ const GroupFeed = ({ groupId }) => {
 								handleOption(post.postId);
 							}}
 						/>
-						{optionMenuOpenedFeedIndex === post.postId && (
+						{optionMenuOpenedFeedIndex === post.postId && post.isMine && (
 							<OptionMenuDiv>
 								<ul>
 									<li>
@@ -87,7 +85,7 @@ const GroupFeed = ({ groupId }) => {
 										<button
 											type="button"
 											onClick={() => {
-												deletePost(post.isMine, groupId, post.postId);
+												deletePost(groupId, post.postId);
 											}}
 										>
 											삭제

@@ -13,7 +13,7 @@ import {
 
 const initialState = {
 	groupPost: null,
-	allGroupPost: [],
+	allGroupPosts: [],
 	userGroupPost: [],
 	lastRecordId: 0,
 	isLoading: true,
@@ -55,7 +55,7 @@ const postSlice = createSlice({
 			.addMatcher(isAllOf(getGroupAllPosts.fulfilled), (state, { payload }) => {
 				state.isLoading = false;
 				payload.feed.forEach((postInfo) => {
-					state.allGroupPost.push(postInfo);
+					state.allGroupPosts.push(postInfo);
 				});
 				state.lastRecordId = payload.feed[payload.feed.length - 1].postId;
 				state.isEnd = payload.isEnd;

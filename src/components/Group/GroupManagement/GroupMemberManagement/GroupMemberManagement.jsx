@@ -108,7 +108,10 @@ const GroupMemberManagement = ({ groupId }) => {
 			{memberList?.map((memberInfo) => (
 				<MemberUl key={memberInfo.member.userId}>
 					<MemberLi>
-						<img src={memberInfo.member.image} alt="profileImg" />
+						<img
+							src={memberInfo.member.image}
+							alt={`${memberInfo.member.nickname}님의 프로필`}
+						/>
 					</MemberLi>
 					<MemberLi>
 						<span>{memberInfo.member.nickname}</span>
