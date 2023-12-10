@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import DefaultProfile from "@/assets/img/img-selody-logo/3x.png";
 import ToggleButton from "@/components/Common/ToggleButton/ToggleButton";
 import {
-	getGroupInfo,
 	changeGroupPublicOption,
 	updateGroupProfile,
 } from "@/features/group/group-service";
@@ -24,41 +23,42 @@ import {
 	DeleteButton,
 } from "./GroupManagementProfile.styles";
 
-const GroupLeaderProfile = ({ groupId }) => {
+const GroupLeaderProfile = ({ groupInfo }) => {
 	const dispatch = useDispatch();
 
-	const { groupInfo, isLoading } = useSelector((state) => state.group);
+	const isLoading = useSelector((state) => state.group.isLoading);
 	const { openedModal } = useSelector((state) => state.ui);
 
 	const groupDetailInfo = groupInfo?.information.group;
+	const groupId = groupInfo?.information.group.groupId;
 
 	const defaultProfileImg = groupDetailInfo?.image ?? DefaultProfile;
 	const isPublicGroup = groupDetailInfo?.isPublicGroup;
 
-	const [isPublicClick, setIsPublicClick] = useState(isPublicGroup);
+	const [isPublic, setIsPublic] = useState(isPublicGroup);
 
-	const [profileObj, setProfileObj] = useState();
-	const [newProfileImg, setNewProfileImg] = useState(defaultProfileImg);
-	const [newName, setNewName] = useState(groupDetailInfo?.name);
-	const [newDescription, setNewDescription] = useState(
+	const [profileObj, setProfileObj] = useState("");
+	const [profileImgValue, setProfileImgValue] = useState(defaultProfileImg);
+	const [nameValue, setNameValue] = useState(groupDetailInfo?.name);
+	const [descriptionValue, setDescriptionValue] = useState(
 		groupDetailInfo?.description,
 	);
 
 	const isSaveEnabled =
-		(newName !== groupDetailInfo?.name ||
-			newDescription !== groupDetailInfo?.description ||
-			newProfileImg !== defaultProfileImg) &&
-		newName.trim();
+		(nameValue !== groupDetailInfo?.name ||
+			descriptionValue !== groupDetailInfo?.description ||
+			profileImgValue !== defaultProfileImg) &&
+		nameValue.trim();
 
 	const handleClickSave = () => {
 		const formdata = new FormData();
 		const data = {
-			name: newName,
-			description: newDescription,
+			name: nameValue,
+			description: descriptionValue,
 		};
 		formdata.append("data", JSON.stringify(data));
 
-		if (newProfileImg !== defaultProfileImg) {
+		if (profileImgValue !== defaultProfileImg) {
 			formdata.append("image", profileObj);
 		}
 
@@ -66,11 +66,13 @@ const GroupLeaderProfile = ({ groupId }) => {
 	};
 
 	const handleClickToggle = async () => {
-		const isPublic = !isPublicGroup;
+		const chagnePublicOption = !isPublicGroup;
 
 		try {
-			await dispatch(changeGroupPublicOption({ groupId, isPublic })).unwrap();
-			setIsPublicClick(!isPublicClick);
+			await dispatch(
+				changeGroupPublicOption({ groupId, chagnePublicOption }),
+			).unwrap();
+			setIsPublic(!isPublic);
 		} catch (e) {
 			// eslint-disable-next-line no-console
 			console.error(e);
@@ -82,20 +84,16 @@ const GroupLeaderProfile = ({ groupId }) => {
 		const reader = new FileReader();
 		reader.readAsDataURL(file);
 		reader.onloadend = () => {
-			setNewProfileImg(reader.result);
+			setProfileImgValue(reader.result);
 			setProfileObj(file);
 		};
 	};
-
-	useEffect(() => {
-		dispatch(getGroupInfo(groupId));
-	}, []);
 
 	return (
 		<>
 			<InfoDiv>
 				<h3>프로필</h3>
-				<img src={newProfileImg} alt="DefaultProfile" />
+				<img src={profileImgValue} alt="DefaultProfile" />
 				<label htmlFor="profileImg">이미지 재선택</label>
 				<ProfileInput type="file" id="profileImg" onChange={handleChangeImg} />
 			</InfoDiv>
@@ -103,21 +101,21 @@ const GroupLeaderProfile = ({ groupId }) => {
 				<h3>이름</h3>
 				<InfoInput
 					type="text"
-					defaultValue={newName}
-					onChange={(e) => setNewName(e.target.value)}
+					defaultValue={nameValue}
+					onChange={(e) => setNameValue(e.target.value)}
 				/>
 			</InfoDiv>
 			<InfoDiv>
 				<h3>소개글</h3>
 				<textarea
-					defaultValue={newDescription}
-					onChange={(e) => setNewDescription(e.target.value)}
+					defaultValue={descriptionValue}
+					onChange={(e) => setDescriptionValue(e.target.value)}
 				/>
 			</InfoDiv>
 			<InfoDiv>
 				<h3>공개여부</h3>
 				<ToggleButtonDiv onClick={() => handleClickToggle()}>
-					<ToggleButton isActive={isPublicClick} />
+					<ToggleButton isActive={isPublic} />
 				</ToggleButtonDiv>
 			</InfoDiv>
 			<SaveButtonDiv>

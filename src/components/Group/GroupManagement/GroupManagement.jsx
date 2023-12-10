@@ -14,7 +14,7 @@ const GROUP_MANAGEMENT_TAB_TITLE = {
 	GROUP_MEMBER_MANGEMENT: "그룹원 관리",
 };
 
-const GroupManagement = ({ groupId }) => {
+const GroupManagement = ({ groupInfo }) => {
 	const [menu, setMenu] = useState(GROUP_MANAGEMENT_TAB_TITLE.GROUP_PROFILE);
 
 	return (
@@ -43,9 +43,9 @@ const GroupManagement = ({ groupId }) => {
 					</li>
 				</TitleUl>
 				{menu === GROUP_MANAGEMENT_TAB_TITLE.GROUP_PROFILE ? (
-					<GroupLeaderProfile groupId={groupId} />
+					<GroupLeaderProfile groupInfo={groupInfo} />
 				) : (
-					<GroupMemberManagement groupId={groupId} />
+					<GroupMemberManagement groupInfo={groupInfo} />
 				)}
 			</InnerDiv>
 		</ContainerDiv>

@@ -26,10 +26,11 @@ import {
 	AccessLevelUl,
 } from "./GroupMemberManagement.styles";
 
-const GroupMemberManagement = ({ groupId }) => {
+const GroupMemberManagement = ({ groupInfo }) => {
 	const dispatch = useDispatch();
 
 	const memberList = useSelector((state) => state.group.groupMemberList);
+	// const memberList = groupInfo?.information.memberInfo
 
 	const [isAccessInfoOpen, setIsAccessInfoOpen] = useState(false);
 	const [isAccessLevelOptionsOpen, setisAccessLevelOptionsOpen] =
@@ -39,6 +40,8 @@ const GroupMemberManagement = ({ groupId }) => {
 
 	const accessInfoRef = useRef();
 	const innerDropdownRef = useRef();
+
+	const groupId = groupInfo?.information.group.groupId;
 
 	const handleAccessInfo = (e) => {
 		const { target } = e;

@@ -230,12 +230,12 @@ export const changeRequestGroupJoin = createAsyncThunk(
 
 export const changeGroupPublicOption = createAsyncThunk(
 	"group/changeGroupPublicOption",
-	async ({ groupId, isPublic }, thunkAPI) => {
+	async ({ groupId, chagnePublicOption }, thunkAPI) => {
 		const data = await commonThunk(
 			{
 				method: "PATCH",
 				url: `/api/group/${groupId}/public`,
-				data: { isPublicGroup: isPublic },
+				data: { isPublicGroup: chagnePublicOption },
 				successCode: 200,
 			},
 			thunkAPI,
