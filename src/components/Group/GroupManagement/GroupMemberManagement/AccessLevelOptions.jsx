@@ -8,61 +8,53 @@ import {
 	ContentDiv,
 } from "./AccessLevelOptions.styles";
 
+const mockItems = [
+	{
+		name: "홍길동",
+		date: "2023.10.17",
+		content:
+			"오늘은 개발 스터디 그룹에서 알고리즘 대회에 참여했어. 좋은 시간이였어",
+	},
+	{
+		name: "홍길동2",
+		date: "2023.10.17",
+		content:
+			"오늘은 개발 스터디 그룹에서 알고리즘 대회에 참여했어. 좋은 시간이였어",
+	},
+	{
+		name: "홍길동3",
+		date: "2023.10.17",
+		content:
+			"오늘은 개발 스터디 그룹에서 알고리즘 대회에 참여했어. 좋은 시간이였어",
+	},
+	{
+		name: "홍길동4",
+		date: "2023.10.17",
+		content:
+			"오늘은 개발 스터디 그룹에서 알고리즘 대회에 참여했어. 좋은 시간이였어",
+	},
+	{
+		name: "홍길동5",
+		date: "2023.10.17",
+		content:
+			"오늘은 개발 스터디 그룹에서 알고리즘 대회에 참여했어. 좋은 시간이였어",
+	},
+];
+
 const AccessLevelOptions = () => {
 	return (
 		<ContainerDiv>
 			<InnerDropdownIcon />
 			<ul>
-				<li>
-					<TitleDiv>
-						<h3>홍길동</h3>
-						<span>2023.10.17</span>
-					</TitleDiv>
-					<ContentDiv>
-						오늘은 개발 스터디 그룹에서 알고리즘 대회에 참여했어. 좋은
-						시간이였어
-					</ContentDiv>
-				</li>
-				<li>
-					<TitleDiv>
-						<h3>홍길동</h3>
-						<span>2023.10.17</span>
-					</TitleDiv>
-					<ContentDiv>
-						오늘은 개발 스터디 그룹에서 알고리즘 대회에 참여했어. 좋은
-						시간이였어
-					</ContentDiv>
-				</li>
-				<li>
-					<TitleDiv>
-						<h3>홍길동</h3>
-						<span>2023.10.17</span>
-					</TitleDiv>
-					<ContentDiv>
-						오늘은 개발 스터디 그룹에서 알고리즘 대회에 참여했어. 좋은
-						시간이였어
-					</ContentDiv>
-				</li>
-				<li>
-					<TitleDiv>
-						<h3>홍길동</h3>
-						<span>2023.10.17</span>
-					</TitleDiv>
-					<ContentDiv>
-						오늘은 개발 스터디 그룹에서 알고리즘 대회에 참여했어. 좋은
-						시간이였어
-					</ContentDiv>
-				</li>
-				<li>
-					<TitleDiv>
-						<h3>홍길동</h3>
-						<span>2023.10.17</span>
-					</TitleDiv>
-					<ContentDiv>
-						오늘은 개발 스터디 그룹에서 알고리즘 대회에 참여했어. 좋은
-						시간이였어
-					</ContentDiv>
-				</li>
+				{mockItems.map((data) => (
+					<li key={data.name}>
+						<TitleDiv>
+							<h3>{data.name}</h3>
+							<span>{data.date}</span>
+						</TitleDiv>
+						<ContentDiv>{data.content}</ContentDiv>
+					</li>
+				))}
 			</ul>
 		</ContainerDiv>
 	);

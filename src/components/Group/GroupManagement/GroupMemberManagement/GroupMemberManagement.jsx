@@ -29,7 +29,7 @@ import {
 const GroupMemberManagement = ({ groupInfo }) => {
 	const dispatch = useDispatch();
 
-	const memberList = useSelector((state) => state.group.groupMemberList);
+	const { groupMemberList } = useSelector((state) => state.group);
 
 	const [isAccessInfoOpen, setIsAccessInfoOpen] = useState(false);
 	const [isAccessLevelOptionsOpen, setisAccessLevelOptionsOpen] =
@@ -41,6 +41,9 @@ const GroupMemberManagement = ({ groupInfo }) => {
 	const innerDropdownRef = useRef();
 
 	const groupId = groupInfo?.information.group.groupId;
+	const memberList = groupMemberList?.filter(
+		(item) => item.accessLevel !== "owner",
+	);
 
 	const handleAccessInfo = (e) => {
 		const { target } = e;
