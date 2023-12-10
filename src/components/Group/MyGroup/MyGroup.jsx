@@ -22,8 +22,8 @@ const MyGroup = () => {
 	const childRef = useRef(null);
 	const parentRef = useRef(null);
 
-	const [disablePrevButton, setDisablePrevButton] = useState(false);
-	const [disableNextButton, setDisableNextButton] = useState(false);
+	const [isPrevButtonDisplayed, setIsPrevButtonDisplayed] = useState(false);
+	const [isNextButtonDisplayed, setIsNextButtonDisplayed] = useState(false);
 
 	const [currentWidth, setCurrentWidth] = useState(0);
 	const [widthGap, setWidthGap] = useState(0);
@@ -50,14 +50,14 @@ const MyGroup = () => {
 
 	useEffect(() => {
 		if (widthGap && currentWidth > widthGap) {
-			setDisableNextButton(true);
+			setIsNextButtonDisplayed(true);
 		} else {
-			setDisableNextButton(false);
+			setIsNextButtonDisplayed(false);
 		}
 		if (currentWidth > 0) {
-			setDisablePrevButton(false);
+			setIsPrevButtonDisplayed(false);
 		} else {
-			setDisablePrevButton(true);
+			setIsPrevButtonDisplayed(true);
 		}
 	}, [currentWidth, widthGap]);
 
@@ -65,8 +65,8 @@ const MyGroup = () => {
 		<GroupDiv>
 			<h3>내 그룹</h3>
 			<Div ref={parentRef}>
-				{!disablePrevButton && (
-					<LeftButton onClick={handlePrevButton} disabled={disablePrevButton}>
+				{!isPrevButtonDisplayed && (
+					<LeftButton onClick={handlePrevButton}>
 						<LeftArrowIcon />
 					</LeftButton>
 				)}
@@ -94,8 +94,8 @@ const MyGroup = () => {
 						))}
 					</ul>
 				</InnerDiv>
-				{!disableNextButton && (
-					<RightButton onClick={handleNextButton} disabled={disableNextButton}>
+				{!isNextButtonDisplayed && (
+					<RightButton onClick={handleNextButton}>
 						<RightArrowIcon />
 					</RightButton>
 				)}
