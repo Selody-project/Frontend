@@ -30,7 +30,7 @@ const scheduleSlice = createSlice({
 	initialState,
 	reducers: {
 		setCurrentYear: (state, { payload }) => {
-			state.currentWeek = payload;
+			state.currentYear = payload;
 		},
 		setCurrentMonth: (state, { payload }) => {
 			state.currentMonth = payload;
