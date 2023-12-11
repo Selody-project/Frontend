@@ -151,7 +151,7 @@ const CalendarContainer = ({ type }) => {
 	// }, [dispatch]);
 
 	useEffect(() => {
-		dispatch(resetCurrentDate());
+		return () => dispatch(resetCurrentDate());
 	}, []);
 
 	return (
