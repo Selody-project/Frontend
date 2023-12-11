@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
+import rrulePlugin from "@fullcalendar/rrule";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import { useTheme } from "styled-components";
 
@@ -179,7 +180,12 @@ const CustomCalendar = forwardRef(
 				</TitleSelect>
 				<FullCalendar
 					ref={calendarRef}
-					plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+					plugins={[
+						dayGridPlugin,
+						timeGridPlugin,
+						interactionPlugin,
+						rrulePlugin,
+					]}
 					initialView="dayGridMonth"
 					events={fullCalendarEvents}
 					headerToolbar={{

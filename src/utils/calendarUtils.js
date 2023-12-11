@@ -41,6 +41,20 @@ export const checkIsAlldaySchedule = (startDateTime, endDateTime) => {
 	);
 };
 
+export const convertByweekdayNumberToString = (byweekdayNums) => {
+	if (!Array.isArray(byweekdayNums)) return byweekdayNums;
+	return byweekdayNums.map((num) => {
+		if (num === 0) return "su";
+		if (num === 1) return "mo";
+		if (num === 2) return "tu";
+		if (num === 3) return "we";
+		if (num === 4) return "th";
+		if (num === 5) return "fr";
+		if (num === 6) return "sa";
+		throw Error("유효하지 않은 byweekday number입니다");
+	});
+};
+
 export const getSchedule = async (
 	scheduleId,
 	onFulfilled,

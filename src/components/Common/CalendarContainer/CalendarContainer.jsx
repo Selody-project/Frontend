@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import moment from "moment";
+
 import { SCHEDULE_TYPE } from "@/constants/calendarConstants";
 import { getSchedulesSummary } from "@/features/schedule/schedule-service";
 import {
@@ -9,7 +11,11 @@ import {
 	setCurrentWeek,
 	setCurrentYear,
 } from "@/features/schedule/schedule-slice";
-import { getCurrentWeek, getFirstDateOfWeek } from "@/utils/calendarUtils";
+import {
+	convertByweekdayNumberToString,
+	getCurrentWeek,
+	getFirstDateOfWeek,
+} from "@/utils/calendarUtils";
 
 import { CalendarContainerDiv } from "./CalendarContainer.styles";
 import CustomCalendar from "./CustomCalendar/CustomCalendar";
@@ -27,21 +33,24 @@ const CalendarContainer = ({ type }) => {
 	const [inviteInput, setInviteInput] = useState("");
 	const [invitationLink, setInvitationLink] = useState("");
 
-	const fullCalendarEvents = calendarSchedules.map((schedule) =>
+	const schedulesToInjectIntoCalendar = calendarSchedules.map((schedule) =>
 		schedule.recurrence
 			? {
 					id: schedule.id,
 					userId: schedule.userId,
-					daysOfWeek: schedule.byweekday,
-					startTime: new Date(schedule.startDateTime),
-					endDateTime: new Date(schedule.endDateTime),
-					startRecur: new Date(schedule.startRecur),
-					endRecur: new Date(schedule.until),
+					rrule: {
+						freq: schedule.freq.toLowerCase(),
+						interval: schedule.interval,
+						byweekday: convertByweekdayNumberToString(schedule.byweekday),
+						dtstart: schedule.startDateTime,
+						until: moment(schedule.endRecur).format("YYYY-MM-DD"),
+					},
+					duration:
+						new Date(schedule.endDateTime) - new Date(schedule.startDateTime),
 			  }
 			: {
 					id: schedule.id,
 					userId: schedule.userId,
-					title: schedule.title,
 					start: new Date(schedule.startDateTime),
 					end: new Date(schedule.endDateTime),
 			  },
@@ -175,7 +184,7 @@ const CalendarContainer = ({ type }) => {
 			)}
 			<CustomCalendar
 				ref={calendarRef}
-				fullCalendarEvents={fullCalendarEvents}
+				fullCalendarEvents={schedulesToInjectIntoCalendar}
 				handleDateChange={handleDateChange}
 				handleDateClick={handleDateClick}
 				handleScheduleClick={
