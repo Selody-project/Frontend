@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { SCHEDULE_TYPE } from "@/constants/calendarConstants";
+import { getSchedulesSummary } from "@/features/schedule/schedule-service";
 import {
 	resetCurrentDate,
 	setCurrentMonth,
@@ -151,6 +152,8 @@ const CalendarContainer = ({ type }) => {
 	// }, [dispatch]);
 
 	useEffect(() => {
+		dispatch(getSchedulesSummary({ isGroup: false }));
+
 		return () => dispatch(resetCurrentDate());
 	}, []);
 

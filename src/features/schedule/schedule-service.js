@@ -63,29 +63,32 @@ export const getSchedulesSummary = createAsyncThunk(
 	"schedule/getSchedulesSummary",
 	async ({ isGroup, groupId }, thunkAPI) => {
 		const state = thunkAPI.getState();
-		const { year, month, week, currentView } = state.schedule;
-		const firstDateOfWeek = getFirstDateOfWeek(year, month, week);
+		const { currentYear, currentMonth, currentWeek, currentCalendarView } =
+			state.schedule;
+		const firstDateOfWeek = getFirstDateOfWeek(
+			currentYear,
+			currentMonth,
+			currentWeek,
+		);
 		const doesWeekContainNextMonth =
-			getFirstDateOfWeek(year, month, week + 1) > 1;
-		const doesWeekContainNextYear = doesWeekContainNextMonth && year === 12;
-
+			getFirstDateOfWeek(currentYear, currentMonth, currentWeek + 1) > 1;
+		const doesWeekContainNextYear =
+			doesWeekContainNextMonth && currentYear === 12;
 		const startDateTime = new Date(
-			year,
-			month - 1,
-			currentView === VIEW_TYPE.DAY_GRID_MONTH ? undefined : firstDateOfWeek,
+			currentYear,
+			currentMonth - 1,
+			currentCalendarView === VIEW_TYPE.DAY_GRID_MONTH ? 1 : firstDateOfWeek,
 		).toISOString();
 		const endDateTime = new Date(
-			doesWeekContainNextYear ? year + 1 : year,
+			doesWeekContainNextYear ? currentYear + 1 : currentYear,
 			// eslint-disable-next-line no-nested-ternary
 			doesWeekContainNextYear
 				? 1
 				: doesWeekContainNextMonth
-				? month
-				: month - 1,
-			// eslint-disable-next-line no-nested-ternary
-			currentView === VIEW_TYPE.DAY_GRID_MONTH
-				? undefined
-				: doesWeekContainNextMonth
+				? currentMonth
+				: currentMonth - 1,
+			currentCalendarView === VIEW_TYPE.DAY_GRID_MONTH ||
+			doesWeekContainNextMonth
 				? 1
 				: firstDateOfWeek + 6,
 		).toISOString();
