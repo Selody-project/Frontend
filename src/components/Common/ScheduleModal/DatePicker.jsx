@@ -83,7 +83,7 @@ const DatePicker = ({ minDateStr, selectedStr, onChange }) => {
 				customInput={<CustomInputButton />}
 				renderCustomHeader={CustomHeader}
 				dateFormat="yyyy년 MM월 dd일"
-				popperPlacement="bottom-start"
+				popperPlacement="top-start"
 				minDate={new Date(minDateStr)}
 				selected={dateToChange}
 				onChange={setDateToChange}
