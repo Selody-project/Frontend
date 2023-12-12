@@ -1,5 +1,6 @@
 import React, { forwardRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -8,6 +9,7 @@ import rrulePlugin from "@fullcalendar/rrule";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import { useTheme } from "styled-components";
 
+import customFetch from "@/components/Base/BaseAxios";
 import { VIEW_TYPE } from "@/constants/calendarConstants";
 import { setCurrentCalenderView } from "@/features/schedule/schedule-slice";
 
@@ -104,20 +106,70 @@ const getDayHeaderContentInTimeGridWeek = (props) => {
 };
 
 const CustomCalendar = forwardRef(
-	(
-		{
-			fullCalendarEvents,
-			handleDateChange,
-			handleDateClick,
-			handleScheduleClick = null,
-		},
-		calendarRef,
-	) => {
+	({ fullCalendarEvents, handleDateChange }, calendarRef) => {
 		const { currentYear, currentMonth, currentWeek, currentCalendarView } =
 			useSelector((state) => state.schedule);
 		const dispatch = useDispatch();
 
 		const theme = useTheme();
+		/** 리스트 뷰: 일정 박스를 클릭 시, 여기서 겹친 일정들 중에서 가장 작은 단위에 일정이 조회됩니다 */
+		const handleScheduleClick = async (clickedInfo) => {
+			if (currentCalendarView === VIEW_TYPE.DAY_GRID_MONTH) return;
+			const { start, end } = clickedInfo.event; // 클릭한 이벤트들 중 가장 작은 단위의 처음과 끝
+			try {
+				const {
+					data: { schedules },
+				} = await customFetch.get("/api/user/calendar", {
+					params: {
+						startDateTime: start.toISOString(),
+						endDateTime: end.toISOString(),
+					},
+				});
+				console.log(
+					schedules.filter(
+						(schedule) =>
+							new Date(schedule.startDateTime) <= start &&
+							new Date(schedule.endDateTime) >= end,
+					),
+				);
+			} catch (error) {
+				toast.error("일정 조회에 실패했습니다.");
+			}
+		};
+		// 월별 보기의 경우 날짜 박스 클릭 이벤트리스너를 등록합니다
+		useEffect(() => {
+			const dateDivs = document.querySelectorAll(".fc-daygrid-day");
+			const handleDateClick = async (event) => {
+				const dateStr = `${event.currentTarget.dataset.date}:00:00`;
+				const startDate = new Date(dateStr);
+				const endDate = new Date(new Date(dateStr).setHours(23, 59, 59, 999));
+				try {
+					const {
+						data: { schedules },
+					} = await customFetch.get("/api/user/calendar", {
+						params: {
+							startDateTime: startDate.toISOString(),
+							endDateTime: endDate.toISOString(),
+						},
+					});
+
+					console.log(schedules);
+				} catch (error) {
+					toast.error("일정 조회에 실패했습니다.");
+				}
+			};
+			dateDivs.forEach((dateDiv) => {
+				dateDiv.addEventListener("click", handleDateClick);
+			});
+
+			return () => {
+				dateDivs.forEach((dateDiv) => {
+					dateDiv.removeEventListener("click", handleDateClick);
+				});
+			};
+		}, [currentCalendarView]);
+
+		// 달력 디자인이 오버랩되도록 초기화합니다.
 		useEffect(() => {
 			if (currentCalendarView === VIEW_TYPE.DAY_GRID_MONTH) {
 				const scheduleEventsDivsForEachDate = document.querySelectorAll(
@@ -209,8 +261,11 @@ const CustomCalendar = forwardRef(
 						renderInfo.dayNumberText.replace("일", "")
 					}
 					height={currentCalendarView === VIEW_TYPE.DAY_GRID_MONTH ? 654 : 964}
-					eventClick={handleScheduleClick}
-					dateClick={handleDateClick}
+					eventClick={
+						currentCalendarView === VIEW_TYPE.DAY_GRID_WEEK
+							? handleScheduleClick
+							: undefined
+					}
 					datesSet={({ view: { type } }) =>
 						dispatch(setCurrentCalenderView(type))
 					}
@@ -221,6 +276,7 @@ const CustomCalendar = forwardRef(
 					eventDisplay="block"
 					eventBorderColor="transparent"
 				/>
+				<div />
 			</CustomCalendarDiv>
 		);
 	},

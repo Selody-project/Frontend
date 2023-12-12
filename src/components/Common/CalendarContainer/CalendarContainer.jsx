@@ -105,43 +105,6 @@ const CalendarContainer = ({ type }) => {
 		updateDateState(year, month, week);
 	};
 
-	const handleDateClick = (info) => {
-		const startDate = info.date;
-		const endDate = new Date(
-			startDate.getFullYear(),
-			startDate.getMonth(),
-			startDate.getDate() + 1,
-		);
-		const schdeulesThisDateContained = calendarSchedules.filter((schedule) => {
-			return (
-				// 아예 양쪽으로 포암하거나(오버랩)
-				(schedule.start <= startDate && schedule.end >= endDate) ||
-				// 시작이 포함되거나
-				(schedule.start >= startDate && schedule.start <= endDate) ||
-				// 끝이 포함되거나
-				(schedule.end >= startDate && schedule.end <= endDate) ||
-				// 그냥 안에 있거나
-				(schedule.start >= startDate && schedule.end <= endDate)
-			);
-		});
-		console.log(schdeulesThisDateContained);
-	};
-
-	const handleScheduleClick = (clickedInfo) => {
-		const { start, end } = clickedInfo.event; // 클릭한 이벤트
-		// 오버랩된 이벤트
-		const overlappedSchedules = calendarSchedules.filter((schedule) => {
-			return (
-				schedule.start <= start && // 시작한 날짜가 클릭 이벤트의 시작 날짜 이후
-				schedule.end >= end // 시작 날짜가 클릭 이벤트의 끝나는 날짜 이전
-			);
-		});
-		console.log(overlappedSchedules);
-
-		// console.log(schedule[0].id);
-		// dispatch(setId(schedule.id));
-	};
-
 	const handleInviteButtonClick = (event) => {
 		setAnchorEl(event.currentTarget);
 	};
@@ -186,10 +149,6 @@ const CalendarContainer = ({ type }) => {
 				ref={calendarRef}
 				fullCalendarEvents={schedulesToInjectIntoCalendar}
 				handleDateChange={handleDateChange}
-				handleDateClick={handleDateClick}
-				handleScheduleClick={
-					type === SCHEDULE_TYPE.PERSONAL && handleScheduleClick
-				}
 			/>
 		</CalendarContainerDiv>
 	);
