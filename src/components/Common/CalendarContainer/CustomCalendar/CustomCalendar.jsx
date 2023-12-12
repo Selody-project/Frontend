@@ -167,7 +167,7 @@ const CustomCalendar = forwardRef(
 					dateDiv.removeEventListener("click", handleDateClick);
 				});
 			};
-		}, [currentCalendarView]);
+		}, [currentCalendarView, currentYear, currentMonth, currentWeek]);
 
 		// 달력 디자인이 오버랩되도록 초기화합니다.
 		useEffect(() => {
