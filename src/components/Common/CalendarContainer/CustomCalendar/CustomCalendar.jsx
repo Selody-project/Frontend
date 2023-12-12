@@ -176,6 +176,10 @@ const CustomCalendar = forwardRef(
 					".fc-daygrid-day-events",
 				);
 				scheduleEventsDivsForEachDate.forEach((scheduleEventsDiv) => {
+					const bottomDiv = scheduleEventsDiv.querySelector(
+						".fc-daygrid-day-bottom",
+					);
+					bottomDiv.style["margin-top"] = 0;
 					const childEventsDiv = scheduleEventsDiv.querySelectorAll(
 						".fc-daygrid-event-harness",
 					);
