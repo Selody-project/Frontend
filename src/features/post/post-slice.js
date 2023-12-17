@@ -57,7 +57,11 @@ const postSlice = createSlice({
 				payload.feed.forEach((postInfo) => {
 					state.allGroupPosts.push(postInfo);
 				});
-				state.lastRecordId = payload.feed[payload.feed.length - 1].postId;
+
+				if (payload.feed.length > 0) {
+					state.lastRecordId = payload.feed[payload.feed.length - 1].postId;
+				}
+
 				state.isEnd = payload.isEnd;
 			})
 			.addMatcher(isAllOf(getGroupPosts.fulfilled), (state, { payload }) => {
@@ -69,7 +73,11 @@ const postSlice = createSlice({
 				payload.feed.forEach((postInfo) => {
 					state.myGroupPosts.push(postInfo);
 				});
-				state.lastRecordId = payload.feed[payload.feed.length - 1].postId;
+
+				if (payload.feed.length > 0) {
+					state.lastRecordId = payload.feed[payload.feed.length - 1].postId;
+				}
+
 				state.isEnd = payload.isEnd;
 			})
 			.addMatcher(isAllOf(likeGroupPost.fulfilled), (state) => {

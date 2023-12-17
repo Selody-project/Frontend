@@ -32,7 +32,9 @@ import {
 const GroupFeed = ({ groupId }) => {
 	const dispatch = useDispatch();
 
-	const { allGroupPosts, lastRecordId } = useSelector((state) => state.post);
+	const { allGroupPosts, lastRecordId, isEnd } = useSelector(
+		(state) => state.post,
+	);
 
 	const [optionMenuOpenedFeedIndex, setOptionMenuOpenedFeedIndex] =
 		useState(null);
@@ -60,7 +62,7 @@ const GroupFeed = ({ groupId }) => {
 		const dispatchgetGroupAllPosts = async () => {
 			await dispatch(getGroupAllPosts({ groupId, lastRecordId })).unwrap();
 		};
-		if (isObserving) {
+		if (isObserving && !isEnd) {
 			dispatchgetGroupAllPosts();
 		}
 	}, [isObserving, dispatch]);
