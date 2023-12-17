@@ -69,13 +69,14 @@ const GroupLeaderProfile = ({ groupInfo }) => {
 		const chagnePublicOption = !isPublicGroup;
 
 		try {
+			setIsPublic(!isPublic);
 			await dispatch(
 				changeGroupPublicOption({ groupId, chagnePublicOption }),
 			).unwrap();
-			setIsPublic(!isPublic);
 		} catch (e) {
 			// eslint-disable-next-line no-console
 			console.error(e);
+			setIsPublic(!chagnePublicOption);
 		}
 	};
 

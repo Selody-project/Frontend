@@ -42,12 +42,7 @@ const GroupPage = () => {
 	useEffect(() => {
 		if (user.userId === leaderId) {
 			setIsGroupLeader(true);
-		}
-	}, [leaderId]);
-
-	useEffect(() => {
-		if (user.userId === leaderId) {
-			setIsGroupLeader(true);
+			setIsGroupMember(true);
 		} else {
 			userGroup?.forEach((info) => {
 				if (info.groupId === Number(param.id)) {
