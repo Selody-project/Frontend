@@ -7,8 +7,8 @@ export const ContainerDiv = styled.div`
 	background-color: ${({ theme: { colors } }) => colors.white};
 	padding: 20px;
 	position: absolute;
-	top: calc(100% + 4px);
-	left: 0;
+	top: 80px;
+	left: 48px;
 	box-sizing: border-box;
 	z-index: 1;
 
