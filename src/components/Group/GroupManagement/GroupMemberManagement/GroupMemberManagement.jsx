@@ -2,14 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { ACCESS_LEVEL_DATA } from "@/constants/accessConstants";
-import {
-	InfoIcon,
-	ViewerIcon,
-	AccessArrowIcon,
-	RegularIcon,
-	AdminIcon,
-	OwnerIcon,
-} from "@/constants/iconConstants";
+import { InfoIcon, AccessArrowIcon } from "@/constants/iconConstants";
 import {
 	getGroupMemberList,
 	changeAccessLevel,
@@ -26,6 +19,24 @@ import {
 	MemberLi,
 	AccessLevelUl,
 } from "./GroupMemberManagement.styles";
+
+const groupMemberManagementTitleData = [
+	{
+		title: "프로필",
+	},
+	{
+		title: "이름",
+	},
+	{
+		title: "댓글 내역",
+	},
+	{
+		title: "공감 내역",
+	},
+	{
+		title: "가입 날짜",
+	},
+];
 
 const GroupMemberManagement = ({ groupInfo }) => {
 	const dispatch = useDispatch();
@@ -67,11 +78,9 @@ const GroupMemberManagement = ({ groupInfo }) => {
 	return (
 		<>
 			<TitleUl>
-				<TitleLi>프로필</TitleLi>
-				<TitleLi>이름</TitleLi>
-				<TitleLi>댓글 내역</TitleLi>
-				<TitleLi>공감 내역</TitleLi>
-				<TitleLi>가입 날짜</TitleLi>
+				{groupMemberManagementTitleData.map((data) => (
+					<TitleLi key={data.title}>{data.title}</TitleLi>
+				))}
 				<TitleLi
 					ref={accessInfoRef}
 					onClick={() => {
@@ -118,32 +127,15 @@ const GroupMemberManagement = ({ groupInfo }) => {
 						}}
 						click
 					>
-						{/* eslint-disable-next-line no-nested-ternary */}
-						{memberInfo.accessLevel === "viewer" ? (
-							<span>
-								<ViewerIcon />
-								viewer
-								<AccessArrowIcon />
-							</span>
-						) : // eslint-disable-next-line no-nested-ternary
-						memberInfo.accessLevel === "regular" ? (
-							<span>
-								<RegularIcon />
-								regular
-								<AccessArrowIcon />
-							</span>
-						) : memberInfo.accessLevel === "admin" ? (
-							<span>
-								<AdminIcon />
-								admin
-								<AccessArrowIcon />
-							</span>
-						) : (
-							<span>
-								<OwnerIcon />
-								owner
-								<AccessArrowIcon />
-							</span>
+						{ACCESS_LEVEL_DATA.map(
+							(data) =>
+								memberInfo.accessLevel === data.accessLevel && (
+									<span>
+										{data.icon}
+										{data.accessLevel}
+										<AccessArrowIcon />
+									</span>
+								),
 						)}
 						{isAccessChangeOpenIndex === memberInfo.member.userId && (
 							<AccessLevelUl>
