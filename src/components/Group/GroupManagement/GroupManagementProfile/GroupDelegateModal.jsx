@@ -45,6 +45,14 @@ const GroupDelegateModal = ({ groupDetailInfo, groupMember }) => {
 		}
 	};
 
+	const handleClickSelectBox = (userId) => {
+		setSelectedMemberId(userId);
+
+		if (selectedMemberId === userId) {
+			setSelectedMemberId(null);
+		}
+	};
+
 	const memberList = groupMember.filter(
 		(info) => info.userId !== groupDetailInfo?.leader,
 	);
@@ -66,7 +74,7 @@ const GroupDelegateModal = ({ groupDetailInfo, groupMember }) => {
 							<SelectBox
 								key={info.userId}
 								name={info.nickname}
-								onClick={() => setSelectedMemberId(info.userId)}
+								onClick={() => handleClickSelectBox(info.userId)}
 								isSelected={info.userId === selectedMemberId}
 							/>
 						))}
