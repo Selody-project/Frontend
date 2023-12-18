@@ -21,6 +21,56 @@ const GroupProfileButton = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 	const [isManaging, setIsManaging] = useState(false);
 	const [isGroupInviteLinkOpen, setIsGroupInviteLinkOpen] = useState(false);
 
+	const profileButtonRender = [];
+
+	//	그룹 관리 페이지일때
+	if (isManaging) {
+		profileButtonRender.push(
+			<>
+				<ProfileButton onClick={() => setIsGroupInviteLinkOpen(true)}>
+					링크 생성하기
+				</ProfileButton>
+				<ProfileWhiteButton
+					onClick={() => dispatch(openModal({ type: "DELEGATE_GROUP" }))}
+				>
+					그룹장 위임
+				</ProfileWhiteButton>
+			</>,
+		);
+	}
+
+	// 그룹 리더일떄
+	if (isGroupLeader) {
+		profileButtonRender.push(
+			<ProfileButton
+				onClick={() =>
+					navigate(`/group/${groupInfo?.information?.group?.groupId}/leader`)
+				}
+			>
+				그룹 관리
+			</ProfileButton>,
+		);
+	}
+
+	// 그룹 멤버일때
+	if (!isGroupLeader && isGroupMember) {
+		profileButtonRender.push(
+			<ProfileWhiteButton>그룹 나가기</ProfileWhiteButton>,
+		);
+	}
+
+	// 그룹 멤버가 아닐떄
+	if (!isGroupMember) {
+		profileButtonRender.push(
+			<ProfileWhiteButton>
+				<>
+					<AddIcon />
+					그룹 참여 요청
+				</>
+			</ProfileWhiteButton>,
+		);
+	}
+
 	useEffect(() => {
 		if (locate.pathname.includes("leader")) {
 			setIsManaging(true);
@@ -29,46 +79,7 @@ const GroupProfileButton = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 
 	return (
 		<ProfileButtonDiv>
-			{/* 그룹 관리 페이지일때 */}
-			{isManaging && (
-				<>
-					<ProfileButton onClick={() => setIsGroupInviteLinkOpen(true)}>
-						링크 생성하기
-					</ProfileButton>
-					<ProfileWhiteButton
-						onClick={() => dispatch(openModal({ type: "DELEGATE_GROUP" }))}
-					>
-						그룹장 위임
-					</ProfileWhiteButton>
-				</>
-			)}
-
-			{/* 그룹 리더일때 */}
-			{!isManaging && isGroupLeader && (
-				<ProfileButton
-					onClick={() =>
-						navigate(`/group/${groupInfo?.information?.group?.groupId}/leader`)
-					}
-				>
-					그룹 관리
-				</ProfileButton>
-			)}
-
-			{/* 그룹 멤버일때 */}
-			{!isManaging && !isGroupLeader && isGroupMember && (
-				<ProfileWhiteButton>그룹 나가기</ProfileWhiteButton>
-			)}
-
-			{/* 그룹 멤버가 아닐때 */}
-			{!isManaging && !isGroupMember && (
-				<ProfileWhiteButton>
-					<>
-						<AddIcon />
-						그룹 참여 요청
-					</>
-				</ProfileWhiteButton>
-			)}
-
+			{profileButtonRender}
 			{isGroupInviteLinkOpen && (
 				<GroupInviteLink
 					groupId={groupInfo?.information?.group.groupId}
