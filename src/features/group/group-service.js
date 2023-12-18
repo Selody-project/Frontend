@@ -213,6 +213,21 @@ export const cancelGroupJoin = createAsyncThunk(
 	},
 );
 
+export const changeRequestGroupJoin = createAsyncThunk(
+	"group/changeRequestGroupJoin",
+	async (groupId, thunkAPI) => {
+		const data = await commonThunk(
+			{
+				method: "POST",
+				url: `/api/group/${groupId}/members/request`,
+				successCode: 200,
+			},
+			thunkAPI,
+		);
+		return data;
+	},
+);
+
 export const changeGroupPublic = createAsyncThunk(
 	"group/changeGroupPublic",
 	async ({ groupId, status }, thunkAPI) => {
@@ -242,5 +257,51 @@ export const updateGroupProfile = createAsyncThunk(
 			thunkAPI,
 		);
 		return data;
+	},
+);
+
+export const createGroupInviteLink = createAsyncThunk(
+	"group/createGroupInviteLink",
+	async (groupId, thunkAPI) => {
+		const data = await commonThunk(
+			{
+				method: "POST",
+				url: `/api/group/${groupId}/join/invite-link`,
+				successCode: 200,
+			},
+			thunkAPI,
+		);
+		return data;
+	},
+);
+
+export const getGroupMemberList = createAsyncThunk(
+	"group/getGroupMemberList",
+	async (groupId, thunkAPI) => {
+		const data = await commonThunk(
+			{
+				method: "GET",
+				url: `/api/group/${groupId}/members`,
+				successCode: 200,
+			},
+			thunkAPI,
+		);
+		return data;
+	},
+);
+
+export const changeAccessLevel = createAsyncThunk(
+	"group/changeAccessLevel",
+	async ({ groupId, userId, accessLevel }, thunkAPI) => {
+		const response = await commonThunk(
+			{
+				method: "PATCH",
+				url: `/api/group/${groupId}/members/${userId}/access-level`,
+				data: { access_level: accessLevel },
+				successCode: 204,
+			},
+			thunkAPI,
+		);
+		return response;
 	},
 );

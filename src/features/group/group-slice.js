@@ -17,9 +17,12 @@ import {
 	rejectGroupJoin,
 	deleteGroupMember,
 	cancelGroupJoin,
-	// changeRequestGroupJoin,
+	changeRequestGroupJoin,
 	changeGroupPublic,
 	updateGroupProfile,
+	createGroupInviteLink,
+	getGroupMemberList,
+	changeAccessLevel,
 } from "./group-service.js";
 
 const initialState = {
@@ -30,23 +33,20 @@ const initialState = {
 	searchGroupList: [],
 	isLoading: false,
 	groupInfo: null,
-	groupDetailInfo: null,
 	groupRequestMemberList: [],
 	isUserGroupRefetching: true,
 	isPublicGroup: null,
 	groupLeaderId: null,
+	groupDetailInfo: null,
+	groupInviteLink: null,
+	groupMemberList: null,
+	isEnd: false,
 };
 
 const groupSlice = createSlice({
 	name: "group",
 	initialState,
 	reducers: {
-		groupInfo: (state, { payload }) => {
-			state.groupInfo = payload;
-		},
-		selectGroupInfo: (state, { payload }) => {
-			state.groupInfo = payload;
-		},
 		setRefetchUserGroup: (state, { payload }) => {
 			state.isUserGroupRefetching = payload;
 		},
@@ -73,15 +73,14 @@ const groupSlice = createSlice({
 					rejectGroupJoin.pending,
 					getGroupRequestMemberList.pending,
 					getGroupInfo.pending,
-					getGroupList.pending,
-					deleteGroup.pending,
 					delegateGroup.pending,
-					updateGroup.pending,
-					leaveGroup.pending,
 					changeGroupOption.pending,
-					// createGroup.pending,
+					changeRequestGroupJoin.pending,
 					changeGroupPublic.pending,
 					updateGroupProfile.pending,
+					createGroupInviteLink.pending,
+					getGroupMemberList.pending,
+					changeAccessLevel.pending,
 				),
 				(state) => {
 					state.isLoading = true;
@@ -101,18 +100,17 @@ const groupSlice = createSlice({
 					rejectGroupJoin.rejected,
 					getGroupRequestMemberList.rejected,
 					getGroupInfo.rejected,
-					getGroupList.rejected,
-					deleteGroup.rejected,
-					updateGroup.rejected,
-					leaveGroup.rejected,
+					delegateGroup.rejected,
 					changeGroupOption.rejected,
-					createGroup.rejected,
+					changeRequestGroupJoin.rejected,
 					changeGroupPublic.rejected,
 					updateGroupProfile.rejected,
+					createGroupInviteLink.rejected,
+					getGroupMemberList.rejected,
+					changeAccessLevel.rejected,
 				),
-				(state, { payload }) => {
+				(state) => {
 					state.isLoading = false;
-					toast.error(payload);
 				},
 			)
 			.addMatcher(isAllOf(searchGroup.fulfilled), (state, { payload }) => {
@@ -122,6 +120,7 @@ const groupSlice = createSlice({
 				});
 				state.searchLastRecordId =
 					payload.groups[payload.groups.length - 1].groupId;
+				state.isEnd = payload.isEnd;
 			})
 			.addMatcher(isAllOf(createGroup.fulfilled), (state) => {
 				state.isLoading = false;
@@ -133,6 +132,7 @@ const groupSlice = createSlice({
 					state.groupList.push(groupInfo);
 				});
 				state.lastRecordId = payload.groups[payload.groups.length - 1].groupId;
+				state.isEnd = payload.isEnd;
 			})
 			.addMatcher(isAllOf(deleteGroup.fulfilled), (state) => {
 				state.isLoading = false;
@@ -167,45 +167,14 @@ const groupSlice = createSlice({
 			)
 			.addMatcher(isAllOf(getGroupInfo.fulfilled), (state, { payload }) => {
 				state.isLoading = false;
-				state.groupInfoDetail = payload;
+				state.groupInfo = payload;
 				state.isPublicGroup = payload.information.group.isPublicGroup;
 				state.groupLeaderId = payload.information.leaderInfo.userId;
 				state.groupDetailInfo = payload.information.group;
 			})
-			.addMatcher(isAllOf(getGroupList.fulfilled), (state, { payload }) => {
-				state.isLoading = false;
-				state.groupList = payload;
-			})
-			.addMatcher(isAllOf(deleteGroup.fulfilled), (state) => {
-				state.isLoading = false;
-				toast.success("그룹을 삭제했습니다");
-			})
-			.addMatcher(isAllOf(delegateGroup.fulfilled), (state) => {
-				state.isLoading = false;
-				toast.success("그룹장 위임이 완료되었습니다.");
-			})
-			.addMatcher(isAllOf(updateGroup.fulfilled), (state) => {
-				state.isLoading = false;
-				toast.success("그룹리더 변경에 성공하였습니다.");
-			})
-			.addMatcher(isAllOf(leaveGroup.fulfilled), (state) => {
-				state.isLoading = false;
-				toast.success("그룹을 탈퇴하였습니다.");
-			})
-			.addMatcher(
-				isAllOf(changeGroupOption.fulfilled),
-				(state, { payload }) => {
-					state.isLoading = false;
-					state.isPublicGroup = payload.information.group.isPublicGroup;
-				},
-			)
-			.addMatcher(isAllOf(cancelGroupJoin.fulfilled), (state) => {
+			.addMatcher(isAllOf(changeRequestGroupJoin.fulfilled), (state) => {
 				state.isLoading = false;
 				toast.success("그룹 신청 취소 완료");
-			})
-			.addMatcher(isAllOf(createGroup.fulfilled), (state) => {
-				state.isLoading = false;
-				toast.success("그룹 생성에 성공하였습니다.");
 			})
 			.addMatcher(
 				isAllOf(changeGroupPublic.fulfilled),
@@ -221,7 +190,40 @@ const groupSlice = createSlice({
 					state.groupInfo = { ...state.groupInfo, name, description, image };
 					toast.success("그룹 정보가 수정되었습니다");
 				},
-			);
+			)
+			.addMatcher(isAllOf(cancelGroupJoin.fulfilled), (state) => {
+				state.isLoading = false;
+				toast.success("그룹 신청 취소 완료");
+			})
+			.addMatcher(
+				isAllOf(changeGroupOption.fulfilled),
+				(state, { payload }) => {
+					state.isLoading = false;
+					state.isPublicGroup = payload.information.group.isPublicGroup;
+				},
+			)
+			.addMatcher(isAllOf(delegateGroup.fulfilled), (state) => {
+				state.isLoading = false;
+				toast.success("그룹장 위임이 완료되었습니다.");
+			})
+			.addMatcher(
+				isAllOf(createGroupInviteLink.fulfilled),
+				(state, { payload }) => {
+					state.isLoading = false;
+					state.groupInviteLink = payload;
+				},
+			)
+			.addMatcher(
+				isAllOf(getGroupMemberList.fulfilled),
+				(state, { payload }) => {
+					state.isLoading = false;
+					state.groupMemberList = payload;
+				},
+			)
+			.addMatcher(isAllOf(changeAccessLevel.fulfilled), (state) => {
+				state.isLoading = false;
+				toast.success("그룹원 권한이 변경되었습니다.");
+			});
 	},
 });
 
