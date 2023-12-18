@@ -41,7 +41,7 @@ const authSlice = createSlice({
 			})
 			.addCase(signup.rejected, (state, payload) => {
 				state.isLoading = false;
-				toast.error(payload.error);
+				toast.error(payload);
 			})
 			// 로그인
 			.addCase(login.pending, (state) => {
@@ -53,7 +53,7 @@ const authSlice = createSlice({
 			})
 			.addCase(login.rejected, (state, { payload }) => {
 				state.isLoading = false;
-				toast.error(payload.error);
+				toast.error(payload);
 			})
 			// naver 로그인
 			.addCase(naverLogin.pending, (state) => {
@@ -65,7 +65,7 @@ const authSlice = createSlice({
 			})
 			.addCase(naverLogin.rejected, (state, { payload }) => {
 				state.isLoading = false;
-				toast.error(payload.error);
+				toast.error(payload);
 			})
 			// google 로그인
 			.addCase(googleLogin.pending, (state) => {
@@ -77,7 +77,7 @@ const authSlice = createSlice({
 			})
 			.addCase(googleLogin.rejected, (state, { payload }) => {
 				state.isLoading = false;
-				toast.error(payload.error);
+				toast.error(payload);
 			})
 			// 로그아웃
 			.addCase(logout.pending, (state) => {
@@ -90,7 +90,7 @@ const authSlice = createSlice({
 			})
 			.addCase(logout.rejected, (state, { payload }) => {
 				state.isLoading = false;
-				toast.error(payload.error);
+				toast.error(payload);
 			})
 			// 유저 쿠키 토큰 확인
 			.addCase(getCurrentUser.pending, (state) => {
@@ -117,7 +117,7 @@ const authSlice = createSlice({
 			)
 			.addCase(updateUserProfile.rejected, (state, { payload }) => {
 				state.isLoading = false;
-				toast.error(payload.error);
+				toast.error(payload);
 			})
 			// 유저 비밀번호 수정
 			.addCase(updateUserPassword.pending, (state) => {
@@ -129,7 +129,7 @@ const authSlice = createSlice({
 			})
 			.addCase(updateUserPassword.rejected, (state, { payload }) => {
 				state.isLoading = false;
-				toast.error(payload.error);
+				toast.error(payload);
 			})
 			// 회원 탈퇴
 			.addCase(withdrawMembership.pending, (state) => {
@@ -142,7 +142,7 @@ const authSlice = createSlice({
 			})
 			.addCase(withdrawMembership.rejected, (state, { payload }) => {
 				state.isLoading = false;
-				toast.error(payload.error);
+				toast.error(payload);
 			});
 	},
 });

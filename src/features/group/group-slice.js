@@ -103,7 +103,7 @@ const groupSlice = createSlice({
 				),
 				(state, { payload }) => {
 					state.isLoading = false;
-					toast.error(payload.error);
+					toast.error(payload);
 				},
 			)
 			.addMatcher(isAllOf(searchGroup.fulfilled), (state, { payload }) => {
