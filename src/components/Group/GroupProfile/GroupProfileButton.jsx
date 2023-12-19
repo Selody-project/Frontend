@@ -40,7 +40,7 @@ const GroupProfileButton = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 	}
 
 	// 그룹 리더일떄
-	if (isGroupLeader) {
+	if (!isManaging && isGroupLeader) {
 		profileButtonRender.push(
 			<ProfileButton
 				onClick={() =>
