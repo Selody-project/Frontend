@@ -1,6 +1,5 @@
-import React, { forwardRef, useEffect, useRef, useState } from "react";
+import React, { forwardRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
 
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -9,11 +8,9 @@ import rrulePlugin from "@fullcalendar/rrule";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import { useTheme } from "styled-components";
 
-import customFetch from "@/components/Base/BaseAxios";
-import OverlappedSchedulesModal from "@/components/Common/CalendarContainer/CustomCalendar/OverlappedSchedulesModal/OverlappedSchedules";
 import { VIEW_TYPE } from "@/constants/calendarConstants";
+import { getOverlappedSchedules } from "@/features/schedule/schedule-service";
 import { setCurrentCalenderView } from "@/features/schedule/schedule-slice";
-import useOutsideClick from "@/hooks/useOutsideClick";
 
 import { CustomCalendarDiv, TitleSelect } from "./CustomCalendar.styles";
 
@@ -113,78 +110,22 @@ const CustomCalendar = forwardRef(
 			useSelector((state) => state.schedule);
 		const dispatch = useDispatch();
 
-		const [overlappedSchedules, setOverlappedSchedules] = useState([]);
-		const [
-			overlappedSchedulesModalPosition,
-			setOverlappedSchedulesModalPosition,
-		] = useState({ top: 0, left: 0 });
-
 		const theme = useTheme();
 
-		const OverlappedSchedulesModalRef = useRef(null);
-
-		useOutsideClick(OverlappedSchedulesModalRef, () =>
-			setOverlappedSchedules([]),
-		);
-
 		/** 리스트 뷰: 일정 박스를 클릭 시, 여기서 겹친 일정들 중에서 가장 작은 단위에 일정이 조회됩니다 */
-		const handleScheduleClick = async (clickedInfo) => {
+		const handleScheduleClick = (clickedInfo) => {
 			if (currentCalendarView === VIEW_TYPE.DAY_GRID_MONTH) return;
-			const { right, top } = clickedInfo.jsEvent.target.getBoundingClientRect();
-			setOverlappedSchedulesModalPosition({
-				// - (맨 위부터 달력 시작점) + top
-				top: -230 + top,
-				// - (페이지 왼쪽 패딩) + right + (달력 좌측 시간 박스 크기)
-				left: -22 + right + 34,
-			});
 			const { start, end } = clickedInfo.event; // 클릭한 이벤트들 중 가장 작은 단위의 처음과 끝
-			try {
-				const {
-					data: { schedules },
-				} = await customFetch.get("/api/user/calendar", {
-					params: {
-						startDateTime: start.toISOString(),
-						endDateTime: end.toISOString(),
-					},
-				});
-				setOverlappedSchedules(
-					schedules.filter(
-						(schedule) =>
-							new Date(schedule.startDateTime) <= start &&
-							new Date(schedule.endDateTime) >= end,
-					),
-				);
-			} catch (error) {
-				toast.error("일정 조회에 실패했습니다.");
-			}
+			dispatch(getOverlappedSchedules({ start, end }));
 		};
 		// 월별 보기의 경우 날짜 박스 클릭 이벤트리스너를 등록합니다
 		useEffect(() => {
 			const dateDivs = document.querySelectorAll(".fc-daygrid-day");
-			const handleDateClick = async (event) => {
-				const { right, top } = event.currentTarget.getBoundingClientRect();
-				setOverlappedSchedulesModalPosition({
-					top: top + document.documentElement.scrollTop - 50 - 180 - 40,
-					// - 좌측 margin + 화살표 자리
-					left: right - 95 + 34,
-				});
+			const handleDateClick = (event) => {
 				const dateStr = `${event.currentTarget.dataset.date}:00:00`;
 				const startDate = new Date(dateStr);
 				const endDate = new Date(new Date(dateStr).setHours(23, 59, 59, 999));
-				try {
-					const {
-						data: { schedules },
-					} = await customFetch.get("/api/user/calendar", {
-						params: {
-							startDateTime: startDate.toISOString(),
-							endDateTime: endDate.toISOString(),
-						},
-					});
-
-					setOverlappedSchedules(schedules);
-				} catch (error) {
-					toast.error("일정 조회에 실패했습니다.");
-				}
+				dispatch(getOverlappedSchedules({ start: startDate, end: endDate }));
 			};
 			dateDivs.forEach((dateDiv) => {
 				dateDiv.addEventListener("click", handleDateClick);
@@ -308,13 +249,6 @@ const CustomCalendar = forwardRef(
 					eventDisplay="block"
 					eventBorderColor="transparent"
 				/>
-				{overlappedSchedules.length > 0 && (
-					<OverlappedSchedulesModal
-						ref={OverlappedSchedulesModalRef}
-						schedules={overlappedSchedules}
-						position={overlappedSchedulesModalPosition}
-					/>
-				)}
 			</CustomCalendarDiv>
 		);
 	},
