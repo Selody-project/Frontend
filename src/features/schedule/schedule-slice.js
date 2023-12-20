@@ -12,12 +12,14 @@ import {
 	getTodaySchedules,
 	updateSchedule,
 	deleteSchedule,
+	getOverlappedSchedules,
 } from "./schedule-service.js";
 
 const initialState = {
 	calendarSchedules: [],
 	todaySchedules: [],
 	schedulesForTheWeek: [],
+	overlappedSchedules: [],
 	currentYear: new Date().getFullYear(),
 	currentMonth: new Date().getMonth() + 1,
 	currentWeek: getCurrentWeek(),
@@ -51,6 +53,9 @@ const scheduleSlice = createSlice({
 				throw new Error("잘못된 view type입니다.");
 			}
 			state.currentCalendarView = payload;
+		},
+		resetOverlappedSchedules: (state) => {
+			state.overlappedSchedules = [];
 		},
 	},
 
@@ -193,6 +198,21 @@ const scheduleSlice = createSlice({
 				toast.dismiss();
 				toast.error("일정 삭제에 실패했습니다.");
 				state.isLoading = false;
+			})
+			.addCase(getOverlappedSchedules.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(
+				getOverlappedSchedules.fulfilled,
+				(state, { data: { schedules } }) => {
+					state.overlappedSchedules = schedules;
+					state.isLoading = false;
+				},
+			)
+			.addCase(getOverlappedSchedules.rejected, (state, { payload }) => {
+				console.log(payload);
+				state.isLoading = false;
+				state.overlappedSchedules = [];
 			});
 	},
 });

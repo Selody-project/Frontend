@@ -156,3 +156,37 @@ export const updateSchedule = createAsyncThunk(
 		return data;
 	},
 );
+
+export const getOverlappedSchedules = createAsyncThunk(
+	"schedule/getOverlappedSchedules",
+	async ({ start, end }, thunkAPI) => {
+		const {
+			schedule: { currentCalendarView },
+		} = thunkAPI.getState();
+		if (!(start instanceof Date) || !(end instanceof Date))
+			throw Error("잘못된 payload입니다.");
+		const data = await commonThunk(
+			{
+				method: "GET",
+				url: "/api/user/calendar",
+				params: {
+					startDateTime: start.toISOString(),
+					endDateTime: end.toISOString(),
+				},
+				successCode: 200,
+			},
+			thunkAPI,
+		);
+		if (
+			data.status === 200 &&
+			currentCalendarView === VIEW_TYPE.DAY_GRID_WEEK
+		) {
+			data.data.schedules = data.data.schedules.filter(
+				(schedule) =>
+					new Date(schedule.startDateTime) <= start &&
+					new Date(schedule.endDateTime) >= end,
+			);
+		}
+		return data;
+	},
+);
