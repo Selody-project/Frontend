@@ -106,6 +106,7 @@ export const CustomCalendarDiv = styled.div`
 	// border
 	.fc-day.fc-daygrid-day {
 		border: 1px solid ${({ theme }) => theme.colors.disabled_text};
+		cursor: pointer;
 	}
 	.fc-theme-standard .fc-timegrid-slots tr > td {
 		border: 1px solid ${({ theme }) => theme.colors.disabled_text};
