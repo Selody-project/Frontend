@@ -25,9 +25,8 @@ import {
 
 const ScheduleItemList = () => {
 	const dispatch = useDispatch();
-	const { todaySchedules, schedulesForTheWeek } = useSelector(
-		(state) => state.schedule,
-	);
+	const { todaySchedules, schedulesForTheWeek, overlappedSchedules } =
+		useSelector((state) => state.schedule);
 	const [isTodayTab, setIsTodayTab] = useState(true);
 
 	useEffect(() => {
@@ -42,6 +41,27 @@ const ScheduleItemList = () => {
 			}),
 		);
 	};
+
+	if (overlappedSchedules.length > 0) {
+		return (
+			<ScheduleItemListLayoutAside data-testid="personal-todo-list">
+				<TodoBody>
+					<TodoList>
+						{overlappedSchedules.map((schedule) => (
+							<ScheduleItem
+								key={
+									schedule.recurrence
+										? schedule.startDateTime + schedule.id
+										: schedule.id
+								}
+								schedule={schedule}
+							/>
+						))}
+					</TodoList>
+				</TodoBody>
+			</ScheduleItemListLayoutAside>
+		);
+	}
 
 	return (
 		<ScheduleItemListLayoutAside data-testid="personal-todo-list">
