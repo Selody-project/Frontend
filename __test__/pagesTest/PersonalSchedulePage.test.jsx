@@ -47,6 +47,7 @@ const getInitialScheduleState = (recurrence) => {
 		],
 		calendarSchedules: [],
 		schedulesForTheWeek: [],
+		overlappedSchedules: [],
 	};
 };
 
