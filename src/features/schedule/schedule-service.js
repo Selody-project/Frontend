@@ -177,11 +177,8 @@ export const getOverlappedSchedules = createAsyncThunk(
 			},
 			thunkAPI,
 		);
-		if (
-			data.status === 200 &&
-			currentCalendarView === VIEW_TYPE.DAY_GRID_WEEK
-		) {
-			data.data.schedules = data.data.schedules.filter(
+		if (data.schedules && currentCalendarView === VIEW_TYPE.DAY_GRID_WEEK) {
+			data.schedules = data.schedules.filter(
 				(schedule) =>
 					new Date(schedule.startDateTime) <= start &&
 					new Date(schedule.endDateTime) >= end,
