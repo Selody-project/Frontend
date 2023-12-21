@@ -14,9 +14,10 @@ import { openScheduleEditModal } from "@/features/ui/ui-slice";
 import { checkIsAlldaySchedule } from "@/utils/calendarUtils";
 
 import {
+	CardDiv,
 	ColoredCircleDiv,
 	ScheduleItemContentDiv,
-	ScheduleItemDiv,
+	ScheduleItemLi,
 	ScheduleItemRightButtonsDiv,
 } from "./ScheduleItem.styles";
 
@@ -71,50 +72,52 @@ const ScheduleItem = ({
 
 	return (
 		<>
-			<ScheduleItemDiv>
-				<ColoredCircleDiv
-					bgColor={isGroup ? colors.sunday : colors.disabled_text}
-				/>
-				<ScheduleItemContentDiv>
-					<div>
-						<h3>{title}</h3>
-						{recurrence === 1 && (
-							<>
-								&nbsp;
-								<span className="recur" data-testid="recurreningText">
-									반복
-								</span>
-							</>
-						)}
-					</div>
-					<span>{getTimeString(startDateTime, endDateTime)}</span>
-				</ScheduleItemContentDiv>
-				<ScheduleItemRightButtonsDiv>
-					<button
-						type="button"
-						aria-label="editSchedule"
-						onClick={() =>
-							dispatch(
-								openScheduleEditModal({
-									type: isGroup
-										? UI_TYPE.SHARE_SCHEDULE
-										: UI_TYPE.PERSONAL_SCHEDULE,
-									id,
-								}),
-							)
-						}
-					>
-						<EditScheduleIcon />
-					</button>
-					<button
-						type="button"
-						aria-label="deleteSchedule"
-						onClick={() => setIsDeleteWarningModalOn(true)}
-					>
-						<DeleteScheduleIcon />
-					</button>
-				</ScheduleItemRightButtonsDiv>
-			</ScheduleItemDiv>
+			<ScheduleItemLi>
+				<CardDiv>
+					<ColoredCircleDiv
+						bgColor={isGroup ? colors.sunday : colors.disabled_text}
+					/>
+					<ScheduleItemContentDiv>
+						<div>
+							<h3>{title}</h3>
+							{recurrence === 1 && (
+								<>
+									&nbsp;
+									<span className="recur" data-testid="recurreningText">
+										반복
+									</span>
+								</>
+							)}
+						</div>
+						<span>{getTimeString(startDateTime, endDateTime)}</span>
+					</ScheduleItemContentDiv>
+					<ScheduleItemRightButtonsDiv>
+						<button
+							type="button"
+							aria-label="editSchedule"
+							onClick={() =>
+								dispatch(
+									openScheduleEditModal({
+										type: isGroup
+											? UI_TYPE.SHARE_SCHEDULE
+											: UI_TYPE.PERSONAL_SCHEDULE,
+										id,
+									}),
+								)
+							}
+						>
+							<EditScheduleIcon />
+						</button>
+						<button
+							type="button"
+							aria-label="deleteSchedule"
+							onClick={() => setIsDeleteWarningModalOn(true)}
+						>
+							<DeleteScheduleIcon />
+						</button>
+					</ScheduleItemRightButtonsDiv>
+				</CardDiv>
+			</ScheduleItemLi>
 			{isDeleteWarningModalOn && (
 				<DeleteScheduleWarningModal
 					onCancel={() => setIsDeleteWarningModalOn(false)}

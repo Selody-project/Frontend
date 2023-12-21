@@ -2,10 +2,16 @@ import styled from "styled-components";
 
 import BaseCard from "@/components/UI/BaseCard/BaseCard";
 
-export const ScheduleItemDiv = styled(BaseCard)`
+export const ScheduleItemLi = styled.li`
+	width: 100%;
+	cursor: pointer;
+`;
+
+export const CardDiv = styled(BaseCard)`
 	display: flex;
 	align-items: center;
 	gap: 16px;
+	width: 100%;
 	height: 67px;
 	min-height: 67px;
 	padding-left: 15px;
