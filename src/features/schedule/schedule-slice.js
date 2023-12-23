@@ -220,6 +220,7 @@ export const {
 	setCurrentWeek,
 	resetCurrentDate,
 	setCurrentCalenderView,
+	resetOverlappedSchedules,
 } = scheduleSlice.actions;
 
 export default scheduleSlice.reducer;

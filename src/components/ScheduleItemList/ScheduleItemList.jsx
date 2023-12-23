@@ -2,18 +2,19 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import ScheduleItem from "@/components/ScheduleItemList/ScheduleItem/ScheduleItem";
+import { VIEW_TYPE } from "@/constants/calendarConstants";
 import { ScheduleAddIcon } from "@/constants/iconConstants";
 import { UI_TYPE } from "@/constants/uiConstants";
 import {
 	getSchedulesForTheWeek,
 	getTodaySchedules,
 } from "@/features/schedule/schedule-service.js";
+import { resetOverlappedSchedules } from "@/features/schedule/schedule-slice";
 import { openScheduleCreateModal } from "@/features/ui/ui-slice";
 
 import {
 	TodoHeader,
 	TodoTab,
-	ScheduleAddButton,
 	TodoBody,
 	TodoButton,
 	TodoList,
@@ -21,13 +22,20 @@ import {
 	TodoH3,
 	TodoBodyHeader,
 	ScheduleItemListLayoutAside,
+	TodoBodyHeaderButton,
 } from "./ScheduleItemList.styles";
 
 const ScheduleItemList = () => {
 	const dispatch = useDispatch();
-	const { todaySchedules, schedulesForTheWeek, overlappedSchedules } =
-		useSelector((state) => state.schedule);
+	const {
+		todaySchedules,
+		schedulesForTheWeek,
+		overlappedSchedules,
+		currentCalendarView,
+	} = useSelector((state) => state.schedule);
 	const [isTodayTab, setIsTodayTab] = useState(true);
+
+	const isOverlappedSchedulesOn = overlappedSchedules.length > 0;
 
 	useEffect(() => {
 		dispatch(getTodaySchedules());
@@ -41,11 +49,24 @@ const ScheduleItemList = () => {
 			}),
 		);
 	};
-
-	if (overlappedSchedules.length > 0) {
+	if (isOverlappedSchedulesOn) {
 		return (
 			<ScheduleItemListLayoutAside data-testid="personal-todo-list">
 				<TodoBody>
+					<TodoBodyHeader>
+						<div>
+							<TodoH2>몇월 몇일 ~ 몇월 몇일</TodoH2>
+							{currentCalendarView === VIEW_TYPE.DAY_GRID_WEEK && (
+								<TodoH2>몇시 몇분 ~ 몇시 몇분</TodoH2>
+							)}
+							<TodoH3>동안의 일정들</TodoH3>
+						</div>
+						<TodoBodyHeaderButton
+							onClick={() => dispatch(resetOverlappedSchedules())}
+						>
+							<span>돌아가기</span>
+						</TodoBodyHeaderButton>
+					</TodoBodyHeader>
 					<TodoList>
 						{overlappedSchedules.map((schedule) => (
 							<ScheduleItem
@@ -83,10 +104,10 @@ const ScheduleItemList = () => {
 								: "앞으로 7일간 예정된 일정을 확인합니다."}
 						</TodoH3>
 					</div>
-					<ScheduleAddButton onClick={handleMenuOpen}>
+					<TodoBodyHeaderButton onClick={handleMenuOpen}>
 						<ScheduleAddIcon />
 						<span>일정 추가</span>
-					</ScheduleAddButton>
+					</TodoBodyHeaderButton>
 				</TodoBodyHeader>
 				{(isTodayTab && todaySchedules.length === 0) ||
 				(!isTodayTab && schedulesForTheWeek.length === 0) ? (

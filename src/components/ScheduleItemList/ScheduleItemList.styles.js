@@ -70,7 +70,7 @@ export const TodoBodyHeader = styled.header`
 	justify-content: space-between;
 	width: 100%;
 	& > div {
-		height: 43px;
+		min-height: 43px;
 	}
 `;
 
@@ -104,15 +104,11 @@ export const TodoH3 = styled.h3`
 	color: ${({ theme: { colors } }) => colors.text_02};
 `;
 
-export const ScheduleAddButton = styled.button`
+export const TodoBodyHeaderButton = styled.button`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	width: 47px;
-	height: 47px;
-	margin-top: -2px;
-	margin-right: -7px;
 	font-size: ${({
 		theme: {
 			typography: { size },
