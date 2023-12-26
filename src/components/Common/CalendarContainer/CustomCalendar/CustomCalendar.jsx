@@ -242,6 +242,11 @@ const CustomCalendar = forwardRef(
 							? handleScheduleClick
 							: undefined
 					}
+					dateClick={
+						currentCalendarView === VIEW_TYPE.DAY_GRID_WEEK
+							? () => dispatch(resetOverlappedSchedules())
+							: undefined
+					}
 					datesSet={({ view: { type } }) => {
 						dispatch(resetOverlappedSchedules());
 						dispatch(setCurrentCalenderView(type));
