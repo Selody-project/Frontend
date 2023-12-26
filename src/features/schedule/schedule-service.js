@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import moment from "moment";
 
 import { VIEW_TYPE } from "@/constants/calendarConstants";
 import commonThunk from "@/features/commonThunk";
@@ -184,6 +185,16 @@ export const getOverlappedSchedules = createAsyncThunk(
 					new Date(schedule.endDateTime) >= end,
 			);
 		}
-		return data;
+		const yearFormat =
+			start.getFullYear() === end.getFullYear() &&
+			currentCalendarView === VIEW_TYPE.DAY_GRID_WEEK
+				? ""
+				: "YYYY년 ";
+		const title =
+			currentCalendarView === VIEW_TYPE.DAY_GRID_MONTH
+				? moment(start).format(`${yearFormat}MM월 DD일`)
+				: `${moment(start).format(`${yearFormat}MM월 DD일 HH시 mm분`)}부터
+${moment(end).format(`${yearFormat}MM월 DD일 HH시 mm분`)}`;
+		return { schedules: data.schedules, title };
 	},
 );

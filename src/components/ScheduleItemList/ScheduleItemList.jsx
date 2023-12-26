@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import ScheduleItem from "@/components/ScheduleItemList/ScheduleItem/ScheduleItem";
-import { VIEW_TYPE } from "@/constants/calendarConstants";
 import { ScheduleAddIcon } from "@/constants/iconConstants";
 import { UI_TYPE } from "@/constants/uiConstants";
 import {
@@ -30,8 +29,10 @@ const ScheduleItemList = () => {
 	const {
 		todaySchedules,
 		schedulesForTheWeek,
-		overlappedSchedules,
-		currentCalendarView,
+		overlappedScheduleInfo: {
+			title: overlappedScheduleTitle,
+			schedules: overlappedSchedules,
+		},
 	} = useSelector((state) => state.schedule);
 	const [isTodayTab, setIsTodayTab] = useState(true);
 
@@ -55,10 +56,9 @@ const ScheduleItemList = () => {
 				<TodoBody>
 					<TodoBodyHeader>
 						<div>
-							<TodoH2>몇월 몇일 ~ 몇월 몇일</TodoH2>
-							{currentCalendarView === VIEW_TYPE.DAY_GRID_WEEK && (
-								<TodoH2>몇시 몇분 ~ 몇시 몇분</TodoH2>
-							)}
+							{overlappedScheduleTitle.split("\n").map((line) => (
+								<TodoH2 key={line}>{line}</TodoH2>
+							))}
 							<TodoH3>동안의 일정들</TodoH3>
 						</div>
 						<TodoBodyHeaderButton

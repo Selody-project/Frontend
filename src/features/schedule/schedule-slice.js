@@ -15,11 +15,13 @@ import {
 	getOverlappedSchedules,
 } from "./schedule-service.js";
 
+const initialOverlappedScheduleInfo = { title: "", schedules: [] };
+
 const initialState = {
 	calendarSchedules: [],
 	todaySchedules: [],
 	schedulesForTheWeek: [],
-	overlappedSchedules: [],
+	overlappedScheduleInfo: initialOverlappedScheduleInfo,
 	currentYear: new Date().getFullYear(),
 	currentMonth: new Date().getMonth() + 1,
 	currentWeek: getCurrentWeek(),
@@ -55,7 +57,7 @@ const scheduleSlice = createSlice({
 			state.currentCalendarView = payload;
 		},
 		resetOverlappedSchedules: (state) => {
-			state.overlappedSchedules = [];
+			state.overlappedScheduleInfo = initialOverlappedScheduleInfo;
 		},
 	},
 
@@ -203,13 +205,13 @@ const scheduleSlice = createSlice({
 				state.isLoading = true;
 			})
 			.addCase(getOverlappedSchedules.fulfilled, (state, { payload }) => {
-				state.overlappedSchedules = payload.schedules;
+				state.overlappedScheduleInfo = payload;
 				state.isLoading = false;
 			})
 			.addCase(getOverlappedSchedules.rejected, (state, { payload }) => {
 				console.log(payload);
 				state.isLoading = false;
-				state.overlappedSchedules = [];
+				state.overlappedScheduleInfo = initialOverlappedScheduleInfo;
 			});
 	},
 });
