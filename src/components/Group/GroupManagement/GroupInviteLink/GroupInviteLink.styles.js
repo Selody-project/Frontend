@@ -23,6 +23,7 @@ export const ContainerDiv = styled.div`
 export const TopDiv = styled.div`
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 
 	& > h3 {
 		color: ${({ theme: { colors } }) => colors.text_01};
@@ -30,13 +31,10 @@ export const TopDiv = styled.div`
 		font-weight: ${({ theme: { typography } }) => typography.weight.medium};
 	}
 
-	& > h4 {
-		font-size: ${({ theme: { typography } }) => typography.size.s1};
-		text-decoration: underline;
-
-		& > button {
-			cursor: pointer;
-		}
+	& > svg {
+		width: 14px;
+		height: 14px;
+		cursor: pointer;
 	}
 `;
 

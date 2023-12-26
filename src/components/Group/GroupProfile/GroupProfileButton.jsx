@@ -82,7 +82,7 @@ const GroupProfileButton = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 			{profileButtonRender}
 			{isGroupInviteLinkOpen && (
 				<GroupInviteLink
-					groupId={groupInfo?.information?.group.groupId}
+					groupInfo={groupInfo?.information?.group}
 					onClose={() => setIsGroupInviteLinkOpen(false)}
 				/>
 			)}

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import { CloseIcon } from "@/constants/iconConstants";
 import { createGroupInviteLink } from "@/features/group/group-service";
 
 import {
@@ -10,7 +11,7 @@ import {
 	TextDiv,
 } from "./GroupInviteLink.styles";
 
-const GroupInviteLink = ({ groupId, onClose }) => {
+const GroupInviteLink = ({ groupInfo, onClose }) => {
 	const dispatch = useDispatch();
 
 	const groupInviteLink = useSelector(
@@ -19,26 +20,27 @@ const GroupInviteLink = ({ groupId, onClose }) => {
 
 	const [inviteLink, setInviteLink] = useState(false);
 
+	const groupId = groupInfo?.groupId;
+	const groupName = groupInfo?.name;
+
 	const createLinkButtonClick = () => {
 		dispatch(createGroupInviteLink(groupId));
 		setInviteLink(true);
 	};
 
+	useEffect(() => {
+		createLinkButtonClick();
+	}, []);
+
 	return (
 		<ContainerDiv>
 			<TopDiv>
-				<h3>그룹 A</h3>
-				<h4>
-					<button type="button" onClick={createLinkButtonClick}>
-						생성하기
-					</button>
-				</h4>
+				<h3>{groupName}</h3>
+				<CloseIcon onClick={() => onClose(false)} />
 			</TopDiv>
 			<MiddleDiv>
 				<TextDiv>{inviteLink ? groupInviteLink : "링크"}</TextDiv>
-				<button type="button" onClick={() => onClose(false)}>
-					확인
-				</button>
+				<button type="button">복사</button>
 			</MiddleDiv>
 			<h3>* 24시간이 지나거나 새로 생성 시 기존 코드는 만료됩니다.</h3>
 		</ContainerDiv>
