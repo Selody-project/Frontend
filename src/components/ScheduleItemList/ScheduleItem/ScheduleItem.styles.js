@@ -12,9 +12,7 @@ export const CardDiv = styled(BaseCard)`
 	align-items: center;
 	gap: 16px;
 	width: 100%;
-	height: 67px;
-	min-height: 67px;
-	padding-left: 15px;
+	padding: 15px;
 `;
 
 export const ColoredCircleDiv = styled.div`
@@ -28,9 +26,10 @@ export const ColoredCircleDiv = styled.div`
 export const ScheduleItemContentDiv = styled.div`
 	flex: 1;
 	display: flex;
+	gap: 4px;
 	flex-direction: column;
-	justify-content: space-between;
-	height: 38px;
+	justify-content: center;
+	height: 100%;
 	color: ${({ theme: { colors } }) => colors.text_03};
 	font-size: ${({
 		theme: {
@@ -59,7 +58,6 @@ export const ScheduleItemContentDiv = styled.div`
 `;
 
 export const ScheduleItemRightButtonsDiv = styled.div`
-	margin-right: 8px;
 	display: flex;
 	gap: 16px;
 	& > button {
