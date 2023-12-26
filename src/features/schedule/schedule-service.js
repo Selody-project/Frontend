@@ -178,6 +178,8 @@ export const getOverlappedSchedules = createAsyncThunk(
 			},
 			thunkAPI,
 		);
+		if (data.schedules.length === 0)
+			return thunkAPI.rejectWithValue("해당 날짜의 일정이 없습니다.");
 		if (data.schedules && currentCalendarView === VIEW_TYPE.DAY_GRID_WEEK) {
 			data.schedules = data.schedules.filter(
 				(schedule) =>

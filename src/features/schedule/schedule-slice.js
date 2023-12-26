@@ -208,8 +208,7 @@ const scheduleSlice = createSlice({
 				state.overlappedScheduleInfo = payload;
 				state.isLoading = false;
 			})
-			.addCase(getOverlappedSchedules.rejected, (state, { payload }) => {
-				console.log(payload);
+			.addCase(getOverlappedSchedules.rejected, (state) => {
 				state.isLoading = false;
 				state.overlappedScheduleInfo = initialOverlappedScheduleInfo;
 			});
