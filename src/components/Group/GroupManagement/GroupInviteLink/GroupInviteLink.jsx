@@ -28,6 +28,10 @@ const GroupInviteLink = ({ groupInfo, onClose }) => {
 		setInviteLink(true);
 	};
 
+	const handleCopyClipBoard = async (text) => {
+		await navigator.clipboard.writeText(text);
+	};
+
 	useEffect(() => {
 		createLinkButtonClick();
 	}, []);
@@ -40,7 +44,12 @@ const GroupInviteLink = ({ groupInfo, onClose }) => {
 			</TopDiv>
 			<MiddleDiv>
 				<TextDiv>{inviteLink ? groupInviteLink : "링크"}</TextDiv>
-				<button type="button">복사</button>
+				<button
+					type="button"
+					onClick={() => handleCopyClipBoard(groupInviteLink)}
+				>
+					복사
+				</button>
 			</MiddleDiv>
 			<h3>* 24시간이 지나거나 새로 생성 시 기존 코드는 만료됩니다.</h3>
 		</ContainerDiv>
