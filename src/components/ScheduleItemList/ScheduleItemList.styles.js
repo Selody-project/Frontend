@@ -9,7 +9,7 @@ export const ScheduleItemListLayoutAside = styled.aside`
 	gap: 19px;
 	width: 100%;
 	max-width: 422px;
-	height: 100%;
+	height: 549px;
 	border-radius: 15px;
 	font-family: "Inter";
 `;
