@@ -10,7 +10,10 @@ import { useTheme } from "styled-components";
 
 import { VIEW_TYPE } from "@/constants/calendarConstants";
 import { getOverlappedSchedules } from "@/features/schedule/schedule-service";
-import { setCurrentCalenderView } from "@/features/schedule/schedule-slice";
+import {
+	resetOverlappedSchedules,
+	setCurrentCalenderView,
+} from "@/features/schedule/schedule-slice";
 
 import { CustomCalendarDiv, TitleSelect } from "./CustomCalendar.styles";
 
@@ -239,9 +242,10 @@ const CustomCalendar = forwardRef(
 							? handleScheduleClick
 							: undefined
 					}
-					datesSet={({ view: { type } }) =>
-						dispatch(setCurrentCalenderView(type))
-					}
+					datesSet={({ view: { type } }) => {
+						dispatch(resetOverlappedSchedules());
+						dispatch(setCurrentCalenderView(type));
+					}}
 					slotLabelFormat={getTimeFormat}
 					slotDuration="1:00:00"
 					eventBackgroundColor={theme.colors.disabled_text}
