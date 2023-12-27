@@ -4,8 +4,8 @@ import { NavLink } from "react-router-dom";
 
 import NotificationIcon from "@/assets/icon/ic-notification.svg";
 import DefaultProfile from "@/assets/img/img-default-profile.png";
-import Tab from "@/components/Base/Tab/Tab";
 import SelodyLogo from "@/components/Common/SelodyLogo";
+import Tab from "@/components/Common/Tab/Tab";
 import NotificationDropdown from "@/components/Notification/NotificationDropdown/NotificationDropdown";
 import { HEADER_TAB_TYPE } from "@/constants/tabConstants";
 import { openModal } from "@/features/ui/ui-slice";
