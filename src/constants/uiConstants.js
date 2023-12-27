@@ -11,4 +11,5 @@ export const UI_TYPE = {
 export const SCHEDULE_MODAL_TYPE = {
 	EDIT: "EDIT",
 	CREATE: "CREATE",
+	VIEW: "VIEW",
 };

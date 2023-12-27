@@ -39,6 +39,21 @@ const uiSlice = createSlice({
 			state.scheduleModalMode = SCHEDULE_MODAL_TYPE.EDIT;
 			state.scheduleModalId = id;
 		},
+		openScheduleViewModal: (state, action) => {
+			const { type, id } = action.payload;
+			if (
+				type !== UI_TYPE.PERSONAL_SCHEDULE &&
+				type !== UI_TYPE.SHARE_SCHEDULE
+			) {
+				throw Error("잘못된 modal type입니다");
+			}
+			if (id === null) {
+				throw Error("일정 id를 입력해주세요");
+			}
+			state.openedModal = type;
+			state.scheduleModalMode = SCHEDULE_MODAL_TYPE.VIEW;
+			state.scheduleModalId = id;
+		},
 		openCreateGroupModal: (state) => {
 			state.openedModal = UI_TYPE.CREATE_GROUP;
 		},
@@ -69,6 +84,7 @@ const uiSlice = createSlice({
 export const {
 	openScheduleCreateModal,
 	openScheduleEditModal,
+	openScheduleViewModal,
 	openCreateGroupModal,
 	closeModal,
 	setIsLoading,
