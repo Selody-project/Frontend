@@ -9,6 +9,7 @@ import { screen } from "@testing-library/react";
 
 import "@testing-library/jest-dom";
 import ScheduleModal from "@/components/Common/ScheduleModal/ScheduleModal.jsx";
+import { SCHEDULE_MODAL_TYPE } from "@/constants/uiConstants";
 import PersonalSchedulePage from "@/pages/PersonalSchedulePage/PersonalSchedulePage.jsx";
 import lightTheme from "@/styles/theme.js";
 
@@ -35,21 +36,30 @@ jest.mock(
 const TITLE_TEXT = "일정 1";
 const getInitialScheduleState = (recurrence) => {
 	return {
-		todaySchedules: [
-			{
-				id: 0,
-				isGroup: false,
-				title: TITLE_TEXT,
-				startDateTime: new Date().toISOString(),
-				endDateTime: new Date().toISOString(),
-				recurrence,
+		schedule: {
+			todaySchedules: [
+				{
+					id: 0,
+					isGroup: false,
+					title: TITLE_TEXT,
+					startDateTime: new Date().toISOString(),
+					endDateTime: new Date().toISOString(),
+					recurrence,
+				},
+			],
+			calendarSchedules: [],
+			schedulesForTheWeek: [],
+			overlappedScheduleInfo: {
+				title: "",
+				schedules: [],
 			},
-		],
-		calendarSchedules: [],
-		schedulesForTheWeek: [],
-		overlappedScheduleInfo: {
-			title: "",
-			schedules: [],
+		},
+		ui: {
+			isLoading: true,
+			scheduleModalMode: SCHEDULE_MODAL_TYPE.CREATE,
+		},
+		auth: {
+			user: { userId: 1 },
 		},
 	};
 };
@@ -113,9 +123,7 @@ describe("PersonalSchedulePage without ScheduleModal", () => {
 
 	it("do not render schedule add button and render one todaySchedule when todaySchedule is not empty", () => {
 		render(<PersonalSchedulePage />, {
-			preloadedState: {
-				schedule: getInitialScheduleState(0),
-			},
+			preloadedState: getInitialScheduleState(0),
 		});
 
 		const addButton = screen.queryByRole("button", {
@@ -128,9 +136,7 @@ describe("PersonalSchedulePage without ScheduleModal", () => {
 
 	it("render '반복' text when todaySchedules contain recurring schedule", () => {
 		render(<PersonalSchedulePage />, {
-			preloadedState: {
-				schedule: getInitialScheduleState(1),
-			},
+			preloadedState: getInitialScheduleState(1),
 		});
 
 		const addButton = screen.queryByRole("button", {
