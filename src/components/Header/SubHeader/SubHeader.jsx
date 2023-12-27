@@ -4,10 +4,10 @@ import Tab from "@/components/Common/Tab/Tab";
 
 import { SubHeaderDiv } from "./SubHeader.style";
 
-const SubHeader = ({ data }) => {
+const SubHeader = ({ contents }) => {
 	return (
 		<SubHeaderDiv>
-			<Tab data={data} name="subheader" />
+			<Tab contents={contents} name="subheader" />
 		</SubHeaderDiv>
 	);
 };
