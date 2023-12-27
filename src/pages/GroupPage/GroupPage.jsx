@@ -22,7 +22,7 @@ const GroupPage = () => {
 	const { groupInfo, groupRequestMemberList } = useSelector(
 		(state) => state.group,
 	);
-	const userGroup = useSelector((state) => state.user.userGroupList);
+	const userGroups = useSelector((state) => state.user.userGroupList);
 	const { user } = useSelector((state) => state.auth);
 
 	const param = useParams();
@@ -44,13 +44,13 @@ const GroupPage = () => {
 			setIsGroupLeader(true);
 			setIsGroupMember(true);
 		} else {
-			userGroup?.forEach((info) => {
+			userGroups?.forEach((info) => {
 				if (info.groupId === Number(param.id)) {
 					setIsGroupMember(true);
 				}
 			});
 		}
-	}, [userGroup, leaderId]);
+	}, [userGroups, leaderId]);
 
 	return (
 		<GroupMain>
