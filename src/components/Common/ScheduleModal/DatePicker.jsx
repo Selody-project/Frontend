@@ -79,7 +79,9 @@ const DatePicker = ({ minDateStr, selectedStr, onChange }) => {
 	}, [selectedStr]);
 
 	return (
-		<CustomDatePickerComponents.DatePickerDiv>
+		<CustomDatePickerComponents.DatePickerDiv
+			isDisabled={isLoading || scheduleModalMode === SCHEDULE_MODAL_TYPE.VIEW}
+		>
 			<ReactDatePicker
 				ref={datePickerRef}
 				locale={ko}

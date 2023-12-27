@@ -5,6 +5,9 @@ const DatePickerDiv = styled.div`
 	& .react-datepicker__aria-live {
 		display: none;
 	}
+	& > .react-datepicker-wrapper > .react-datepicker__input-container > button {
+		cursor: ${({ isDisabled }) => (isDisabled ? "not-allowed" : "cursor")};
+	}
 	// datePicker 레이아웃
 	& .react-datepicker {
 		margin: 7px 0;

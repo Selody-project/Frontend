@@ -147,6 +147,11 @@ const GlobalStyles = createGlobalStyle`${css`
 		all: unset;
 	}
 
+	button:disabled,
+	input:disabled {
+		cursor: not-allowed;
+	}
+
 	* {
 		box-sizing: border-box !important;
 	}
