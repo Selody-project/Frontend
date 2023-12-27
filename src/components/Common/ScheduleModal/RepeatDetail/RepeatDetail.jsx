@@ -1,6 +1,9 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 import PropTypes from "prop-types";
+
+import { SCHEDULE_MODAL_TYPE } from "@/constants/uiConstants";
 
 import { ByweekdayPickerDiv } from "./RepeatDetail.styles";
 
@@ -39,6 +42,8 @@ const RepeatDetail = ({
 	onByweekdayChange,
 	onIntervalChange,
 }) => {
+	const { isLoading, scheduleModalMode } = useSelector(({ ui }) => ui);
+
 	return (
 		<div>
 			{isWeekly && (
@@ -52,6 +57,9 @@ const RepeatDetail = ({
 									id={EN}
 									checked={byweekday.indexOf(index) !== -1}
 									onChange={(event) => onByweekdayChange(event, index)}
+									disabled={
+										isLoading || scheduleModalMode === SCHEDULE_MODAL_TYPE.VIEW
+									}
 								/>
 							</div>
 						</label>
@@ -67,6 +75,9 @@ const RepeatDetail = ({
 						min={1}
 						value={interval}
 						onChange={onIntervalChange}
+						disabled={
+							isLoading || scheduleModalMode === SCHEDULE_MODAL_TYPE.VIEW
+						}
 					/>
 					<span>{`${getRecurringString(freq)} 간격으로 반복합니다.`}</span>
 				</div>

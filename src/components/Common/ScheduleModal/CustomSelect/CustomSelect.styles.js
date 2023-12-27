@@ -4,7 +4,7 @@ export const CustomSelectWrapperDiv = styled.div`
 	position: relative;
 `;
 
-export const SelectDiv = styled.div`
+export const SelectButton = styled.button`
 	width: 196px;
 	height: 33px;
 	border: 1px solid ${({ theme: { colors } }) => colors.disabled_text};

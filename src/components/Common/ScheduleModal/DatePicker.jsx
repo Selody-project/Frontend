@@ -1,9 +1,11 @@
 import React, { forwardRef, useEffect, useRef, useState } from "react";
 import ReactDatePicker from "react-datepicker";
+import { useSelector } from "react-redux";
 
 import { ko } from "date-fns/locale";
 
 import { PreviousIcon, NextIcon } from "@/constants/iconConstants";
+import { SCHEDULE_MODAL_TYPE } from "@/constants/uiConstants";
 
 import { CustomDatePickerComponents } from "./Picker.styles";
 
@@ -54,6 +56,7 @@ const CustomHeader = ({
 };
 
 const DatePicker = ({ minDateStr, selectedStr, onChange }) => {
+	const { isLoading, scheduleModalMode } = useSelector(({ ui }) => ui);
 	const [dateToChange, setDateToChange] = useState(new Date(selectedStr));
 	const datePickerRef = useRef();
 	const prevDateRef = useRef(new Date(selectedStr));
@@ -89,6 +92,7 @@ const DatePicker = ({ minDateStr, selectedStr, onChange }) => {
 				onChange={setDateToChange}
 				shouldCloseOnSelect={false}
 				onClickOutside={cancelDatePick}
+				disabled={isLoading || scheduleModalMode === SCHEDULE_MODAL_TYPE.VIEW}
 			>
 				<footer>
 					<button type="button" onClick={cancelDatePick}>

@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 
+import { SCHEDULE_MODAL_TYPE } from "@/constants/uiConstants";
 import useOutsideClick from "@/hooks/useOutsideClick";
 
 import { CustomTimePickerComponents } from "./Picker.styles";
@@ -44,6 +46,7 @@ const TimePicker = ({
 		Number(selectedHours),
 	)}:${selectedMinutes}`;
 
+	const { isLoading, scheduleModalMode } = useSelector(({ ui }) => ui);
 	const [isAM, setIsAM] = useState(Number(selectedHours) < 12);
 	const [hours, setHours] = useState(
 		Number(selectedHours) === 12 ? 12 : Number(selectedHours) % 12,
@@ -92,6 +95,7 @@ const TimePicker = ({
 				isTime={true}
 				value={selected}
 				onClick={onOpen}
+				disabled={isLoading || scheduleModalMode === SCHEDULE_MODAL_TYPE.VIEW}
 			>
 				{initialButtonText}
 			</CustomTimePickerComponents.CustomInputButton>

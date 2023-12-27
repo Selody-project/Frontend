@@ -110,7 +110,16 @@ const ScheduleModal = () => {
 		useSelector((state) => state.ui);
 	const [formValues, setFormValues] = useState(initialFormValues);
 	// value
+	const isCreateMode = scheduleModalMode === SCHEDULE_MODAL_TYPE.CREATE;
 	const isEditMode = scheduleModalMode === SCHEDULE_MODAL_TYPE.EDIT;
+	const isViewMode = scheduleModalMode === SCHEDULE_MODAL_TYPE.VIEW;
+
+	const getModalTitle = () => {
+		if (isCreateMode) return "일정 추가";
+		if (isEditMode) return "일정 수정";
+		if (isViewMode) return "일정 정보";
+		return new Error("올바르지 않은 모달 타입입니다.");
+	};
 
 	// handle date change
 	const handleDateValueChange = (date, id) => {
@@ -392,13 +401,14 @@ const ScheduleModal = () => {
 			!checkTimeIsValid() ||
 			!checkIntervalIsValid() ||
 			!checkByweekdayIsValid() ||
-			!checkUntilIsValid()
+			!checkUntilIsValid() ||
+			isViewMode
 		) {
 			return;
 		}
 
 		// 일정 저장 로직
-		if (!isEditMode) {
+		if (isCreateMode) {
 			dispatch(createSchedule(formValues));
 		} else {
 			dispatch(updateSchedule({ schedule: formValues, id: scheduleModalId }));
@@ -412,7 +422,7 @@ const ScheduleModal = () => {
 	};
 
 	useEffect(() => {
-		if (isEditMode) {
+		if (!isCreateMode) {
 			getSchedule(scheduleModalId, (schedule) => {
 				dispatch(setIsLoading(false));
 				setFormValues(convertScheduleDataToFormValue(schedule));
@@ -425,7 +435,7 @@ const ScheduleModal = () => {
 		return () => {
 			dispatch(closeModal());
 		};
-	}, [isEditMode, scheduleModalId]);
+	}, [isCreateMode, scheduleModalId]);
 
 	useEffect(() => {
 		// set byweekday
@@ -462,7 +472,7 @@ const ScheduleModal = () => {
 	return (
 		<FormModal isEmpty={checkIsEmpty()}>
 			<ScheduleModalLayoutDiv>
-				<h2>{isEditMode ? "일정 수정" : "일정 추가"}</h2>
+				<h2>{getModalTitle()}</h2>
 				<TitleInput
 					id="title"
 					type="text"
@@ -471,6 +481,7 @@ const ScheduleModal = () => {
 					onChange={(e) =>
 						setFormValues((prev) => ({ ...prev, title: e.target.value }))
 					}
+					disabled={isLoading || isViewMode}
 				/>
 				<DetailTextarea
 					id="content"
@@ -480,6 +491,7 @@ const ScheduleModal = () => {
 					onChange={(e) =>
 						setFormValues((prev) => ({ ...prev, content: e.target.value }))
 					}
+					disabled={isLoading || isViewMode}
 				/>
 				<DateAndTime
 					startDate={formValues.startDate}
@@ -496,6 +508,7 @@ const ScheduleModal = () => {
 								type="checkbox"
 								onChange={handleIsAllDayValueChange}
 								checked={formValues.isAllDay}
+								disabled={isLoading || isViewMode}
 							/>
 							하루 종일
 						</label>
@@ -562,12 +575,14 @@ const ScheduleModal = () => {
 						formValues.startDate && !formValues.endDate
 					}
 				>
-					<SubmitButton
-						onClick={handleSubmit}
-						disabled={!checkFormIsFilledOrChanged() || isLoading}
-					>
-						{isEditMode ? "수정하기" : "저장하기"}
-					</SubmitButton>
+					{isViewMode || (
+						<SubmitButton
+							onClick={handleSubmit}
+							disabled={!checkFormIsFilledOrChanged() || isLoading}
+						>
+							{isEditMode ? "수정하기" : "저장하기"}
+						</SubmitButton>
+					)}
 				</FooterDiv>
 			</ScheduleModalLayoutDiv>
 		</FormModal>
