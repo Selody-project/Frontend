@@ -98,11 +98,12 @@ export const IconDiv = styled.div`
 	gap: 26px;
 `;
 
-export const IconItemDiv = styled.div`
+export const IconItemButton = styled.button`
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	gap: 6px;
+	cursor: pointer;
 
 	& > span {
 		font-size: 10px;

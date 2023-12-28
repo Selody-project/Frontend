@@ -26,7 +26,7 @@ import {
 	InfoDiv,
 	BottomDiv,
 	IconDiv,
-	IconItemDiv,
+	IconItemButton,
 } from "./MyGroupFeed.styles";
 
 const MyGroupFeed = () => {
@@ -112,18 +112,18 @@ const MyGroupFeed = () => {
 					<BottomDiv>
 						<p>{post.content}</p>
 						<IconDiv>
-							<IconItemDiv
+							<IconItemButton
 								onClick={() => {
 									handleLikeClick(post.isLiked, post.groupId, post.postId);
 								}}
 							>
 								{post.isLiked ? <HeartClickIcon /> : <HeartIcon />}
 								<span>{post.likesCount}</span>
-							</IconItemDiv>
-							<IconItemDiv>
+							</IconItemButton>
+							<IconItemButton>
 								<CommentIcon />
 								<span>{post.commentCount}</span>
-							</IconItemDiv>
+							</IconItemButton>
 						</IconDiv>
 					</BottomDiv>
 				</FeedArticle>

@@ -34,6 +34,10 @@ export const InfoDiv = styled.div`
 		background-color: ${({ theme: { colors } }) => colors.bg_01};
 		border: 0;
 		padding: 12px;
+
+		&:focus {
+			outline: 1px solid ${({ theme: { colors } }) => colors.primary};
+		}
 	}
 `;
 
