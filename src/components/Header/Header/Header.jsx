@@ -7,7 +7,7 @@ import DefaultProfile from "@/assets/img/img-default-profile.png";
 import SelodyLogo from "@/components/Common/SelodyLogo";
 import Tab from "@/components/Common/Tab/Tab";
 import NotificationDropdown from "@/components/Notification/NotificationDropdown/NotificationDropdown";
-import { HEADER_TAB_TYPE } from "@/constants/tabConstants";
+import { HEADER_TAB_CONSTANTS } from "@/constants/tabConstants";
 import { openModal } from "@/features/ui/ui-slice";
 
 import {
@@ -77,7 +77,7 @@ const Header = () => {
 							</h1>
 						</LogoDiv>
 					</NavLink>
-					<Tab contents={HEADER_TAB_TYPE} name="header" />
+					<Tab contents={HEADER_TAB_CONSTANTS} name="header" />
 				</LeftDiv>
 				<RightDiv>
 					<GroupCreateButton

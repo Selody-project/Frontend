@@ -1,4 +1,4 @@
-export const HEADER_TAB_TYPE = [
+export const HEADER_TAB_CONSTANTS = [
 	{
 		id: "schedule",
 		title: "일정",
