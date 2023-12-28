@@ -16,7 +16,7 @@ export const TitleLi = styled.li`
 	align-items: center;
 	justify-content: center;
 	position: relative;
-	cursor: ${({ click }) => (click ? "pointer" : "default")};
+	cursor: ${({ isClickable }) => (isClickable ? "pointer" : "default")};
 
 	& > svg {
 		margin-left: 2px;

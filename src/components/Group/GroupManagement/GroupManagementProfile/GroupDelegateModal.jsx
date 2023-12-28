@@ -28,7 +28,7 @@ const SelectBox = ({ name, isSelected, onClick }) => (
 	</SelectBoxDiv>
 );
 
-const GroupDelegateModal = ({ groupDetailInfo, groupMember }) => {
+const GroupDelegateModal = ({ groupDetailInfo, groupMembers }) => {
 	const dispatch = useDispatch();
 
 	const [selectedMemberId, setSelectedMemberId] = useState(null);
@@ -36,24 +36,16 @@ const GroupDelegateModal = ({ groupDetailInfo, groupMember }) => {
 	const handleClickDelegate = async () => {
 		const { groupId } = groupDetailInfo;
 
-		try {
-			await dispatch(delegateGroup({ groupId, selectedMemberId })).unwrap();
-			dispatch(closeModal());
-			dispatch(setRefetchUserGroup(true));
-		} catch (e) {
-			console.error(e);
-		}
+		await dispatch(delegateGroup({ groupId, selectedMemberId }));
+		dispatch(closeModal());
+		dispatch(setRefetchUserGroup(true));
 	};
 
 	const handleClickSelectBox = (userId) => {
-		setSelectedMemberId(userId);
-
-		if (selectedMemberId === userId) {
-			setSelectedMemberId(null);
-		}
+		setSelectedMemberId((prev) => (prev === userId ? null : userId));
 	};
 
-	const memberList = groupMember.filter(
+	const memberList = groupMembers.filter(
 		(info) => info.userId !== groupDetailInfo?.leader,
 	);
 

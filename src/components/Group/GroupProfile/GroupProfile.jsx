@@ -42,7 +42,7 @@ const GroupProfile = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 				<GroupDelegateModal
 					groupDetailInfo={groupDetailInfo}
 					isLoading={isLoading}
-					groupMember={groupInfo.information.memberInfo}
+					groupMembers={groupInfo.information.memberInfo}
 				/>
 			)}
 		</ContainerDiv>
