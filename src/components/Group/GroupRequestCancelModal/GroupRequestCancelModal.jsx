@@ -15,7 +15,7 @@ const modalStyle = {
 const GroupRequestCancelModal = ({ groupId }) => {
 	const dispatch = useDispatch();
 
-	const handleCancelGroupJoin = async () => {
+	const handleCancelGroupJoin = () => {
 		dispatch(changeRequestGroupJoin(groupId));
 		dispatch(closeModal());
 	};

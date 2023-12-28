@@ -80,7 +80,7 @@ const MyGroup = () => {
 					ref={childRef}
 				>
 					<ul>
-						{userGroupList?.map((info) => (
+						{userGroupList.map((info) => (
 							<li key={info.groupId}>
 								<Link to={`/group/${info.groupId}`}>
 									<ItemDiv>
