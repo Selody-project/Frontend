@@ -19,11 +19,12 @@ import {
 	SaveButtonDiv,
 	SaveButton,
 	BottomButtonDiv,
+	DividerHr,
 	ExitButton,
 	DeleteButton,
 } from "./GroupManagementProfile.styles";
 
-const GroupLeaderProfile = ({ groupInfo }) => {
+const GroupManagementProfile = ({ groupInfo }) => {
 	const dispatch = useDispatch();
 
 	const isLoading = useSelector((state) => state.group.isLoading);
@@ -124,7 +125,7 @@ const GroupLeaderProfile = ({ groupInfo }) => {
 					변경 정보 저장하기
 				</SaveButton>
 			</SaveButtonDiv>
-			<hr />
+			<DividerHr />
 			<BottomButtonDiv>
 				<ExitButton onClick={() => dispatch(openModal({ type: "EXIT_GROUP" }))}>
 					그룹 나가기
@@ -146,4 +147,4 @@ const GroupLeaderProfile = ({ groupInfo }) => {
 	);
 };
 
-export default GroupLeaderProfile;
+export default GroupManagementProfile;

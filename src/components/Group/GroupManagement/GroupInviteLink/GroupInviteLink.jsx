@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { CloseIcon } from "@/constants/iconConstants";
@@ -14,18 +14,13 @@ import {
 const GroupInviteLink = ({ groupInfo, onClose }) => {
 	const dispatch = useDispatch();
 
-	const groupInviteLink = useSelector(
-		(state) => state.group.groupInviteLink?.inviteCode,
-	);
-
-	const [inviteLink, setInviteLink] = useState(false);
+	const { isLoading, groupInviteLink } = useSelector((state) => state.group);
 
 	const groupId = groupInfo?.groupId;
 	const groupName = groupInfo?.name;
 
 	const createLinkButtonClick = () => {
 		dispatch(createGroupInviteLink(groupId));
-		setInviteLink(true);
 	};
 
 	const handleCopyClipBoard = async (text) => {
@@ -43,10 +38,10 @@ const GroupInviteLink = ({ groupInfo, onClose }) => {
 				<CloseIcon onClick={() => onClose(false)} />
 			</TopDiv>
 			<MiddleDiv>
-				<TextDiv>{inviteLink ? groupInviteLink : "링크"}</TextDiv>
+				<TextDiv>{!isLoading ? groupInviteLink?.inviteCode : "링크"}</TextDiv>
 				<button
 					type="button"
-					onClick={() => handleCopyClipBoard(groupInviteLink)}
+					onClick={() => handleCopyClipBoard(groupInviteLink?.inviteCode)}
 				>
 					복사
 				</button>

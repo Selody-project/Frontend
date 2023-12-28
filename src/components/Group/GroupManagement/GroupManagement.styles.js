@@ -5,17 +5,10 @@ export const ContainerDiv = styled.div`
 	border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
 	font-family: Inter;
 	width: 100%;
-`;
-
-export const InnerDiv = styled.div`
 	padding: 40px;
-
-	& > hr {
-		margin: 40px 0 0 0;
-		border: none;
-		border-top: 1px solid ${({ theme: { colors } }) => colors.btn_02};
-	}
 `;
+
+export const InnerDiv = styled.div``;
 
 export const TitleUl = styled.ul`
 	display: flex;

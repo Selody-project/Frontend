@@ -62,7 +62,7 @@ const MyGroupFeed = () => {
 
 	useEffect(() => {
 		const dispatchGetMyGroupPosts = async () => {
-			await dispatch(getMyGroupPosts(lastRecordId)).unwrap();
+			await dispatch(getMyGroupPosts(lastRecordId));
 		};
 		if (isObserving && !isEnd) {
 			dispatchGetMyGroupPosts();

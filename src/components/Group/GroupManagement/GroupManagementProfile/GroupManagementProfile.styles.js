@@ -81,6 +81,12 @@ export const BottomButtonDiv = styled.div`
 	gap: 26px;
 `;
 
+export const DividerHr = styled.hr`
+	margin: 40px 0 0 0;
+	border: none;
+	border-top: 1px solid ${({ theme: { colors } }) => colors.btn_02};
+`;
+
 export const ExitButton = styled.button`
 	width: 150px;
 	padding: 12px 0;

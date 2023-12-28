@@ -60,7 +60,7 @@ const GroupFeed = ({ groupId }) => {
 
 	useEffect(() => {
 		const dispatchgetGroupAllPosts = async () => {
-			await dispatch(getGroupAllPosts({ groupId, lastRecordId })).unwrap();
+			await dispatch(getGroupAllPosts({ groupId, lastRecordId }));
 		};
 		if (isObserving && !isEnd) {
 			dispatchgetGroupAllPosts();
@@ -69,7 +69,7 @@ const GroupFeed = ({ groupId }) => {
 
 	return (
 		<FeedSection>
-			{allGroupPosts?.map((post) => (
+			{allGroupPosts.map((post) => (
 				<FeedArticle key={post.postId}>
 					<OptionDiv>
 						<OptionThreeDotIcon
