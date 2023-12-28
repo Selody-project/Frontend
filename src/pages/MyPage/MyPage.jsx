@@ -26,8 +26,7 @@ import {
 const MyPage = () => {
 	const dispatch = useDispatch();
 
-	const auth = useSelector((state) => state.auth.user);
-
+	const currentUser = useSelector((state) => state.auth.user);
 	const { groupList, lastRecordId, isEnd } = useSelector(
 		(state) => state.group,
 	);
@@ -37,7 +36,6 @@ const MyPage = () => {
 
 	const [groups, setGroups] = useState([]);
 	const [tabIndex, setTabIndex] = useState(0);
-	const [introduction, setIntroduction] = useState("");
 
 	const target = useRef(null);
 
@@ -48,12 +46,6 @@ const MyPage = () => {
 	useEffect(() => {
 		dispatch(getUserGroups());
 		dispatch(getRequestUserGroups());
-
-		if (auth.introduction === "") {
-			setIntroduction("소개글을 입력해주세요.");
-		} else {
-			setIntroduction(auth.introduction);
-		}
 	}, []);
 
 	useEffect(() => {
@@ -80,11 +72,11 @@ const MyPage = () => {
 		<ContainerMain>
 			<ProfileSection>
 				<ProfileLeftDiv>
-					<img src={auth.profileImage} alt="profileImg" />
+					<img src={currentUser.profileImage} alt="profileImg" />
 					<ProfileInfoDiv>
-						<h3>{auth.nickname}</h3>
+						<h3>{currentUser.nickname}</h3>
 						<ProfileIntroductionDiv>
-							<p>{introduction}</p>
+							<p>{currentUser.introduction || "소개글을 입력해주세요"}</p>
 							<IntroductionEditIcon
 								onClick={() => {
 									navigate("/setting");
@@ -95,11 +87,11 @@ const MyPage = () => {
 				</ProfileLeftDiv>
 				<ProfileRightDiv>
 					<ProfileRightInnerDiv>
-						<h3>{auth.groupCount?.toLocaleString()}</h3>
+						<h3>{currentUser.groupCount?.toLocaleString()}</h3>
 						<h4>참여한 그룹</h4>
 					</ProfileRightInnerDiv>
 					<ProfileRightInnerDiv>
-						<h3>{auth.postCount?.toLocaleString()}</h3>
+						<h3>{currentUser.postCount?.toLocaleString()}</h3>
 						<h4>작성한 피드</h4>
 					</ProfileRightInnerDiv>
 				</ProfileRightDiv>

@@ -6,6 +6,7 @@ const initialState = {
 	userGroupList: [],
 	userRequestGroupList: [],
 	isUserGroupFetching: true,
+	isRequestUserGroupFetching: true,
 };
 
 const userSlice = createSlice({
@@ -15,7 +16,7 @@ const userSlice = createSlice({
 	extraReducers: (builder) => {
 		builder
 			.addMatcher(
-				isAnyOf(getUserGroups.pending, getRequestUserGroups),
+				isAnyOf(getUserGroups.pending, getRequestUserGroups.pending),
 				(state) => {
 					state.isUserGroupFetching = true;
 				},
@@ -23,7 +24,7 @@ const userSlice = createSlice({
 			.addMatcher(
 				isAnyOf(getUserGroups.rejected, getRequestUserGroups.rejected),
 				(state) => {
-					state.isUserGroupFetching = false;
+					state.isRequestUserGroupFetching = false;
 				},
 			)
 			.addMatcher(isAllOf(getUserGroups.fulfilled), (state, { payload }) => {
@@ -33,7 +34,7 @@ const userSlice = createSlice({
 			.addMatcher(
 				isAllOf(getRequestUserGroups.fulfilled),
 				(state, { payload }) => {
-					state.isUserGroupFetching = false;
+					state.isRequestUserGroupFetching = false;
 					state.userRequestGroupList = payload;
 				},
 			);
