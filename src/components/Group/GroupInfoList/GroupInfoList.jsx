@@ -13,7 +13,7 @@ import {
 } from "./GroupInfoList.styles";
 import GroupRequestCancelModal from "../GroupRequestCancelModal/GroupRequestCancelModal";
 
-const GroupInfoList = ({ groups, scrollRef, index }) => {
+const GroupInfoList = ({ groups, scrollRef, isReqeust }) => {
 	const dispatch = useDispatch();
 	const { openedModal } = useSelector((state) => state.ui);
 
@@ -35,7 +35,7 @@ const GroupInfoList = ({ groups, scrollRef, index }) => {
 						navigate(`/group/${info.groupId}`);
 					}}
 				>
-					{index && (
+					{isReqeust && (
 						<OptionDiv>
 							<OptionThreeDotIcon
 								onClick={() => {

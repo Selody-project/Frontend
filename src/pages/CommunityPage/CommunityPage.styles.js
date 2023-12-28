@@ -11,15 +11,18 @@ export const FeedDiv = styled.div`
 	margin-top: 50px;
 `;
 
-export const TabDiv = styled.div`
+export const TabUl = styled.ul`
 	display: flex;
-	justify-content: center;
 	align-items: center;
+	gap: 24px;
+`;
 
-	& > ul {
-		display: flex;
-		gap: 48px;
-	}
+export const TabButton = styled.button`
+	font-size: 18px;
+	font-weight: ${({ theme: { typography } }) => typography.weight.semibold};
+	cursor: pointer;
+	color: ${({ isActive, theme: { colors } }) =>
+		isActive ? colors.text_01 : colors.disabled_text};
 `;
 
 export const FeedTitleDiv = styled.div`

@@ -4,9 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import GroupSearch from "@/components/Group/GroupSearch/GroupSearch";
 import MyGroup from "@/components/Group/MyGroup/MyGroup";
 import MyGroupFeed from "@/components/Group/MyGroupFeed/MyGroupFeed";
-import Tab from "@/components/Tab/Tab";
 import { SearchIcon } from "@/constants/iconConstants";
-import { TAB_OPTION_TYPE, TAB_OPTION_TITLE } from "@/constants/tabConstants";
+import { TAB_CONSTANTS_TITLE } from "@/constants/tabConstants";
 import { searchGroup } from "@/features/group/group-service";
 
 import {
@@ -16,10 +15,13 @@ import {
 	SearchDiv,
 	Input,
 	SearchButton,
+	TabUl,
+	TabButton,
 } from "./CommunityPage.styles";
 
 const CommunityPage = () => {
-	const [tabIndex, setTabIndex] = useState(0);
+	const [tabName, setTabName] = useState(TAB_CONSTANTS_TITLE.MY_GROUP_FEED);
+
 	const [searchKeyword, setSearchKeyword] = useState("");
 	const [onSearch, setOnSearch] = useState(false);
 
@@ -57,27 +59,40 @@ const CommunityPage = () => {
 			<MyGroup />
 			<FeedDiv>
 				<FeedTitleDiv>
-					<Tab
-						defaultOption={TAB_OPTION_TYPE.MY_GROUP_FEED}
-						tabOption={TAB_OPTION_TYPE.GROUP_SEARCH}
-						defaultTitle={TAB_OPTION_TITLE.MY_GROUP_FEED}
-						tabTitle={TAB_OPTION_TITLE.GROUP_SEARCH}
-						tabIndex={tabIndex}
-						setTabIndex={setTabIndex}
-					/>
-					<SearchDiv>
-						<Input
-							placeholder="다른 그룹을 탐색해보세요."
-							onChange={handleSearchInput}
-							onKeyDown={handleSearchKeyDown}
-						/>
-						<SearchButton onClick={handleSearchClick}>
-							<SearchIcon />
-						</SearchButton>
-					</SearchDiv>
+					<TabUl role="tablist">
+						<li role="tab">
+							<TabButton
+								isActive={tabName === TAB_CONSTANTS_TITLE.MY_GROUP_FEED}
+								onClick={() => setTabName(TAB_CONSTANTS_TITLE.MY_GROUP_FEED)}
+							>
+								{TAB_CONSTANTS_TITLE.MY_GROUP_FEED}
+							</TabButton>
+						</li>
+						<li role="tab">
+							<TabButton
+								isActive={tabName === TAB_CONSTANTS_TITLE.GROUP_SEARCH}
+								onClick={() => setTabName(TAB_CONSTANTS_TITLE.GROUP_SEARCH)}
+							>
+								{TAB_CONSTANTS_TITLE.GROUP_SEARCH}
+							</TabButton>
+						</li>
+					</TabUl>
+
+					{tabName === TAB_CONSTANTS_TITLE.GROUP_SEARCH && (
+						<SearchDiv>
+							<Input
+								placeholder="다른 그룹을 탐색해보세요."
+								onChange={handleSearchInput}
+								onKeyDown={handleSearchKeyDown}
+							/>
+							<SearchButton onClick={handleSearchClick}>
+								<SearchIcon />
+							</SearchButton>
+						</SearchDiv>
+					)}
 				</FeedTitleDiv>
 
-				{tabIndex ? (
+				{tabName === TAB_CONSTANTS_TITLE.GROUP_SEARCH ? (
 					<GroupSearch onSearch={onSearch} searchGroupList={searchGroupList} />
 				) : (
 					<MyGroupFeed />

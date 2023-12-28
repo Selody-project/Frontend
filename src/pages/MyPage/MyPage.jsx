@@ -3,9 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import GroupInfoList from "@/components/Group/GroupInfoList/GroupInfoList";
-import Tab from "@/components/Tab/Tab";
 import { IntroductionEditIcon } from "@/constants/iconConstants";
-import { TAB_OPTION_TITLE, TAB_OPTION_TYPE } from "@/constants/tabConstants";
+import { TAB_CONSTANTS_TITLE } from "@/constants/tabConstants";
 import { getGroupList } from "@/features/group/group-service";
 import {
 	getUserGroups,
@@ -21,6 +20,8 @@ import {
 	ProfileIntroductionDiv,
 	ProfileRightDiv,
 	ProfileRightInnerDiv,
+	TabUl,
+	TabButton,
 } from "./MyPage.styles";
 
 const MyPage = () => {
@@ -35,7 +36,7 @@ const MyPage = () => {
 	);
 
 	const [groups, setGroups] = useState([]);
-	const [tabIndex, setTabIndex] = useState(0);
+	const [tabName, setTabName] = useState(TAB_CONSTANTS_TITLE.MY_GROUP);
 
 	const target = useRef(null);
 
@@ -61,7 +62,7 @@ const MyPage = () => {
 	useEffect(() => {
 		if (userGroupList?.length === 0) {
 			setGroups(groupList);
-		} else if (tabIndex) {
+		} else if (tabName === TAB_CONSTANTS_TITLE.REQUEST_GROUP) {
 			setGroups(userRequestGroupList);
 		} else {
 			setGroups(userGroupList);
@@ -96,18 +97,29 @@ const MyPage = () => {
 					</ProfileRightInnerDiv>
 				</ProfileRightDiv>
 			</ProfileSection>
-			<Tab
-				defaultOption={TAB_OPTION_TYPE.MY_GROUP}
-				tabOPTION={TAB_OPTION_TYPE.REQUEST_GROUP}
-				defaultTitle={TAB_OPTION_TITLE.MY_GROUP}
-				tabTitle={TAB_OPTION_TITLE.REQUEST_GROUP}
-				tabIndex={tabIndex}
-				setTabIndex={setTabIndex}
-			/>
+			<TabUl role="tablist">
+				<li role="tab">
+					<TabButton
+						isActive={tabName === TAB_CONSTANTS_TITLE.MY_GROUP}
+						onClick={() => setTabName(TAB_CONSTANTS_TITLE.MY_GROUP)}
+					>
+						{TAB_CONSTANTS_TITLE.MY_GROUP}
+					</TabButton>
+				</li>
+				<li role="tab">
+					<TabButton
+						isActive={tabName === TAB_CONSTANTS_TITLE.REQUEST_GROUP}
+						onClick={() => setTabName(TAB_CONSTANTS_TITLE.REQUEST_GROUP)}
+					>
+						{TAB_CONSTANTS_TITLE.REQUEST_GROUP}
+					</TabButton>
+				</li>
+			</TabUl>
+
 			<GroupInfoList
 				groups={groups}
 				scrollRef={target}
-				index={tabIndex === 1}
+				isRequest={tabName === TAB_CONSTANTS_TITLE.REQUEST_GROUP}
 			/>
 		</ContainerMain>
 	);

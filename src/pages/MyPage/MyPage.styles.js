@@ -89,3 +89,18 @@ export const ProfileRightInnerDiv = styled.div`
 		font-weight: ${({ theme: { typography } }) => typography.weight.medium};
 	}
 `;
+
+export const TabUl = styled.ul`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 48px;
+`;
+
+export const TabButton = styled.button`
+	font-size: 18px;
+	font-weight: ${({ theme: { typography } }) => typography.weight.semibold};
+	cursor: pointer;
+	color: ${({ isActive, theme: { colors } }) =>
+		isActive ? colors.text_01 : colors.disabled_text};
+`;
