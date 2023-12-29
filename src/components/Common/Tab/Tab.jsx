@@ -5,23 +5,23 @@ import SubHeader from "@/components/Header/SubHeader/SubHeader";
 
 import { TabUl, TabButton } from "./Tab.styles";
 
-const Tab = ({ contents, name }) => {
+const Tab = ({ contents, isSubHeader }) => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const path = location.pathname;
 
 	return (
-		<TabUl role="tablist" className={name}>
+		<TabUl role="tablist" className={isSubHeader ? "header" : "subheader"}>
 			{contents.map(({ ...tabContents }) => (
 				<li role="tab" key={tabContents.id}>
 					<TabButton
 						isActive={path.includes(tabContents.link)}
 						onClick={() => navigate(tabContents.link)}
-						className={name}
+						className={isSubHeader ? "header" : "subheader"}
 					>
 						{tabContents.title}
 					</TabButton>
-					{name === "header" && <SubHeader contents={tabContents.subHeader} />}
+					{isSubHeader && <SubHeader contents={tabContents.subHeader} />}
 				</li>
 			))}
 		</TabUl>

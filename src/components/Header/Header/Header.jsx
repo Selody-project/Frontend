@@ -77,7 +77,7 @@ const Header = () => {
 							</h1>
 						</LogoDiv>
 					</NavLink>
-					<Tab contents={HEADER_TAB_CONSTANTS} name="header" />
+					<Tab contents={HEADER_TAB_CONSTANTS} isSubHeader />
 				</LeftDiv>
 				<RightDiv>
 					<GroupCreateButton

@@ -7,7 +7,7 @@ import { SubHeaderDiv } from "./SubHeader.style";
 const SubHeader = ({ contents }) => {
 	return (
 		<SubHeaderDiv>
-			<Tab contents={contents} name="subheader" />
+			<Tab contents={contents} />
 		</SubHeaderDiv>
 	);
 };
