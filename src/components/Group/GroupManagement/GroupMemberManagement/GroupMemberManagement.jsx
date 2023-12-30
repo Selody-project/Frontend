@@ -18,6 +18,7 @@ import {
 	MemberUl,
 	MemberLi,
 	AccessLevelUl,
+	AccessLevelLi,
 } from "./GroupMemberManagement.styles";
 
 const groupMemberManagementTitleData = [
@@ -64,7 +65,9 @@ const GroupMemberManagement = ({ groupInfo }) => {
 		setIsAccessChangeOpenIndex((prev) => (prev === num ? null : num));
 
 	const handleChangeLevelClick = (userId, accessLevel) => {
-		dispatch(changeAccessLevel({ groupId, userId, accessLevel }));
+		if (groupInfo.accessLevel !== accessLevel) {
+			dispatch(changeAccessLevel({ groupId, userId, accessLevel }));
+		}
 	};
 
 	const deleteMember = (userId) => {
@@ -86,7 +89,7 @@ const GroupMemberManagement = ({ groupInfo }) => {
 					onClick={() => {
 						setIsAccessInfoOpen(!isAccessInfoOpen);
 					}}
-					click
+					isClickable
 				>
 					멤버 권한
 					<InfoIcon />
@@ -110,7 +113,7 @@ const GroupMemberManagement = ({ groupInfo }) => {
 						onClick={() => {
 							setIsCommentListOpen(!isCommentListOpen);
 						}}
-						click
+						isClickable
 					>
 						<span>1</span>
 						{isCommentListOpen && <CommentList />}
@@ -125,12 +128,12 @@ const GroupMemberManagement = ({ groupInfo }) => {
 						onClick={() => {
 							handleAccessChange(memberInfo.member.userId);
 						}}
-						click
+						isClickable
 					>
 						{ACCESS_LEVEL_DATA.map(
 							(data) =>
 								memberInfo.accessLevel === data.accessLevel && (
-									<span>
+									<span key={data.accessLevel}>
 										{data.icon}
 										{data.accessLevel}
 										<AccessArrowIcon />
@@ -140,7 +143,10 @@ const GroupMemberManagement = ({ groupInfo }) => {
 						{isAccessChangeOpenIndex === memberInfo.member.userId && (
 							<AccessLevelUl>
 								{ACCESS_LEVEL_DATA.map((data) => (
-									<li key={data.accessLevel}>
+									<AccessLevelLi
+										key={data.accessLevel}
+										isAccessLevel={data.accessLevel === memberInfo.accessLevel}
+									>
 										<button
 											type="button"
 											onClick={() => {
@@ -153,7 +159,7 @@ const GroupMemberManagement = ({ groupInfo }) => {
 											{data.icon}
 											{data.accessLevel}
 										</button>
-									</li>
+									</AccessLevelLi>
 								))}
 							</AccessLevelUl>
 						)}

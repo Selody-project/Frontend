@@ -37,7 +37,7 @@ export const MemberLi = styled.li`
 	color: ${({ theme: { colors }, red }) =>
 		red ? colors.sunday : colors.text_03};
 	position: relative;
-	cursor: ${({ click }) => (click ? "pointer" : "default")};
+	cursor: ${({ isClickable }) => (isClickable ? "pointer" : "default")};
 
 	& > img {
 		width: 42px;
@@ -71,36 +71,36 @@ export const AccessLevelUl = styled.ul`
 	top: 10px;
 	left: calc(100% + 6px);
 	z-index: 50;
-	box-sizing: border-box;
 	background-color: ${({ theme: { colors } }) => colors.white};
+`;
 
-	& > li {
-		&:last-of-type {
-			border-bottom: 1px solid
-				${({ theme: { colors } }) => colors.disabled_text};
-		}
+export const AccessLevelLi = styled.li`
+	background-color: ${({ isAccessLevel, theme: { colors } }) =>
+		isAccessLevel ? colors.bg_01 : "transparent"};
 
-		&:hover {
-			background-color: ${({ theme: { colors } }) => colors.bg_01};
-		}
+	&:last-of-type {
+		border-bottom: 1px solid ${({ theme: { colors } }) => colors.disabled_text};
+	}
 
-		& > button {
-			width: 100%;
-			color: #4b4b4b;
-			background-color: inherit;
-			font-size: 12px;
-			font-weight: ${({ theme: { typography } }) => typography.weight.medium};
-			display: flex;
-			align-items: center;
-			gap: 12px;
-			height: 20px;
-			border: 1px solid ${({ theme: { colors } }) => colors.disabled_text};
-			border-bottom: none;
+	&:hover {
+		background-color: ${({ theme: { colors } }) => colors.bg_01};
+	}
 
-			& > svg {
-				width: 10px;
-				margin-left: 12px;
-			}
+	& > button {
+		width: 100%;
+		color: #4b4b4b;
+		font-size: 12px;
+		font-weight: ${({ theme: { typography } }) => typography.weight.medium};
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		height: 20px;
+		border: 1px solid ${({ theme: { colors } }) => colors.disabled_text};
+		border-bottom: none;
+
+		& > svg {
+			width: 10px;
+			margin-left: 12px;
 		}
 	}
 `;
