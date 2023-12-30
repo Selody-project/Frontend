@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import GroupInfoList from "@/components/Group/GroupInfoList/GroupInfoList";
@@ -11,8 +11,6 @@ const GroupSearch = ({ onSearch, searchGroupList }) => {
 	const { groupList, lastRecordId, isEnd } = useSelector(
 		(state) => state.group,
 	);
-
-	const [groups, setGroups] = useState([]);
 
 	const target = useRef(null);
 
@@ -28,15 +26,12 @@ const GroupSearch = ({ onSearch, searchGroupList }) => {
 		}
 	}, [isObserving, dispatch]);
 
-	useEffect(() => {
-		if (onSearch) {
-			setGroups(searchGroupList);
-		} else {
-			setGroups(groupList);
-		}
-	});
-
-	return <GroupInfoList groups={groups} scrollRef={target} />;
+	return (
+		<GroupInfoList
+			groups={onSearch ? searchGroupList : groupList}
+			scrollRef={target}
+		/>
+	);
 };
 
 export default GroupSearch;
