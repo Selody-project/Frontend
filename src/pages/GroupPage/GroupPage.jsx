@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
@@ -27,30 +27,19 @@ const GroupPage = () => {
 
 	const param = useParams();
 
-	const [isGroupMember, setIsGroupMember] = useState(false);
-	const [isGroupLeader, setIsGroupLeader] = useState(false);
-
 	const isPublicGroup = groupInfo?.information.group.isPublicGroup;
 	const leaderId = groupInfo?.information.leaderInfo.userId;
+
+	const isGroupLeader = user.userId === leaderId;
+	const isGroupMember = userGroups.some(
+		(group) => group.groupId === Number(param.id),
+	);
 
 	useEffect(() => {
 		dispatch(getGroupInfo(param.id));
 		dispatch(getGroupRequestMemberList(param.id));
 		dispatch(getUserGroups());
 	}, []);
-
-	useEffect(() => {
-		if (user.userId === leaderId) {
-			setIsGroupLeader(true);
-			setIsGroupMember(true);
-		} else {
-			userGroups?.forEach((info) => {
-				if (info.groupId === Number(param.id)) {
-					setIsGroupMember(true);
-				}
-			});
-		}
-	}, [userGroups, leaderId]);
 
 	return (
 		<GroupMain>
