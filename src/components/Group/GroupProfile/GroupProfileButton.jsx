@@ -12,6 +12,7 @@ import {
 } from "./GroupProfile.styles";
 import GroupInviteLink from "../GroupManagement/GroupInviteLink/GroupInviteLink";
 
+// eslint-disable-next-line consistent-return
 const GroupProfileButton = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 	const dispatch = useDispatch();
 
@@ -21,12 +22,16 @@ const GroupProfileButton = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 	const [isManaging, setIsManaging] = useState(false);
 	const [isGroupInviteLinkOpen, setIsGroupInviteLinkOpen] = useState(false);
 
-	const profileButtonRender = [];
+	useEffect(() => {
+		if (locate.pathname.includes("leader")) {
+			setIsManaging(true);
+		}
+	}, []);
 
 	//	그룹 관리 페이지일때
 	if (isManaging) {
-		profileButtonRender.push(
-			<>
+		return (
+			<ProfileButtonDiv>
 				<ProfileButton onClick={() => setIsGroupInviteLinkOpen(true)}>
 					링크 생성하기
 				</ProfileButton>
@@ -35,59 +40,53 @@ const GroupProfileButton = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 				>
 					그룹장 위임
 				</ProfileWhiteButton>
-			</>,
+				{isGroupInviteLinkOpen && (
+					<GroupInviteLink
+						groupInfo={groupInfo?.information?.group}
+						onClose={() => setIsGroupInviteLinkOpen(false)}
+					/>
+				)}
+			</ProfileButtonDiv>
 		);
 	}
 
 	// 그룹 리더일떄
 	if (!isManaging && isGroupLeader) {
-		profileButtonRender.push(
-			<ProfileButton
-				onClick={() =>
-					navigate(`/group/${groupInfo?.information?.group?.groupId}/leader`)
-				}
-			>
-				그룹 관리
-			</ProfileButton>,
+		return (
+			<ProfileButtonDiv>
+				<ProfileButton
+					onClick={() =>
+						navigate(`/group/${groupInfo?.information?.group?.groupId}/leader`)
+					}
+				>
+					그룹 관리
+				</ProfileButton>
+			</ProfileButtonDiv>
 		);
 	}
 
 	// 그룹 멤버일때
 	if (!isGroupLeader && isGroupMember) {
-		profileButtonRender.push(
-			<ProfileWhiteButton>그룹 나가기</ProfileWhiteButton>,
+		return (
+			<ProfileButtonDiv>
+				<ProfileWhiteButton>그룹 나가기</ProfileWhiteButton>
+			</ProfileButtonDiv>
 		);
 	}
 
 	// 그룹 멤버가 아닐떄
 	if (!isGroupMember) {
-		profileButtonRender.push(
-			<ProfileWhiteButton>
-				<>
-					<AddIcon />
-					그룹 참여 요청
-				</>
-			</ProfileWhiteButton>,
+		return (
+			<ProfileButtonDiv>
+				<ProfileWhiteButton>
+					<>
+						<AddIcon />
+						그룹 참여 요청
+					</>
+				</ProfileWhiteButton>
+			</ProfileButtonDiv>
 		);
 	}
-
-	useEffect(() => {
-		if (locate.pathname.includes("leader")) {
-			setIsManaging(true);
-		}
-	}, []);
-
-	return (
-		<ProfileButtonDiv>
-			{profileButtonRender}
-			{isGroupInviteLinkOpen && (
-				<GroupInviteLink
-					groupInfo={groupInfo?.information?.group}
-					onClose={() => setIsGroupInviteLinkOpen(false)}
-				/>
-			)}
-		</ProfileButtonDiv>
-	);
 };
 
 export default GroupProfileButton;
