@@ -46,13 +46,16 @@ const GroupManagementProfile = ({ groupInfo }) => {
 	);
 
 	const isSaveEnabled =
-		(nameValue !== groupDetailInfo.name ||
-			descriptionValue !== groupDetailInfo.description ||
-			profileImgValue !== defaultProfileImg) &&
+		(nameValue.trim() !== groupDetailInfo.name.trim() ||
+			descriptionValue.trim() !== groupDetailInfo.description.trim() ||
+			profileImgValue.trim() !== defaultProfileImg.trim() ||
+			isPublicGroup !== isPublic) &&
 		nameValue.trim();
 
-	const handleClickSave = () => {
+	const handleClickSave = async () => {
 		const formdata = new FormData();
+		const chagnePublicOption = !isPublicGroup;
+
 		const data = {
 			name: nameValue,
 			description: descriptionValue,
@@ -64,13 +67,8 @@ const GroupManagementProfile = ({ groupInfo }) => {
 		}
 
 		dispatch(updateGroupProfile({ formdata, groupId }));
-	};
-
-	const handleClickToggle = async () => {
-		const chagnePublicOption = !isPublicGroup;
 
 		try {
-			setIsPublic(!isPublic);
 			await dispatch(
 				changeGroupPublicOption({ groupId, chagnePublicOption }),
 			).unwrap();
@@ -79,6 +77,10 @@ const GroupManagementProfile = ({ groupInfo }) => {
 			console.error(e);
 			setIsPublic(!chagnePublicOption);
 		}
+	};
+
+	const handleClickToggle = async () => {
+		setIsPublic(!isPublic);
 	};
 
 	const handleChangeImg = (e) => {
