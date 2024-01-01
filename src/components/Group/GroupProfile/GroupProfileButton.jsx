@@ -22,6 +22,8 @@ const GroupProfileButton = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 	const [isManaging, setIsManaging] = useState(false);
 	const [isGroupInviteLinkOpen, setIsGroupInviteLinkOpen] = useState(false);
 
+	const memberLength = groupInfo.information.memberInfo.length;
+
 	useEffect(() => {
 		if (locate.pathname.includes("leader")) {
 			setIsManaging(true);
@@ -35,11 +37,13 @@ const GroupProfileButton = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 				<ProfileButton onClick={() => setIsGroupInviteLinkOpen(true)}>
 					링크 생성하기
 				</ProfileButton>
-				<ProfileWhiteButton
-					onClick={() => dispatch(openModal({ type: "DELEGATE_GROUP" }))}
-				>
-					그룹장 위임
-				</ProfileWhiteButton>
+				{memberLength > 1 && (
+					<ProfileWhiteButton
+						onClick={() => dispatch(openModal({ type: "DELEGATE_GROUP" }))}
+					>
+						그룹장 위임
+					</ProfileWhiteButton>
+				)}
 				{isGroupInviteLinkOpen && (
 					<GroupInviteLink
 						groupInfo={groupInfo}
