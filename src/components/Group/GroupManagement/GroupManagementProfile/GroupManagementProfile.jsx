@@ -32,6 +32,7 @@ const GroupManagementProfile = ({ groupInfo }) => {
 
 	const groupDetailInfo = groupInfo.information.group;
 	const { groupId, isPublicGroup } = groupDetailInfo;
+	const memberLength = groupInfo.information.memberInfo.length;
 
 	const defaultProfileImg = groupDetailInfo.image ?? DefaultProfile;
 
@@ -126,9 +127,13 @@ const GroupManagementProfile = ({ groupInfo }) => {
 			</SaveButtonDiv>
 			<DividerHr />
 			<BottomButtonDiv>
-				<ExitButton onClick={() => dispatch(openModal({ type: "EXIT_GROUP" }))}>
-					그룹 나가기
-				</ExitButton>
+				{memberLength > 1 && (
+					<ExitButton
+						onClick={() => dispatch(openModal({ type: "EXIT_GROUP" }))}
+					>
+						그룹 나가기
+					</ExitButton>
+				)}
 				<DeleteButton
 					onClick={() => dispatch(openModal({ type: "DELETE_GROUP" }))}
 				>

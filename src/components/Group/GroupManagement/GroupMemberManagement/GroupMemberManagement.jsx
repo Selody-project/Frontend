@@ -53,12 +53,11 @@ const GroupMemberManagement = ({ groupInfo }) => {
 	const commentListRef = useRef(null);
 
 	const { groupId } = groupInfo.information.group;
-	const memberList = groupMemberList.filter(
+	const memberList = groupMemberList?.filter(
 		(item) => item.accessLevel !== "owner",
 	);
 
 	useOutsideClick(accessInfoRef, () => setIsAccessInfoOpen(false));
-
 	useOutsideClick(commentListRef, () => setIsCommentListOpen(false));
 
 	const handleAccessChange = (num) =>
@@ -97,87 +96,90 @@ const GroupMemberManagement = ({ groupInfo }) => {
 				</TitleLi>
 				<TitleLi red>내보내기</TitleLi>
 			</TitleUl>
-			{memberList?.map((memberInfo) => (
-				<MemberUl key={memberInfo.member.userId}>
-					<MemberLi>
-						<img
-							src={memberInfo.member.image}
-							alt={`${memberInfo.member.nickname}님의 프로필`}
-						/>
-					</MemberLi>
-					<MemberLi>
-						<span>{memberInfo.member.nickname}</span>
-					</MemberLi>
-					<MemberLi
-						ref={commentListRef}
-						onClick={() => {
-							setIsCommentListOpen(!isCommentListOpen);
-						}}
-						isClickable
-					>
-						<span>1</span>
-						{isCommentListOpen && <CommentList />}
-					</MemberLi>
-					<MemberLi>
-						<span>4</span>
-					</MemberLi>
-					<MemberLi>
-						<span>2023.10.13</span>
-					</MemberLi>
-					<MemberLi
-						onClick={() => {
-							handleAccessChange(memberInfo.member.userId);
-						}}
-						isClickable
-					>
-						{ACCESS_LEVEL_DATA.map(
-							(data) =>
-								memberInfo.accessLevel === data.accessLevel && (
-									<span key={data.accessLevel}>
-										{data.icon}
-										{data.accessLevel}
-										<AccessArrowIcon />
-									</span>
-								),
-						)}
-						{isAccessChangeOpenIndex === memberInfo.member.userId && (
-							<AccessLevelUl>
-								{ACCESS_LEVEL_DATA.map((data) => (
-									<AccessLevelLi
-										key={data.accessLevel}
-										isAccessLevel={data.accessLevel === memberInfo.accessLevel}
-									>
-										<button
-											type="button"
-											onClick={() => {
-												handleChangeLevelClick(
-													memberInfo.member.userId,
-													data.accessLevel,
-												);
-											}}
-										>
+			{memberList &&
+				memberList.map((memberInfo) => (
+					<MemberUl key={memberInfo.member.userId}>
+						<MemberLi>
+							<img
+								src={memberInfo.member.image}
+								alt={`${memberInfo.member.nickname}님의 프로필`}
+							/>
+						</MemberLi>
+						<MemberLi>
+							<span>{memberInfo.member.nickname}</span>
+						</MemberLi>
+						<MemberLi
+							ref={commentListRef}
+							onClick={() => {
+								setIsCommentListOpen(!isCommentListOpen);
+							}}
+							isClickable
+						>
+							<span>1</span>
+							{isCommentListOpen && <CommentList />}
+						</MemberLi>
+						<MemberLi>
+							<span>4</span>
+						</MemberLi>
+						<MemberLi>
+							<span>2023.10.13</span>
+						</MemberLi>
+						<MemberLi
+							onClick={() => {
+								handleAccessChange(memberInfo.member.userId);
+							}}
+							isClickable
+						>
+							{ACCESS_LEVEL_DATA.map(
+								(data) =>
+									memberInfo.accessLevel === data.accessLevel && (
+										<span key={data.accessLevel}>
 											{data.icon}
 											{data.accessLevel}
-										</button>
-									</AccessLevelLi>
-								))}
-							</AccessLevelUl>
-						)}
-					</MemberLi>
-					<MemberLi red>
-						<span>
-							<button
-								type="button"
-								onClick={() => {
-									deleteMember(memberInfo.member.userId);
-								}}
-							>
-								내보내기
-							</button>
-						</span>
-					</MemberLi>
-				</MemberUl>
-			))}
+											<AccessArrowIcon />
+										</span>
+									),
+							)}
+							{isAccessChangeOpenIndex === memberInfo.member.userId && (
+								<AccessLevelUl>
+									{ACCESS_LEVEL_DATA.map((data) => (
+										<AccessLevelLi
+											key={data.accessLevel}
+											isAccessLevel={
+												data.accessLevel === memberInfo.accessLevel
+											}
+										>
+											<button
+												type="button"
+												onClick={() => {
+													handleChangeLevelClick(
+														memberInfo.member.userId,
+														data.accessLevel,
+													);
+												}}
+											>
+												{data.icon}
+												{data.accessLevel}
+											</button>
+										</AccessLevelLi>
+									))}
+								</AccessLevelUl>
+							)}
+						</MemberLi>
+						<MemberLi red>
+							<span>
+								<button
+									type="button"
+									onClick={() => {
+										deleteMember(memberInfo.member.userId);
+									}}
+								>
+									내보내기
+								</button>
+							</span>
+						</MemberLi>
+					</MemberUl>
+				))}
 		</>
 	);
 };

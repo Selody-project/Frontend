@@ -23,6 +23,7 @@ import {
 	createGroupInviteLink,
 	getGroupMemberList,
 	changeAccessLevel,
+	withdrawalGroup,
 } from "./group-service.js";
 
 const initialState = {
@@ -78,6 +79,7 @@ const groupSlice = createSlice({
 					createGroupInviteLink.pending,
 					getGroupMemberList.pending,
 					changeAccessLevel.pending,
+					withdrawalGroup.pending,
 				),
 				(state) => {
 					state.isLoading = true;
@@ -105,6 +107,7 @@ const groupSlice = createSlice({
 					createGroupInviteLink.rejected,
 					getGroupMemberList.rejected,
 					changeAccessLevel.rejected,
+					withdrawalGroup.rejected,
 				),
 				(state) => {
 					state.isLoading = false;
@@ -213,6 +216,10 @@ const groupSlice = createSlice({
 			.addMatcher(isAllOf(changeAccessLevel.fulfilled), (state) => {
 				state.isLoading = false;
 				toast.success("그룹원 권한이 변경되었습니다.");
+			})
+			.addMatcher(isAllOf(withdrawalGroup.fulfilled), (state) => {
+				state.isLoading = false;
+				toast.error("그룹 탈퇴에 성공하였습니다");
 			});
 	},
 });

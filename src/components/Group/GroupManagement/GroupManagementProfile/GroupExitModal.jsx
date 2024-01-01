@@ -23,7 +23,7 @@ const GroupExitModal = () => {
 		<BaseModal style={modalStyle}>
 			<ContainerDiv>
 				<TitleHeader>
-					<strong>그룹장을 위임하실건가요?</strong>
+					<strong>그룹을 나가시겠습니까?</strong>
 				</TitleHeader>
 				<ContentMain>
 					<p className="margin">

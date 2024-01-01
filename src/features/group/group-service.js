@@ -305,3 +305,18 @@ export const changeAccessLevel = createAsyncThunk(
 		return response;
 	},
 );
+
+export const withdrawalGroup = createAsyncThunk(
+	"group/withdrawalGroup",
+	async (groupId, thunkAPI) => {
+		const response = await commonThunk(
+			{
+				method: "DELETE",
+				url: `/api/user/group/${groupId}`,
+				successCode: 204,
+			},
+			thunkAPI,
+		);
+		return response;
+	},
+);

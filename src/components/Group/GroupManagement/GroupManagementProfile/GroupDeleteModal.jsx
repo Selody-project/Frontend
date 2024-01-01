@@ -1,7 +1,10 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import BaseModal from "@/components/Base/BaseModal/BaseModal";
+import { deleteGroup } from "@/features/group/group-service";
 import { openModal } from "@/features/ui/ui-slice";
 
 import {
@@ -20,6 +23,19 @@ const modalStyle = {
 const GroupDeleteModal = ({ groupDetailInfo, isLoading }) => {
 	const dispatch = useDispatch();
 
+	const navigate = useNavigate();
+
+	const hasGroupMember = groupDetailInfo.member > 1;
+
+	const handleDeleteGroup = async () => {
+		try {
+			await dispatch(deleteGroup(groupDetailInfo.groupId)).unwrap();
+			navigate("/community");
+		} catch (e) {
+			toast.error("그룹 삭제에 실패했습니다.");
+		}
+	};
+
 	return (
 		<BaseModal style={modalStyle}>
 			<ContainerDiv>
@@ -32,17 +48,21 @@ const GroupDeleteModal = ({ groupDetailInfo, isLoading }) => {
 						<br />
 						복구가 불가능합니다.
 					</p>
-					<Button disabled={isLoading}>삭제하기</Button>
+					<Button disabled={isLoading} onClick={handleDeleteGroup}>
+						삭제하기
+					</Button>
 				</ContentMain>
-				<ModalFooter>
-					<p>아니면 이런 방법은 어떠세요?</p>
-					<button
-						type="button"
-						onClick={() => dispatch(openModal({ type: "DELEGATE_GROUP" }))}
-					>
-						다음 사람에게 위임
-					</button>
-				</ModalFooter>
+				{hasGroupMember && (
+					<ModalFooter>
+						<p>그룹원이 없어야 삭제가 가능합니다</p>
+						<button
+							type="button"
+							onClick={() => dispatch(openModal({ type: "DELEGATE_GROUP" }))}
+						>
+							그룹원 내보내기
+						</button>
+					</ModalFooter>
+				)}
 			</ContainerDiv>
 		</BaseModal>
 	);

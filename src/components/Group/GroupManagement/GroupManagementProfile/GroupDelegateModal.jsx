@@ -35,6 +35,10 @@ const GroupDelegateModal = ({ groupInfo, groupMembers }) => {
 
 	const groupDetailInfo = groupInfo.information.group;
 
+	const memberList = groupMembers.filter(
+		(info) => info.userId !== groupDetailInfo.leader,
+	);
+
 	const handleClickDelegate = async () => {
 		const { groupId } = groupDetailInfo;
 
@@ -46,10 +50,6 @@ const GroupDelegateModal = ({ groupInfo, groupMembers }) => {
 	const handleClickSelectBox = (userId) => {
 		setSelectedMemberId((prev) => (prev === userId ? null : userId));
 	};
-
-	const memberList = groupMembers.filter(
-		(info) => info.userId !== groupDetailInfo.leader,
-	);
 
 	return (
 		<BaseModal style={modalStyle}>
