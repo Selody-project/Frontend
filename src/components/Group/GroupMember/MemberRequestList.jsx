@@ -14,8 +14,10 @@ import {
 } from "./GroupMember.Shared.styles";
 import { ButtonDiv, ButtonInnerDiv } from "./GroupMember.styles";
 
-const MemberRequestList = ({ requestMemberList, groupId }) => {
+const MemberRequestList = ({ requestMemberList, groupInfo }) => {
 	const dispatch = useDispatch();
+
+	const groupId = groupInfo.information.group;
 
 	const approveRequest = (userId) => {
 		dispatch(approveGroupJoin({ groupId, userId }));

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { OptionThreeDotIcon } from "@/constants/iconConstants";
 import { deleteGroupMember } from "@/features/group/group-service";
@@ -11,13 +11,13 @@ import {
 } from "./GroupMember.Shared.styles";
 import { OptionMenuDiv } from "./GroupMember.styles";
 
-const MemberList = ({ groupId }) => {
+const MemberList = ({ groupInfo }) => {
+	const dispatch = useDispatch();
+
 	const [optionMenuOpenedMemberIndex, setOptionMenuOpenedMemberIndex] =
 		useState(null);
 
-	const dispatch = useDispatch();
-
-	const groupInfo = useSelector((state) => state.group.groupInfo);
+	const { groupId } = groupInfo.information.group;
 
 	const handleOption = (num) =>
 		setOptionMenuOpenedMemberIndex((prev) => (prev === num ? null : num));
@@ -30,7 +30,7 @@ const MemberList = ({ groupId }) => {
 		<MemberInnerDiv>
 			<MemberH3>그룹원</MemberH3>
 			<MemberUl>
-				{groupInfo?.information.memberInfo.map((info) => (
+				{groupInfo.information.memberInfo.map((info) => (
 					<li key={info.userId}>
 						<img src={info.image} alt="memberImg" />
 						<h4>{info.nickname}</h4>

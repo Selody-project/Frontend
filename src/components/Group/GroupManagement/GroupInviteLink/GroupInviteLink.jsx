@@ -16,8 +16,7 @@ const GroupInviteLink = ({ groupInfo, onClose }) => {
 
 	const { isLoading, groupInviteLink } = useSelector((state) => state.group);
 
-	const groupId = groupInfo?.groupId;
-	const groupName = groupInfo?.name;
+	const { groupId, name } = groupInfo.information.group;
 
 	const createLinkButtonClick = () => {
 		dispatch(createGroupInviteLink(groupId));
@@ -34,7 +33,7 @@ const GroupInviteLink = ({ groupInfo, onClose }) => {
 	return (
 		<ContainerDiv>
 			<TopDiv>
-				<h3>{groupName}</h3>
+				<h3>{name}</h3>
 				<CloseIcon onClick={() => onClose(false)} />
 			</TopDiv>
 			<MiddleDiv>

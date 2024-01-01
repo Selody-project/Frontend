@@ -88,11 +88,11 @@ const MyPage = () => {
 				</ProfileLeftDiv>
 				<ProfileRightDiv>
 					<ProfileRightInnerDiv>
-						<h3>{currentUser.groupCount?.toLocaleString()}</h3>
+						<h3>{currentUser.groupCount.toLocaleString()}</h3>
 						<h4>참여한 그룹</h4>
 					</ProfileRightInnerDiv>
 					<ProfileRightInnerDiv>
-						<h3>{currentUser.postCount?.toLocaleString()}</h3>
+						<h3>{currentUser.postCount.toLocaleString()}</h3>
 						<h4>작성한 피드</h4>
 					</ProfileRightInnerDiv>
 				</ProfileRightDiv>

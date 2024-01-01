@@ -24,11 +24,11 @@ const GroupDeleteModal = ({ groupDetailInfo, isLoading }) => {
 		<BaseModal style={modalStyle}>
 			<ContainerDiv>
 				<TitleHeader>
-					<strong>{`${groupDetailInfo?.name}을(를) 정말 삭제하실 건가요?`}</strong>
+					<strong>{`${groupDetailInfo.name}을(를) 정말 삭제하실 건가요?`}</strong>
 				</TitleHeader>
 				<ContentMain>
 					<p className="margin">
-						{`삭제하면 ${groupDetailInfo?.name}에 있는 모든 내용이 삭제되어`}
+						{`삭제하면 ${groupDetailInfo.name}에 있는 모든 내용이 삭제되어`}
 						<br />
 						복구가 불가능합니다.
 					</p>

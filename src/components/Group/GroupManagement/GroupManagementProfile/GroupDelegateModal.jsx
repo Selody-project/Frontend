@@ -28,10 +28,12 @@ const SelectBox = ({ name, isSelected, onClick }) => (
 	</SelectBoxDiv>
 );
 
-const GroupDelegateModal = ({ groupDetailInfo, groupMembers }) => {
+const GroupDelegateModal = ({ groupInfo, groupMembers }) => {
 	const dispatch = useDispatch();
 
 	const [selectedMemberId, setSelectedMemberId] = useState(null);
+
+	const groupDetailInfo = groupInfo.information.group;
 
 	const handleClickDelegate = async () => {
 		const { groupId } = groupDetailInfo;
@@ -46,14 +48,14 @@ const GroupDelegateModal = ({ groupDetailInfo, groupMembers }) => {
 	};
 
 	const memberList = groupMembers.filter(
-		(info) => info.userId !== groupDetailInfo?.leader,
+		(info) => info.userId !== groupDetailInfo.leader,
 	);
 
 	return (
 		<BaseModal style={modalStyle}>
 			<ContainerDiv>
 				<TitleHeader>
-					<strong>{`${groupDetailInfo?.name}을(를) 위임받을 그룹원을 선택해주세요.`}</strong>
+					<strong>{`${groupDetailInfo.name}을(를) 위임받을 그룹원을 선택해주세요.`}</strong>
 				</TitleHeader>
 				<ContentMain>
 					<p>

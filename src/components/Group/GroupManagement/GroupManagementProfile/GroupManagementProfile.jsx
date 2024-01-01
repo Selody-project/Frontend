@@ -30,26 +30,25 @@ const GroupManagementProfile = ({ groupInfo }) => {
 	const isLoading = useSelector((state) => state.group.isLoading);
 	const { openedModal } = useSelector((state) => state.ui);
 
-	const groupDetailInfo = groupInfo?.information.group;
-	const groupId = groupInfo?.information.group.groupId;
+	const groupDetailInfo = groupInfo.information.group;
+	const { groupId, isPublicGroup } = groupDetailInfo;
 
-	const defaultProfileImg = groupDetailInfo?.image ?? DefaultProfile;
-	const isPublicGroup = groupDetailInfo?.isPublicGroup;
+	const defaultProfileImg = groupDetailInfo.image ?? DefaultProfile;
 
 	const [isPublic, setIsPublic] = useState(isPublicGroup);
 
 	const [profileObj, setProfileObj] = useState("");
 	const [profileImgValue, setProfileImgValue] = useState(defaultProfileImg);
-	const [nameValue, setNameValue] = useState(groupDetailInfo?.name);
+	const [nameValue, setNameValue] = useState(groupDetailInfo.name);
 	const [descriptionValue, setDescriptionValue] = useState(
-		groupDetailInfo?.description,
+		groupDetailInfo.description,
 	);
 
 	const isSaveEnabled =
-		(nameValue !== groupDetailInfo?.name ||
-			descriptionValue !== groupDetailInfo?.description ||
+		(nameValue !== groupDetailInfo.name ||
+			descriptionValue !== groupDetailInfo.description ||
 			profileImgValue !== defaultProfileImg) &&
-		nameValue?.trim();
+		nameValue.trim();
 
 	const handleClickSave = () => {
 		const formdata = new FormData();

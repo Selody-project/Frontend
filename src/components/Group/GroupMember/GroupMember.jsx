@@ -10,7 +10,7 @@ import { ContainerAside, MemberDiv } from "./GroupMember.styles";
 import MemberList from "./MemberList";
 import MemberRequestList from "./MemberRequestList";
 
-const GroupMember = ({ requestMemberList, groupId }) => {
+const GroupMember = ({ requestMemberList, groupInfo }) => {
 	const { user } = useSelector((state) => state.auth);
 
 	return (
@@ -20,20 +20,20 @@ const GroupMember = ({ requestMemberList, groupId }) => {
 					<MemberH3>내 프로필</MemberH3>
 					<MemberUl>
 						<li>
-							<img src={user?.profileImage} alt="profileImg" />
-							<h4>{user?.nickname}</h4>
+							<img src={user.profileImage} alt="profileImg" />
+							<h4>{user.nickname}</h4>
 						</li>
 					</MemberUl>
 				</MemberInnerDiv>
 			</MemberDiv>
 			<MemberDiv>
-				{requestMemberList?.length === 0 || (
+				{requestMemberList.length === 0 || (
 					<MemberRequestList
 						requestMemberList={requestMemberList}
-						groupId={groupId}
+						groupInfo={groupInfo}
 					/>
 				)}
-				<MemberList groupId={groupId} />
+				<MemberList groupInfo={groupInfo} />
 			</MemberDiv>
 		</ContainerAside>
 	);

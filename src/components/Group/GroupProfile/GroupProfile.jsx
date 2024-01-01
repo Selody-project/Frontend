@@ -14,22 +14,20 @@ const GroupProfile = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 	const { openedModal } = useSelector((state) => state.ui);
 	const { isLoading } = useSelector((state) => state.group);
 
-	const groupDetailInfo = groupInfo?.information.group;
-
 	return (
 		<ContainerDiv>
 			<TopDiv>
-				<img src={groupInfo?.information.group.image} alt="groupImg" />
-				<h3>{groupInfo?.information.group.name}</h3>
-				<p>{groupInfo?.information.group.description}</p>
+				<img src={groupInfo.information.group.image} alt="groupImg" />
+				<h3>{groupInfo.information.group.name}</h3>
+				<p>{groupInfo.information.group.description}</p>
 			</TopDiv>
 			<MiddleDiv>
 				<MiddleInnerDiv>
-					<h3>{groupInfo?.information.group.member.toLocaleString()}</h3>
+					<h3>{groupInfo.information.group.member.toLocaleString()}</h3>
 					<h4>그룹원</h4>
 				</MiddleInnerDiv>
 				<MiddleInnerDiv>
-					<h3>{groupInfo?.information.group.feedCount.toLocaleString()}</h3>
+					<h3>{groupInfo.information.group.feedCount.toLocaleString()}</h3>
 					<h4>작성된 피드</h4>
 				</MiddleInnerDiv>
 			</MiddleDiv>
@@ -40,7 +38,7 @@ const GroupProfile = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 			/>
 			{openedModal === "DELEGATE_GROUP" && (
 				<GroupDelegateModal
-					groupDetailInfo={groupDetailInfo}
+					groupInfo={groupInfo}
 					isLoading={isLoading}
 					groupMembers={groupInfo.information.memberInfo}
 				/>

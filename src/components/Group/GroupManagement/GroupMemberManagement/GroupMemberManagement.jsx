@@ -52,8 +52,8 @@ const GroupMemberManagement = ({ groupInfo }) => {
 	const accessInfoRef = useRef(null);
 	const commentListRef = useRef(null);
 
-	const groupId = groupInfo?.information.group.groupId;
-	const memberList = groupMemberList?.filter(
+	const { groupId } = groupInfo.information.group;
+	const memberList = groupMemberList.filter(
 		(item) => item.accessLevel !== "owner",
 	);
 

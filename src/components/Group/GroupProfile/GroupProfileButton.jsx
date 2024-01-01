@@ -42,7 +42,7 @@ const GroupProfileButton = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 				</ProfileWhiteButton>
 				{isGroupInviteLinkOpen && (
 					<GroupInviteLink
-						groupInfo={groupInfo?.information?.group}
+						groupInfo={groupInfo}
 						onClose={() => setIsGroupInviteLinkOpen(false)}
 					/>
 				)}
@@ -56,7 +56,7 @@ const GroupProfileButton = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 			<ProfileButtonDiv>
 				<ProfileButton
 					onClick={() =>
-						navigate(`/group/${groupInfo?.information?.group?.groupId}/leader`)
+						navigate(`/group/${groupInfo.information.group.groupId}/leader`)
 					}
 				>
 					그룹 관리

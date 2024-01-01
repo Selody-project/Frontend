@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import GroupFeed from "@/components/Group/GroupFeed/GroupFeed";
 import SecretFeed from "@/components/Group/GroupFeed/SecretFeed";
@@ -26,6 +26,7 @@ const GroupPage = () => {
 	const { user } = useSelector((state) => state.auth);
 
 	const param = useParams();
+	const navigate = useNavigate();
 
 	const isPublicGroup = groupInfo?.information.group.isPublicGroup;
 	const leaderId = groupInfo?.information.leaderInfo.userId;
@@ -36,18 +37,25 @@ const GroupPage = () => {
 	);
 
 	useEffect(() => {
-		dispatch(getGroupInfo(param.id));
-		dispatch(getGroupRequestMemberList(param.id));
-		dispatch(getUserGroups());
+		try {
+			dispatch(getGroupInfo(param.id)).unwrap();
+			dispatch(getGroupRequestMemberList(param.id));
+			dispatch(getUserGroups());
+		} catch (e) {
+			navigate("/community");
+		}
 	}, []);
 
 	return (
 		<GroupMain>
-			<GroupProfile
-				groupInfo={groupInfo}
-				isGroupMember={isGroupMember}
-				isGroupLeader={isGroupLeader}
-			/>
+			{groupInfo && (
+				<GroupProfile
+					groupInfo={groupInfo}
+					isGroupMember={isGroupMember}
+					isGroupLeader={isGroupLeader}
+				/>
+			)}
+
 			{!isPublicGroup && !isGroupMember ? (
 				<SecretFeed />
 			) : (
@@ -58,10 +66,10 @@ const GroupPage = () => {
 						<GroupFeed groupId={param.id} />
 					</FeedDiv>
 
-					{isGroupMember && (
+					{isGroupMember && groupInfo && (
 						<GroupMember
 							requestMemberList={groupRequestMemberList}
-							groupId={param.id}
+							groupInfo={groupInfo}
 						/>
 					)}
 				</>
