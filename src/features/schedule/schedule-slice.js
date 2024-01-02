@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 
 import { VIEW_TYPE } from "@/constants/calendarConstants.js";
 import { getCurrentWeek } from "@/utils/calendarUtils.js";
@@ -63,9 +63,8 @@ const scheduleSlice = createSlice({
 
 	extraReducers: (builder) => {
 		builder
-			.addCase(createSchedule.pending, (state) => {
+			.addCase(createSchedule.pending, () => {
 				toast.loading("업로드 중");
-				state.isLoading = true;
 			})
 			.addCase(
 				createSchedule.fulfilled,
@@ -91,52 +90,34 @@ const scheduleSlice = createSlice({
 								new Date(prev.startDateTime) - new Date(curr.startDateTime),
 						);
 					}
-					state.isLoading = false;
 				},
 			)
-			.addCase(createSchedule.rejected, (state) => {
+			.addCase(createSchedule.rejected, () => {
 				toast.dismiss();
 				toast.error("일정 추가에 실패했습니다.");
-				state.isLoading = false;
-			})
-			.addCase(getTodaySchedules.pending, (state) => {
-				state.isLoading = true;
 			})
 			.addCase(getTodaySchedules.fulfilled, (state, { payload }) => {
 				const { schedules } = payload;
-				state.isLoading = false;
 				state.todaySchedules = schedules;
 			})
-			.addCase(getTodaySchedules.rejected, (state) => {
+			.addCase(getTodaySchedules.rejected, () => {
 				toast.error("오늘 일정을 불러오는 데 실패했습니다.");
-				state.isLoading = false;
-			})
-			.addCase(getSchedulesForTheWeek.pending, (state) => {
-				state.isLoading = true;
 			})
 			.addCase(getSchedulesForTheWeek.fulfilled, (state, { payload }) => {
 				const { schedules } = payload;
-				state.isLoading = false;
 				state.schedulesForTheWeek = schedules;
 			})
-			.addCase(getSchedulesForTheWeek.rejected, (state) => {
+			.addCase(getSchedulesForTheWeek.rejected, () => {
 				toast.error("예정된 일정을 불러오는 데 실패했습니다.");
-				state.isLoading = false;
-			})
-			.addCase(getSchedulesSummary.pending, (state) => {
-				state.isLoading = true;
 			})
 			.addCase(getSchedulesSummary.fulfilled, (state, { payload }) => {
-				state.isLoading = false;
 				state.calendarSchedules = payload.schedules;
 			})
-			.addCase(getSchedulesSummary.rejected, (state) => {
+			.addCase(getSchedulesSummary.rejected, () => {
 				toast.error("달력 일정을 불러오는 데 실패했습니다.");
-				state.isLoading = false;
 			})
-			.addCase(updateSchedule.pending, (state) => {
+			.addCase(updateSchedule.pending, () => {
 				toast.loading("수정 중");
-				state.isLoading = true;
 			})
 			.addCase(
 				updateSchedule.fulfilled,
@@ -173,19 +154,16 @@ const scheduleSlice = createSlice({
 					}
 				},
 			)
-			.addCase(updateSchedule.rejected, (state) => {
+			.addCase(updateSchedule.rejected, () => {
 				toast.dismiss();
 				toast.error("일정 수정에 실패했습니다.");
-				state.isLoading = false;
 			})
-			.addCase(deleteSchedule.pending, (state) => {
+			.addCase(deleteSchedule.pending, () => {
 				toast.loading("삭제 중");
-				state.isLoading = true;
 			})
 			.addCase(deleteSchedule.fulfilled, (state, { meta: { arg: id } }) => {
 				toast.dismiss();
 				toast.success("일정이 삭제되었습니다");
-				state.isLoading = false;
 				state.calendarSchedules = state.calendarSchedules.filter(
 					(prev) => prev.id !== id,
 				);
@@ -196,22 +174,58 @@ const scheduleSlice = createSlice({
 					(prev) => prev.id !== id,
 				);
 			})
-			.addCase(deleteSchedule.rejected, (state) => {
+			.addCase(deleteSchedule.rejected, () => {
 				toast.dismiss();
 				toast.error("일정 삭제에 실패했습니다.");
-				state.isLoading = false;
-			})
-			.addCase(getOverlappedSchedules.pending, (state) => {
-				state.isLoading = true;
 			})
 			.addCase(getOverlappedSchedules.fulfilled, (state, { payload }) => {
 				state.overlappedScheduleInfo = payload;
-				state.isLoading = false;
 			})
 			.addCase(getOverlappedSchedules.rejected, (state) => {
-				state.isLoading = false;
 				state.overlappedScheduleInfo = initialOverlappedScheduleInfo;
-			});
+			})
+			.addMatcher(
+				isAnyOf(
+					createSchedule.pending,
+					getTodaySchedules.pending,
+					getSchedulesForTheWeek.pending,
+					getSchedulesSummary.pending,
+					updateSchedule.pending,
+					deleteSchedule.pending,
+					getOverlappedSchedules.pending,
+				),
+				(state) => {
+					state.isLoading = true;
+				},
+			)
+			.addMatcher(
+				isAnyOf(
+					createSchedule.fulfilled,
+					getTodaySchedules.fulfilled,
+					getSchedulesForTheWeek.fulfilled,
+					getSchedulesSummary.fulfilled,
+					updateSchedule.fulfilled,
+					deleteSchedule.fulfilled,
+					getOverlappedSchedules.fulfilled,
+				),
+				(state) => {
+					state.isLoading = false;
+				},
+			)
+			.addMatcher(
+				isAnyOf(
+					createSchedule.rejected,
+					getTodaySchedules.rejected,
+					getSchedulesForTheWeek.rejected,
+					getSchedulesSummary.rejected,
+					updateSchedule.rejected,
+					deleteSchedule.rejected,
+					getOverlappedSchedules.rejected,
+				),
+				(state) => {
+					state.isLoading = false;
+				},
+			);
 	},
 });
 
