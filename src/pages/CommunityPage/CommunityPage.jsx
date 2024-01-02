@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import GroupSearch from "@/components/Group/GroupSearch/GroupSearch";
@@ -7,6 +7,8 @@ import MyGroupFeed from "@/components/Group/MyGroupFeed/MyGroupFeed";
 import { SearchIcon } from "@/constants/iconConstants";
 import { TAB_CONSTANTS_TITLE } from "@/constants/tabConstants";
 import { searchGroup } from "@/features/group/group-service";
+import { getMyGroupPosts } from "@/features/post/post-service";
+import useObserver from "@/hooks/useObserver";
 
 import {
 	ContainerDiv,
@@ -20,18 +22,23 @@ import {
 } from "./CommunityPage.styles";
 
 const CommunityPage = () => {
+	const dispatch = useDispatch();
+
+	const { searchGroupList, searchLastRecordId } = useSelector(
+		(state) => state.group,
+	);
+	const { myGroupPosts, myGroupPostslastRecordId, isEnd } = useSelector(
+		(state) => state.post,
+	);
+
 	const [tabName, setTabName] = useState(TAB_CONSTANTS_TITLE.MY_GROUP_FEED);
 
 	const [searchKeyword, setSearchKeyword] = useState("");
 	const [onSearch, setOnSearch] = useState(false);
 
-	const dispatch = useDispatch();
+	const postRef = useRef(null);
 
-	const searchGroupList = useSelector((state) => state.group.searchGroupList);
-
-	const searchLastRecordId = useSelector(
-		(state) => state.group.searchLastRecordId,
-	);
+	const isObserving = useObserver(postRef, { threshold: 0.3 });
 
 	const handleSearchInput = (e) => {
 		setSearchKeyword(e.target.value);
@@ -53,6 +60,15 @@ const CommunityPage = () => {
 			handleSearchClick();
 		}
 	};
+
+	useEffect(() => {
+		const dispatchGetMyGroupPosts = async () => {
+			await dispatch(getMyGroupPosts(myGroupPostslastRecordId));
+		};
+		if (isObserving && !isEnd) {
+			dispatchGetMyGroupPosts();
+		}
+	}, [isObserving, dispatch]);
 
 	return (
 		<ContainerDiv>
@@ -95,7 +111,7 @@ const CommunityPage = () => {
 				{tabName === TAB_CONSTANTS_TITLE.GROUP_SEARCH ? (
 					<GroupSearch onSearch={onSearch} searchGroupList={searchGroupList} />
 				) : (
-					<MyGroupFeed />
+					<MyGroupFeed myGroupPosts={myGroupPosts} ref={postRef} />
 				)}
 			</FeedDiv>
 		</ContainerDiv>

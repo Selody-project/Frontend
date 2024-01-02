@@ -15,7 +15,8 @@ const initialState = {
 	currentGroupPost: null,
 	allGroupPosts: [],
 	myGroupPosts: [],
-	lastRecordId: 0,
+	allGroupPostslastRecordId: 0,
+	myGroupPostslastRecordId: 0,
 	isLoading: true,
 	isEnd: false,
 };
@@ -54,15 +55,17 @@ const postSlice = createSlice({
 			)
 			.addMatcher(isAllOf(getGroupAllPosts.fulfilled), (state, { payload }) => {
 				state.isLoading = false;
-				payload.feed.forEach((postInfo) => {
-					state.allGroupPosts.push(postInfo);
-				});
+				state.allGroupPosts = [...state.allGroupPosts, ...payload.feed];
+				state.isEnd = payload.isEnd;
 
 				if (payload.feed.length > 0) {
-					state.lastRecordId = payload.feed[payload.feed.length - 1].postId;
+					state.allGroupPostslastRecordId =
+						payload.feed[payload.feed.length - 1].postId;
 				}
 
-				state.isEnd = payload.isEnd;
+				if (payload.isEnd) {
+					state.isEnd = false;
+				}
 			})
 			.addMatcher(isAllOf(getGroupPosts.fulfilled), (state, { payload }) => {
 				state.isLoading = false;
@@ -70,15 +73,17 @@ const postSlice = createSlice({
 			})
 			.addMatcher(isAllOf(getMyGroupPosts.fulfilled), (state, { payload }) => {
 				state.isLoading = false;
-				payload.feed.forEach((postInfo) => {
-					state.myGroupPosts.push(postInfo);
-				});
+				state.myGroupPosts = [...state.myGroupPosts, ...payload.feed];
+				state.isEnd = payload.isEnd;
 
 				if (payload.feed.length > 0) {
-					state.lastRecordId = payload.feed[payload.feed.length - 1].postId;
+					state.myGroupPostslastRecordId =
+						payload.feed[payload.feed.length - 1].postId;
 				}
 
-				state.isEnd = payload.isEnd;
+				if (payload.isEnd) {
+					state.isEnd = false;
+				}
 			})
 			.addMatcher(isAllOf(likeGroupPost.fulfilled), (state) => {
 				state.isLoading = false;

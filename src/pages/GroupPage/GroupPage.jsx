@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -12,7 +12,9 @@ import {
 	getGroupInfo,
 	getGroupRequestMemberList,
 } from "@/features/group/group-service";
+import { getGroupAllPosts } from "@/features/post/post-service";
 import { getUserGroups } from "@/features/user/user-service";
+import useObserver from "@/hooks/useObserver";
 
 import { GroupMain, FeedDiv } from "./GroupPage.styles";
 
@@ -24,27 +26,46 @@ const GroupPage = () => {
 	);
 	const userGroups = useSelector((state) => state.user.userGroupList);
 	const { user } = useSelector((state) => state.auth);
+	const { allGroupPosts, allGroupPostslastRecordId, isEnd } = useSelector(
+		(state) => state.post,
+	);
 
 	const param = useParams();
 	const navigate = useNavigate();
 
+	const postRef = useRef(null);
+
+	const isObserving = useObserver(postRef, { threshold: 0.3 });
+
 	const isPublicGroup = groupInfo?.information.group.isPublicGroup;
 	const leaderId = groupInfo?.information.leaderInfo.userId;
+	const groupId = param.id;
 
 	const isGroupLeader = user.userId === leaderId;
 	const isGroupMember = userGroups.some(
-		(group) => group.groupId === Number(param.id),
+		(group) => group.groupId === Number(groupId),
 	);
 
 	useEffect(() => {
 		try {
-			dispatch(getGroupInfo(param.id)).unwrap();
-			dispatch(getGroupRequestMemberList(param.id));
+			dispatch(getGroupInfo(groupId)).unwrap();
+			dispatch(getGroupRequestMemberList(groupId));
 			dispatch(getUserGroups());
 		} catch (e) {
 			navigate("/community");
 		}
 	}, []);
+
+	useEffect(() => {
+		const dispatchgetGroupAllPosts = async () => {
+			await dispatch(
+				getGroupAllPosts({ groupId, lastRecordId: allGroupPostslastRecordId }),
+			);
+		};
+		if (isObserving && !isEnd) {
+			dispatchgetGroupAllPosts();
+		}
+	}, [isObserving, dispatch]);
 
 	return (
 		<GroupMain>
@@ -63,7 +84,13 @@ const GroupPage = () => {
 					<FeedDiv>
 						{isGroupMember && <UploadFeed />}
 						<GroupTitle />
-						<GroupFeed groupId={param.id} />
+						{allGroupPosts && (
+							<GroupFeed
+								groupPosts={allGroupPosts}
+								groupId={groupId}
+								ref={postRef}
+							/>
+						)}
 					</FeedDiv>
 
 					{isGroupMember && groupInfo && (

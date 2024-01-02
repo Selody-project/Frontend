@@ -28,6 +28,7 @@ export const TabButton = styled.button`
 export const FeedTitleDiv = styled.div`
 	display: flex;
 	justify-content: space-between;
+	margin-bottom: 42px;
 
 	& > ul {
 		display: flex;
