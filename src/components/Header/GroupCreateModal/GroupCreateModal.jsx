@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import BaseModal from "@/components/Base/BaseModal/BaseModal.jsx";
+import BaseModal from "@/components/Common/BaseModal/BaseModal.jsx";
 
 import {
 	ButtonWrapDiv,
