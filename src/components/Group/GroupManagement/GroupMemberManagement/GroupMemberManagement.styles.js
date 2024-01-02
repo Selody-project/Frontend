@@ -2,13 +2,12 @@ import styled from "styled-components";
 
 export const TitleUl = styled.ul`
 	display: flex;
-	justify-content: space-between;
+	gap: 80px;
 	margin-top: 40px;
 `;
 
 export const TitleLi = styled.li`
-	color: ${({ theme: { colors }, red }) =>
-		red ? colors.sunday : colors.disabled_text};
+	color: ${({ theme: { colors } }) => colors.disabled_text};
 	font-size: ${({ theme: { typography } }) => typography.size.s1};
 	font-weight: ${({ theme: { typography } }) => typography.weight.medium};
 	width: 60px;
@@ -25,7 +24,7 @@ export const TitleLi = styled.li`
 
 export const MemberUl = styled.ul`
 	display: flex;
-	justify-content: space-between;
+	gap: 80px;
 	margin-top: 30px;
 `;
 

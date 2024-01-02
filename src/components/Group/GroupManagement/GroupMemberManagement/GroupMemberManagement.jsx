@@ -94,7 +94,6 @@ const GroupMemberManagement = ({ groupInfo }) => {
 					<InfoIcon />
 					{isAccessInfoOpen && <AccessLevelInfo />}
 				</TitleLi>
-				<TitleLi red>내보내기</TitleLi>
 			</TitleUl>
 			{memberList &&
 				memberList.map((memberInfo) => (
