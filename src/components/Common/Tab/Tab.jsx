@@ -12,7 +12,7 @@ const Tab = ({ contents, isSubHeader }) => {
 
 	return (
 		<TabUl role="tablist" className={isSubHeader ? "header" : "subheader"}>
-			{contents.map(({ ...tabContents }) => (
+			{contents.map((tabContents) => (
 				<li role="tab" key={tabContents.id}>
 					<TabButton
 						isActive={path.includes(tabContents.link)}
