@@ -32,6 +32,7 @@ import {
 const GroupFeed = ({ groupId }) => {
 	const dispatch = useDispatch();
 
+	const { user } = useSelector((state) => state.auth);
 	const { allGroupPosts, lastRecordId, isEnd } = useSelector(
 		(state) => state.post,
 	);
@@ -69,66 +70,69 @@ const GroupFeed = ({ groupId }) => {
 
 	return (
 		<FeedSection>
-			{allGroupPosts.map((post) => (
-				<FeedArticle key={post.postId}>
-					<OptionDiv>
-						<OptionThreeDotIcon
-							onClick={() => {
-								handleOption(post.postId);
-							}}
-						/>
-						{optionMenuOpenedFeedIndex === post.postId && post.isMine && (
-							<OptionMenuDiv>
-								<ul>
-									<li>
-										<button type="button">수정</button>
-									</li>
-									<li>
-										<button
-											type="button"
-											onClick={() => {
-												deletePost(groupId, post.postId);
-											}}
-										>
-											삭제
-										</button>
-									</li>
-								</ul>
-							</OptionMenuDiv>
+			{allGroupPosts &&
+				allGroupPosts.map((post) => (
+					<FeedArticle key={post.postId}>
+						{user.nickname === post.author && (
+							<OptionDiv>
+								<OptionThreeDotIcon
+									onClick={() => {
+										handleOption(post.postId);
+									}}
+								/>
+								{optionMenuOpenedFeedIndex === post.postId && (
+									<OptionMenuDiv>
+										<ul>
+											<li>
+												<button type="button">수정</button>
+											</li>
+											<li>
+												<button
+													type="button"
+													onClick={() => {
+														deletePost(groupId, post.postId);
+													}}
+												>
+													삭제
+												</button>
+											</li>
+										</ul>
+									</OptionMenuDiv>
+								)}
+							</OptionDiv>
 						)}
-					</OptionDiv>
-					<TopDiv>
-						<img
-							src={post.authorImage}
-							alt={`${post.author}님의 프로필 이미지`}
-						/>
-						<InfoDiv>
-							<h3>
-								{post.author}
-								{post.leader && <CrownIcon />}
-							</h3>
-							<h4>{useTimeStamp(post.createdAt)}</h4>
-						</InfoDiv>
-					</TopDiv>
-					<BottomDiv>
-						<p>{post.content}</p>
-						<IconDiv>
-							<IconItemButton
-								onClick={() => {
-									handleLikeClick(post.isLiked, groupId, post.postId);
-								}}
-							>
-								{post.isLiked ? <HeartClickIcon /> : <HeartIcon />}
-								<span>{post.likesCount}</span>
-							</IconItemButton>
-							<IconItemButton>
-								<CommentIcon />
-								<span>{post.commentCount}</span>
-							</IconItemButton>
-						</IconDiv>
-					</BottomDiv>
-				</FeedArticle>
-			))}
+						<TopDiv>
+							<img
+								src={post.authorImage}
+								alt={`${post.author}님의 프로필 이미지`}
+							/>
+							<InfoDiv>
+								<h3>
+									{post.author}
+									{post.isMine && <CrownIcon />}
+								</h3>
+								<h4>{useTimeStamp(post.createdAt)}</h4>
+							</InfoDiv>
+						</TopDiv>
+						<BottomDiv>
+							<p>{post.content}</p>
+							<IconDiv>
+								<IconItemButton
+									onClick={() => {
+										handleLikeClick(post.isLiked, groupId, post.postId);
+									}}
+								>
+									{post.isLiked ? <HeartClickIcon /> : <HeartIcon />}
+									<span>{post.likesCount}</span>
+								</IconItemButton>
+								<IconItemButton>
+									<CommentIcon />
+									<span>{post.commentCount}</span>
+								</IconItemButton>
+							</IconDiv>
+						</BottomDiv>
+					</FeedArticle>
+				))}
 			<div ref={target} />
 		</FeedSection>
 	);
