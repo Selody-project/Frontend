@@ -15,12 +15,12 @@ import lightTheme from "@/styles/theme.js";
 
 import { render } from "../../jest.setup.js";
 
-jest.mock("@fullcalendar/react", () => () => (
-	<div data-testid="mock-fullcalendar" />
-));
-jest.mock("@fullcalendar/timegrid", () => ({}));
-jest.mock("@fullcalendar/daygrid", () => ({}));
-jest.mock("@fullcalendar/interaction", () => ({}));
+// jest.mock("@fullcalendar/react", () => () => (
+// 	<div data-testid="mock-fullcalendar" />
+// ));
+// jest.mock("@fullcalendar/timegrid", () => ({}));
+// jest.mock("@fullcalendar/daygrid", () => ({}));
+// jest.mock("@fullcalendar/interaction", () => ({}));
 
 jest.mock(
 	"../../src/components/Common/CalendarContainer/CustomCalendar/CustomCalendar.jsx",
@@ -34,7 +34,13 @@ jest.mock(
 );
 
 const TITLE_TEXT = "일정 1";
-const getInitialScheduleState = (recurrence) => {
+const getInitialScheduleState = ({ recurrence, isAllDay }) => {
+	const startDate = new Date();
+	const endDate = new Date();
+	if (isAllDay) {
+		startDate.setHours(0, 0, 0, 0);
+		endDate.setHours(23, 59, 59, 999);
+	}
 	return {
 		schedule: {
 			todaySchedules: [
@@ -42,8 +48,8 @@ const getInitialScheduleState = (recurrence) => {
 					id: 0,
 					isGroup: false,
 					title: TITLE_TEXT,
-					startDateTime: new Date().toISOString(),
-					endDateTime: new Date().toISOString(),
+					startDateTime: startDate.toISOString(),
+					endDateTime: endDate.toISOString(),
 					recurrence,
 				},
 			],
@@ -64,87 +70,99 @@ const getInitialScheduleState = (recurrence) => {
 	};
 };
 
-describe("PersonalSchedulePage without ScheduleModal", () => {
-	it("renders Header, CalendarContainer, and PersonalTodoList", () => {
-		render(<PersonalSchedulePage />);
-		expect(screen.getByTestId("calendar-container")).toBeInTheDocument();
-		expect(screen.getByTestId("personal-todo-list")).toBeInTheDocument();
-	});
+describe("PersonalSchedulePage", () => {
+	describe("initial render and update ui after fetching", () => {
+		it("initial render with on all-day todaySchedule", async () => {
+			render(<PersonalSchedulePage />, {
+				preloadedState: {
+					auth: {
+						user: {
+							userId: 1,
+						},
+					},
+				},
+			});
+			// before fetching schedules
+			const calendar = screen.getByTestId("calendar-container");
+			const todaySchedulesTab = screen.getByRole("button", {
+				name: "오늘 일정",
+			});
+			const schedulesForTheWeekTab = screen.getByRole("button", {
+				name: "예정",
+			});
+			let addButton = screen.getByRole("button", {
+				name: "아직 추가된 일정이 없습니다! 할 일을 추가하여 하루동안 할 일을 관리해보세요.",
+			});
 
-	it("render todaySchedules tab and add button when first rendered with empty schedules", () => {
-		render(<PersonalSchedulePage />);
+			expect(calendar).toBeInTheDocument();
+			expect(todaySchedulesTab).toHaveStyle({
+				backgroundColor: lightTheme.colors.primary,
+			});
+			expect(schedulesForTheWeekTab).toHaveStyle({
+				backgroundColor: lightTheme.colors.white,
+			});
+			expect(addButton).toBeInTheDocument();
 
-		const todayTab = screen.queryByRole("button", { name: "오늘 일정" });
-		const addButton = screen.queryByRole("button", {
-			name: "아직 추가된 일정이 없습니다! 할 일을 추가하여 하루동안 할 일을 관리해보세요.",
-		});
-		expect(todayTab).not.toBeNull();
-		expect(addButton).not.toBeNull();
-	});
+			// fetching
+			await screen.findByText("오늘오늘");
 
-	it("render schedulesForTheWeek tab when click '예정' button", () => {
-		render(<PersonalSchedulePage />);
+			// after fetching schedules
+			addButton = screen.queryByRole("button", {
+				name: "아직 추가된 일정이 없습니다! 할 일을 추가하여 하루동안 할 일을 관리해보세요.",
+			});
+			const todayScheduleItem = screen.getByText(
+				`${new Date().getMonth() + 1}월 ${new Date().getDate()}일 하루 종일`,
+			);
 
-		const schedulesForTheWeekTab = screen.queryByRole("button", {
-			name: "예정",
-		});
-		userEvent.click(schedulesForTheWeekTab);
-
-		const todaySchedulesTab = screen.queryByRole("button", {
-			name: "오늘 일정",
-		});
-		expect(todaySchedulesTab).toHaveStyle({
-			backgroundColor: lightTheme.colors.white,
-		});
-		expect(schedulesForTheWeekTab).toHaveStyle({
-			backgroundColor: lightTheme.colors.primary,
-		});
-	});
-
-	it("render todaySchedules tab when click '오늘 일정' button after click '예정' button", () => {
-		render(<PersonalSchedulePage />);
-
-		const schedulesForTheWeekTab = screen.queryByRole("button", {
-			name: "예정",
-		});
-		const todaySchedulesTab = screen.queryByRole("button", {
-			name: "오늘 일정",
-		});
-		userEvent.click(schedulesForTheWeekTab);
-		userEvent.click(todaySchedulesTab);
-
-		expect(todaySchedulesTab).toHaveStyle(
-			`background-color: ${lightTheme.colors.primary}`,
-		);
-		expect(schedulesForTheWeekTab).toHaveStyle(
-			`background-color: ${lightTheme.colors.white}`,
-		);
-	});
-
-	it("do not render schedule add button and render one todaySchedule when todaySchedule is not empty", () => {
-		render(<PersonalSchedulePage />, {
-			preloadedState: getInitialScheduleState(0),
+			expect(addButton).toBeNull();
+			expect(todayScheduleItem).toBeInTheDocument();
 		});
 
-		const addButton = screen.queryByRole("button", {
-			name: "아직 추가된 일정이 없습니다! 할 일을 추가하여 하루동안 할 일을 관리해보세요.",
-		});
-		const todaySchedule = screen.queryByRole("heading", { name: TITLE_TEXT });
-		expect(addButton).toBeNull();
-		expect(todaySchedule).not.toBeNull();
-	});
+		it("render all-day tommorow schedule with changing tab color when user click '예정' tab", async () => {
+			render(<PersonalSchedulePage />, {
+				preloadedState: {
+					auth: {
+						user: {
+							userId: 1,
+						},
+					},
+				},
+			});
 
-	it("render '반복' text when todaySchedules contain recurring schedule", () => {
-		render(<PersonalSchedulePage />, {
-			preloadedState: getInitialScheduleState(1),
-		});
+			// initial
+			const todaySchedulesTab = screen.getByRole("button", {
+				name: "오늘 일정",
+			});
+			const schedulesForTheWeekTab = screen.getByRole("button", {
+				name: "예정",
+			});
+			expect(todaySchedulesTab).toHaveStyle({
+				backgroundColor: lightTheme.colors.primary,
+			});
+			expect(schedulesForTheWeekTab).toHaveStyle({
+				backgroundColor: lightTheme.colors.white,
+			});
 
-		const addButton = screen.queryByRole("button", {
-			name: "아직 추가된 일정이 없습니다! 할 일을 추가하여 하루동안 할 일을 관리해보세요.",
+			// action
+			userEvent.click(schedulesForTheWeekTab);
+
+			// fetching
+			await screen.findByText("오늘오늘");
+
+			// after fetching
+			expect(todaySchedulesTab).toHaveStyle({
+				backgroundColor: lightTheme.colors.white,
+			});
+			expect(schedulesForTheWeekTab).toHaveStyle({
+				backgroundColor: lightTheme.colors.primary,
+			});
+			const nextDay = new Date();
+			nextDay.setDate(nextDay.getDate() + 1);
+			const scheduleItem = screen.getByText(
+				`${nextDay.getMonth() + 1}월 ${nextDay.getDate()}일 하루 종일`,
+			);
+			expect(scheduleItem).toBeInTheDocument();
 		});
-		const todaySchedule = screen.queryByTestId("recurreningText");
-		expect(addButton).toBeNull();
-		expect(todaySchedule).not.toBeNull();
 	});
 });
 
