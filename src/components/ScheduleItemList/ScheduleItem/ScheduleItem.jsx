@@ -98,9 +98,7 @@ const ScheduleItem = ({
 							{recurrence === 1 && (
 								<>
 									&nbsp;
-									<span className="recur" data-testid="recurreningText">
-										반복
-									</span>
+									<span className="recur">반복</span>
 								</>
 							)}
 						</div>
