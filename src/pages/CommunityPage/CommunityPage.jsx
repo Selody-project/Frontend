@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import GroupSearch from "@/components/Group/GroupSearch/GroupSearch";
 import MyGroup from "@/components/Group/MyGroup/MyGroup";
@@ -41,18 +42,24 @@ const CommunityPage = () => {
 	const isObserving = useObserver(postRef, { threshold: 0.3 });
 
 	const handleSearchInput = (e) => {
-		setSearchKeyword(e.target.value);
-
-		if (searchKeyword.length <= 1) {
-			setOnSearch(false);
-		}
+		setSearchKeyword(e.target.value.trim());
 	};
 
 	const handleSearchClick = () => {
-		dispatch(
-			searchGroup({ keyword: searchKeyword, recordId: searchLastRecordId }),
-		);
-		setOnSearch(true);
+		if (searchKeyword.length <= 1) {
+			setOnSearch(false);
+			toast.error("2글자 이상부터 검색 가능합니다.");
+		} else {
+			dispatch(
+				searchGroup({
+					keyword: searchKeyword,
+					recordId: searchLastRecordId,
+				}),
+			);
+
+			setOnSearch(true);
+			setSearchKeyword("");
+		}
 	};
 
 	const handleSearchKeyDown = (event) => {

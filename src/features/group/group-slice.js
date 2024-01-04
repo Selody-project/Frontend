@@ -120,12 +120,14 @@ const groupSlice = createSlice({
 			)
 			.addMatcher(isAllOf(searchGroup.fulfilled), (state, { payload }) => {
 				state.isLoading = false;
-				state.searchGroupList = [...state.searchGroupList, ...payload.groups];
 				state.isEnd = payload.isEnd;
 
-				if (payload.groups.length > 0) {
+				if (payload.groups.length > 0 && !payload.isEnd) {
 					state.searchLastRecordId =
 						payload.groups[payload.groups.length - 1].groupId;
+					state.searchGroupList = [...state.searchGroupList, ...payload.groups];
+				} else {
+					state.searchGroupList = payload.groups;
 				}
 
 				if (payload.isEnd) {
