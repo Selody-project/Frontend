@@ -34,6 +34,8 @@ jest.mock(
 );
 
 const TITLE_TEXT = "일정 1";
+const ALL_PAGE_BUTTON_LENGTH_EXCEPT_CARD_BUTTONS = 3;
+
 const getInitialScheduleState = ({ recurrence, isAllDay, isMine }) => {
 	const startDate = new Date();
 	const endDate = new Date();
@@ -46,8 +48,8 @@ const getInitialScheduleState = ({ recurrence, isAllDay, isMine }) => {
 			todaySchedules: [
 				{
 					id: 0,
-					userId: isMine ? 1 : 2,
-					isGroup: !isMine,
+					userId: 1,
+					isGroup: false,
 					title: TITLE_TEXT,
 					startDateTime: startDate.toISOString(),
 					endDateTime: endDate.toISOString(),
@@ -66,7 +68,7 @@ const getInitialScheduleState = ({ recurrence, isAllDay, isMine }) => {
 			scheduleModalMode: SCHEDULE_MODAL_TYPE.CREATE,
 		},
 		auth: {
-			user: { userId: 1 },
+			user: { userId: isMine ? 1 : 2 },
 		},
 	};
 };
@@ -219,7 +221,6 @@ describe("PersonalSchedulePage without modal", () => {
 			});
 		});
 		describe("Is it mine?", () => {
-			const ALL_PAGE_BUTTON_LENGTH_EXCEPT_CARD_BUTTONS = 3;
 			it("yes", () => {
 				render(<PersonalSchedulePage />, {
 					preloadedState: getInitialScheduleState({
@@ -261,163 +262,255 @@ describe("PersonalSchedulePage without modal", () => {
 	});
 });
 
-describe("open ScheduleModal in PersonalSchedulePage", () => {
+describe("ScheduleModal in PersonalSchedulePage", () => {
 	beforeAll(() => {
 		ReactDOM.createPortal = jest.fn((element) => {
 			return element;
 		});
 		window.scrollTo = jest.fn();
 	});
+	describe("trigger opening ScheduleModal", () => {
+		describe("as a create mode", () => {
+			it("when click '일정 추가' button", () => {
+				render(<PersonalSchedulePage />);
 
-	it("render ScheduleModal if click '일정 추가' button", () => {
-		render(<PersonalSchedulePage />);
+				userEvent.click(screen.getByRole("button", { name: "일정 추가" }));
 
-		userEvent.click(screen.queryByRole("button", { name: "일정 추가" }));
+				const saveButton = screen.getByRole("button", {
+					name: "저장하기",
+				});
+				expect(saveButton).toBeDisabled();
+			});
 
-		const saveButton = screen.queryByRole("button", {
-			name: "저장하기",
+			it("when click big add button", () => {
+				render(<PersonalSchedulePage />);
+
+				userEvent.click(
+					screen.getByRole("button", {
+						name: "아직 추가된 일정이 없습니다! 할 일을 추가하여 하루동안 할 일을 관리해보세요.",
+					}),
+				);
+
+				const saveButton = screen.getByRole("button", {
+					name: "저장하기",
+				});
+				expect(saveButton).toBeDisabled();
+			});
 		});
-		expect(saveButton).toBeDisabled();
+		describe("as a edit mode", () => {
+			it("when click editButton in existing my schedule", async () => {
+				render(<PersonalSchedulePage />, {
+					preloadedState: getInitialScheduleState({
+						recurrence: 0,
+						isAllDay: false,
+						isMine: true,
+					}),
+				});
+
+				const allPageButtons = screen.getAllByRole("button");
+				const editButton = allPageButtons.slice(
+					ALL_PAGE_BUTTON_LENGTH_EXCEPT_CARD_BUTTONS,
+				)[0];
+
+				userEvent.click(editButton);
+
+				const modalTitle = screen.getByText("일정 수정");
+				const titleInput = await screen.findByPlaceholderText("일정 제목");
+				const textarea = await screen.findByPlaceholderText("상세 내용");
+				const dateButtons = await screen.findAllByRole("button", {
+					name: "2023년 12월 14일",
+				});
+				const startTimeButton = await screen.findByRole("button", {
+					name: "오전 10:55",
+				});
+				const endTimeButton = await screen.findByRole("button", {
+					name: "오후 02:55",
+				});
+				const allDayCheckbox = await screen.findByLabelText("하루 종일");
+				const repeatOrNotSelect = await screen.findByRole("button", {
+					name: "반복 안함",
+				});
+				const submitButton = await screen.findByRole("button", {
+					name: "수정하기",
+				});
+
+				expect(modalTitle).toBeInTheDocument();
+				expect(titleInput).toHaveValue("오늘오늘");
+				expect(titleInput).toBeEnabled();
+				expect(textarea).toHaveValue("오늘 끝");
+				expect(textarea).toBeEnabled();
+				expect(dateButtons).toHaveLength(2);
+				dateButtons.forEach((dateButton) => expect(dateButton).toBeEnabled());
+				expect(startTimeButton).toBeEnabled();
+				expect(endTimeButton).toBeEnabled();
+				expect(allDayCheckbox).not.toBeChecked();
+				expect(allDayCheckbox).toBeEnabled();
+				expect(repeatOrNotSelect).toBeEnabled();
+				expect(submitButton).toBeDisabled();
+			});
+		});
+		describe("as a view mode", () => {
+			it("when click editButton in existing not my schedule", async () => {
+				render(<PersonalSchedulePage />, {
+					preloadedState: getInitialScheduleState({
+						recurrence: 0,
+						isAllDay: false,
+						isMine: false,
+					}),
+				});
+
+				const allPageButtons = screen.getAllByRole("button");
+				const viewButton = allPageButtons.at(-1);
+
+				userEvent.click(viewButton);
+
+				const modalTitle = screen.getByText("일정 정보");
+				const titleInput = await screen.findByPlaceholderText("일정 제목");
+				const textarea = await screen.findByPlaceholderText("상세 내용");
+				const startTimeButton = await screen.findByRole("button", {
+					name: "오전 10:55",
+				});
+				const endTimeButton = await screen.findByRole("button", {
+					name: "오후 02:55",
+				});
+				const allDayCheckbox = await screen.findByLabelText("하루 종일");
+				const repeatOrNotSelect = await screen.findByRole("button", {
+					name: "반복 안함",
+				});
+				const submitButton = screen.queryByRole("button", {
+					name: /수정하기|저장하기/i,
+				});
+
+				expect(modalTitle).toBeInTheDocument();
+				expect(titleInput).toHaveValue("오늘오늘");
+				expect(titleInput).toBeDisabled();
+				expect(textarea).toHaveValue("오늘 끝");
+				expect(textarea).toBeDisabled();
+				expect(startTimeButton).toBeDisabled();
+				expect(endTimeButton).toBeDisabled();
+				expect(allDayCheckbox).not.toBeChecked();
+				expect(allDayCheckbox).toBeDisabled();
+				expect(repeatOrNotSelect).toBeDisabled();
+				expect(submitButton).toBeNull();
+			});
+		});
+		// it("when click viewButton in existing group schedule(view mode)", async () => {
+		// 	render(<PersonalSchedulePage />, {
+		// 		preloadedState: getInitialScheduleState({
+		// 			recurrence: 0,
+		// 			isAllDay: false,
+		// 			isMine: true,
+		// 		}),
+		// 	});
+		// });
 	});
+	describe("change UI in ScheduleModal while fill in form", () => {
+		it("change displayed components if schedule is recurring or not", () => {
+			render(<ScheduleModal />);
 
-	it("render ScheduleModal if click big add button", () => {
-		render(<PersonalSchedulePage />);
+			// initial render
+			const labelForToggleFreq = screen.queryByRole("heading", {
+				name: "반복 종료",
+			});
+			expect(labelForToggleFreq).toBeNull();
 
-		userEvent.click(
-			screen.queryByRole("button", {
-				name: "아직 추가된 일정이 없습니다! 할 일을 추가하여 하루동안 할 일을 관리해보세요.",
-			}),
-		);
+			// DAILY
+			userEvent.click(screen.getByText("반복 안함"));
+			userEvent.click(screen.getByText("매일"));
 
-		const saveButton = screen.queryByRole("button", {
-			name: "저장하기",
+			expect(screen.getByText("매일")).toBeInTheDocument();
+			expect(
+				screen.getByRole("heading", {
+					name: "반복 종료",
+				}),
+			).toBeInTheDocument();
+
+			// DAILY_N
+			userEvent.click(screen.getByText("매일"));
+			userEvent.click(screen.getByText("N일 간격"));
+
+			expect(screen.getByText("N일 간격")).toBeInTheDocument();
+			expect(
+				screen.getByRole("heading", {
+					name: "반복 종료",
+				}),
+			).toBeInTheDocument();
+			expect(screen.getByDisplayValue(1)).toBeInTheDocument();
+			expect(screen.getByText("일 간격으로 반복합니다.")).toBeInTheDocument();
+
+			// WEEKLY
+			userEvent.click(screen.getByText("N일 간격"));
+			userEvent.click(screen.getByText("매주"));
+
+			expect(screen.getByText("매주")).toBeInTheDocument();
+			expect(
+				screen.getByRole("heading", {
+					name: "반복 종료",
+				}),
+			).toBeInTheDocument();
+			expect(screen.getByLabelText("월")).toBeInTheDocument();
+
+			// WEEKLY_N
+			userEvent.click(screen.getByText("매주"));
+			userEvent.click(screen.getByText("N주 간격"));
+
+			expect(screen.getByText("N주 간격")).toBeInTheDocument();
+			expect(
+				screen.getByRole("heading", {
+					name: "반복 종료",
+				}),
+			).toBeInTheDocument();
+			expect(screen.getByLabelText("월")).toBeInTheDocument();
+			expect(screen.getByDisplayValue(1)).toBeInTheDocument();
+			expect(screen.getByText("주 간격으로 반복합니다.")).toBeInTheDocument();
+
+			// MONTHLY
+			userEvent.click(screen.getByText("N주 간격"));
+			userEvent.click(screen.getByText("매월"));
+
+			expect(screen.getByText("매월")).toBeInTheDocument();
+			expect(
+				screen.getByRole("heading", {
+					name: "반복 종료",
+				}),
+			).toBeInTheDocument();
+
+			// MONTHLY_N
+			userEvent.click(screen.getByText("매월"));
+			userEvent.click(screen.getByText("N개월 간격"));
+
+			expect(screen.getByText("N개월 간격")).toBeInTheDocument();
+			expect(
+				screen.getByRole("heading", {
+					name: "반복 종료",
+				}),
+			).toBeInTheDocument();
+			expect(screen.getByDisplayValue(1)).toBeInTheDocument();
+			expect(screen.getByText("개월 간격으로 반복합니다.")).toBeInTheDocument();
+
+			// YEARLY
+			userEvent.click(screen.getByText("N개월 간격"));
+			userEvent.click(screen.getByText("매년"));
+
+			expect(screen.getByText("매년")).toBeInTheDocument();
+			expect(
+				screen.getByRole("heading", {
+					name: "반복 종료",
+				}),
+			).toBeInTheDocument();
+
+			// YEARLY_N
+			userEvent.click(screen.getByText("매년"));
+			userEvent.click(screen.getByText("N년 간격"));
+
+			expect(screen.getByText("N년 간격")).toBeInTheDocument();
+			expect(
+				screen.getByRole("heading", {
+					name: "반복 종료",
+				}),
+			).toBeInTheDocument();
+			expect(screen.getByDisplayValue(1)).toBeInTheDocument();
+			expect(screen.getByText("년 간격으로 반복합니다.")).toBeInTheDocument();
 		});
-		expect(saveButton).toBeDisabled();
-	});
-});
-
-describe("display components in ScheduleModal", () => {
-	beforeAll(() => {
-		ReactDOM.createPortal = jest.fn((element) => {
-			return element;
-		});
-		window.scrollTo = jest.fn();
-	});
-
-	// beforeEach(() => {
-	// 	render(<PersonalSchedulePage />, {
-	// 		preloadedState: {
-	// 			schedule: getInitialScheduleState(0),
-	// 		},
-	// 	});
-	// 	userEvent.click(screen.queryByRole("button", { name: "일정 추가" }));
-	// });
-
-	it("change displayed components if schedule is recurring or not", () => {
-		render(<ScheduleModal />);
-
-		// initial render
-		const labelForToggleFreq = screen.queryByRole("heading", {
-			name: "반복 종료",
-		});
-		expect(labelForToggleFreq).toBeNull();
-
-		// DAILY
-		userEvent.click(screen.getByText("반복 안함"));
-		userEvent.click(screen.getByText("매일"));
-
-		expect(screen.getByText("매일")).toBeInTheDocument();
-		expect(
-			screen.getByRole("heading", {
-				name: "반복 종료",
-			}),
-		).toBeInTheDocument();
-
-		// DAILY_N
-		userEvent.click(screen.getByText("매일"));
-		userEvent.click(screen.getByText("N일 간격"));
-
-		expect(screen.getByText("N일 간격")).toBeInTheDocument();
-		expect(
-			screen.getByRole("heading", {
-				name: "반복 종료",
-			}),
-		).toBeInTheDocument();
-		expect(screen.getByDisplayValue(1)).toBeInTheDocument();
-		expect(screen.getByText("일 간격으로 반복합니다.")).toBeInTheDocument();
-
-		// WEEKLY
-		userEvent.click(screen.getByText("N일 간격"));
-		userEvent.click(screen.getByText("매주"));
-
-		expect(screen.getByText("매주")).toBeInTheDocument();
-		expect(
-			screen.getByRole("heading", {
-				name: "반복 종료",
-			}),
-		).toBeInTheDocument();
-		expect(screen.getByLabelText("월")).toBeInTheDocument();
-
-		// WEEKLY_N
-		userEvent.click(screen.getByText("매주"));
-		userEvent.click(screen.getByText("N주 간격"));
-
-		expect(screen.getByText("N주 간격")).toBeInTheDocument();
-		expect(
-			screen.getByRole("heading", {
-				name: "반복 종료",
-			}),
-		).toBeInTheDocument();
-		expect(screen.getByLabelText("월")).toBeInTheDocument();
-		expect(screen.getByDisplayValue(1)).toBeInTheDocument();
-		expect(screen.getByText("주 간격으로 반복합니다.")).toBeInTheDocument();
-
-		// MONTHLY
-		userEvent.click(screen.getByText("N주 간격"));
-		userEvent.click(screen.getByText("매월"));
-
-		expect(screen.getByText("매월")).toBeInTheDocument();
-		expect(
-			screen.getByRole("heading", {
-				name: "반복 종료",
-			}),
-		).toBeInTheDocument();
-
-		// MONTHLY_N
-		userEvent.click(screen.getByText("매월"));
-		userEvent.click(screen.getByText("N개월 간격"));
-
-		expect(screen.getByText("N개월 간격")).toBeInTheDocument();
-		expect(
-			screen.getByRole("heading", {
-				name: "반복 종료",
-			}),
-		).toBeInTheDocument();
-		expect(screen.getByDisplayValue(1)).toBeInTheDocument();
-		expect(screen.getByText("개월 간격으로 반복합니다.")).toBeInTheDocument();
-
-		// YEARLY
-		userEvent.click(screen.getByText("N개월 간격"));
-		userEvent.click(screen.getByText("매년"));
-
-		expect(screen.getByText("매년")).toBeInTheDocument();
-		expect(
-			screen.getByRole("heading", {
-				name: "반복 종료",
-			}),
-		).toBeInTheDocument();
-
-		// YEARLY_N
-		userEvent.click(screen.getByText("매년"));
-		userEvent.click(screen.getByText("N년 간격"));
-
-		expect(screen.getByText("N년 간격")).toBeInTheDocument();
-		expect(
-			screen.getByRole("heading", {
-				name: "반복 종료",
-			}),
-		).toBeInTheDocument();
-		expect(screen.getByDisplayValue(1)).toBeInTheDocument();
-		expect(screen.getByText("년 간격으로 반복합니다.")).toBeInTheDocument();
 	});
 });
