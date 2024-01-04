@@ -61,4 +61,22 @@ export const handlers = [
 	// 		ctx.json({ message: "Successfully create user schedule" }),
 	// 	);
 	// }),
+	rest.get(`${BASE_URL}/api/user/calendar/:id`, (req, res, ctx) => {
+		return res(
+			ctx.status(200),
+			ctx.json({
+				id: req.params.id,
+				userId: 1,
+				title: "오늘오늘",
+				content: "오늘 끝",
+				startDateTime: "2023-12-14T01:55:00.000Z",
+				endDateTime: "2023-12-14T05:55:00.000Z",
+				recurrence: 0,
+				freq: null,
+				interval: null,
+				byweekday: null,
+				until: null,
+			}),
+		);
+	}),
 ];
