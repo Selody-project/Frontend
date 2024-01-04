@@ -33,11 +33,12 @@ const initialState = {
 	searchLastRecordId: 0,
 	searchGroupList: [],
 	isLoading: false,
+	isMemberListLoading: false,
 	groupInfo: null,
 	groupRequestMemberList: [],
 	isUserGroupRefetching: true,
 	groupInviteLink: null,
-	groupMemberList: null,
+	groupMemberList: [],
 	isEnd: false,
 };
 
@@ -57,6 +58,12 @@ const groupSlice = createSlice({
 	},
 	extraReducers: (bulider) => {
 		bulider
+			.addCase(getGroupRequestMemberList.pending, (state) => {
+				state.isMemberListLoading = true;
+			})
+			.addCase(getGroupRequestMemberList.rejected, (state) => {
+				state.isMemberListLoading = false;
+			})
 			.addMatcher(
 				isAnyOf(
 					searchGroup.pending,
@@ -69,7 +76,6 @@ const groupSlice = createSlice({
 					deleteGroupMember.pending,
 					approveGroupJoin.pending,
 					rejectGroupJoin.pending,
-					getGroupRequestMemberList.pending,
 					getGroupInfo.pending,
 					delegateGroup.pending,
 					changeGroupOption.pending,
@@ -97,7 +103,6 @@ const groupSlice = createSlice({
 					deleteGroupMember.rejected,
 					approveGroupJoin.rejected,
 					rejectGroupJoin.rejected,
-					getGroupRequestMemberList.rejected,
 					getGroupInfo.rejected,
 					delegateGroup.rejected,
 					changeGroupOption.rejected,
@@ -115,12 +120,17 @@ const groupSlice = createSlice({
 			)
 			.addMatcher(isAllOf(searchGroup.fulfilled), (state, { payload }) => {
 				state.isLoading = false;
-				payload.groups.forEach((groupInfo) => {
-					state.searchGroupList.push(groupInfo);
-				});
-				state.searchLastRecordId =
-					payload.groups[payload.groups.length - 1].groupId;
+				state.searchGroupList = [...state.searchGroupList, ...payload.groups];
 				state.isEnd = payload.isEnd;
+
+				if (payload.groups.length > 0) {
+					state.searchLastRecordId =
+						payload.groups[payload.groups.length - 1].groupId;
+				}
+
+				if (payload.isEnd) {
+					state.isEnd = false;
+				}
 			})
 			.addMatcher(isAllOf(createGroup.fulfilled), (state) => {
 				state.isLoading = false;
@@ -128,11 +138,17 @@ const groupSlice = createSlice({
 			})
 			.addMatcher(isAllOf(getGroupList.fulfilled), (state, { payload }) => {
 				state.isLoading = false;
-				payload.groups.forEach((groupInfo) => {
-					state.groupList.push(groupInfo);
-				});
-				state.lastRecordId = payload.groups[payload.groups.length - 1].groupId;
+				state.groupList = [...state.groupList, ...payload.groups];
 				state.isEnd = payload.isEnd;
+
+				if (payload.groups.length > 0) {
+					state.lastRecordId =
+						payload.groups[payload.groups.length - 1].groupId;
+				}
+
+				if (payload.isEnd) {
+					state.isEnd = false;
+				}
 			})
 			.addMatcher(isAllOf(deleteGroup.fulfilled), (state) => {
 				state.isLoading = false;
@@ -161,7 +177,7 @@ const groupSlice = createSlice({
 			.addMatcher(
 				isAllOf(getGroupRequestMemberList.fulfilled),
 				(state, { payload }) => {
-					state.isLoading = false;
+					state.isMemberListLoading = false;
 					state.groupRequestMemberList = payload;
 				},
 			)
