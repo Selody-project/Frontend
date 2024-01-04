@@ -34,7 +34,7 @@ jest.mock(
 );
 
 const TITLE_TEXT = "일정 1";
-const getInitialScheduleState = ({ recurrence, isAllDay }) => {
+const getInitialScheduleState = ({ recurrence, isAllDay, isMine }) => {
 	const startDate = new Date();
 	const endDate = new Date();
 	if (isAllDay) {
@@ -46,7 +46,8 @@ const getInitialScheduleState = ({ recurrence, isAllDay }) => {
 			todaySchedules: [
 				{
 					id: 0,
-					isGroup: false,
+					userId: isMine ? 1 : 2,
+					isGroup: !isMine,
 					title: TITLE_TEXT,
 					startDateTime: startDate.toISOString(),
 					endDateTime: endDate.toISOString(),
@@ -70,8 +71,8 @@ const getInitialScheduleState = ({ recurrence, isAllDay }) => {
 	};
 };
 
-describe("PersonalSchedulePage", () => {
-	describe("initial render and update ui after fetching", () => {
+describe("PersonalSchedulePage without modal", () => {
+	describe("fetch data and update UI", () => {
 		it("initial render with on all-day todaySchedule", async () => {
 			render(<PersonalSchedulePage />, {
 				preloadedState: {
@@ -162,6 +163,100 @@ describe("PersonalSchedulePage", () => {
 				`${nextDay.getMonth() + 1}월 ${nextDay.getDate()}일 하루 종일`,
 			);
 			expect(scheduleItem).toBeInTheDocument();
+		});
+	});
+	describe("render diffrent ScheduleItem UI depends on schedule type", () => {
+		describe("Is it recurring?", () => {
+			it("yes", () => {
+				render(<PersonalSchedulePage />, {
+					preloadedState: getInitialScheduleState({
+						recurrence: 0,
+						isAllDay: false,
+					}),
+				});
+
+				const todaySchedule = screen.queryByText("반복");
+				expect(todaySchedule).toBeNull();
+			});
+			it("no", () => {
+				render(<PersonalSchedulePage />, {
+					preloadedState: getInitialScheduleState({
+						recurrence: 1,
+						isAllDay: false,
+					}),
+				});
+
+				const todaySchedule = screen.getByText("반복");
+				expect(todaySchedule).toBeInTheDocument();
+			});
+		});
+		describe("Is it all day?", () => {
+			it("yes", () => {
+				render(<PersonalSchedulePage />, {
+					preloadedState: getInitialScheduleState({
+						recurrence: 0,
+						isAllDay: true,
+					}),
+				});
+
+				const allDayElement = screen.getByText(
+					`${new Date().getMonth() + 1}월 ${new Date().getDate()}일 하루 종일`,
+				);
+				expect(allDayElement).toBeInTheDocument();
+			});
+			it("no", () => {
+				render(<PersonalSchedulePage />, {
+					preloadedState: getInitialScheduleState({
+						recurrence: 0,
+						isAllDay: false,
+					}),
+				});
+
+				const allDayElement = screen.queryByText(
+					`${new Date().getMonth() + 1}월 ${new Date().getDate()}일 하루 종일`,
+				);
+				expect(allDayElement).toBeNull();
+			});
+		});
+		describe("Is it mine?", () => {
+			const ALL_PAGE_BUTTON_LENGTH_EXCEPT_CARD_BUTTONS = 3;
+			it("yes", () => {
+				render(<PersonalSchedulePage />, {
+					preloadedState: getInitialScheduleState({
+						recurrence: 0,
+						isAllDay: false,
+						isMine: true,
+					}),
+				});
+
+				const allPageButtons = screen.getAllByRole("button");
+				const [editButton, deleteButton] = allPageButtons.slice(
+					ALL_PAGE_BUTTON_LENGTH_EXCEPT_CARD_BUTTONS,
+				);
+
+				expect(allPageButtons).toHaveLength(
+					ALL_PAGE_BUTTON_LENGTH_EXCEPT_CARD_BUTTONS + 2,
+				);
+				expect(editButton).toHaveAttribute("aria-label", "editSchedule");
+				expect(deleteButton).toHaveAttribute("aria-label", "deleteSchedule");
+			});
+			it("no", () => {
+				render(<PersonalSchedulePage />, {
+					preloadedState: getInitialScheduleState({
+						recurrence: 0,
+						isAllDay: false,
+						isMine: false,
+					}),
+				});
+
+				const allPageButtons = screen.getAllByRole("button");
+				const viewButton = allPageButtons.at(-1);
+
+				expect(allPageButtons).toHaveLength(
+					ALL_PAGE_BUTTON_LENGTH_EXCEPT_CARD_BUTTONS + 1,
+				);
+				expect(viewButton).toHaveAttribute("aria-label", "viewSchedule");
+			});
 		});
 	});
 });
