@@ -6,6 +6,7 @@ import {
 	getUserPersonalSchedule,
 	getUserPersonalScheduleSummary,
 	postPersonalSchedule,
+	putPersonalSchedule,
 } from "./handlers/users/calendar";
 
 const BASE_URL = "http://localhost/back";
@@ -18,6 +19,7 @@ export const handlers = [
 	rest.get(`${BASE_URL}/api/user/calendar`, getUserPersonalSchedule),
 	rest.get(`${BASE_URL}/api/user/calendar/:id`, getSingleUserSchedule),
 	rest.post(`${BASE_URL}/api/user/calendar`, postPersonalSchedule),
+	rest.put(`${BASE_URL}/api/user/calendar:id`, putPersonalSchedule),
 ];
 
 export const server = setupServer(...handlers);

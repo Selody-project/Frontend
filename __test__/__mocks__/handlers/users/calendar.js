@@ -54,50 +54,41 @@ export const getUserPersonalSchedule = (req, res, ctx) => {
 
 export const postPersonalSchedule = (req, res, ctx) => {
 	// default: 반복 일정이 아닌 '오늘' 일정의 경우
-	const {
-		title,
-		content,
-		startDateTime,
-		endDateTime,
-		recurrence,
-		freq,
-		interval,
-		byweekday,
-		until,
-	} = req.json();
-	if (
-		!title ||
-		!content ||
-		!startDateTime ||
-		!endDateTime ||
-		recurrence ||
-		freq ||
-		interval ||
-		byweekday ||
-		until
-	)
-		return res(ctx.status(401), ctx.json({ error: "형식에 맞지 않는 데이터" }));
+	try {
+		const {
+			title,
+			content,
+			startDateTime,
+			endDateTime,
+			recurrence,
+			freq,
+			interval,
+			byweekday,
+			until,
+		} = req.body;
 
-	return res(
-		ctx.status(201),
-		ctx.json({
-			scheduleSummary: {
-				id: 2,
-				userId: 1,
-				startDateTime,
-				endDateTime,
-				recurrence,
-				freq,
-				interval,
-				byweekday,
-				until,
-			},
-			todaySchedule: [
-				{
+		if (
+			!title ||
+			!content ||
+			!startDateTime ||
+			!endDateTime ||
+			recurrence ||
+			freq ||
+			interval ||
+			byweekday ||
+			until
+		)
+			return res(
+				ctx.status(401),
+				ctx.json({ error: "형식에 맞지 않는 데이터" }),
+			);
+
+		return res(
+			ctx.status(201),
+			ctx.json({
+				scheduleSummary: {
 					id: 2,
 					userId: 1,
-					title,
-					content,
 					startDateTime,
 					endDateTime,
 					recurrence,
@@ -106,10 +97,28 @@ export const postPersonalSchedule = (req, res, ctx) => {
 					byweekday,
 					until,
 				},
-			],
-			schedulesForTheWeek: [],
-		}),
-	);
+				todaySchedules: [
+					{
+						id: 2,
+						userId: 1,
+						title,
+						content,
+						startDateTime,
+						endDateTime,
+						recurrence,
+						freq,
+						interval,
+						byweekday,
+						until,
+					},
+				],
+				schedulesForTheWeek: [],
+			}),
+		);
+	} catch (error) {
+		console.log(error);
+		return res(ctx.status(500), ctx.json({ error: "Internal Server Error" }));
+	}
 };
 
 export const getSingleUserSchedule = (req, res, ctx) => {
@@ -129,4 +138,73 @@ export const getSingleUserSchedule = (req, res, ctx) => {
 			until: null,
 		}),
 	);
+};
+
+export const putPersonalSchedule = (req, res, ctx) => {
+	// default: 반복 일정이 아닌 '오늘' 일정의 경우
+	try {
+		const {
+			title,
+			content,
+			startDateTime,
+			endDateTime,
+			recurrence,
+			freq,
+			interval,
+			byweekday,
+			until,
+		} = req.body;
+
+		if (
+			!title ||
+			!content ||
+			!startDateTime ||
+			!endDateTime ||
+			recurrence ||
+			freq ||
+			interval ||
+			byweekday ||
+			until
+		)
+			return res(
+				ctx.status(401),
+				ctx.json({ error: "형식에 맞지 않는 데이터" }),
+			);
+
+		return res(
+			ctx.status(201),
+			ctx.json({
+				scheduleSummary: {
+					id: req.params.id,
+					userId: 1,
+					startDateTime,
+					endDateTime,
+					recurrence,
+					freq,
+					interval,
+					byweekday,
+					until,
+				},
+				todaySchedules: [
+					{
+						id: req.params.id,
+						userId: 1,
+						title,
+						content,
+						startDateTime,
+						endDateTime,
+						recurrence,
+						freq,
+						interval,
+						byweekday,
+						until,
+					},
+				],
+				schedulesForTheWeek: [],
+			}),
+		);
+	} catch (error) {
+		console.log(error);
+		return res(ctx.status(500), ctx.json({ error: "Internal Server Error" }));
+	}
 };

@@ -8,6 +8,7 @@ import { userEvent } from "@storybook/testing-library";
 import { screen } from "@testing-library/react";
 
 import "@testing-library/jest-dom";
+
 import ScheduleModal from "@/components/Common/ScheduleModal/ScheduleModal.jsx";
 import { SCHEDULE_MODAL_TYPE } from "@/constants/uiConstants";
 import PersonalSchedulePage from "@/pages/PersonalSchedulePage/PersonalSchedulePage.jsx";
@@ -34,6 +35,7 @@ jest.mock(
 );
 
 const TITLE_TEXT = "일정 1";
+const CONTENT_TEXT = "일정 상세 정보";
 const ALL_PAGE_BUTTON_LENGTH_EXCEPT_CARD_BUTTONS = 3;
 
 const getInitialScheduleState = ({ recurrence, isAllDay, isMine }) => {
@@ -587,5 +589,57 @@ describe("ScheduleModal in PersonalSchedulePage", () => {
 				).toBeInTheDocument();
 			});
 		});
+	});
+	describe("mutate schedule", () => {
+		it("POST all day schedule", async () => {
+			render(<PersonalSchedulePage />, {
+				preloadedState: { auth: { user: { userId: 1 } } },
+			});
+
+			// open ScheduleModal as a create mode
+			userEvent.click(screen.getByRole("button", { name: "일정 추가" }));
+
+			// action
+			const titleInput = screen.getByPlaceholderText("일정 제목");
+			const contentTextarea = screen.getByPlaceholderText("상세 내용");
+			const allDayCheckbox = screen.getByLabelText("하루 종일");
+			userEvent.clear(titleInput);
+			userEvent.clear(contentTextarea);
+			userEvent.clear(allDayCheckbox);
+			userEvent.type(titleInput, TITLE_TEXT);
+			userEvent.type(contentTextarea, CONTENT_TEXT);
+			userEvent.click(allDayCheckbox);
+			await userEvent.click(screen.getByRole("button", { name: "저장하기" }));
+
+			// assertion
+			expect(
+				await screen.findByRole("heading", {
+					name: TITLE_TEXT,
+				}),
+			).toBeInTheDocument();
+		});
+		// it.only("PUT all day schedule", async () => {
+		// 	render(<PersonalSchedulePage />, {
+		// 		preloadedState: { auth: { user: { userId: 1 } } },
+		// 	});
+
+		// 	// open ScheduleModal as a create mode
+		// 	const allButtons = await screen.findAllByRole("button");
+		// 	const editButton = allButtons[allButtons.length - 2];
+		// 	userEvent.click(editButton);
+
+		// 	// action
+		// 	const titleInput = await screen.findByPlaceholderText("일정 제목");
+		// 	userEvent.clear(titleInput);
+		// 	userEvent.type(titleInput, "newnew");
+		// 	userEvent.click(await screen.findByRole("button", { name: "수정하기" }));
+
+		// 	// assertion
+		// 	expect(
+		// 		await screen.findByRole("heading", {
+		// 			name: "newnew",
+		// 		}),
+		// 	).toBeInTheDocument();
+		// });
 	});
 });
