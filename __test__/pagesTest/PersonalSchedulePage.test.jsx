@@ -429,18 +429,24 @@ describe("ScheduleModal in PersonalSchedulePage", () => {
 				unmount();
 			});
 		});
-		// it("when click viewButton in existing group schedule(view mode)", async () => {
-		// 	const {unmount} = render(<PersonalSchedulePage />, {
-		// 		preloadedState: getInitialScheduleState({
-		// 			recurrence: 0,
-		// 			isAllDay: false,
-		// 			isMine: true,
-		// 		}),
-		// 	});
-		// });
 	});
 	describe("change UI in ScheduleModal while fill in form", () => {
-		it("change displayed components if schedule is recurring or not", () => {
+		it("enable '저장하기' 버튼 if fill in title and content", () => {
+			render(<ScheduleModal />);
+
+			const titleInput = screen.getByPlaceholderText("일정 제목");
+			const contentTextarea = screen.getByPlaceholderText("상세 내용");
+			const submitButton = screen.getByRole("button", { name: "저장하기" });
+			expect(submitButton).toBeDisabled();
+
+			userEvent.clear(titleInput);
+			userEvent.clear(contentTextarea);
+			userEvent.type(titleInput, "일정 제목 예시 1");
+			userEvent.type(contentTextarea, "일정 설명 예시");
+
+			expect(submitButton).toBeEnabled();
+		});
+		it("change UI if schedule is recurring or not", () => {
 			render(<ScheduleModal />);
 
 			// initial render
