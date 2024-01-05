@@ -8,12 +8,13 @@ import { openModal } from "@/features/ui/ui-slice";
 import {
 	ContainerDiv,
 	GroupDiv,
+	InfoDiv,
 	OptionDiv,
 	OptionMenuDiv,
 } from "./GroupInfoList.styles";
 import GroupRequestCancelModal from "../GroupRequestCancelModal/GroupRequestCancelModal";
 
-const GroupInfoList = ({ groups, scrollRef, isReqeust }) => {
+const GroupInfoList = ({ groups, scrollRef, isRequest }) => {
 	const dispatch = useDispatch();
 	const { openedModal } = useSelector((state) => state.ui);
 
@@ -29,13 +30,8 @@ const GroupInfoList = ({ groups, scrollRef, isReqeust }) => {
 	return (
 		<ContainerDiv>
 			{groups.map((info) => (
-				<GroupDiv
-					key={info.groupId}
-					onClick={() => {
-						navigate(`/group/${info.groupId}`);
-					}}
-				>
-					{isReqeust && (
+				<GroupDiv key={info.groupId}>
+					{isRequest && (
 						<OptionDiv>
 							<OptionThreeDotIcon
 								onClick={() => {
@@ -54,10 +50,16 @@ const GroupInfoList = ({ groups, scrollRef, isReqeust }) => {
 							)}
 						</OptionDiv>
 					)}
-					<img src={info.image} alt="groupImg" />
-					<h3>{info.name}</h3>
-					<p>{info.description}</p>
-					<h4>{info.member}명의 그룹원</h4>
+					<InfoDiv
+						onClick={() => {
+							navigate(`/group/${info.groupId}`);
+						}}
+					>
+						<img src={info.image} alt="groupImg" />
+						<h3>{info.name}</h3>
+						<p>{info.description}</p>
+						<h4>{info.member}명의 그룹원</h4>
+					</InfoDiv>
 				</GroupDiv>
 			))}
 			<div ref={scrollRef} />

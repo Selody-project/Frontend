@@ -9,13 +9,16 @@ export const ContainerDiv = styled.div`
 `;
 
 export const GroupDiv = styled.div`
+	position: relative;
+`;
+
+export const InfoDiv = styled.div`
 	border-radius: 10px;
 	border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	padding: 24px 0;
-	position: relative;
 	cursor: pointer;
 
 	& > img {
