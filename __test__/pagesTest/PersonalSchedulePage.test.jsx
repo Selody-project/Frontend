@@ -76,7 +76,7 @@ const getInitialScheduleState = ({ recurrence, isAllDay, isMine }) => {
 describe("PersonalSchedulePage without modal", () => {
 	describe("fetch data and update UI", () => {
 		it("initial render with on all-day todaySchedule", async () => {
-			render(<PersonalSchedulePage />, {
+			const { unmount } = render(<PersonalSchedulePage />, {
 				preloadedState: {
 					auth: {
 						user: {
@@ -119,10 +119,13 @@ describe("PersonalSchedulePage without modal", () => {
 
 			expect(addButton).toBeNull();
 			expect(todayScheduleItem).toBeInTheDocument();
+
+			// explicit unmount
+			unmount();
 		});
 
 		it("render all-day tommorow schedule with changing tab color when user click '예정' tab", async () => {
-			render(<PersonalSchedulePage />, {
+			const { unmount } = render(<PersonalSchedulePage />, {
 				preloadedState: {
 					auth: {
 						user: {
@@ -165,12 +168,15 @@ describe("PersonalSchedulePage without modal", () => {
 				`${nextDay.getMonth() + 1}월 ${nextDay.getDate()}일 하루 종일`,
 			);
 			expect(scheduleItem).toBeInTheDocument();
+
+			// explicit unmount
+			unmount();
 		});
 	});
 	describe("render diffrent ScheduleItem UI depends on schedule type", () => {
 		describe("Is it recurring?", () => {
 			it("yes", () => {
-				render(<PersonalSchedulePage />, {
+				const { unmount } = render(<PersonalSchedulePage />, {
 					preloadedState: getInitialScheduleState({
 						recurrence: 0,
 						isAllDay: false,
@@ -179,9 +185,12 @@ describe("PersonalSchedulePage without modal", () => {
 
 				const todaySchedule = screen.queryByText("반복");
 				expect(todaySchedule).toBeNull();
+
+				// explicit unmount
+				unmount();
 			});
 			it("no", () => {
-				render(<PersonalSchedulePage />, {
+				const { unmount } = render(<PersonalSchedulePage />, {
 					preloadedState: getInitialScheduleState({
 						recurrence: 1,
 						isAllDay: false,
@@ -190,11 +199,14 @@ describe("PersonalSchedulePage without modal", () => {
 
 				const todaySchedule = screen.getByText("반복");
 				expect(todaySchedule).toBeInTheDocument();
+
+				// explicit unmount
+				unmount();
 			});
 		});
 		describe("Is it all day?", () => {
 			it("yes", () => {
-				render(<PersonalSchedulePage />, {
+				const { unmount } = render(<PersonalSchedulePage />, {
 					preloadedState: getInitialScheduleState({
 						recurrence: 0,
 						isAllDay: true,
@@ -205,9 +217,12 @@ describe("PersonalSchedulePage without modal", () => {
 					`${new Date().getMonth() + 1}월 ${new Date().getDate()}일 하루 종일`,
 				);
 				expect(allDayElement).toBeInTheDocument();
+
+				// explicit unmount
+				unmount();
 			});
 			it("no", () => {
-				render(<PersonalSchedulePage />, {
+				const { unmount } = render(<PersonalSchedulePage />, {
 					preloadedState: getInitialScheduleState({
 						recurrence: 0,
 						isAllDay: false,
@@ -218,11 +233,14 @@ describe("PersonalSchedulePage without modal", () => {
 					`${new Date().getMonth() + 1}월 ${new Date().getDate()}일 하루 종일`,
 				);
 				expect(allDayElement).toBeNull();
+
+				// explicit unmount
+				unmount();
 			});
 		});
 		describe("Is it mine?", () => {
 			it("yes", () => {
-				render(<PersonalSchedulePage />, {
+				const { unmount } = render(<PersonalSchedulePage />, {
 					preloadedState: getInitialScheduleState({
 						recurrence: 0,
 						isAllDay: false,
@@ -240,9 +258,12 @@ describe("PersonalSchedulePage without modal", () => {
 				);
 				expect(editButton).toHaveAttribute("aria-label", "editSchedule");
 				expect(deleteButton).toHaveAttribute("aria-label", "deleteSchedule");
+
+				// explicit unmount
+				unmount();
 			});
 			it("no", () => {
-				render(<PersonalSchedulePage />, {
+				const { unmount } = render(<PersonalSchedulePage />, {
 					preloadedState: getInitialScheduleState({
 						recurrence: 0,
 						isAllDay: false,
@@ -257,6 +278,9 @@ describe("PersonalSchedulePage without modal", () => {
 					ALL_PAGE_BUTTON_LENGTH_EXCEPT_CARD_BUTTONS + 1,
 				);
 				expect(viewButton).toHaveAttribute("aria-label", "viewSchedule");
+
+				// explicit unmount
+				unmount();
 			});
 		});
 	});
@@ -272,7 +296,7 @@ describe("ScheduleModal in PersonalSchedulePage", () => {
 	describe("trigger opening ScheduleModal", () => {
 		describe("as a create mode", () => {
 			it("when click '일정 추가' button", () => {
-				render(<PersonalSchedulePage />);
+				const { unmount } = render(<PersonalSchedulePage />);
 
 				userEvent.click(screen.getByRole("button", { name: "일정 추가" }));
 
@@ -280,10 +304,12 @@ describe("ScheduleModal in PersonalSchedulePage", () => {
 					name: "저장하기",
 				});
 				expect(saveButton).toBeDisabled();
-			});
 
+				// explicit unmount
+				unmount();
+			});
 			it("when click big add button", () => {
-				render(<PersonalSchedulePage />);
+				const { unmount } = render(<PersonalSchedulePage />);
 
 				userEvent.click(
 					screen.getByRole("button", {
@@ -295,11 +321,14 @@ describe("ScheduleModal in PersonalSchedulePage", () => {
 					name: "저장하기",
 				});
 				expect(saveButton).toBeDisabled();
+
+				// explicit unmount
+				unmount();
 			});
 		});
 		describe("as a edit mode", () => {
 			it("when click editButton in existing my schedule", async () => {
-				render(<PersonalSchedulePage />, {
+				const { unmount } = render(<PersonalSchedulePage />, {
 					preloadedState: getInitialScheduleState({
 						recurrence: 0,
 						isAllDay: false,
@@ -347,11 +376,14 @@ describe("ScheduleModal in PersonalSchedulePage", () => {
 				expect(allDayCheckbox).toBeEnabled();
 				expect(repeatOrNotSelect).toBeEnabled();
 				expect(submitButton).toBeDisabled();
+
+				// explicit unmount
+				unmount();
 			});
 		});
 		describe("as a view mode", () => {
 			it("when click editButton in existing not my schedule", async () => {
-				render(<PersonalSchedulePage />, {
+				const { unmount } = render(<PersonalSchedulePage />, {
 					preloadedState: getInitialScheduleState({
 						recurrence: 0,
 						isAllDay: false,
@@ -392,10 +424,13 @@ describe("ScheduleModal in PersonalSchedulePage", () => {
 				expect(allDayCheckbox).toBeDisabled();
 				expect(repeatOrNotSelect).toBeDisabled();
 				expect(submitButton).toBeNull();
+
+				// explicit unmount
+				unmount();
 			});
 		});
 		// it("when click viewButton in existing group schedule(view mode)", async () => {
-		// 	render(<PersonalSchedulePage />, {
+		// 	const {unmount} = render(<PersonalSchedulePage />, {
 		// 		preloadedState: getInitialScheduleState({
 		// 			recurrence: 0,
 		// 			isAllDay: false,
