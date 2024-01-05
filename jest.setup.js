@@ -7,7 +7,7 @@ import "@testing-library/jest-dom/extend-expect";
 import { render as rtlRender } from "@testing-library/react";
 import { ThemeProvider } from "styled-components";
 
-import { server } from "./__test__/__mocks__/msw/server.js";
+import { server } from "./__test__/__mocks__/server.js";
 import { setupStore } from "./src/store/index.js";
 import lightTheme from "./src/styles/theme.js";
 
