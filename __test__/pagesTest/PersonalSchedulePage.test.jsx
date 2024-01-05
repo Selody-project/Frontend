@@ -446,112 +446,146 @@ describe("ScheduleModal in PersonalSchedulePage", () => {
 
 			expect(submitButton).toBeEnabled();
 		});
-		it("change UI if schedule is recurring or not", () => {
-			render(<ScheduleModal />);
+		describe("depend on recurring type", () => {
+			it("do not recur", () => {
+				render(<ScheduleModal />);
 
-			// initial render
-			const labelForToggleFreq = screen.queryByRole("heading", {
-				name: "반복 종료",
+				expect(
+					screen.queryByRole("heading", {
+						name: "반복 종료",
+					}),
+				).toBeNull();
 			});
-			expect(labelForToggleFreq).toBeNull();
+			it("recur daily", () => {
+				render(<ScheduleModal />);
 
-			// DAILY
-			userEvent.click(screen.getByText("반복 안함"));
-			userEvent.click(screen.getByText("매일"));
+				userEvent.click(screen.getByText("반복 안함"));
+				userEvent.click(screen.getByText("매일"));
 
-			expect(screen.getByText("매일")).toBeInTheDocument();
-			expect(
-				screen.getByRole("heading", {
-					name: "반복 종료",
-				}),
-			).toBeInTheDocument();
+				expect(screen.getByText("매일")).toBeInTheDocument();
+				expect(
+					screen.getByRole("heading", {
+						name: "반복 종료",
+					}),
+				).toBeInTheDocument();
+			});
+			it("recur daily_N", () => {
+				render(<ScheduleModal />);
 
-			// DAILY_N
-			userEvent.click(screen.getByText("매일"));
-			userEvent.click(screen.getByText("N일 간격"));
+				userEvent.click(screen.getByText("반복 안함"));
+				userEvent.click(screen.getByText("N일 간격"));
 
-			expect(screen.getByText("N일 간격")).toBeInTheDocument();
-			expect(
-				screen.getByRole("heading", {
-					name: "반복 종료",
-				}),
-			).toBeInTheDocument();
-			expect(screen.getByDisplayValue(1)).toBeInTheDocument();
-			expect(screen.getByText("일 간격으로 반복합니다.")).toBeInTheDocument();
+				expect(screen.getByText("N일 간격")).toBeInTheDocument();
+				expect(
+					screen.getByRole("heading", {
+						name: "반복 종료",
+					}),
+				).toBeInTheDocument();
+				expect(screen.getByDisplayValue(1)).toBeInTheDocument();
+				expect(screen.getByText("일 간격으로 반복합니다.")).toBeInTheDocument();
+			});
+			it("recur weekly", () => {
+				render(<ScheduleModal />);
 
-			// WEEKLY
-			userEvent.click(screen.getByText("N일 간격"));
-			userEvent.click(screen.getByText("매주"));
+				userEvent.click(screen.getByText("반복 안함"));
+				userEvent.click(screen.getByText("매주"));
 
-			expect(screen.getByText("매주")).toBeInTheDocument();
-			expect(
-				screen.getByRole("heading", {
-					name: "반복 종료",
-				}),
-			).toBeInTheDocument();
-			expect(screen.getByLabelText("월")).toBeInTheDocument();
+				expect(screen.getByText("매주")).toBeInTheDocument();
+				expect(
+					screen.getByRole("heading", {
+						name: "반복 종료",
+					}),
+				).toBeInTheDocument();
+				expect(screen.getByLabelText("월")).toBeInTheDocument();
+			});
+			it("recur weekly_N", () => {
+				render(<ScheduleModal />);
 
-			// WEEKLY_N
-			userEvent.click(screen.getByText("매주"));
-			userEvent.click(screen.getByText("N주 간격"));
+				userEvent.click(screen.getByText("반복 안함"));
+				userEvent.click(screen.getByText("N주 간격"));
 
-			expect(screen.getByText("N주 간격")).toBeInTheDocument();
-			expect(
-				screen.getByRole("heading", {
-					name: "반복 종료",
-				}),
-			).toBeInTheDocument();
-			expect(screen.getByLabelText("월")).toBeInTheDocument();
-			expect(screen.getByDisplayValue(1)).toBeInTheDocument();
-			expect(screen.getByText("주 간격으로 반복합니다.")).toBeInTheDocument();
+				expect(screen.getByText("N주 간격")).toBeInTheDocument();
+				expect(
+					screen.getByRole("heading", {
+						name: "반복 종료",
+					}),
+				).toBeInTheDocument();
+				expect(screen.getByLabelText("월")).toBeInTheDocument();
+				expect(screen.getByDisplayValue(1)).toBeInTheDocument();
+				expect(screen.getByText("주 간격으로 반복합니다.")).toBeInTheDocument();
+			});
+			it("recur monthly", () => {
+				render(<ScheduleModal />);
 
-			// MONTHLY
-			userEvent.click(screen.getByText("N주 간격"));
-			userEvent.click(screen.getByText("매월"));
+				userEvent.click(screen.getByText("반복 안함"));
+				userEvent.click(screen.getByText("매월"));
 
-			expect(screen.getByText("매월")).toBeInTheDocument();
-			expect(
-				screen.getByRole("heading", {
-					name: "반복 종료",
-				}),
-			).toBeInTheDocument();
+				expect(screen.getByText("매월")).toBeInTheDocument();
+				expect(
+					screen.getByRole("heading", {
+						name: "반복 종료",
+					}),
+				).toBeInTheDocument();
+			});
+			it("recur monthly_N", () => {
+				render(<ScheduleModal />);
 
-			// MONTHLY_N
-			userEvent.click(screen.getByText("매월"));
-			userEvent.click(screen.getByText("N개월 간격"));
+				userEvent.click(screen.getByText("반복 안함"));
+				userEvent.click(screen.getByText("N개월 간격"));
 
-			expect(screen.getByText("N개월 간격")).toBeInTheDocument();
-			expect(
-				screen.getByRole("heading", {
-					name: "반복 종료",
-				}),
-			).toBeInTheDocument();
-			expect(screen.getByDisplayValue(1)).toBeInTheDocument();
-			expect(screen.getByText("개월 간격으로 반복합니다.")).toBeInTheDocument();
+				expect(screen.getByText("N개월 간격")).toBeInTheDocument();
+				expect(
+					screen.getByRole("heading", {
+						name: "반복 종료",
+					}),
+				).toBeInTheDocument();
+				expect(screen.getByDisplayValue(1)).toBeInTheDocument();
+				expect(
+					screen.getByText("개월 간격으로 반복합니다."),
+				).toBeInTheDocument();
+			});
+			it("recur yearly", () => {
+				render(<ScheduleModal />);
 
-			// YEARLY
-			userEvent.click(screen.getByText("N개월 간격"));
-			userEvent.click(screen.getByText("매년"));
+				userEvent.click(screen.getByText("반복 안함"));
+				userEvent.click(screen.getByText("매년"));
 
-			expect(screen.getByText("매년")).toBeInTheDocument();
-			expect(
-				screen.getByRole("heading", {
-					name: "반복 종료",
-				}),
-			).toBeInTheDocument();
+				expect(screen.getByText("매년")).toBeInTheDocument();
+				expect(
+					screen.getByRole("heading", {
+						name: "반복 종료",
+					}),
+				).toBeInTheDocument();
+			});
+			it("recur yearly_N", () => {
+				render(<ScheduleModal />);
 
-			// YEARLY_N
-			userEvent.click(screen.getByText("매년"));
-			userEvent.click(screen.getByText("N년 간격"));
+				userEvent.click(screen.getByText("반복 안함"));
+				userEvent.click(screen.getByText("N년 간격"));
 
-			expect(screen.getByText("N년 간격")).toBeInTheDocument();
-			expect(
-				screen.getByRole("heading", {
-					name: "반복 종료",
-				}),
-			).toBeInTheDocument();
-			expect(screen.getByDisplayValue(1)).toBeInTheDocument();
-			expect(screen.getByText("년 간격으로 반복합니다.")).toBeInTheDocument();
+				expect(screen.getByText("N년 간격")).toBeInTheDocument();
+				expect(
+					screen.getByRole("heading", {
+						name: "반복 종료",
+					}),
+				).toBeInTheDocument();
+				expect(screen.getByDisplayValue(1)).toBeInTheDocument();
+				expect(screen.getByText("년 간격으로 반복합니다.")).toBeInTheDocument();
+			});
+			it("recur infinitely", () => {
+				render(<ScheduleModal />);
+
+				userEvent.click(screen.getByRole("button", { name: "반복 안함" }));
+				userEvent.click(screen.getByRole("button", { name: "매일" }));
+				userEvent.click(screen.getByRole("button", { name: "안 함" }));
+				userEvent.click(screen.getByRole("button", { name: "날짜" }));
+
+				expect(
+					screen.getByRole("heading", {
+						name: "반복 종료 날짜",
+					}),
+				).toBeInTheDocument();
+			});
 		});
 	});
 });
