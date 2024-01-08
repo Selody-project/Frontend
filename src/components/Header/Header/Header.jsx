@@ -1,22 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import NotificationIcon from "@/assets/icon/ic-notification.svg";
 import DefaultProfile from "@/assets/img/img-default-profile.png";
 import SelodyLogo from "@/components/Common/SelodyLogo";
+import Tab from "@/components/Common/Tab/Tab";
 import NotificationDropdown from "@/components/Notification/NotificationDropdown/NotificationDropdown";
+import { HEADER_TAB_CONSTANTS } from "@/constants/tabConstants";
 import { openModal } from "@/features/ui/ui-slice";
 
 import {
 	LogoDiv,
-	TabUl,
 	LeftDiv,
 	RightDiv,
 	GroupCreateButton,
 	ProfileImg,
 	ProfileDiv,
-	TabButton,
 	ContainerHeader,
 	WrapDiv,
 	NotificationDiv,
@@ -24,19 +24,12 @@ import {
 } from "./Header.styles";
 import GroupCreateModal from "../GroupCreateModal/GroupCreateModal";
 import ProfileDropdown from "../ProfileDropdown/ProfileDropdown";
-import SubHeader from "../SubHeader/SubHeader";
 
 const Header = () => {
-	const path = useLocation().pathname;
 	const dispatch = useDispatch();
 
 	const profileRef = useRef();
 	const notiRef = useRef();
-
-	const navigate = useNavigate();
-
-	const isSchedule = path === "/" || path === "/share";
-	const isFeed = path === "/community" || path === "mypage";
 
 	const { openedModal } = useSelector((state) => state.ui);
 	const { user } = useSelector((state) => state.auth);
@@ -84,28 +77,7 @@ const Header = () => {
 							</h1>
 						</LogoDiv>
 					</NavLink>
-					<TabUl>
-						<li>
-							<TabButton
-								isActive={isSchedule}
-								type="button"
-								onClick={() => navigate("/")}
-							>
-								일정
-							</TabButton>
-							<SubHeader tab="schedule" />
-						</li>
-						<li>
-							<TabButton
-								isActive={isFeed}
-								type="button"
-								onClick={() => navigate("/community")}
-							>
-								FEED IN SELODY
-							</TabButton>
-							<SubHeader tab="feed" />
-						</li>
-					</TabUl>
+					<Tab contents={HEADER_TAB_CONSTANTS} isSubHeader />
 				</LeftDiv>
 				<RightDiv>
 					<GroupCreateButton

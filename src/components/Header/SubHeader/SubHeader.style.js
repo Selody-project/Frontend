@@ -10,25 +10,3 @@ export const SubHeaderDiv = styled.div`
 		display: block;
 	}
 `;
-
-export const SubTabUl = styled.ul`
-	display: flex;
-	align-items: center;
-	color: ${({ theme }) => theme.colors.text_01};
-	font-family: Inter;
-	font-size: 16px;
-	font-weight: 500;
-	line-height: normal;
-	gap: 48px;
-	margin-top: 60px;
-
-	& > li {
-		white-space: nowrap;
-		cursor: pointer;
-	}
-
-	.isActive {
-		color: ${({ theme }) => theme.colors.primary};
-		font-weight: 600;
-	}
-`;

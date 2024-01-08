@@ -1,34 +1,13 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 
-import { SubHeaderDiv, SubTabUl } from "./SubHeader.style";
+import Tab from "@/components/Common/Tab/Tab";
 
-const SubHeader = ({ tab }) => {
-	const listItems =
-		tab === "schedule"
-			? [
-					{ path: "/", title: "개인일정" },
-					{ path: "/share", title: "공유일정" },
-			  ]
-			: [
-					{ path: "/community", title: "홈" },
-					{ path: "/mypage", title: "마이페이지" },
-			  ];
+import { SubHeaderDiv } from "./SubHeader.style";
 
+const SubHeader = ({ contents }) => {
 	return (
 		<SubHeaderDiv>
-			<SubTabUl>
-				{listItems.map(({ path, title }) => (
-					<li key={title}>
-						<NavLink
-							to={path}
-							className={({ isActive }) => (isActive ? "isActive" : "")}
-						>
-							{title}
-						</NavLink>
-					</li>
-				))}
-			</SubTabUl>
+			<Tab contents={contents} />
 		</SubHeaderDiv>
 	);
 };
