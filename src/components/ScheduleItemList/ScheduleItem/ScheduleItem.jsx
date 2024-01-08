@@ -87,7 +87,7 @@ const ScheduleItem = ({
 
 	return (
 		<>
-			<ScheduleItemLi>
+			<ScheduleItemLi data-testid={`scheduleItem-${id}`}>
 				<CardDiv>
 					<ColoredCircleDiv
 						bgColor={isGroup ? colors.sunday : colors.disabled_text}

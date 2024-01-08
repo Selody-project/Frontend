@@ -45,11 +45,11 @@ const BaseModal = ({ children, onClose, isUpper }) => {
 	return (
 		<>
 			{ReactDOM.createPortal(
-				<Backdrop onClick={onClose} isUpper={isUpper} />,
+				<Backdrop onClick={onClose} isUpper={isUpper || false} />,
 				document.getElementById("backdrop"),
 			)}
 			{ReactDOM.createPortal(
-				<Modal onClose={onClose} isUpper={isUpper}>
+				<Modal onClose={onClose} isUpper={isUpper || false}>
 					{children}
 				</Modal>,
 				document.getElementById("modal"),

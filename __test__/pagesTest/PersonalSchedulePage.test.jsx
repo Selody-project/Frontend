@@ -36,7 +36,6 @@ jest.mock(
 
 const TITLE_TEXT = "일정 1";
 const CONTENT_TEXT = "일정 상세 정보";
-const ALL_PAGE_BUTTON_LENGTH_EXCEPT_CARD_BUTTONS = 3;
 
 const getInitialScheduleState = ({ recurrence, isAllDay, isMine }) => {
 	const startDate = new Date();
@@ -250,14 +249,15 @@ describe("PersonalSchedulePage without modal", () => {
 					}),
 				});
 
-				const allPageButtons = screen.getAllByRole("button");
-				const [editButton, deleteButton] = allPageButtons.slice(
-					ALL_PAGE_BUTTON_LENGTH_EXCEPT_CARD_BUTTONS,
+				const scheduleItem = screen.getByTestId(
+					`scheduleItem-${
+						getInitialScheduleState({ isMine: true }).schedule.todaySchedules[0]
+							.id
+					}`,
 				);
+				const [editButton, deleteButton] =
+					scheduleItem.getElementsByTagName("button");
 
-				expect(allPageButtons).toHaveLength(
-					ALL_PAGE_BUTTON_LENGTH_EXCEPT_CARD_BUTTONS + 2,
-				);
 				expect(editButton).toHaveAttribute("aria-label", "editSchedule");
 				expect(deleteButton).toHaveAttribute("aria-label", "deleteSchedule");
 
@@ -273,12 +273,15 @@ describe("PersonalSchedulePage without modal", () => {
 					}),
 				});
 
-				const allPageButtons = screen.getAllByRole("button");
-				const viewButton = allPageButtons.at(-1);
+				const viewButton = screen
+					.getByTestId(
+						`scheduleItem-${
+							getInitialScheduleState({ isMine: true }).schedule
+								.todaySchedules[0].id
+						}`,
+					)
+					.getElementsByTagName("button")[0];
 
-				expect(allPageButtons).toHaveLength(
-					ALL_PAGE_BUTTON_LENGTH_EXCEPT_CARD_BUTTONS + 1,
-				);
 				expect(viewButton).toHaveAttribute("aria-label", "viewSchedule");
 
 				// explicit unmount
@@ -338,10 +341,14 @@ describe("ScheduleModal in PersonalSchedulePage", () => {
 					}),
 				});
 
-				const allPageButtons = screen.getAllByRole("button");
-				const editButton = allPageButtons.slice(
-					ALL_PAGE_BUTTON_LENGTH_EXCEPT_CARD_BUTTONS,
-				)[0];
+				const editButton = screen
+					.getByTestId(
+						`scheduleItem-${
+							getInitialScheduleState({ isMine: true }).schedule
+								.todaySchedules[0].id
+						}`,
+					)
+					.getElementsByTagName("button")[0];
 
 				userEvent.click(editButton);
 
@@ -393,8 +400,14 @@ describe("ScheduleModal in PersonalSchedulePage", () => {
 					}),
 				});
 
-				const allPageButtons = screen.getAllByRole("button");
-				const viewButton = allPageButtons.at(-1);
+				const viewButton = screen
+					.getByTestId(
+						`scheduleItem-${
+							getInitialScheduleState({ isMine: true }).schedule
+								.todaySchedules[0].id
+						}`,
+					)
+					.getElementsByTagName("button")[0];
 
 				userEvent.click(viewButton);
 
@@ -626,8 +639,9 @@ describe("ScheduleModal in PersonalSchedulePage", () => {
 			// open ScheduleModal as a create mode
 			// 클릭해야 하는 요소를 정확히 비동기적 호출로 잡아내야 함
 			await screen.findByRole("heading", { name: "오늘오늘" });
-			const allButtons = screen.getAllByRole("button");
-			const editButton = allButtons[allButtons.length - 2];
+			const editButton = screen
+				.getByTestId("scheduleItem-1")
+				.getElementsByTagName("button")[0];
 			userEvent.click(editButton);
 
 			// action
@@ -650,16 +664,23 @@ describe("ScheduleModal in PersonalSchedulePage", () => {
 		});
 
 		it("DELETE current all day schedule", async () => {
-			window.confirm = jest.fn(() => true);
-
 			render(<PersonalSchedulePage />, {
 				preloadedState: { auth: { user: { userId: 1 } } },
 			});
 
 			await screen.findByRole("heading", { name: "오늘오늘" });
-			const allButtons = screen.getAllByRole("button");
-			const deleteButton = allButtons.at(-1);
+			const deleteButton = screen
+				.getByTestId("scheduleItem-1")
+				.getElementsByTagName("button")[1];
+
 			userEvent.click(deleteButton);
+
+			const deleteConfirmButton = screen.getByRole("button", {
+				name: "삭제하기",
+			});
+			expect(deleteConfirmButton).toBeInTheDocument();
+
+			userEvent.click(deleteConfirmButton);
 
 			const scheduleAddButton = await screen.findByRole("button", {
 				name: "아직 추가된 일정이 없습니다! 할 일을 추가하여 하루동안 할 일을 관리해보세요.",
@@ -669,7 +690,6 @@ describe("ScheduleModal in PersonalSchedulePage", () => {
 			});
 			expect(scheduleAddButton).toBeInTheDocument();
 			expect(scheduleItemHeadingToBeDeleted).toBeNull();
-			expect(window.confirm).toHaveBeenCalledWith("이 일정을 삭제하겠습니까?");
 		});
 	});
 });
