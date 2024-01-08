@@ -591,7 +591,7 @@ describe("ScheduleModal in PersonalSchedulePage", () => {
 		});
 	});
 	describe("mutate schedule", () => {
-		it("POST all day schedule", async () => {
+		it("POST new all day schedule", async () => {
 			render(<PersonalSchedulePage />, {
 				preloadedState: { auth: { user: { userId: 1 } } },
 			});
@@ -618,28 +618,30 @@ describe("ScheduleModal in PersonalSchedulePage", () => {
 				}),
 			).toBeInTheDocument();
 		});
-		// it.only("PUT all day schedule", async () => {
-		// 	render(<PersonalSchedulePage />, {
-		// 		preloadedState: { auth: { user: { userId: 1 } } },
-		// 	});
+		it("PUT all day schedule after changing title", async () => {
+			render(<PersonalSchedulePage />, {
+				preloadedState: { auth: { user: { userId: 1 } } },
+			});
 
-		// 	// open ScheduleModal as a create mode
-		// 	const allButtons = await screen.findAllByRole("button");
-		// 	const editButton = allButtons[allButtons.length - 2];
-		// 	userEvent.click(editButton);
+			// open ScheduleModal as a create mode
+			// 클릭해야 하는 요소를 정확히 비동기적 호출로 잡아내야 함
+			await screen.findByRole("heading", { name: "오늘오늘" });
+			const allButtons = await screen.findAllByRole("button");
+			const editButton = allButtons[allButtons.length - 2];
+			userEvent.click(editButton);
 
-		// 	// action
-		// 	const titleInput = await screen.findByPlaceholderText("일정 제목");
-		// 	userEvent.clear(titleInput);
-		// 	userEvent.type(titleInput, "newnew");
-		// 	userEvent.click(await screen.findByRole("button", { name: "수정하기" }));
+			// action
+			const titleInput = await screen.findByPlaceholderText("일정 제목");
+			userEvent.clear(titleInput);
+			userEvent.type(titleInput, "newnew");
+			await userEvent.click(screen.getByRole("button", { name: "수정하기" }));
 
-		// 	// assertion
-		// 	expect(
-		// 		await screen.findByRole("heading", {
-		// 			name: "newnew",
-		// 		}),
-		// 	).toBeInTheDocument();
-		// });
+			// assertion
+			expect(
+				await screen.findByRole("heading", {
+					name: "newnew",
+				}),
+			).toBeInTheDocument();
+		});
 	});
 });
