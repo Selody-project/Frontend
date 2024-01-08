@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import {
 	CrownIcon,
 	CommentIcon,
-	HeartIcon,
+	EmptyHeartIcon,
 	OptionThreeDotIcon,
-	HeartClickIcon,
+	FillHeartIcon,
 } from "@/constants/iconConstants";
 import {
 	deleteGroupPost,
@@ -26,19 +26,13 @@ import {
 	IconItemButton,
 } from "./Feed.styles";
 
-const Feed = ({ groupId, post }) => {
+const Feed = ({ groupId, post, optionOpenedFeedIndex, onThreeDotClick }) => {
 	const dispatch = useDispatch();
 
 	const { user } = useSelector((state) => state.auth);
 
-	const [optionMenuOpenedFeedIndex, setOptionMenuOpenedFeedIndex] =
-		useState(null);
-
 	const [postIsLiked, setPostIsLiked] = useState(post.isLiked);
 	const [postLikesCount, setPostLikesCount] = useState(post.likesCount);
-
-	const handleOption = (num) =>
-		setOptionMenuOpenedFeedIndex((prev) => (prev === num ? null : num));
 
 	const likeClick = async () => {
 		try {
@@ -82,12 +76,8 @@ const Feed = ({ groupId, post }) => {
 		<FeedArticle key={post.postId}>
 			{user.nickname === post.author && (
 				<OptionDiv>
-					<OptionThreeDotIcon
-						onClick={() => {
-							handleOption(post.postId);
-						}}
-					/>
-					{optionMenuOpenedFeedIndex === post.postId && (
+					<OptionThreeDotIcon onClick={() => onThreeDotClick(post.postId)} />
+					{optionOpenedFeedIndex === post.postId && (
 						<OptionMenuDiv>
 							<ul>
 								<li>
@@ -121,12 +111,8 @@ const Feed = ({ groupId, post }) => {
 			<BottomDiv>
 				<p>{post.content}</p>
 				<IconDiv>
-					<IconItemButton
-						onClick={() => {
-							handleLikeClick();
-						}}
-					>
-						{postIsLiked ? <HeartClickIcon /> : <HeartIcon />}
+					<IconItemButton onClick={handleLikeClick}>
+						{postIsLiked ? <FillHeartIcon /> : <EmptyHeartIcon />}
 						<span>{postLikesCount}</span>
 					</IconItemButton>
 					<IconItemButton>

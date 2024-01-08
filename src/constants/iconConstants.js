@@ -10,8 +10,8 @@ import DocumentIcon from "@/assets/icon/ic-document.svg";
 import DownArrowIcon from "@/assets/icon/ic-down-arrow.svg";
 import EditScheduleIcon from "@/assets/icon/ic-edit-schedule.svg";
 import CommentIcon from "@/assets/icon/ic-feed-comment.svg";
-import HeartClickIcon from "@/assets/icon/ic-feed-heart-click.svg";
-import HeartIcon from "@/assets/icon/ic-feed-heart.svg";
+import EmptyHeartIcon from "@/assets/icon/ic-feed-heart-empty.svg";
+import FillHeartIcon from "@/assets/icon/ic-feed-heart-fill.svg";
 import OptionThreeDotIcon from "@/assets/icon/ic-feed-option.svg";
 import GoogleLogoIcon from "@/assets/icon/ic-google-logo.svg";
 import AddIcon from "@/assets/icon/ic-group-add.svg";
@@ -40,7 +40,7 @@ export {
 	RightArrowIcon,
 	CrownIcon,
 	CommentIcon,
-	HeartIcon,
+	EmptyHeartIcon,
 	OptionThreeDotIcon,
 	SecretIcon,
 	RequestCheckIcon,
@@ -66,6 +66,6 @@ export {
 	AccessArrowIcon,
 	AccessInfoIcon,
 	CommentListIcon,
-	HeartClickIcon,
+	FillHeartIcon,
 	CheckIcon,
 };
