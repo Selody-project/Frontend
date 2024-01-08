@@ -125,7 +125,7 @@ export const getSingleUserSchedule = (req, res, ctx) => {
 	return res(
 		ctx.status(200),
 		ctx.json({
-			id: req.params.id,
+			id: Number(req.params.id),
 			userId: 1,
 			title: "오늘오늘",
 			content: "오늘 끝",
@@ -175,7 +175,7 @@ export const putPersonalSchedule = (req, res, ctx) => {
 			ctx.status(201),
 			ctx.json({
 				scheduleSummary: {
-					id: req.params.id,
+					id: Number(req.params.id),
 					userId: 1,
 					startDateTime,
 					endDateTime,
@@ -187,7 +187,7 @@ export const putPersonalSchedule = (req, res, ctx) => {
 				},
 				todaySchedules: [
 					{
-						id: req.params.id,
+						id: Number(req.params.id),
 						userId: 1,
 						title,
 						content,

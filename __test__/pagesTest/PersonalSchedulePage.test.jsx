@@ -626,7 +626,7 @@ describe("ScheduleModal in PersonalSchedulePage", () => {
 			// open ScheduleModal as a create mode
 			// 클릭해야 하는 요소를 정확히 비동기적 호출로 잡아내야 함
 			await screen.findByRole("heading", { name: "오늘오늘" });
-			const allButtons = await screen.findAllByRole("button");
+			const allButtons = screen.getAllByRole("button");
 			const editButton = allButtons[allButtons.length - 2];
 			userEvent.click(editButton);
 
@@ -634,7 +634,7 @@ describe("ScheduleModal in PersonalSchedulePage", () => {
 			const titleInput = await screen.findByPlaceholderText("일정 제목");
 			userEvent.clear(titleInput);
 			userEvent.type(titleInput, "newnew");
-			await userEvent.click(screen.getByRole("button", { name: "수정하기" }));
+			userEvent.click(screen.getByRole("button", { name: "수정하기" }));
 
 			// assertion
 			expect(
@@ -642,6 +642,11 @@ describe("ScheduleModal in PersonalSchedulePage", () => {
 					name: "newnew",
 				}),
 			).toBeInTheDocument();
+			expect(
+				screen.queryByRole("heading", {
+					name: "오늘오늘",
+				}),
+			).toBeNull();
 		});
 	});
 });
