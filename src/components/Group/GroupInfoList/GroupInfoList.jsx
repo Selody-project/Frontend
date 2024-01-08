@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { OptionThreeDotIcon } from "@/constants/iconConstants";
 import { openModal } from "@/features/ui/ui-slice";
@@ -8,7 +8,6 @@ import { openModal } from "@/features/ui/ui-slice";
 import {
 	ContainerDiv,
 	GroupDiv,
-	InfoDiv,
 	OptionDiv,
 	OptionMenuDiv,
 } from "./GroupInfoList.styles";
@@ -17,8 +16,6 @@ import GroupRequestCancelModal from "../GroupRequestCancelModal/GroupRequestCanc
 const GroupInfoList = ({ groups, scrollRef, isRequest }) => {
 	const dispatch = useDispatch();
 	const { openedModal } = useSelector((state) => state.ui);
-
-	const navigate = useNavigate();
 
 	const [optionMenuOpenedFeedIndex, setOptionMenuOpenedFeedIndex] =
 		useState(null);
@@ -50,16 +47,12 @@ const GroupInfoList = ({ groups, scrollRef, isRequest }) => {
 							)}
 						</OptionDiv>
 					)}
-					<InfoDiv
-						onClick={() => {
-							navigate(`/group/${info.groupId}`);
-						}}
-					>
+					<Link to={`/group/${info.groupId}`}>
 						<img src={info.image} alt="groupImg" />
 						<h3>{info.name}</h3>
 						<p>{info.description}</p>
 						<h4>{info.member}명의 그룹원</h4>
-					</InfoDiv>
+					</Link>
 				</GroupDiv>
 			))}
 			<div ref={scrollRef} />

@@ -10,50 +10,50 @@ export const ContainerDiv = styled.div`
 
 export const GroupDiv = styled.div`
 	position: relative;
-`;
 
-export const InfoDiv = styled.div`
-	border-radius: 10px;
-	border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	padding: 24px 0;
-	cursor: pointer;
-
-	& > img {
-		width: 58px;
-		height: 58px;
-		border-radius: 50%;
-		object-fit: cover;
-	}
-
-	& > h3 {
-		max-width: 260px;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		color: ${({ theme: { colors } }) => colors.text_01};
-		font-size: ${({ theme: { typography } }) => typography.size.m1};
-		font-weight: ${({ theme: { typography } }) => typography.weight.semibold};
-		margin-top: 12px;
-	}
-
-	& > p {
-		max-width: 260px;
-		height: 34px;
-		color: ${({ theme: { colors } }) => colors.text_02};
-		font-size: ${({ theme: { typography } }) => typography.size.s2};
-		margin-top: 4px;
+	& > a {
+		border-radius: 10px;
+		border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
 		display: flex;
+		flex-direction: column;
 		align-items: center;
-		text-align: center;
-	}
+		padding: 24px 0;
+		cursor: pointer;
 
-	& > h4 {
-		color: ${({ theme: { colors } }) => colors.disabled_text};
-		font-size: ${({ theme: { typography } }) => typography.size.s2};
-		font-weight: ${({ theme: { typography } }) => typography.weight.medium};
-		margin-top: 10px;
+		& > img {
+			width: 58px;
+			height: 58px;
+			border-radius: 50%;
+			object-fit: cover;
+		}
+
+		& > h3 {
+			max-width: 260px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			color: ${({ theme: { colors } }) => colors.text_01};
+			font-size: ${({ theme: { typography } }) => typography.size.m1};
+			font-weight: ${({ theme: { typography } }) => typography.weight.semibold};
+			margin-top: 12px;
+		}
+
+		& > p {
+			max-width: 260px;
+			height: 34px;
+			color: ${({ theme: { colors } }) => colors.text_02};
+			font-size: ${({ theme: { typography } }) => typography.size.s2};
+			margin-top: 4px;
+			display: flex;
+			align-items: center;
+			text-align: center;
+		}
+
+		& > h4 {
+			color: ${({ theme: { colors } }) => colors.disabled_text};
+			font-size: ${({ theme: { typography } }) => typography.size.s2};
+			font-weight: ${({ theme: { typography } }) => typography.weight.medium};
+			margin-top: 10px;
+		}
 	}
 `;
 
