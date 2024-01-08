@@ -2,6 +2,7 @@ import { rest } from "msw";
 import { setupServer } from "msw/node";
 
 import {
+	deletePersonalSchedule,
 	getSingleUserSchedule,
 	getUserPersonalSchedule,
 	getUserPersonalScheduleSummary,
@@ -20,6 +21,7 @@ export const handlers = [
 	rest.get(`${BASE_URL}/api/user/calendar/:id`, getSingleUserSchedule),
 	rest.post(`${BASE_URL}/api/user/calendar`, postPersonalSchedule),
 	rest.put(`${BASE_URL}/api/user/calendar/:id`, putPersonalSchedule),
+	rest.delete(`${BASE_URL}/api/user/calendar/:id`, deletePersonalSchedule),
 ];
 
 export const server = setupServer(...handlers);

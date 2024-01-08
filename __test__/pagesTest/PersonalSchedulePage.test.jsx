@@ -648,5 +648,28 @@ describe("ScheduleModal in PersonalSchedulePage", () => {
 				}),
 			).toBeNull();
 		});
+
+		it("DELETE current all day schedule", async () => {
+			window.confirm = jest.fn(() => true);
+
+			render(<PersonalSchedulePage />, {
+				preloadedState: { auth: { user: { userId: 1 } } },
+			});
+
+			await screen.findByRole("heading", { name: "오늘오늘" });
+			const allButtons = screen.getAllByRole("button");
+			const deleteButton = allButtons.at(-1);
+			userEvent.click(deleteButton);
+
+			const scheduleAddButton = await screen.findByRole("button", {
+				name: "아직 추가된 일정이 없습니다! 할 일을 추가하여 하루동안 할 일을 관리해보세요.",
+			});
+			const scheduleItemHeadingToBeDeleted = screen.queryByRole("heading", {
+				name: "오늘오늘",
+			});
+			expect(scheduleAddButton).toBeInTheDocument();
+			expect(scheduleItemHeadingToBeDeleted).toBeNull();
+			expect(window.confirm).toHaveBeenCalledWith("이 일정을 삭제하겠습니까?");
+		});
 	});
 });

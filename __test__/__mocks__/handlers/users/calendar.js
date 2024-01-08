@@ -208,3 +208,24 @@ export const putPersonalSchedule = (req, res, ctx) => {
 		return res(ctx.status(500), ctx.json({ error: "Internal Server Error" }));
 	}
 };
+
+export const deletePersonalSchedule = (req, res, ctx) => {
+	try {
+		const scheduleId = Number(req.params.id);
+		if (!scheduleId)
+			return res(
+				ctx.status(400),
+				ctx.json({ error: "지원하지 않는 형식의 데이터입니다." }),
+			);
+		// 삭제할 일정이 무조건 id가 1이라는 가정 하에
+		if (scheduleId !== 1)
+			return res(
+				ctx.status(404),
+				ctx.json({ error: "일정을 찾을 수 없습니다." }),
+			);
+		return res(ctx.status(204));
+	} catch (error) {
+		console.log(error);
+		return res(ctx.status(500), ctx.json({ error: "Internal Server Error" }));
+	}
+};
