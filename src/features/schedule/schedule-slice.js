@@ -123,18 +123,23 @@ const scheduleSlice = createSlice({
 				updateSchedule.fulfilled,
 				(
 					state,
-					{ payload: { scheduleSummary, todaySchedules, schedulesForTheWeek } },
+					{
+						payload: { scheduleSummary, todaySchedules, schedulesForTheWeek },
+						meta: {
+							arg: { id },
+						},
+					},
 				) => {
 					toast.dismiss();
 					toast.success("일정이 수정되었습니다");
 					state.calendarSchedules = state.calendarSchedules.filter(
-						(prev) => prev.id !== scheduleSummary.id,
+						(schedule) => schedule.id !== id,
 					);
 					state.todaySchedules = state.todaySchedules.filter(
-						(schedule) => schedule.id !== scheduleSummary.id,
+						(schedule) => schedule.id !== id,
 					);
 					state.schedulesForTheWeek = state.schedulesForTheWeek.filter(
-						(schedule) => schedule.id !== scheduleSummary.id,
+						(schedule) => schedule.id !== id,
 					);
 					state.calendarSchedules.push(scheduleSummary);
 					if (todaySchedules.length > 0) {
@@ -151,6 +156,14 @@ const scheduleSlice = createSlice({
 							(prev, curr) =>
 								new Date(prev.startDateTime) - new Date(curr.startDateTime),
 						);
+					}
+					// 겹친 일정들 중 하나를 열고 수정 시 겹치느 일정들 목록을 초기화함
+					if (
+						state.overlappedScheduleInfo.schedules.some(
+							(schedule) => schedule.id === id,
+						)
+					) {
+						state.overlappedScheduleInfo = initialOverlappedScheduleInfo;
 					}
 				},
 			)

@@ -37,7 +37,6 @@ const ScheduleItemList = () => {
 	const [isTodayTab, setIsTodayTab] = useState(true);
 
 	const isOverlappedSchedulesOn = overlappedSchedules.length > 0;
-
 	useEffect(() => {
 		dispatch(getTodaySchedules());
 		dispatch(getSchedulesForTheWeek());
