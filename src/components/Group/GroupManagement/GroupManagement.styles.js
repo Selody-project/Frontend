@@ -8,8 +8,6 @@ export const ContainerDiv = styled.div`
 	padding: 40px;
 `;
 
-export const InnerDiv = styled.div``;
-
 export const TitleUl = styled.ul`
 	display: flex;
 	gap: 24px;
