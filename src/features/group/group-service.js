@@ -113,8 +113,7 @@ export const getGroupInfo = createAsyncThunk(
 	"group/getGroupInfo",
 	async (groupId, thunkAPI) => {
 		const data = await commonThunk(
-			{ method: "GET", url: `/api/group/${groupId}` },
-			200,
+			{ method: "GET", url: `/api/group/${groupId}`, successCode: 200 },
 			thunkAPI,
 		);
 		return data;
