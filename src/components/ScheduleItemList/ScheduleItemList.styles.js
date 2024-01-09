@@ -27,17 +27,32 @@ export const TodoHeader = styled.header`
 	}) => size.s2};
 `;
 
-export const TodoTab = styled.button`
+export const TodoTabButton = styled.button`
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex: 1;
-	background: ${({ selected, theme: { colors } }) =>
+	background-color: ${({ selected, theme: { colors } }) =>
 		selected ? colors.primary : colors.white};
+
+	&:hover {
+		background-color: ${({ theme: { colors } }) => colors.btn_04};
+	}
+
+	&:active {
+		background-color: ${({ theme: { colors } }) => colors.btn_05};
+	}
+
 	border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
+	opacity: ${({ selected }) => (selected ? "1" : "0.7")};
 	color: ${({ selected, theme: { colors } }) =>
 		selected ? colors.white : colors.text_01};
-	opacity: ${({ selected }) => (selected ? "1" : "0.7")};
+
+	&:hover,
+	&:active {
+		color: ${({ theme: { colors } }) => colors.white};
+	}
+
 	transition: opacity 0.3s ease, background 0.3s ease, color 0.3s ease;
 	padding: ${({
 			theme: {

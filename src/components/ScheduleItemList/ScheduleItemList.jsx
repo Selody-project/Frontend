@@ -13,7 +13,6 @@ import { openScheduleCreateModal } from "@/features/ui/ui-slice";
 
 import {
 	TodoHeader,
-	TodoTab,
 	TodoBody,
 	TodoButton,
 	TodoList,
@@ -22,6 +21,7 @@ import {
 	TodoBodyHeader,
 	ScheduleItemListLayoutAside,
 	TodoBodyHeaderButton,
+	TodoTabButton,
 } from "./ScheduleItemList.styles";
 
 const ScheduleItemList = () => {
@@ -87,12 +87,18 @@ const ScheduleItemList = () => {
 	return (
 		<ScheduleItemListLayoutAside data-testid="personal-todo-list">
 			<TodoHeader>
-				<TodoTab selected={isTodayTab} onClick={() => setIsTodayTab(true)}>
+				<TodoTabButton
+					selected={isTodayTab}
+					onClick={() => setIsTodayTab(true)}
+				>
 					오늘 일정
-				</TodoTab>
-				<TodoTab selected={!isTodayTab} onClick={() => setIsTodayTab(false)}>
+				</TodoTabButton>
+				<TodoTabButton
+					selected={!isTodayTab}
+					onClick={() => setIsTodayTab(false)}
+				>
 					예정
-				</TodoTab>
+				</TodoTabButton>
 			</TodoHeader>
 			<TodoBody>
 				<TodoBodyHeader>
