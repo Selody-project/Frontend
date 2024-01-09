@@ -63,8 +63,8 @@ const GroupMemberManagement = ({ groupInfo }) => {
 	const handleAccessChange = (num) =>
 		setIsAccessChangeOpenIndex((prev) => (prev === num ? null : num));
 
-	const handleChangeLevelClick = (userId, accessLevel) => {
-		if (groupInfo.accessLevel !== accessLevel) {
+	const handleChangeLevelClick = (userId, accessLevel, memberAccessLevel) => {
+		if (memberAccessLevel !== accessLevel) {
 			dispatch(changeAccessLevel({ groupId, userId, accessLevel }));
 		}
 	};
@@ -154,6 +154,7 @@ const GroupMemberManagement = ({ groupInfo }) => {
 													handleChangeLevelClick(
 														memberInfo.member.userId,
 														data.accessLevel,
+														memberInfo.accessLevel,
 													);
 												}}
 											>
