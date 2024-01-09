@@ -65,8 +65,10 @@ const calculateMinUntilDateString = (
 	if (freq === "NONE" || isInfinite) {
 		return "";
 	}
+
 	const startDate = new Date(startDateStr);
 	let untilDate = "";
+
 	if (freq === "DAILY" || freq === "DAILY_N") {
 		untilDate = startDate.setDate(startDate.getDate() + interval + 1);
 	} else if (freq === "WEEKLY" || freq === "WEEKLY_N") {

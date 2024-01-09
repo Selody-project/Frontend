@@ -90,7 +90,7 @@ const TimePicker = ({
 	}, [selected, isOpen]);
 
 	return (
-		<CustomTimePickerComponents.TImePickerWrapperDiv ref={timePickerRef}>
+		<CustomTimePickerComponents.TimePickerWrapperDiv ref={timePickerRef}>
 			<CustomTimePickerComponents.CustomInputButton
 				isTime={true}
 				value={selected}
@@ -188,7 +188,7 @@ const TimePicker = ({
 					</button>
 				</div>
 			</CustomTimePickerComponents.CustomTimePicker>
-		</CustomTimePickerComponents.TImePickerWrapperDiv>
+		</CustomTimePickerComponents.TimePickerWrapperDiv>
 	);
 };
 

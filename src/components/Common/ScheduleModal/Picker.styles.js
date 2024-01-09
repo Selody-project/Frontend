@@ -223,7 +223,7 @@ const CustomTimePicker = styled.div`
 	}
 `;
 
-const TImePickerWrapperDiv = styled.div`
+const TimePickerWrapperDiv = styled.div`
 	position: relative;
 `;
 
@@ -236,5 +236,5 @@ export const CustomDatePickerComponents = {
 export const CustomTimePickerComponents = {
 	CustomTimePicker,
 	CustomInputButton,
-	TImePickerWrapperDiv,
+	TimePickerWrapperDiv,
 };
