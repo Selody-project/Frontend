@@ -49,12 +49,6 @@ const groupSlice = createSlice({
 		setRefetchUserGroup: (state, { payload }) => {
 			state.isUserGroupRefetching = payload;
 		},
-		groupInfoDetail: (state, { payload }) => {
-			state.groupInfoDetail = payload;
-		},
-		viewGroupList: (state, { payload }) => {
-			state.groupList = payload;
-		},
 	},
 	extraReducers: (bulider) => {
 		bulider
