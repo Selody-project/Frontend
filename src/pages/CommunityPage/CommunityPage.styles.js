@@ -11,6 +11,17 @@ export const FeedDiv = styled.div`
 	margin-top: 50px;
 `;
 
+export const TabDiv = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	& > ul {
+		display: flex;
+		gap: 48px;
+	}
+`;
+
 export const FeddTitleDiv = styled.div`
 	display: flex;
 	justify-content: space-between;
@@ -20,14 +31,6 @@ export const FeddTitleDiv = styled.div`
 		gap: 24px;
 		align-items: center;
 	}
-`;
-
-export const TabButton = styled.button`
-	color: ${({ disabled, theme: { colors } }) =>
-		disabled ? colors.text_01 : colors.disabled_text};
-	font-size: 18px;
-	font-weight: ${({ theme: { typography } }) => typography.weight.semibold};
-	cursor: pointer;
 `;
 
 export const SearchDiv = styled.div`

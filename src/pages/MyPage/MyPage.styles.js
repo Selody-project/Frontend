@@ -10,6 +10,7 @@ export const ProfileSection = styled.section`
 	border-radius: 10px;
 	border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
 	padding: 72px 0;
+	margin-bottom: 32px;
 `;
 
 export const ProfileLeftDiv = styled.div`
@@ -75,23 +76,4 @@ export const ProfileRightInnerDiv = styled.div`
 		font-size: ${({ theme: { typography } }) => typography.size.s3};
 		font-weight: ${({ theme: { typography } }) => typography.weight.medium};
 	}
-`;
-
-export const TabDiv = styled.div`
-	display: flex;
-	justify-content: center;
-	margin-top: 32px;
-
-	& > ul {
-		display: flex;
-		gap: 48px;
-	}
-`;
-
-export const TabButton = styled.button`
-	color: ${({ disabled, theme: { colors } }) =>
-		disabled ? colors.text_01 : colors.disabled_text};
-	font-size: 18px;
-	font-weight: ${({ theme: { typography } }) => typography.weight.semibold};
-	cursor: pointer;
 `;

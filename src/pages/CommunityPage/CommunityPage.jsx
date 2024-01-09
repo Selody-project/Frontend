@@ -5,24 +5,23 @@ import SearchIcon from "@/assets/icon/ic-search.svg";
 import GroupSearch from "@/components/Community/GroupSearch/GroupSearch";
 import MyGroup from "@/components/Community/MyGroup/MyGroup";
 import MyGroupFeed from "@/components/Community/MyGroupFeed/MyGroupFeed";
+import Tab from "@/components/Tab/Tab";
+import { TAB_OPTION_TYPE, TAB_OPTION_TITLE } from "@/constants/tabConstants";
 import { searchGroup } from "@/features/group/group-service";
 
 import {
 	ContainerDiv,
 	FeedDiv,
 	FeddTitleDiv,
-	TabButton,
 	SearchDiv,
 	Input,
 	SearchButton,
 } from "./CommunityPage.styles";
 
 const CommunityPage = () => {
-	const [tab, setTab] = useState("feed");
+	const [tabIndex, setTabIndex] = useState(0);
 	const [searchKeyword, setSearchKeyword] = useState("");
-
 	const [onSearch, setOnSearch] = useState(false);
-
 	const dispatch = useDispatch();
 
 	const searchGroupList = useSelector((state) => state.group.searchGroupList);
@@ -46,26 +45,14 @@ const CommunityPage = () => {
 			<MyGroup />
 			<FeedDiv>
 				<FeddTitleDiv>
-					<ul>
-						<li>
-							<TabButton
-								type="button"
-								onClick={() => setTab("feed")}
-								disabled={tab === "feed"}
-							>
-								내 그룹 피드
-							</TabButton>
-						</li>
-						<li>
-							<TabButton
-								type="button"
-								onClick={() => setTab("group")}
-								disabled={tab === "group"}
-							>
-								그룹 검색
-							</TabButton>
-						</li>
-					</ul>
+					<Tab
+						defaultOption={TAB_OPTION_TYPE.MY_GROUP_FEED}
+						tabOption={TAB_OPTION_TYPE.GROUP_SEARCH}
+						defaultTitle={TAB_OPTION_TITLE.MY_GROUP_FEED}
+						tabTitle={TAB_OPTION_TITLE.GROUP_SEARCH}
+						tabIndex={tabIndex}
+						setTabIndex={setTabIndex}
+					/>
 					<SearchDiv>
 						<Input
 							placeholder="다른 그룹을 탐색해보세요."
@@ -77,10 +64,10 @@ const CommunityPage = () => {
 					</SearchDiv>
 				</FeddTitleDiv>
 
-				{tab === "feed" ? (
-					<MyGroupFeed />
-				) : (
+				{tabIndex ? (
 					<GroupSearch onSearch={onSearch} searchGroupList={searchGroupList} />
+				) : (
+					<MyGroupFeed />
 				)}
 			</FeedDiv>
 		</ContainerDiv>
