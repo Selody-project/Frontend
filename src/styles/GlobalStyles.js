@@ -129,7 +129,6 @@ const GlobalStyles = createGlobalStyle`${css`
 	body {
 		padding: 0;
 		line-height: 1;
-		max-width: 1440px;
 		overflow-y: scroll;
 	}
 
