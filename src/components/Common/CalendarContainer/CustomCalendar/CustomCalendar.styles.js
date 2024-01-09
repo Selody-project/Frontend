@@ -31,10 +31,10 @@ export const CustomCalendarDiv = styled.div`
 			line-height: 21px;
 
 			& > .fc-button {
-				&,
 				&:focus {
 					all: unset;
 				}
+				all: unset;
 				cursor: pointer;
 				color: ${({ theme: { colors } }) => colors.disabled_text};
 
@@ -216,7 +216,6 @@ export const TitleSelect = styled.select`
 	border: none;
 	font-size: 23px;
 	font-family: Inter;
-	/* padding-right: 20px; */
 	padding-right: 12px;
 	background-image: url("data:image/svg+xml,%3Csvg width='12' height='6' viewBox='0 0 14 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L7 7L13 1' stroke='%23121127' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
 	background-size: 12px 6px;
