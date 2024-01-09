@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import customFetch from "@/components/Base/BaseAxios";
+import customFetch from "@/components/Ui/BaseAxios";
 
 export const inqueryUserGroup = createAsyncThunk(
 	"user/inqueryUserGroup",
