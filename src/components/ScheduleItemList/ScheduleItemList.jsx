@@ -49,6 +49,7 @@ const ScheduleItemList = () => {
 			}),
 		);
 	};
+
 	if (isOverlappedSchedulesOn) {
 		return (
 			<ScheduleItemListLayoutAside data-testid="personal-todo-list">

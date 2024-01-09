@@ -32,9 +32,11 @@ const getTimeString = (start, end) => {
 	const startDateString = `${
 		startDate.getMonth() + 1
 	}월 ${startDate.getDate()}일`;
+
 	if (isAllday) {
 		return `${startDateString} 하루 종일`;
 	}
+
 	const startTimeString = `${
 		startDate.getHours() < 10
 			? `0${startDate.getHours()}`
@@ -59,9 +61,11 @@ const getTimeString = (start, end) => {
 	}`;
 
 	const isOnlyToday = startDate.toDateString() === endDate.toDateString();
+
 	if (isOnlyToday || checkIsAlldaySchedule(start, end)) {
 		endDateString = null;
 	}
+
 	return `${startDateString} ${startTimeString} ~ ${
 		endDateString || ""
 	} ${endTimeString}`;

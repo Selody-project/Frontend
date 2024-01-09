@@ -16,9 +16,11 @@ const get12HoursString = (hours) => {
 	if (hours === 12) {
 		return 12;
 	}
+
 	if (hours === 22 || hours === 23 || hours === 10 || hours === 11) {
 		return hours % 12;
 	}
+
 	return `0${hours % 12}`;
 };
 
@@ -27,6 +29,7 @@ const get24hoursString = (isAM, hours) => {
 	if (hours < 10) {
 		return `0${hours}`;
 	}
+
 	return hours;
 };
 
@@ -82,6 +85,7 @@ const TimePicker = ({
 
 	useEffect(() => {
 		resetTimeValues();
+
 		if (isOpen) {
 			selectedButtonRefs.current?.forEach((el) => {
 				el.scrollIntoView(true);

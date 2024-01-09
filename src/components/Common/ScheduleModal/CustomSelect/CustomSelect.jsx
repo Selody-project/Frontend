@@ -18,6 +18,7 @@ const CustomSelect = ({ value, onChange, options }) => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	const wrapperRef = useRef();
+
 	useOutsideClick(wrapperRef, () => isOpen && setIsOpen(false));
 
 	const handleOptionClick = (event) => {

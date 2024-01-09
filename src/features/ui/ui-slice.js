@@ -21,6 +21,7 @@ const uiSlice = createSlice({
 			) {
 				throw Error("잘못된 modal type입니다");
 			}
+
 			state.openedModal = type;
 			state.scheduleModalMode = SCHEDULE_MODAL_TYPE.CREATE;
 		},
@@ -32,9 +33,11 @@ const uiSlice = createSlice({
 			) {
 				throw Error("잘못된 modal type입니다");
 			}
+
 			if (id === null) {
 				throw Error("일정 id를 입력해주세요");
 			}
+
 			state.openedModal = type;
 			state.scheduleModalMode = SCHEDULE_MODAL_TYPE.EDIT;
 			state.scheduleModalId = id;
@@ -47,9 +50,11 @@ const uiSlice = createSlice({
 			) {
 				throw Error("잘못된 modal type입니다");
 			}
+
 			if (id === null) {
 				throw Error("일정 id를 입력해주세요");
 			}
+
 			state.openedModal = type;
 			state.scheduleModalMode = SCHEDULE_MODAL_TYPE.VIEW;
 			state.scheduleModalId = id;
@@ -76,6 +81,7 @@ const uiSlice = createSlice({
 			if (typeof payload !== "boolean") {
 				throw new Error("isLoading의 state는 boolean 값만 가능합니다.");
 			}
+
 			state.isLoading = payload;
 		},
 	},

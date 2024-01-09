@@ -54,6 +54,7 @@ const scheduleSlice = createSlice({
 			) {
 				throw new Error("잘못된 view type입니다.");
 			}
+
 			state.currentCalendarView = payload;
 		},
 		resetOverlappedSchedules: (state) => {
@@ -75,6 +76,7 @@ const scheduleSlice = createSlice({
 					toast.dismiss();
 					toast.success("일정이 추가되었습니다");
 					state.calendarSchedules.push(scheduleSummary);
+
 					if (todaySchedules.length > 0) {
 						state.todaySchedules = state.todaySchedules.concat(todaySchedules);
 						state.todaySchedules.sort(
@@ -82,6 +84,7 @@ const scheduleSlice = createSlice({
 								new Date(prev.startDateTime) - new Date(curr.startDateTime),
 						);
 					}
+
 					if (schedulesForTheWeek.length > 0) {
 						state.schedulesForTheWeek =
 							state.schedulesForTheWeek.concat(schedulesForTheWeek);
@@ -142,6 +145,7 @@ const scheduleSlice = createSlice({
 						(schedule) => schedule.id !== id,
 					);
 					state.calendarSchedules.push(scheduleSummary);
+
 					if (todaySchedules.length > 0) {
 						state.todaySchedules = state.todaySchedules.concat(todaySchedules);
 						state.todaySchedules.sort(
@@ -149,6 +153,7 @@ const scheduleSlice = createSlice({
 								new Date(prev.startDateTime) - new Date(curr.startDateTime),
 						);
 					}
+
 					if (schedulesForTheWeek.length > 0) {
 						state.schedulesForTheWeek =
 							state.schedulesForTheWeek.concat(schedulesForTheWeek);

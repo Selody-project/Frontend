@@ -76,6 +76,7 @@ const CalendarContainer = ({ type }) => {
 
 	const handleDateChange = (year, month, week = null) => {
 		const calendarApi = calendarRef.current.getApi();
+
 		if (week) {
 			// 리스트(주별) 보기인 경우
 			const startDate = getFirstDateOfWeek(year, month, week);
@@ -118,10 +119,6 @@ const CalendarContainer = ({ type }) => {
 		setAnchorEl(null);
 		setInviteInput("");
 	};
-
-	// useEffect(() => {
-	// 	dispatch(getGroupList());
-	// }, [dispatch]);
 
 	useEffect(() => {
 		dispatch(getSchedulesSummary({ isGroup: false }));

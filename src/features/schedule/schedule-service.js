@@ -111,6 +111,7 @@ export const getSchedulesSummary = createAsyncThunk(
 			},
 			thunkAPI,
 		);
+
 		return data;
 	},
 );
@@ -127,6 +128,7 @@ export const createSchedule = createAsyncThunk(
 			},
 			thunkAPI,
 		);
+
 		return data;
 	},
 );
@@ -138,6 +140,7 @@ export const deleteSchedule = createAsyncThunk(
 			{ method: "DELETE", url: `/api/user/calendar/${id}`, successCode: 204 },
 			thunkAPI,
 		);
+
 		return data;
 	},
 );
@@ -154,6 +157,7 @@ export const updateSchedule = createAsyncThunk(
 			},
 			thunkAPI,
 		);
+
 		return data;
 	},
 );
@@ -164,8 +168,10 @@ export const getOverlappedSchedules = createAsyncThunk(
 		const {
 			schedule: { currentCalendarView },
 		} = thunkAPI.getState();
+
 		if (!(start instanceof Date) || !(end instanceof Date))
 			throw Error("잘못된 payload입니다.");
+
 		const data = await commonThunk(
 			{
 				method: "GET",
@@ -178,8 +184,11 @@ export const getOverlappedSchedules = createAsyncThunk(
 			},
 			thunkAPI,
 		);
-		if (data.schedules.length === 0)
+
+		if (data.schedules.length === 0) {
 			return thunkAPI.rejectWithValue("해당 날짜의 일정이 없습니다.");
+		}
+
 		if (data.schedules && currentCalendarView === VIEW_TYPE.DAY_GRID_WEEK) {
 			data.schedules = data.schedules.filter(
 				(schedule) =>
@@ -187,6 +196,7 @@ export const getOverlappedSchedules = createAsyncThunk(
 					new Date(schedule.endDateTime) >= end,
 			);
 		}
+
 		const yearFormat =
 			start.getFullYear() === end.getFullYear() &&
 			currentCalendarView === VIEW_TYPE.DAY_GRID_WEEK
@@ -197,6 +207,7 @@ export const getOverlappedSchedules = createAsyncThunk(
 				? moment(start).format(`${yearFormat}MM월 DD일`)
 				: `${moment(start).format(`${yearFormat}MM월 DD일 HH시 mm분`)}부터
 ${moment(end).format(`${yearFormat}MM월 DD일 HH시 mm분`)}`;
+
 		return { schedules: data.schedules, title };
 	},
 );

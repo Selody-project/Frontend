@@ -129,6 +129,7 @@ const CustomCalendar = forwardRef(
 				const endDate = new Date(new Date(dateStr).setHours(23, 59, 59, 999));
 				dispatch(getOverlappedSchedules({ start: startDate, end: endDate }));
 			};
+
 			dateDivs.forEach((dateDiv) => {
 				dateDiv.addEventListener("click", handleDateClick);
 			});
@@ -151,12 +152,16 @@ const CustomCalendar = forwardRef(
 						".fc-daygrid-day-bottom",
 					);
 					bottomDiv.style["margin-top"] = 0;
+
 					const childEventsDiv = scheduleEventsDiv.querySelectorAll(
 						".fc-daygrid-event-harness",
 					);
+
 					if (childEventsDiv.length === 0) return;
+
 					childEventsDiv.forEach((scheduleDiv, index) => {
 						const [, continuousClassName] = scheduleDiv.classList;
+
 						if (continuousClassName) {
 							// 연속 일정인데 여러 개인 경우 겹치기
 							scheduleDiv.style.top = 0;
