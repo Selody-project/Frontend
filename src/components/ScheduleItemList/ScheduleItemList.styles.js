@@ -69,6 +69,7 @@ export const TodoBodyHeader = styled.header`
 	display: flex;
 	justify-content: space-between;
 	width: 100%;
+
 	& > div {
 		min-height: 43px;
 	}
@@ -117,6 +118,7 @@ export const TodoBodyHeaderButton = styled.button`
 	cursor: pointer;
 	color: ${({ theme: { colors } }) => colors.primary};
 	transition: opacity 0.3s ease;
+
 	& > span {
 		line-height: 1;
 		font-weight: ${({
@@ -125,6 +127,7 @@ export const TodoBodyHeaderButton = styled.button`
 			},
 		}) => weight.bold};
 	}
+
 	&:hover {
 		opacity: 0.7;
 	}
@@ -180,6 +183,7 @@ export const TodoList = styled.ul`
 	&::-webkit-scrollbar {
 		display: none;
 	}
+
 	& {
 		-ms-overflow-style: none; /* 인터넷 익스플로러 */
 		scrollbar-width: none; /* 파이어폭스 */

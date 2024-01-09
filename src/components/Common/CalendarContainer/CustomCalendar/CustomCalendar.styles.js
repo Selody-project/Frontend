@@ -10,9 +10,10 @@ export const CustomCalendarDiv = styled.div`
 	flex-direction: column;
 	margin: 0;
 	width: 100%;
+
 	.fc.fc-media-screen.fc-direction-ltr.fc-theme-standard {
-		/* min-width: ${({ isMonthly }) => (isMonthly ? 812 : 812 + 73)}px; */
 		width: 100%;
+
 		.fc-header-toolbar.fc-toolbar {
 			margin: 0;
 			margin-left: ${({ isMonthly }) => (!isMonthly ? TIME_COLUMN_WIDTH : 0)};
@@ -22,48 +23,59 @@ export const CustomCalendarDiv = styled.div`
 			width: 100%;
 			margin-bottom: 92px;
 		}
+
 		.fc-button-group {
 			display: flex;
 			gap: 20px;
 			font-size: 17px;
 			line-height: 21px;
+
 			& > .fc-button {
-				all: unset;
+				&,
 				&:focus {
 					all: unset;
 				}
 				cursor: pointer;
 				color: ${({ theme: { colors } }) => colors.disabled_text};
+
 				&.fc-button-active {
 					color: ${({ theme: { colors } }) => colors.text_01};
 				}
 			}
 		}
+
 		.fc-daygrid-day-header {
 			border: none;
 		}
+
 		.fc-daygrid-day-header {
 			background-color: transparent;
 			border: none;
 		}
 	}
+
 	// border 초기화
 	.fc-scrollgrid.fc-scrollgrid-liquid,
 	.fc-theme-standard td,
 	.fc-theme-standard th {
 		border: none;
 	}
+
 	.fc-col-header-cell.fc-day {
 		color: ${({ theme }) => theme.colors.disabled_text};
+
 		&.fc-day-sun {
 			color: ${({ theme }) => theme.colors.sunday};
 		}
+
 		&.fc-day-sat {
 			color: ${({ theme }) => theme.colors.saturday};
 		}
+
 		padding-bottom: ${({ isMonthly }) => (isMonthly ? "33px" : "10px")};
 		font-size: 17px;
 		line-height: 21px;
+
 		& .dateNum {
 			color: ${({ theme: { colors } }) => colors.text_01};
 			margin-top: 10px;
@@ -72,9 +84,11 @@ export const CustomCalendarDiv = styled.div`
 			line-height: 30px;
 		}
 	}
+
 	// 날짜를 왼쪽 상단에 위치
 	.fc .fc-daygrid-day-top {
 		flex-direction: row;
+
 		& > a {
 			margin-top: 3px;
 			margin-left: 2px;
@@ -96,23 +110,29 @@ export const CustomCalendarDiv = styled.div`
 		color: white;
 		border-radius: 50%;
 	}
+
 	.fc-daygrid-day.fc-day-today .fc-daygrid-day-top > a {
 		background-color: ${({ theme: { colors } }) => colors.text_01};
 	}
+
 	th .dateNum.today {
 		background-color: ${({ theme: { colors } }) => colors.primary};
 	}
+
 	// border
 	.fc-day.fc-daygrid-day {
 		border: 1px solid ${({ theme }) => theme.colors.disabled_text};
 		cursor: pointer;
 	}
+
 	.fc-theme-standard .fc-timegrid-slots tr > td {
 		border: 1px solid ${({ theme }) => theme.colors.disabled_text};
 	}
+
 	.fc .fc-scrollgrid-section-body table {
 		border-style: solid;
 	}
+
 	.fc-theme-standard .fc-timegrid-slots tr > td {
 		&:first-child {
 			display: ${({ isMonthly }) => (!isMonthly ? "flex" : undefined)};
@@ -122,12 +142,15 @@ export const CustomCalendarDiv = styled.div`
 			font-weight: ${({ isMonthly }) => (!isMonthly ? 500 : "inherit")};
 			padding-right: ${({ isMonthly }) => (!isMonthly ? "17px" : 0)};
 			width: ${({ isMonthly }) => (!isMonthly ? TIME_COLUMN_WIDTH : undefined)};
+
 			& > div > div {
 				padding: 0;
 			}
 		}
+
 		height: ${({ isMonthly }) => (!isMonthly ? "60px" : "93px")};
 	}
+
 	// timeGridWeek 내부 border
 	tr > .fc-timegrid-col:not(:first-child) > .fc-timegrid-col-frame {
 		border-right: 1px solid ${({ theme: { colors } }) => colors.disabled_text};
@@ -137,9 +160,11 @@ export const CustomCalendarDiv = styled.div`
 		&::-webkit-scrollbar {
 			display: none;
 		}
+
 		-ms-overflow-style: none;
 		scrollbar-width: none;
 	}
+
 	.fc-scroller-harness-liquid > .fc-scroller {
 		&.fc-scroller-liquid-absolute {
 			&::-webkit-scrollbar {
@@ -171,9 +196,11 @@ export const CustomCalendarDiv = styled.div`
 		width: 100%;
 		mix-blend-mode: multiply;
 	}
+
 	.fc-daygrid-event.fc-event-start {
 		margin-bottom: 2.5px;
 	}
+
 	.fc-timegrid-event-harness-inset .fc-timegrid-event {
 		box-shadow: none;
 	}
@@ -196,6 +223,7 @@ export const TitleSelect = styled.select`
 	background-position: right;
 	background-repeat: no-repeat;
 	cursor: pointer;
+
 	&:focus {
 		outline: none;
 	}
