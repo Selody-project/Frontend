@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import Checked from "@/assets/icon/ic-round-checked-mark.svg";
-import BaseModal from "@/components/Common/BaseModal/BaseModal";
+import BaseModal from "@/components/Common/Modal/BaseModal";
 import {
 	delegateGroup,
 	deleteGroup,
