@@ -14,7 +14,6 @@ export const FeedDiv = styled.div`
 	border-radius: 10px;
 	border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
 	padding: 24px 18px;
-	cursor: pointer;
 	position: relative;
 `;
 
@@ -49,6 +48,7 @@ export const OptionMenuDiv = styled.div`
 
 export const TopDiv = styled.div`
 	display: flex;
+	cursor: pointer;
 
 	& > img {
 		width: 58px;
@@ -108,5 +108,22 @@ export const IconItemDiv = styled.div`
 
 	& > span {
 		font-size: 10px;
+	}
+
+	& > svg {
+		padding: 2px;
+	}
+
+	&:hover {
+		color: ${({ theme: { colors } }) => colors.primary};
+
+		& > svg {
+			background-color: ${({ theme: { colors } }) => colors.bg_01};
+			border-radius: 50%;
+
+			& > g > path {
+				stroke: ${({ theme: { colors } }) => colors.primary};
+			}
+		}
 	}
 `;

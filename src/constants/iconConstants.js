@@ -9,6 +9,7 @@ import DocumentIcon from "@/assets/icon/ic-document.svg";
 import DownArrowIcon from "@/assets/icon/ic-down-arrow.svg";
 import EditScheduleIcon from "@/assets/icon/ic-edit-schedule.svg";
 import CommentIcon from "@/assets/icon/ic-feed-comment.svg";
+import HeartClickIcon from "@/assets/icon/ic-feed-heart-click.svg";
 import HeartIcon from "@/assets/icon/ic-feed-heart.svg";
 import OptionThreeDotIcon from "@/assets/icon/ic-feed-option.svg";
 import GoogleLogoIcon from "@/assets/icon/ic-google-logo.svg";
@@ -61,4 +62,5 @@ export {
 	AccessArrowIcon,
 	AccessInfoIcon,
 	InnerDropdownIcon,
+	HeartClickIcon,
 };
