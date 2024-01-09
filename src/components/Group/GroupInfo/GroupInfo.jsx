@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { OptionThreeDotIcon } from "@/constants/iconConstants";
+import { openModal } from "@/features/ui/ui-slice";
 
 import {
 	ContainerDiv,
@@ -8,8 +10,12 @@ import {
 	OptionDiv,
 	OptionMenuDiv,
 } from "./GroupInfo.styles";
+import GroupRequestCancelModal from "../GroupReqeustModal/GroupRequestCancelModal";
 
 const GroupInfo = ({ groupInfo, target, menu }) => {
+	const dispatch = useDispatch();
+	const { openedModal } = useSelector((state) => state.ui);
+
 	const [optionMenuOpenedFeedIndex, setOptionMenuOpenedFeedIndex] =
 		useState(null);
 
@@ -29,8 +35,13 @@ const GroupInfo = ({ groupInfo, target, menu }) => {
 								}}
 							/>
 							{optionMenuOpenedFeedIndex === info.groupId && (
-								<OptionMenuDiv>요청취소</OptionMenuDiv>
+								<OptionMenuDiv
+									onClick={() => dispatch(openModal({ type: "REQUESTCANCEL" }))}
+								>
+									요청취소
+								</OptionMenuDiv>
 							)}
+							{openedModal === "REQUESTCANCEL" && <GroupRequestCancelModal />}
 						</OptionDiv>
 					)}
 					<img src={info.image} alt="groupImg" />
