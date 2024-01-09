@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import customFetch from "@/components/Base/BaseAxios";
+import customFetch from "@/components/UI/BaseAxios";
 
 export const useAxios = (defaultParams) => {
 	const [response, setResponse] = useState();

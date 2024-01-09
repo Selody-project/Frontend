@@ -1,4 +1,4 @@
-import customFetch from "@/components/Base/BaseAxios";
+import customFetch from "@/components/UI/BaseAxios";
 
 const commonThunk = async (
 	{ method, url, successCode, params = undefined, data = undefined, ...rest },

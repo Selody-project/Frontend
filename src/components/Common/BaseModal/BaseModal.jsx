@@ -8,25 +8,20 @@ import { CloseIcon } from "@/constants/iconConstants.js";
 import { closeModal } from "@/features/ui/ui-slice.js";
 import useScrollLock from "@/hooks/useScrollLock.jsx";
 
-import {
-	BackdropWrapper,
-	IconButton,
-	ModalHeaderDiv,
-	ModalWrapper,
-} from "./BaseModal.style.js";
+import { BackdropDiv, IconButton, ModalDiv } from "./BaseModal.style.js";
 
-const Backdrop = () => {
+const Backdrop = ({ isBackdropClose }) => {
 	const dispatch = useDispatch();
 
 	return (
-		<BackdropWrapper
+		<BackdropDiv
 			className="backdrop"
-			onClick={() => dispatch(closeModal())}
+			onClick={() => isBackdropClose && dispatch(closeModal())}
 		/>
 	);
 };
 
-const Modal = ({ title, children, hasClose, style }) => {
+const Modal = ({ children }) => {
 	const dispatch = useDispatch();
 
 	const handleClose = () => {
@@ -34,30 +29,26 @@ const Modal = ({ title, children, hasClose, style }) => {
 	};
 
 	return (
-		<ModalWrapper style={style}>
-			<ModalHeaderDiv>
-				<span>{title}</span>
-				{hasClose && (
-					<IconButton onClick={handleClose} aria-label="close">
-						<CloseIcon />
-					</IconButton>
-				)}
-			</ModalHeaderDiv>
+		<ModalDiv>
+			<IconButton onClick={handleClose} aria-label="close">
+				<CloseIcon />
+			</IconButton>
 			{children}
-		</ModalWrapper>
+		</ModalDiv>
 	);
 };
 
-const BaseModal = ({ title = null, children, hasClose = true, style }) => {
+const BaseModal = ({ children, isBackdropClose }) => {
 	useScrollLock();
 
 	return (
 		<>
-			{ReactDOM.createPortal(<Backdrop />, document.getElementById("backdrop"))}
 			{ReactDOM.createPortal(
-				<Modal title={title} hasClose={hasClose} style={style}>
-					{children}
-				</Modal>,
+				<Backdrop isBackdropClose={isBackdropClose} />,
+				document.getElementById("backdrop"),
+			)}
+			{ReactDOM.createPortal(
+				<Modal>{children}</Modal>,
 				document.getElementById("modal"),
 			)}
 		</>

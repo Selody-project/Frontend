@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ModalWrapper = styled.div`
+export const ModalDiv = styled.div`
 	position: fixed;
 	top: 50%;
 	left: 50%;
@@ -11,9 +11,11 @@ export const ModalWrapper = styled.div`
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
+	background-color: ${({ theme: { colors } }) => colors.white};
+	padding: 20px;
 `;
 
-export const BackdropWrapper = styled.div`
+export const BackdropDiv = styled.div`
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -23,22 +25,10 @@ export const BackdropWrapper = styled.div`
 	background: rgba(0, 0, 0, 0.4);
 `;
 
-export const ModalHeaderDiv = styled.div`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	font-size: 20px;
-	font-weight: 600;
-	line-height: normal;
-	position: relative;
-	width: 100%;
-	margin-bottom: 24px;
-	color: ${({ theme }) => theme.colors.text_01};
-`;
-
 export const IconButton = styled.button`
 	cursor: pointer;
 	position: absolute;
-	top: 0;
-	right: 0;
+	top: 20px;
+	right: 20px;
+	display: flex;
 `;

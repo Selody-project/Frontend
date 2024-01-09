@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import customFetch from "@/components/Base/BaseAxios.js";
+import customFetch from "@/components/UI/BaseAxios.js";
 
 export const createInviteLink = createAsyncThunk(
 	"groupInvite/createInviteLink",
