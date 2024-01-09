@@ -95,8 +95,7 @@ const getTimeFormat = ({ date: { hour } }) => {
 	return `${hour < 10 ? `0${hour}` : hour}`;
 };
 
-const getDayHeaderContentInTimeGridWeek = (props) => {
-	const { date, text, isToday } = props;
+const getDayHeaderContentInTimeGridWeek = ({ date, text, isToday }) => {
 	return (
 		<>
 			<div>{text.substr(text.length - 2, 1)}</div>
