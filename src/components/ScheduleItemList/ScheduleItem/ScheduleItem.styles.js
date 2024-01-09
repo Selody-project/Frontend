@@ -12,7 +12,7 @@ export const CardDiv = styled(BaseCard)`
 	align-items: center;
 	gap: 16px;
 	width: 100%;
-	padding: 15px;
+	padding: 0 15px;
 `;
 
 export const ColoredCircleDiv = styled.div`
@@ -30,6 +30,7 @@ export const ScheduleItemContentDiv = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	height: 100%;
+	padding: 15px 0;
 	color: ${({ theme: { colors } }) => colors.text_03};
 	font-size: ${({
 		theme: {
@@ -59,12 +60,18 @@ export const ScheduleItemContentDiv = styled.div`
 
 export const ScheduleItemRightButtonsDiv = styled.div`
 	display: flex;
-	gap: 16px;
+
 	& > button {
 		display: flex;
+		justify-content: center;
 		align-items: center;
-		width: 20px;
-		height: 20px;
+		width: 40px;
+		height: 40px;
 		cursor: pointer;
+
+		&:hover {
+			background-color: ${({ theme: { colors } }) => colors.bg_02};
+			border-radius: 50%;
+		}
 	}
 `;
