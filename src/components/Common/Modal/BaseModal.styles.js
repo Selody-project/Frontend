@@ -6,7 +6,7 @@ export const ModalDiv = styled.div`
 	left: 50%;
 	transform: translate(-50%, -50%);
 	width: fit-content;
-	z-index: 100;
+	z-index: ${({ isUpper }) => Number(Boolean(isUpper)) + 100};
 	overflow: hidden;
 	display: flex;
 	justify-content: center;
@@ -21,7 +21,7 @@ export const BackdropDiv = styled.div`
 	left: 0;
 	width: 100vw;
 	height: 100vh;
-	z-index: 100;
+	z-index: ${({ isUpper }) => Number(Boolean(isUpper)) + 100};
 	background: rgba(0, 0, 0, 0.4);
 `;
 
