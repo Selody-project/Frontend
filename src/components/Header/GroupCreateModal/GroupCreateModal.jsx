@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import BaseModal from "@/components/Common/BaseModal/BaseModal.jsx";
+import BaseModal from "@/components/Common/Modal/BaseModal.jsx";
 
 import {
 	ButtonWrapDiv,
@@ -16,7 +16,8 @@ const GroupCreateModal = () => {
 	const handleClick = () => {};
 
 	return (
-		<BaseModal title="그룹 만들기" bg="#fff">
+		<BaseModal>
+			{/* <BaseModal title="그룹 만들기" bg="#fff"> */}
 			<GroupNameInput
 				placeholder="그룹 이름"
 				onChange={(e) => setName(e.target.value)}

@@ -8,7 +8,7 @@ import { CloseIcon } from "@/constants/iconConstants.js";
 import { closeModal } from "@/features/ui/ui-slice.js";
 import useScrollLock from "@/hooks/useScrollLock.jsx";
 
-import { BackdropDiv, IconButton, ModalDiv } from "./BaseModal.style";
+import { BackdropDiv, IconButton, ModalDiv } from "../BaseModal.styles";
 
 const Backdrop = ({ isBackdropClose }) => {
 	const dispatch = useDispatch;
