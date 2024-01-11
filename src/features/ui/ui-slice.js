@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-	openedModal: "",
+	openedModal: null,
 };
 
 const uiSlice = createSlice({
@@ -12,7 +12,7 @@ const uiSlice = createSlice({
 			state.openedModal = action.payload.type;
 		},
 		closeModal: (state) => {
-			state.openedModal = "";
+			state.openedModal = null;
 		},
 	},
 });
