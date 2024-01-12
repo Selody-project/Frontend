@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import BaseModal from "@/components/Common/BaseModal/BaseModal";
+import BaseModal from "@/components/Common/Modal/BaseModal";
 import { withdrawMembership } from "@/features/auth/auth-service";
 import { closeModal, openModal } from "@/features/ui/ui-slice";
 
@@ -61,13 +61,14 @@ const WithdrawalTab = () => {
 				</WithdrawalButton>
 			</ButtonWrapDiv>
 			{openedModal === "WITHDRAW" && (
-				<BaseModal
+				<BaseModal>
+					{/* <BaseModal
 					style={{
 						backgroundColor: "white",
 						borderRadius: "10px",
 					}}
 					hasClose={false}
-				>
+				> */}
 					<ModalContentDiv>
 						<p>
 							Selody를 정말

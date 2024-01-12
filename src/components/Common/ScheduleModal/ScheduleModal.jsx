@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-import BaseModal from "@/components/Common/BaseModal/BaseModal.jsx";
+import BaseModal from "@/components/Common/Modal/BaseModal.jsx";
 import {
 	createSchedule,
 	updateSchedule,
@@ -29,11 +29,11 @@ const ScheduleModal = ({ type, initFormValues }) => {
 	const [formValues, setFormValues] = useState(initFormValues);
 
 	const today = new Date().toISOString().slice(0, 10);
-	let currentDate = today.replace(/-/g, ".");
-	currentDate = `${currentDate.slice(0, 4)}년 ${currentDate.slice(
-		5,
-		7,
-	)}월 ${currentDate.slice(8, 10)}일`;
+	// let currentDate = today.replace(/-/g, ".");
+	// currentDate = `${currentDate.slice(0, 4)}년 ${currentDate.slice(
+	// 	5,
+	// 	7,
+	// )}월 ${currentDate.slice(8, 10)}일`;
 
 	const isTimeValid = () => {
 		if (formValues.startDate === formValues.endDate) {
@@ -80,7 +80,8 @@ const ScheduleModal = ({ type, initFormValues }) => {
 	};
 
 	return (
-		<BaseModal title={currentDate} bg="#fff">
+		<BaseModal>
+			{/* <BaseModal title={currentDate}> */}
 			<TitleInput
 				id="title"
 				type="text"
