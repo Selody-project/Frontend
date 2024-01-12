@@ -73,6 +73,18 @@ const GroupMemberManagement = ({ groupInfo }) => {
 		dispatch(deleteGroupMember({ groupId, userId }));
 	};
 
+	const changeUtcDate = (time) => {
+		const year = new Date(time).getFullYear();
+		const month = new Date(time).getMonth() + 1;
+		const date = new Date(time).getDate();
+
+		if (month < 10) {
+			return `${year}.0${month}.${date}`;
+		}
+
+		return `${year}.${month}.${date}`;
+	};
+
 	useEffect(() => {
 		dispatch(getGroupMemberList(groupId));
 	}, []);
@@ -114,14 +126,14 @@ const GroupMemberManagement = ({ groupInfo }) => {
 							}}
 							isClickable
 						>
-							<span>1</span>
+							<span>{memberInfo.member.commentCount}</span>
 							{isCommentListOpen && <CommentList />}
 						</MemberLi>
 						<MemberLi>
-							<span>4</span>
+							<span>{memberInfo.member.likeCount}</span>
 						</MemberLi>
 						<MemberLi>
-							<span>2023.10.13</span>
+							<span>{changeUtcDate(memberInfo.member.joinedDate)}</span>
 						</MemberLi>
 						<MemberLi
 							onClick={() => {
