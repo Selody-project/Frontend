@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import FormModal from "@/components/Common/Modal/FormModal/FormModal.jsx";
+import { createGroup } from "@/features/group/group-service.js";
 
 import {
 	ButtonWrapDiv,
@@ -10,20 +12,20 @@ import {
 } from "./GroupCreateModal.style.js";
 
 const GroupCreateModal = () => {
+	const dispatch = useDispatch();
+
 	const [name, setName] = useState("");
 	const [description, setDescription] = useState("");
 
 	const handleCreateGroup = (event) => {
 		event.preventDefault();
-		// 업로드하는 로직
-		// ...
+		dispatch(createGroup({ name, description }));
 	};
 
 	const isEmpty = name.trim() === "" && description.trim() === "";
 
 	return (
 		<FormModal isEmpty={isEmpty}>
-			{/* <BaseModal title="그룹 만들기" bg="#fff"> */}
 			<GroupNameInput
 				placeholder="그룹 이름"
 				onChange={(e) => setName(e.target.value)}
