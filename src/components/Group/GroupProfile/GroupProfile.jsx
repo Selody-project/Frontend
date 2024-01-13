@@ -29,15 +29,15 @@ const GroupProfile = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 	const locate = useLocation();
 
 	const [isGroupInviteLinkOpen, setIsGroupInviteLinkOpen] = useState(false);
-	const [management, setManagement] = useState(false);
+	const [isManaging, setIsManagin] = useState(false);
 
 	const groupDetailInfo = groupInfo?.information.group;
 
 	useEffect(() => {
 		if (locate.pathname.includes("leader")) {
-			setManagement(true);
+			setIsManagin(true);
 		} else {
-			setManagement(false);
+			setIsManagin(false);
 		}
 	});
 
@@ -60,7 +60,7 @@ const GroupProfile = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 			</MiddleDiv>
 			<BottomDiv>
 				{/* eslint-disable-next-line no-nested-ternary */}
-				{management ? (
+				{isManaging ? (
 					<>
 						<ProfileButton
 							type="button"

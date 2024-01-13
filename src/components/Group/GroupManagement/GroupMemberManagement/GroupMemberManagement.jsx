@@ -30,7 +30,6 @@ const GroupMemberManagement = ({ groupInfo }) => {
 	const dispatch = useDispatch();
 
 	const memberList = useSelector((state) => state.group.groupMemberList);
-	// const memberList = groupInfo?.information.memberInfo
 
 	const [isAccessInfoOpen, setIsAccessInfoOpen] = useState(false);
 	const [isAccessLevelOptionsOpen, setisAccessLevelOptionsOpen] =

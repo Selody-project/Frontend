@@ -48,7 +48,7 @@ const GroupLeaderProfile = ({ groupInfo }) => {
 		(nameValue !== groupDetailInfo?.name ||
 			descriptionValue !== groupDetailInfo?.description ||
 			profileImgValue !== defaultProfileImg) &&
-		nameValue.trim();
+		nameValue?.trim();
 
 	const handleClickSave = () => {
 		const formdata = new FormData();
