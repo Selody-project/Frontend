@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 
 import FormModal from "@/components/Common/Modal/FormModal/FormModal.jsx";
 import { createGroup } from "@/features/group/group-service.js";
+import { closeModal } from "@/features/ui/ui-slice.js";
 
 import {
 	ButtonWrapDiv,
@@ -20,6 +21,7 @@ const GroupCreateModal = () => {
 	const handleCreateGroup = (event) => {
 		event.preventDefault();
 		dispatch(createGroup({ name, description }));
+		dispatch(closeModal({ type: "CREATE_GROUP" }));
 	};
 
 	const isEmpty = name.trim() === "" && description.trim() === "";
