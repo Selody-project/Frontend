@@ -15,6 +15,7 @@ import FillHeartIcon from "@/assets/icon/ic-feed-heart-fill.svg";
 import OptionThreeDotIcon from "@/assets/icon/ic-feed-option.svg";
 import GoogleLogoIcon from "@/assets/icon/ic-google-logo.svg";
 import AddIcon from "@/assets/icon/ic-group-add.svg";
+import GroupImgAddIcon from "@/assets/icon/ic-group-img-add.svg";
 import IntroductionEditIcon from "@/assets/icon/ic-introduction-edit.svg";
 import LeftArrowIcon from "@/assets/icon/ic-left-arrow.svg";
 import NextIcon from "@/assets/icon/ic-next.svg";
@@ -68,4 +69,5 @@ export {
 	CommentListIcon,
 	FillHeartIcon,
 	CheckIcon,
+	GroupImgAddIcon,
 };

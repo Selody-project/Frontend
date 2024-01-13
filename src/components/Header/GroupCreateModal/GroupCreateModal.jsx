@@ -6,10 +6,14 @@ import { createGroup } from "@/features/group/group-service.js";
 import { closeModal } from "@/features/ui/ui-slice.js";
 
 import {
+	TopDiv,
+	TitleH2,
+	GroupNameH3,
+	GroupNameTextarea,
+	GroupIntroduceH3,
+	GroupIntroduceTextarea,
 	ButtonWrapDiv,
 	GroupCreateButton,
-	GroupIntroduceTextarea,
-	GroupNameInput,
 } from "./GroupCreateModal.style.js";
 
 const GroupCreateModal = () => {
@@ -28,15 +32,18 @@ const GroupCreateModal = () => {
 
 	return (
 		<FormModal isEmpty={isEmpty}>
-			<GroupNameInput
-				placeholder="그룹 이름"
+			<TopDiv>
+				<TitleH2>그룹 만들기</TitleH2>
+			</TopDiv>
+			<GroupNameH3>그룹 이름</GroupNameH3>
+			<GroupNameTextarea
 				onChange={(e) => setName(e.target.value)}
-				value={name}
+				maxLength={20}
 			/>
+			<GroupIntroduceH3>그룹 소개</GroupIntroduceH3>
 			<GroupIntroduceTextarea
-				placeholder="그룹 소개"
 				onChange={(e) => setDescription(e.target.value)}
-				value={description}
+				maxLength={100}
 			/>
 			<ButtonWrapDiv>
 				<GroupCreateButton
