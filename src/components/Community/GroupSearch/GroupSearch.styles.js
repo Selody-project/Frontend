@@ -38,11 +38,10 @@ export const GroupDiv = styled.div`
 		height: 34px;
 		color: ${({ theme: { colors } }) => colors.text_02};
 		font-size: ${({ theme: { typography } }) => typography.size.s2};
-		line-height: normal;
 		margin-top: 4px;
 		display: flex;
-		justify-content: center;
 		align-items: center;
+		text-align: center;
 	}
 
 	& > h4 {
