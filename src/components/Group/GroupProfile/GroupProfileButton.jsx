@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { AddIcon } from "@/constants/iconConstants";
+import { getGroupInviteLink } from "@/features/group/group-service";
 import { openModal } from "@/features/ui/ui-slice";
 
 import {
@@ -16,6 +17,8 @@ import GroupInviteLink from "../GroupManagement/GroupInviteLink/GroupInviteLink"
 const GroupProfileButton = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 	const dispatch = useDispatch();
 
+	const { groupInviteLink } = useSelector((state) => state.group);
+
 	const locate = useLocation();
 	const navigate = useNavigate();
 
@@ -24,10 +27,13 @@ const GroupProfileButton = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 
 	const memberLength = groupInfo.information.memberInfo.length;
 
+	const { groupId, name } = groupInfo.information.group;
+
 	useEffect(() => {
 		if (locate.pathname.includes("leader")) {
 			setIsManaging(true);
 		}
+		dispatch(getGroupInviteLink(groupId));
 	}, []);
 
 	//	그룹 관리 페이지일때
@@ -46,7 +52,9 @@ const GroupProfileButton = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 				)}
 				{isGroupInviteLinkOpen && (
 					<GroupInviteLink
-						groupInfo={groupInfo}
+						inviteLink={groupInviteLink}
+						groupName={name}
+						groupId={groupId}
 						onClose={() => setIsGroupInviteLinkOpen(false)}
 					/>
 				)}
