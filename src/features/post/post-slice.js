@@ -19,12 +19,19 @@ const initialState = {
 	myGroupPostslastRecordId: 0,
 	isLoading: true,
 	isEnd: false,
+	isEmpty: false,
+	allGroupPostsIsEnd: false,
 };
 
 const postSlice = createSlice({
 	name: "post",
 	initialState,
-	reducers: {},
+	reducers: {
+		resetAllGroupPosts: (state) => {
+			state.allGroupPosts = [];
+			state.allGroupPostslastRecordId = 0;
+		},
+	},
 	extraReducers: (bulider) => {
 		bulider
 			.addMatcher(
@@ -55,16 +62,16 @@ const postSlice = createSlice({
 			)
 			.addMatcher(isAllOf(getGroupAllPosts.fulfilled), (state, { payload }) => {
 				state.isLoading = false;
+				if (payload.feed.length === 0) {
+					state.isEmpty = true;
+				}
+
 				state.allGroupPosts = [...state.allGroupPosts, ...payload.feed];
-				state.isEnd = payload.isEnd;
+				state.allGroupPostsIsEnd = payload.isEnd;
 
 				if (payload.feed.length > 0) {
 					state.allGroupPostslastRecordId =
 						payload.feed[payload.feed.length - 1].postId;
-				}
-
-				if (payload.isEnd) {
-					state.isEnd = false;
 				}
 			})
 			.addMatcher(isAllOf(getGroupPosts.fulfilled), (state, { payload }) => {
@@ -97,5 +104,7 @@ const postSlice = createSlice({
 			});
 	},
 });
+
+export const { resetAllGroupPosts } = postSlice.actions;
 
 export default postSlice.reducer;
