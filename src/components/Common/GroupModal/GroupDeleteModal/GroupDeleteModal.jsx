@@ -5,31 +5,25 @@ import { toast } from "react-toastify";
 
 import BaseModal from "@/components/Common/Modal/BaseModal";
 import { deleteGroup } from "@/features/group/group-service";
-import { openModal } from "@/features/ui/ui-slice";
+import { closeModal } from "@/features/ui/ui-slice";
 
 import {
 	ContainerDiv,
-	TitleHeader,
-	ContentMain,
+	TitleH2,
+	ContentDiv,
 	Button,
-	ModalFooter,
-} from "./GroupDeleteModal.styls";
-
-const modalStyle = {
-	padding: "20px",
-	backgroundColor: "white",
-};
+	BottomDiv,
+} from "../GroupModal.Shared.styles";
 
 const GroupDeleteModal = ({ groupDetailInfo, isLoading }) => {
 	const dispatch = useDispatch();
 
 	const navigate = useNavigate();
 
-	const hasGroupMember = groupDetailInfo.member > 1;
-
 	const handleDeleteGroup = async () => {
 		try {
 			await dispatch(deleteGroup(groupDetailInfo.groupId)).unwrap();
+			dispatch(closeModal());
 			navigate("/community");
 		} catch (e) {
 			toast.error("그룹 삭제에 실패했습니다.");
@@ -37,13 +31,13 @@ const GroupDeleteModal = ({ groupDetailInfo, isLoading }) => {
 	};
 
 	return (
-		<BaseModal style={modalStyle}>
-			<ContainerDiv>
-				<TitleHeader>
+		<BaseModal isUpper>
+			<ContainerDiv className="delete-modal">
+				<TitleH2>
 					<strong>{`${groupDetailInfo.name}을(를) 정말 삭제하실 건가요?`}</strong>
-				</TitleHeader>
-				<ContentMain>
-					<p className="margin">
+				</TitleH2>
+				<ContentDiv className="delete-modal">
+					<p>
 						{`삭제하면 ${groupDetailInfo.name}에 있는 모든 내용이 삭제되어`}
 						<br />
 						복구가 불가능합니다.
@@ -51,18 +45,10 @@ const GroupDeleteModal = ({ groupDetailInfo, isLoading }) => {
 					<Button disabled={isLoading} onClick={handleDeleteGroup}>
 						삭제하기
 					</Button>
-				</ContentMain>
-				{hasGroupMember && (
-					<ModalFooter>
-						<p>그룹원이 없어야 삭제가 가능합니다</p>
-						<button
-							type="button"
-							onClick={() => dispatch(openModal({ type: "DELEGATE_GROUP" }))}
-						>
-							그룹원 내보내기
-						</button>
-					</ModalFooter>
-				)}
+				</ContentDiv>
+				<BottomDiv>
+					<p>그룹원이 없어야 삭제가 가능합니다</p>
+				</BottomDiv>
 			</ContainerDiv>
 		</BaseModal>
 	);

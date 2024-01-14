@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import BaseModal from "@/components/Common/Modal/BaseModal";
 import { CheckIcon } from "@/constants/iconConstants";
@@ -9,17 +11,12 @@ import { closeModal } from "@/features/ui/ui-slice";
 
 import {
 	ContainerDiv,
-	ContentMain,
+	TitleH2,
+	ContentDiv,
+	Button,
 	SelectBoxDiv,
 	SelectWrapDiv,
-	TitleHeader,
-	Button,
-} from "./GroupDelegateModal.styles";
-
-const modalStyle = {
-	padding: "20px",
-	backgroundColor: "white",
-};
+} from "../GroupModal.Shared.styles";
 
 const SelectBox = ({ name, isSelected, onClick }) => (
 	<SelectBoxDiv onClick={onClick} isSelected={isSelected}>
@@ -30,6 +27,8 @@ const SelectBox = ({ name, isSelected, onClick }) => (
 
 const GroupDelegateModal = ({ groupInfo, groupMembers }) => {
 	const dispatch = useDispatch();
+
+	const navigate = useNavigate();
 
 	const [selectedMemberId, setSelectedMemberId] = useState(null);
 
@@ -42,9 +41,14 @@ const GroupDelegateModal = ({ groupInfo, groupMembers }) => {
 	const handleClickDelegate = async () => {
 		const { groupId } = groupDetailInfo;
 
-		await dispatch(delegateGroup({ groupId, selectedMemberId }));
-		dispatch(closeModal());
-		dispatch(setRefetchUserGroup(true));
+		try {
+			await dispatch(delegateGroup({ groupId, selectedMemberId })).unwrap();
+			dispatch(closeModal());
+			dispatch(setRefetchUserGroup(true));
+			navigate("/community");
+		} catch (e) {
+			toast.error("그룹장 위임에 실패했습니다.");
+		}
 	};
 
 	const handleClickSelectBox = (userId) => {
@@ -52,12 +56,12 @@ const GroupDelegateModal = ({ groupInfo, groupMembers }) => {
 	};
 
 	return (
-		<BaseModal style={modalStyle}>
+		<BaseModal isUpper>
 			<ContainerDiv>
-				<TitleHeader>
+				<TitleH2>
 					<strong>{`${groupDetailInfo.name}을(를) 위임받을 그룹원을 선택해주세요.`}</strong>
-				</TitleHeader>
-				<ContentMain>
+				</TitleH2>
+				<ContentDiv className="delegate-modal">
 					<p>
 						위임받을 그룹원을 선택하고 위임하기 버튼을 누르면
 						<br />
@@ -76,7 +80,7 @@ const GroupDelegateModal = ({ groupInfo, groupMembers }) => {
 					<Button onClick={handleClickDelegate} disabled={!selectedMemberId}>
 						위임하기
 					</Button>
-				</ContentMain>
+				</ContentDiv>
 			</ContainerDiv>
 		</BaseModal>
 	);

@@ -1,32 +1,39 @@
 import styled from "styled-components";
 
 export const ContainerDiv = styled.div`
-	padding: 0 40px;
 	font-family: Inter;
 	text-align: center;
 	line-height: normal;
+	padding: 0 22px 6px;
+
+	&.delete-modal {
+		padding-bottom: 0;
+	}
 `;
 
-export const TitleHeader = styled.header`
-	margin-top: 18px;
+export const TitleH2 = styled.h2`
+	margin-top: 32px;
 	font-size: 18px;
 	font-weight: ${({ theme }) => theme.typography.weight.semibold};
 `;
 
-export const ContentMain = styled.main`
-	margin: 14px 0;
+export const ContentDiv = styled.div`
+	&.delegate-modal {
+		margin-top: 14px;
+
+		& > p {
+			margin: 0;
+		}
+	}
+
+	&.delete-modal > p {
+		margin: 36px 0;
+	}
 
 	& > p {
 		color: ${({ theme }) => theme.colors.disabled_text};
 		font-size: 14px;
 		font-weight: ${({ theme }) => theme.typography.weight.medium};
-	}
-
-	.margin {
-		margin-bottom: 40px;
-	}
-
-	.leave-modal {
 		margin: 48px 0;
 	}
 `;
@@ -36,8 +43,8 @@ export const Button = styled.button`
 	color: ${({ theme }) => theme.colors.white};
 	font-size: 15px;
 	font-weight: ${({ theme }) => theme.typography.weight.regular};
-	padding: 16px 0;
-	width: 100%;
+	width: 324px;
+	height: 48px;
 	border-radius: 5px;
 	cursor: pointer;
 
@@ -47,21 +54,11 @@ export const Button = styled.button`
 	}
 `;
 
-export const ModalFooter = styled.footer`
-	margin: 12px 0;
+export const BottomDiv = styled.div`
+	margin-top: 16px;
 	font-size: 12px;
 	font-weight: ${({ theme }) => theme.typography.weight.medium};
-
-	& > p {
-		color: ${({ theme }) => theme.colors.disabled_text};
-		margin-bottom: 4px;
-	}
-
-	& > button {
-		color: ${({ theme }) => theme.colors.primary};
-		text-decoration: underline;
-		cursor: pointer;
-	}
+	color: ${({ theme }) => theme.colors.sunday};
 `;
 
 export const SelectWrapDiv = styled.div`

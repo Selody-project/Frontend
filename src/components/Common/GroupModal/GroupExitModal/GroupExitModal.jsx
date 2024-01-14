@@ -6,27 +6,22 @@ import { openModal } from "@/features/ui/ui-slice";
 
 import {
 	ContainerDiv,
-	TitleHeader,
-	ContentMain,
+	TitleH2,
+	ContentDiv,
 	Button,
-} from "./GroupExitModal.styls";
-
-const modalStyle = {
-	padding: "20px",
-	backgroundColor: "white",
-};
+} from "../GroupModal.Shared.styles";
 
 const GroupExitModal = () => {
 	const dispatch = useDispatch();
 
 	return (
-		<BaseModal style={modalStyle}>
+		<BaseModal isUpper>
 			<ContainerDiv>
-				<TitleHeader>
+				<TitleH2>
 					<strong>그룹을 나가시겠습니까?</strong>
-				</TitleHeader>
-				<ContentMain>
-					<p className="margin">
+				</TitleH2>
+				<ContentDiv>
+					<p>
 						그룹장 권한을 위임한 후에 그룹을 나갈 수 있습니다.
 						<br />
 						그룹장을 위임하시겠습니까?
@@ -36,7 +31,7 @@ const GroupExitModal = () => {
 					>
 						그룹장 위임
 					</Button>
-				</ContentMain>
+				</ContentDiv>
 			</ContainerDiv>
 		</BaseModal>
 	);
