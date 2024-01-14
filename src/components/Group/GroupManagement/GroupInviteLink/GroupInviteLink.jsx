@@ -14,7 +14,7 @@ import {
 const GroupInviteLink = ({ groupInfo, onClose }) => {
 	const dispatch = useDispatch();
 
-	const { isLoading, groupInviteLink } = useSelector((state) => state.group);
+	const { isLoading, inviteLink } = useSelector((state) => state.group);
 
 	const { groupId, name } = groupInfo.information.group;
 
@@ -37,10 +37,10 @@ const GroupInviteLink = ({ groupInfo, onClose }) => {
 				<CloseIcon onClick={() => onClose(false)} />
 			</TopDiv>
 			<MiddleDiv>
-				<TextDiv>{!isLoading ? groupInviteLink?.inviteCode : "링크"}</TextDiv>
+				<TextDiv>{!isLoading ? inviteLink?.inviteCode : "링크"}</TextDiv>
 				<button
 					type="button"
-					onClick={() => handleCopyClipBoard(groupInviteLink?.inviteCode)}
+					onClick={() => handleCopyClipBoard(inviteLink?.inviteCode)}
 				>
 					복사
 				</button>

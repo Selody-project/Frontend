@@ -275,6 +275,51 @@ export const createGroupInviteLink = createAsyncThunk(
 	},
 );
 
+export const getGroupInfoWithInviteLink = createAsyncThunk(
+	"group/getGroupInfoWithInviteLink",
+	async (inviteCode, thunkAPI) => {
+		const data = await commonThunk(
+			{
+				method: "GET",
+				url: `/api/group/invite-link/${inviteCode}`,
+				successCode: 200,
+			},
+			thunkAPI,
+		);
+		return data;
+	},
+);
+
+export const getGroupInviteLink = createAsyncThunk(
+	"group/getGroupInviteLink",
+	async (groupId, thunkAPI) => {
+		const data = await commonThunk(
+			{
+				method: "GET",
+				url: `/api/group/${groupId}/join/invite-link`,
+				successCode: 200,
+			},
+			thunkAPI,
+		);
+		return data;
+	},
+);
+
+export const joinGroupInviteLink = createAsyncThunk(
+	"group/joinGroupInviteLink",
+	async ({ groupId, inviteCode }, thunkAPI) => {
+		const data = await commonThunk(
+			{
+				method: "POST",
+				url: `/api/group/${groupId}/join/${inviteCode}`,
+				successCode: 200,
+			},
+			thunkAPI,
+		);
+		return data;
+	},
+);
+
 export const getGroupMemberList = createAsyncThunk(
 	"group/getGroupMemberList",
 	async (groupId, thunkAPI) => {

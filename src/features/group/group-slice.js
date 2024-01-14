@@ -24,6 +24,9 @@ import {
 	getGroupMemberList,
 	changeAccessLevel,
 	withdrawalGroup,
+	getGroupInfoWithInviteLink,
+	getGroupInviteLink,
+	joinGroupInviteLink,
 } from "./group-service.js";
 
 const initialState = {
@@ -38,6 +41,8 @@ const initialState = {
 	groupRequestMemberList: [],
 	isUserGroupRefetching: true,
 	groupInviteLink: null,
+	inviteLink: null,
+	groupInfoWithInviteLink: null,
 	groupMemberList: [],
 	isEnd: false,
 };
@@ -80,6 +85,9 @@ const groupSlice = createSlice({
 					getGroupMemberList.pending,
 					changeAccessLevel.pending,
 					withdrawalGroup.pending,
+					getGroupInfoWithInviteLink.pending,
+					getGroupInviteLink.pending,
+					joinGroupInviteLink.pending,
 				),
 				(state) => {
 					state.isLoading = true;
@@ -107,6 +115,9 @@ const groupSlice = createSlice({
 					getGroupMemberList.rejected,
 					changeAccessLevel.rejected,
 					withdrawalGroup.rejected,
+					getGroupInfoWithInviteLink.rejected,
+					getGroupInviteLink.rejected,
+					joinGroupInviteLink.rejected,
 				),
 				(state) => {
 					state.isLoading = false;
@@ -215,7 +226,7 @@ const groupSlice = createSlice({
 				isAllOf(createGroupInviteLink.fulfilled),
 				(state, { payload }) => {
 					state.isLoading = false;
-					state.groupInviteLink = payload;
+					state.inviteLink = payload;
 				},
 			)
 			.addMatcher(
@@ -232,6 +243,24 @@ const groupSlice = createSlice({
 			.addMatcher(isAllOf(withdrawalGroup.fulfilled), (state) => {
 				state.isLoading = false;
 				toast.error("그룹 탈퇴에 성공하였습니다");
+			})
+			.addMatcher(
+				isAllOf(getGroupInfoWithInviteLink.fulfilled),
+				(state, { payload }) => {
+					state.isLoading = false;
+					state.groupInfoWithInviteLink = payload;
+				},
+			)
+			.addMatcher(
+				isAllOf(getGroupInviteLink.fulfilled),
+				(state, { payload }) => {
+					state.isLoading = false;
+					state.groupInviteLink = payload;
+				},
+			)
+			.addMatcher(isAllOf(joinGroupInviteLink.fulfilled), (state) => {
+				state.isLoading = false;
+				toast.success("그룹 가입에 성공하였습니다");
 			});
 	},
 });
