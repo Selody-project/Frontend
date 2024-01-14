@@ -26,7 +26,13 @@ import {
 	IconItemButton,
 } from "./Feed.styles";
 
-const Feed = ({ groupId, post, optionOpenedFeedIndex, onThreeDotClick }) => {
+const Feed = ({
+	groupId,
+	post,
+	optionOpenedFeedIndex,
+	onThreeDotClick,
+	leaderName,
+}) => {
 	const dispatch = useDispatch();
 
 	const { user } = useSelector((state) => state.auth);
@@ -103,7 +109,7 @@ const Feed = ({ groupId, post, optionOpenedFeedIndex, onThreeDotClick }) => {
 				<InfoDiv>
 					<h3>
 						{post.author}
-						{post.isMine && <CrownIcon />}
+						{post.author === leaderName && <CrownIcon />}
 					</h3>
 					<h4>{useTimeStamp(post.createdAt)}</h4>
 				</InfoDiv>

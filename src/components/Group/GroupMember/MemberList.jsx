@@ -1,31 +1,14 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
 
-import { OptionThreeDotIcon } from "@/constants/iconConstants";
-import { deleteGroupMember } from "@/features/group/group-service";
+import { CrownIcon } from "@/constants/iconConstants";
 
 import {
 	MemberInnerDiv,
 	MemberH3,
 	MemberUl,
 } from "./GroupMember.Shared.styles";
-import { OptionMenuDiv } from "./GroupMember.styles";
 
-const MemberList = ({ groupInfo }) => {
-	const dispatch = useDispatch();
-
-	const [optionMenuOpenedMemberIndex, setOptionMenuOpenedMemberIndex] =
-		useState(null);
-
-	const { groupId } = groupInfo.information.group;
-
-	const handleOption = (num) =>
-		setOptionMenuOpenedMemberIndex((prev) => (prev === num ? null : num));
-
-	const deleteMember = (userId) => {
-		dispatch(deleteGroupMember({ groupId, userId }));
-	};
-
+const MemberList = ({ groupInfo, leaderId }) => {
 	return (
 		<MemberInnerDiv>
 			<MemberH3>그룹원</MemberH3>
@@ -34,22 +17,7 @@ const MemberList = ({ groupInfo }) => {
 					<li key={info.userId}>
 						<img src={info.image} alt="memberImg" />
 						<h4>{info.nickname}</h4>
-						<button type="button">
-							<OptionThreeDotIcon
-								onClick={() => {
-									handleOption(info.userId);
-								}}
-							/>
-							{optionMenuOpenedMemberIndex === info.userId && (
-								<OptionMenuDiv
-									onClick={() => {
-										deleteMember(info.userId);
-									}}
-								>
-									내보내기
-								</OptionMenuDiv>
-							)}
-						</button>
+						{info.userId === leaderId && <CrownIcon />}
 					</li>
 				))}
 			</MemberUl>

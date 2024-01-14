@@ -7,7 +7,7 @@ import useObserver from "@/hooks/useObserver";
 
 import { FeedSection } from "./GroupFeed.styles";
 
-const GroupFeed = ({ groupId, isEnd }) => {
+const GroupFeed = ({ groupId, isEnd, leaderName }) => {
 	const dispatch = useDispatch();
 
 	const { allGroupPosts, allGroupPostslastRecordId } = useSelector(
@@ -43,6 +43,7 @@ const GroupFeed = ({ groupId, isEnd }) => {
 						groupId={groupId}
 						optionOpenedFeedIndex={optionMenuOpenedFeedIndex}
 						onThreeDotClick={(postId) => setOptionMenuOpenedFeedIndex(postId)}
+						leaderName={leaderName}
 					/>
 				))}
 		</FeedSection>

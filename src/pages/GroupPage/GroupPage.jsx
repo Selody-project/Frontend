@@ -35,11 +35,13 @@ const GroupPage = () => {
 
 	const isPublicGroup = groupInfo?.information.group.isPublicGroup;
 	const leaderId = groupInfo?.information.leaderInfo.userId;
+	const leaderName = groupInfo?.information.leaderInfo.nickname;
 
 	const isGroupLeader = user.userId === leaderId;
 	const isGroupMember = userGroupList.some(
 		(group) => group.groupId === Number(groupId),
 	);
+
 	useEffect(() => {
 		try {
 			dispatch(getGroupInfo(groupId)).unwrap();
@@ -73,7 +75,11 @@ const GroupPage = () => {
 					{isEmpty ? (
 						<EmptyFeed />
 					) : (
-						<GroupFeed groupId={groupId} isEnd={!allGroupPostsIsEnd} />
+						<GroupFeed
+							groupId={groupId}
+							isEnd={!allGroupPostsIsEnd}
+							leaderName={leaderName}
+						/>
 					)}
 				</FeedDiv>
 			)}
@@ -83,6 +89,7 @@ const GroupPage = () => {
 					requestMemberList={groupRequestMemberList}
 					groupInfo={groupInfo}
 					isGroupMember={isGroupMember}
+					leaderId={leaderId}
 				/>
 			)}
 		</GroupMain>

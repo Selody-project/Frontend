@@ -39,11 +39,5 @@ export const MemberUl = styled.ul`
 			min-width: 60px;
 			max-width: 100px;
 		}
-
-		> button {
-			margin-left: 32px;
-			cursor: pointer;
-			position: relative;
-		}
 	}
 `;
