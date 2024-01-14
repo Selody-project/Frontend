@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import BaseModal from "@/components/Common/Modal/BaseModal";
 import { changeRequestGroupJoin } from "@/features/group/group-service";
@@ -18,10 +19,14 @@ const GroupRequestCancelModal = ({ groupId }) => {
 
 	const navigate = useNavigate();
 
-	const handleCancelGroupJoin = () => {
-		dispatch(changeRequestGroupJoin(groupId));
-		dispatch(closeModal());
-		navigate("/community");
+	const handleCancelGroupJoin = async () => {
+		try {
+			await dispatch(changeRequestGroupJoin(groupId)).unwrap();
+			dispatch(closeModal());
+			navigate("/community");
+		} catch (e) {
+			toast.error("요청 취소에 실패했습니다.");
+		}
 	};
 
 	return (

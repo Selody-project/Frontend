@@ -22,7 +22,7 @@ const GroupExitModal = () => {
 				</TitleH2>
 				<ContentDiv>
 					<p>
-						그룹장 권한을 위임한 후에 그룹을 나갈 수 있습니다.
+						그룹장은 그룹을 나갈 수 없습니다.
 						<br />
 						그룹장을 위임하시겠습니까?
 					</p>
