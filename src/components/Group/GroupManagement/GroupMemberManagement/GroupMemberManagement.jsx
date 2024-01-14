@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useRef } from "react";
+import { useDispatch } from "react-redux";
 
 import { ACCESS_LEVEL_DATA } from "@/constants/accessConstants";
 import { InfoIcon, AccessArrowIcon } from "@/constants/iconConstants";
 import {
-	getGroupMemberList,
 	changeAccessLevel,
 	deleteGroupMember,
 } from "@/features/group/group-service";
@@ -39,10 +38,8 @@ const groupMemberManagementTitleData = [
 	},
 ];
 
-const GroupMemberManagement = ({ groupInfo }) => {
+const GroupMemberManagement = ({ groupId, memberList }) => {
 	const dispatch = useDispatch();
-
-	const { groupMemberList } = useSelector((state) => state.group);
 
 	const [isAccessInfoOpen, setIsAccessInfoOpen] = useState(false);
 	const [isCommentListOpen, setIsCommentListOpen] = useState(false);
@@ -51,11 +48,6 @@ const GroupMemberManagement = ({ groupInfo }) => {
 
 	const accessInfoRef = useRef(null);
 	const commentListRef = useRef(null);
-
-	const { groupId } = groupInfo.information.group;
-	const memberList = groupMemberList?.filter(
-		(item) => item.accessLevel !== "owner",
-	);
 
 	useOutsideClick(accessInfoRef, () => setIsAccessInfoOpen(false));
 	useOutsideClick(commentListRef, () => setIsCommentListOpen(false));
@@ -84,10 +76,6 @@ const GroupMemberManagement = ({ groupInfo }) => {
 
 		return `${year}.${month}.${date}`;
 	};
-
-	useEffect(() => {
-		dispatch(getGroupMemberList(groupId));
-	}, []);
 
 	return (
 		<>
