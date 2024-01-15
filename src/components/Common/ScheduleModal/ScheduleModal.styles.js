@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const ScheduleModalLayoutDiv = styled.div`
 	width: 100%;
-	min-width: 590px;
 	display: flex;
 	flex-direction: column;
 	font-family: "Inter", sans-serif;
@@ -375,12 +374,35 @@ export const RepeatContainerDiv = styled.div`
 	gap: 20px;
 	flex-direction: column;
 	margin-bottom: 24px;
-	& > div:first-child {
+	& > div {
 		display: flex;
-		gap: 24px;
-		& > div {
+		gap: 15px;
+		&:first-child > div {
 			display: flex;
 			flex-direction: column;
+		}
+		&:last-child > .interval_N {
+			display: flex;
+			gap: 6px;
+			align-items: center;
+			& > input[type="number"] {
+				all: unset;
+				border: 1px solid ${({ theme: { colors } }) => colors.disabled_text};
+				width: 98px;
+				height: 100%;
+				padding: 8px 10px;
+				color: ${({ theme: { colors } }) => colors.disabled_text};
+				/* Chrome, Safari, Edge, Opera */
+				&::-webkit-outer-spin-button,
+				&::-webkit-inner-spin-button {
+					-webkit-appearance: none;
+					margin: 0;
+				}
+				appearance: textfield;
+			}
+			& > span {
+				color: ${({ theme: { colors } }) => colors.text_03};
+			}
 		}
 	}
 `;
