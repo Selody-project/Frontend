@@ -1,14 +1,18 @@
 import styled from "styled-components";
 
-import BaseCard from "@/components/Ui/BaseCard/BaseCard";
+import BaseCard from "@/components/UI/BaseCard/BaseCard";
 
-export const ScheduleItemDiv = styled(BaseCard)`
+export const ScheduleItemLi = styled.li`
+	width: 100%;
+	cursor: pointer;
+`;
+
+export const CardDiv = styled(BaseCard)`
 	display: flex;
 	align-items: center;
 	gap: 16px;
-	height: 67px;
-	min-height: 67px;
-	padding-left: 15px;
+	width: 100%;
+	padding: 0 15px;
 `;
 
 export const ColoredCircleDiv = styled.div`
@@ -22,9 +26,11 @@ export const ColoredCircleDiv = styled.div`
 export const ScheduleItemContentDiv = styled.div`
 	flex: 1;
 	display: flex;
+	gap: 4px;
 	flex-direction: column;
-	justify-content: space-between;
-	height: 38px;
+	justify-content: center;
+	height: 100%;
+	padding: 15px 0;
 	color: ${({ theme: { colors } }) => colors.text_03};
 	font-size: ${({
 		theme: {
@@ -53,14 +59,19 @@ export const ScheduleItemContentDiv = styled.div`
 `;
 
 export const ScheduleItemRightButtonsDiv = styled.div`
-	margin-right: 8px;
 	display: flex;
-	gap: 16px;
+
 	& > button {
 		display: flex;
+		justify-content: center;
 		align-items: center;
-		width: 20px;
-		height: 20px;
+		width: 40px;
+		height: 40px;
 		cursor: pointer;
+
+		&:hover {
+			background-color: ${({ theme: { colors } }) => colors.bg_02};
+			border-radius: 50%;
+		}
 	}
 `;

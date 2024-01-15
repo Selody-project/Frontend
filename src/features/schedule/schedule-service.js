@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import moment from "moment";
 
 import { VIEW_TYPE } from "@/constants/calendarConstants";
 import commonThunk from "@/features/commonThunk";
@@ -63,29 +64,32 @@ export const getSchedulesSummary = createAsyncThunk(
 	"schedule/getSchedulesSummary",
 	async ({ isGroup, groupId }, thunkAPI) => {
 		const state = thunkAPI.getState();
-		const { year, month, week, currentView } = state.schedule;
-		const firstDateOfWeek = getFirstDateOfWeek(year, month, week);
+		const { currentYear, currentMonth, currentWeek, currentCalendarView } =
+			state.schedule;
+		const firstDateOfWeek = getFirstDateOfWeek(
+			currentYear,
+			currentMonth,
+			currentWeek,
+		);
 		const doesWeekContainNextMonth =
-			getFirstDateOfWeek(year, month, week + 1) > 1;
-		const doesWeekContainNextYear = doesWeekContainNextMonth && year === 12;
-
+			getFirstDateOfWeek(currentYear, currentMonth, currentWeek + 1) > 1;
+		const doesWeekContainNextYear =
+			doesWeekContainNextMonth && currentYear === 12;
 		const startDateTime = new Date(
-			year,
-			month - 1,
-			currentView === VIEW_TYPE.DAY_GRID_MONTH ? undefined : firstDateOfWeek,
+			currentYear,
+			currentMonth - 1,
+			currentCalendarView === VIEW_TYPE.DAY_GRID_MONTH ? 1 : firstDateOfWeek,
 		).toISOString();
 		const endDateTime = new Date(
-			doesWeekContainNextYear ? year + 1 : year,
+			doesWeekContainNextYear ? currentYear + 1 : currentYear,
 			// eslint-disable-next-line no-nested-ternary
 			doesWeekContainNextYear
 				? 1
 				: doesWeekContainNextMonth
-				? month
-				: month - 1,
-			// eslint-disable-next-line no-nested-ternary
-			currentView === VIEW_TYPE.DAY_GRID_MONTH
-				? undefined
-				: doesWeekContainNextMonth
+				? currentMonth
+				: currentMonth - 1,
+			currentCalendarView === VIEW_TYPE.DAY_GRID_MONTH ||
+			doesWeekContainNextMonth
 				? 1
 				: firstDateOfWeek + 6,
 		).toISOString();
@@ -107,6 +111,7 @@ export const getSchedulesSummary = createAsyncThunk(
 			},
 			thunkAPI,
 		);
+
 		return data;
 	},
 );
@@ -123,6 +128,7 @@ export const createSchedule = createAsyncThunk(
 			},
 			thunkAPI,
 		);
+
 		return data;
 	},
 );
@@ -134,6 +140,7 @@ export const deleteSchedule = createAsyncThunk(
 			{ method: "DELETE", url: `/api/user/calendar/${id}`, successCode: 204 },
 			thunkAPI,
 		);
+
 		return data;
 	},
 );
@@ -150,6 +157,57 @@ export const updateSchedule = createAsyncThunk(
 			},
 			thunkAPI,
 		);
+
 		return data;
+	},
+);
+
+export const getOverlappedSchedules = createAsyncThunk(
+	"schedule/getOverlappedSchedules",
+	async ({ start, end }, thunkAPI) => {
+		const {
+			schedule: { currentCalendarView },
+		} = thunkAPI.getState();
+
+		if (!(start instanceof Date) || !(end instanceof Date))
+			throw Error("잘못된 payload입니다.");
+
+		const data = await commonThunk(
+			{
+				method: "GET",
+				url: "/api/user/calendar",
+				params: {
+					startDateTime: start.toISOString(),
+					endDateTime: end.toISOString(),
+				},
+				successCode: 200,
+			},
+			thunkAPI,
+		);
+
+		if (data.schedules.length === 0) {
+			return thunkAPI.rejectWithValue("해당 날짜의 일정이 없습니다.");
+		}
+
+		if (data.schedules && currentCalendarView === VIEW_TYPE.DAY_GRID_WEEK) {
+			data.schedules = data.schedules.filter(
+				(schedule) =>
+					new Date(schedule.startDateTime) <= start &&
+					new Date(schedule.endDateTime) >= end,
+			);
+		}
+
+		const yearFormat =
+			start.getFullYear() === end.getFullYear() &&
+			currentCalendarView === VIEW_TYPE.DAY_GRID_WEEK
+				? ""
+				: "YYYY년 ";
+		const title =
+			currentCalendarView === VIEW_TYPE.DAY_GRID_MONTH
+				? moment(start).format(`${yearFormat}MM월 DD일`)
+				: `${moment(start).format(`${yearFormat}MM월 DD일 HH시 mm분`)}부터
+${moment(end).format(`${yearFormat}MM월 DD일 HH시 mm분`)}`;
+
+		return { schedules: data.schedules, title };
 	},
 );

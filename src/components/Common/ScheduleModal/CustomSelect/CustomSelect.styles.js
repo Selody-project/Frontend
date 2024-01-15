@@ -4,22 +4,26 @@ export const CustomSelectWrapperDiv = styled.div`
 	position: relative;
 `;
 
-export const SelectDiv = styled.div`
+export const SelectButton = styled.button`
 	width: 196px;
 	height: 33px;
 	border: 1px solid ${({ theme: { colors } }) => colors.disabled_text};
 	padding: 8px 12px;
 	display: flex;
 	align-items: center;
+
 	& > span {
 		flex: 1;
 	}
+
 	& > svg {
 		transition: transform 0.3s;
 	}
+
 	&.activated > svg {
 		transform: rotate(0.5turn);
 	}
+
 	cursor: pointer;
 	font-size: ${({
 		theme: {
@@ -55,14 +59,17 @@ export const PickerDiv = styled.div`
 			typography: { weight },
 		},
 	}) => weight.regular};
+
 	& > button {
 		cursor: pointer;
 		height: 33px;
 		padding: 0 4px;
+
 		&:not(:last-child) {
 			border-bottom: 0.5px solid
 				${({ theme: { colors } }) => colors.disabled_text};
 		}
+
 		&.selected {
 			background-color: ${({ theme: { colors } }) => colors.primary};
 			color: ${({ theme: { colors } }) => colors.white};

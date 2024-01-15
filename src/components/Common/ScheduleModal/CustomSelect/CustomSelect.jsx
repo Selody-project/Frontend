@@ -1,20 +1,24 @@
 import React, { useRef, useState } from "react";
+import { useSelector } from "react-redux";
 
 import PropTypes from "prop-types";
 
 import { DownArrowIcon } from "@/constants/iconConstants";
+import { SCHEDULE_MODAL_TYPE } from "@/constants/uiConstants";
 import useOutsideClick from "@/hooks/useOutsideClick";
 
 import {
 	CustomSelectWrapperDiv,
 	PickerDiv,
-	SelectDiv,
+	SelectButton,
 } from "./CustomSelect.styles";
 
 const CustomSelect = ({ value, onChange, options }) => {
+	const { isLoading, scheduleModalMode } = useSelector(({ ui }) => ui);
 	const [isOpen, setIsOpen] = useState(false);
 
 	const wrapperRef = useRef();
+
 	useOutsideClick(wrapperRef, () => isOpen && setIsOpen(false));
 
 	const handleOptionClick = (event) => {
@@ -24,15 +28,16 @@ const CustomSelect = ({ value, onChange, options }) => {
 
 	return (
 		<CustomSelectWrapperDiv ref={wrapperRef}>
-			<SelectDiv
+			<SelectButton
 				onClick={() => setIsOpen((prev) => !prev)}
 				className={isOpen ? "activated" : ""}
+				disabled={isLoading || scheduleModalMode === SCHEDULE_MODAL_TYPE.VIEW}
 			>
 				<span>
 					{options[options.findIndex((obj) => obj.value === value)].text}
 				</span>
 				<DownArrowIcon />
-			</SelectDiv>
+			</SelectButton>
 			{isOpen && (
 				<PickerDiv>
 					{options.map((obj) => (

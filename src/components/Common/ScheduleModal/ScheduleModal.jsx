@@ -65,8 +65,10 @@ const calculateMinUntilDateString = (
 	if (freq === "NONE" || isInfinite) {
 		return "";
 	}
+
 	const startDate = new Date(startDateStr);
 	let untilDate = "";
+
 	if (freq === "DAILY" || freq === "DAILY_N") {
 		untilDate = startDate.setDate(startDate.getDate() + interval + 1);
 	} else if (freq === "WEEKLY" || freq === "WEEKLY_N") {
@@ -91,9 +93,8 @@ const setByweekday = (weekNum, prev, checked) => {
 	return prev;
 };
 
-const calculateIsAllDay = (startDate, startTime, endDate, endTime) => {
-	return startDate === endDate && startTime === "00:00" && endTime === "23:59";
-};
+const calculateIsAllDay = (startDate, startTime, endDate, endTime) =>
+	startDate === endDate && startTime === "00:00" && endTime === "23:59";
 
 const ScheduleModal = () => {
 	const dispatch = useDispatch();
@@ -104,11 +105,24 @@ const ScheduleModal = () => {
 		useSelector((state) => state.ui);
 	const [formValues, setFormValues] = useState(initialFormValues);
 	// value
+	const isCreateMode = scheduleModalMode === SCHEDULE_MODAL_TYPE.CREATE;
 	const isEditMode = scheduleModalMode === SCHEDULE_MODAL_TYPE.EDIT;
+	const isViewMode = scheduleModalMode === SCHEDULE_MODAL_TYPE.VIEW;
+
+	const getModalTitle = () => {
+		if (isCreateMode) return "일정 추가";
+
+		if (isEditMode) return "일정 수정";
+
+		if (isViewMode) return "일정 정보";
+
+		return new Error("올바르지 않은 모달 타입입니다.");
+	};
 
 	// handle date change
 	const handleDateValueChange = (date, id) => {
 		const value = moment(date).format("YYYY-MM-DD");
+
 		if (id === "startDate") {
 			setFormValues((prev) => {
 				const endDate =
@@ -229,9 +243,9 @@ const ScheduleModal = () => {
 		const {
 			target: { value },
 		} = event;
-		if (Number.isNaN(Number(value))) {
-			return;
-		}
+
+		if (Number.isNaN(Number(value))) return;
+
 		setFormValues((prev) => ({
 			...prev,
 			interval: Number(value) >= 0 ? value : 1,
@@ -289,6 +303,7 @@ const ScheduleModal = () => {
 		if (checkIsEmpty()) {
 			return false;
 		}
+
 		return (
 			formValues.title.trim() !== "" &&
 			formValues.content.trim() !== "" &&
@@ -310,13 +325,16 @@ const ScheduleModal = () => {
 		if (formValues.startDate < formValues.endDate) {
 			return true;
 		}
+
 		if (formValues.startDate === formValues.endDate) {
 			if (formValues.startTime < formValues.endTime) {
 				return true;
 			}
+
 			toast.error("시작 시간은 종료 시간보다 빨라야 합니다.");
 			return false;
 		}
+
 		toast.error("종료 날짜는 시작 날짜보다 동일하거나 빠를 수 없습니다.");
 		return false;
 	};
@@ -330,11 +348,23 @@ const ScheduleModal = () => {
 			toast.error("반복 간격은 0보다 큰 자연수여야 합니다");
 			return false;
 		}
+		if (formValues.startDate === formValues.endDate) {
+			if (formValues.startTime < formValues.endTime) {
+				return true;
+			}
+			toast.error(
+				"반복 요일은 무조건 일정 시작 날짜에 해당하는 요일을 포함해야 합니다.",
+			);
+			return false;
+		}
 		return true;
 	};
 	// validate byweekday
 	const checkByweekdayIsValid = () => {
-		if (!formValues.freq.startsWith("WEEKLY")) return true;
+		if (!formValues.freq.startsWith("WEEKLY")) {
+			return true;
+		}
+
 		if (
 			formValues.byweekday.indexOf(new Date(formValues.startDate).getDay()) ===
 			-1
@@ -344,6 +374,7 @@ const ScheduleModal = () => {
 			);
 			return false;
 		}
+
 		return true;
 	};
 	// validate until
@@ -352,6 +383,7 @@ const ScheduleModal = () => {
 			toast.error("반복 종료 일자는 일정 시작 날짜보다 커야 합니다.");
 			return false;
 		}
+
 		if (
 			!formValues.until ||
 			formValues.until >=
@@ -363,6 +395,7 @@ const ScheduleModal = () => {
 		) {
 			return true;
 		}
+
 		toast.error(
 			`반복 종료 일자는 최소 ${formValues.interval}${getRecurringString(
 				formValues.freq,
@@ -377,13 +410,14 @@ const ScheduleModal = () => {
 			!checkTimeIsValid() ||
 			!checkIntervalIsValid() ||
 			!checkByweekdayIsValid() ||
-			!checkUntilIsValid()
+			!checkUntilIsValid() ||
+			isViewMode
 		) {
 			return;
 		}
 
 		// 일정 저장 로직
-		if (!isEditMode) {
+		if (isCreateMode) {
 			dispatch(createSchedule(formValues));
 		} else {
 			dispatch(updateSchedule({ schedule: formValues, id: scheduleModalId }));
@@ -395,6 +429,38 @@ const ScheduleModal = () => {
 		// 메뉴 닫기
 		dispatch(closeModal());
 	};
+
+	useEffect(() => {
+		if (!isCreateMode) {
+			getSchedule(scheduleModalId, (schedule) => {
+				dispatch(setIsLoading(false));
+				setFormValues(convertScheduleDataToFormValue(schedule));
+				prevFormValue.current = convertScheduleDataToFormValue(schedule);
+			});
+		} else {
+			dispatch(setIsLoading(false));
+		}
+
+		return () => {
+			dispatch(closeModal());
+		};
+	}, [isCreateMode, scheduleModalId]);
+
+	useEffect(() => {
+		// set byweekday
+		if (
+			!(formValues.freq === "WEEKLY" || formValues.freq === "WEEKLY_N") ||
+			!formValues.startDate
+		) {
+			return;
+		}
+		const weekNum = new Date(formValues.startDate).getDay();
+		setFormValues((prev) => ({
+			...prev,
+			byweekday:
+				prev.byweekday.indexOf(weekNum) === -1 ? [weekNum] : prev.byweekday,
+		}));
+	}, [formValues.startDate, formValues.freq]);
 
 	useEffect(() => {
 		if (isEditMode) {
@@ -415,7 +481,7 @@ const ScheduleModal = () => {
 	return (
 		<FormModal isEmpty={checkIsEmpty()}>
 			<ScheduleModalLayoutDiv>
-				<h2>{isEditMode ? "일정 수정" : "일정 추가"}</h2>
+				<h2>{getModalTitle()}</h2>
 				<TitleInput
 					id="title"
 					type="text"
@@ -424,6 +490,7 @@ const ScheduleModal = () => {
 					onChange={(e) =>
 						setFormValues((prev) => ({ ...prev, title: e.target.value }))
 					}
+					disabled={isLoading || isViewMode}
 				/>
 				<DetailTextarea
 					id="content"
@@ -433,6 +500,7 @@ const ScheduleModal = () => {
 					onChange={(e) =>
 						setFormValues((prev) => ({ ...prev, content: e.target.value }))
 					}
+					disabled={isLoading || isViewMode}
 				/>
 				<DateAndTime
 					startDate={formValues.startDate}
@@ -449,6 +517,7 @@ const ScheduleModal = () => {
 								type="checkbox"
 								onChange={handleIsAllDayValueChange}
 								checked={formValues.isAllDay}
+								disabled={isLoading || isViewMode}
 							/>
 							하루 종일
 						</label>
@@ -515,12 +584,14 @@ const ScheduleModal = () => {
 						formValues.startDate && !formValues.endDate
 					}
 				>
-					<SubmitButton
-						onClick={handleSubmit}
-						disabled={!checkFormIsFilledOrChanged() || isLoading}
-					>
-						{isEditMode ? "수정하기" : "저장하기"}
-					</SubmitButton>
+					{isViewMode || (
+						<SubmitButton
+							onClick={handleSubmit}
+							disabled={!checkFormIsFilledOrChanged() || isLoading}
+						>
+							{isEditMode ? "수정하기" : "저장하기"}
+						</SubmitButton>
+					)}
 				</FooterDiv>
 			</ScheduleModalLayoutDiv>
 		</FormModal>

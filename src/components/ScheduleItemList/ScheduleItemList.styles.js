@@ -9,7 +9,7 @@ export const ScheduleItemListLayoutAside = styled.aside`
 	gap: 19px;
 	width: 100%;
 	max-width: 422px;
-	height: 100%;
+	height: 549px;
 	border-radius: 15px;
 	font-family: "Inter";
 `;
@@ -27,17 +27,32 @@ export const TodoHeader = styled.header`
 	}) => size.s2};
 `;
 
-export const TodoTab = styled.button`
+export const TodoTabButton = styled.button`
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex: 1;
-	background: ${({ selected, theme: { colors } }) =>
+	background-color: ${({ selected, theme: { colors } }) =>
 		selected ? colors.primary : colors.white};
+
+	&:hover {
+		background-color: ${({ theme: { colors } }) => colors.btn_04};
+	}
+
+	&:active {
+		background-color: ${({ theme: { colors } }) => colors.btn_05};
+	}
+
 	border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
+	opacity: ${({ selected }) => (selected ? "1" : "0.7")};
 	color: ${({ selected, theme: { colors } }) =>
 		selected ? colors.white : colors.text_01};
-	opacity: ${({ selected }) => (selected ? "1" : "0.7")};
+
+	&:hover,
+	&:active {
+		color: ${({ theme: { colors } }) => colors.white};
+	}
+
 	transition: opacity 0.3s ease, background 0.3s ease, color 0.3s ease;
 	padding: ${({
 			theme: {
@@ -69,8 +84,9 @@ export const TodoBodyHeader = styled.header`
 	display: flex;
 	justify-content: space-between;
 	width: 100%;
+
 	& > div {
-		height: 43px;
+		min-height: 43px;
 	}
 `;
 
@@ -104,15 +120,11 @@ export const TodoH3 = styled.h3`
 	color: ${({ theme: { colors } }) => colors.text_02};
 `;
 
-export const ScheduleAddButton = styled.button`
+export const TodoBodyHeaderButton = styled.button`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	width: 47px;
-	height: 47px;
-	margin-top: -2px;
-	margin-right: -7px;
 	font-size: ${({
 		theme: {
 			typography: { size },
@@ -121,6 +133,7 @@ export const ScheduleAddButton = styled.button`
 	cursor: pointer;
 	color: ${({ theme: { colors } }) => colors.primary};
 	transition: opacity 0.3s ease;
+
 	& > span {
 		line-height: 1;
 		font-weight: ${({
@@ -129,6 +142,7 @@ export const ScheduleAddButton = styled.button`
 			},
 		}) => weight.bold};
 	}
+
 	&:hover {
 		opacity: 0.7;
 	}
@@ -184,6 +198,7 @@ export const TodoList = styled.ul`
 	&::-webkit-scrollbar {
 		display: none;
 	}
+
 	& {
 		-ms-overflow-style: none; /* 인터넷 익스플로러 */
 		scrollbar-width: none; /* 파이어폭스 */

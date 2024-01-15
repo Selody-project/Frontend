@@ -129,6 +129,7 @@ const GlobalStyles = createGlobalStyle`${css`
 	body {
 		padding: 0;
 		line-height: 1;
+		overflow-y: scroll;
 	}
 
 	#root {
@@ -143,6 +144,11 @@ const GlobalStyles = createGlobalStyle`${css`
 
 	button {
 		all: unset;
+	}
+
+	button:disabled,
+	input:disabled {
+		cursor: not-allowed;
 	}
 
 	* {

@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 
+import { SCHEDULE_MODAL_TYPE } from "@/constants/uiConstants";
 import useOutsideClick from "@/hooks/useOutsideClick";
 
 import { CustomTimePickerComponents } from "./Picker.styles";
@@ -14,9 +16,11 @@ const get12HoursString = (hours) => {
 	if (hours === 12) {
 		return 12;
 	}
+
 	if (hours === 22 || hours === 23 || hours === 10 || hours === 11) {
 		return hours % 12;
 	}
+
 	return `0${hours % 12}`;
 };
 
@@ -25,6 +29,7 @@ const get24hoursString = (isAM, hours) => {
 	if (hours < 10) {
 		return `0${hours}`;
 	}
+
 	return hours;
 };
 
@@ -44,6 +49,7 @@ const TimePicker = ({
 		Number(selectedHours),
 	)}:${selectedMinutes}`;
 
+	const { isLoading, scheduleModalMode } = useSelector(({ ui }) => ui);
 	const [isAM, setIsAM] = useState(Number(selectedHours) < 12);
 	const [hours, setHours] = useState(
 		Number(selectedHours) === 12 ? 12 : Number(selectedHours) % 12,
@@ -79,6 +85,7 @@ const TimePicker = ({
 
 	useEffect(() => {
 		resetTimeValues();
+
 		if (isOpen) {
 			selectedButtonRefs.current?.forEach((el) => {
 				el.scrollIntoView(true);
@@ -87,11 +94,12 @@ const TimePicker = ({
 	}, [selected, isOpen]);
 
 	return (
-		<CustomTimePickerComponents.TImePickerWrapperDiv ref={timePickerRef}>
+		<CustomTimePickerComponents.TimePickerWrapperDiv ref={timePickerRef}>
 			<CustomTimePickerComponents.CustomInputButton
 				isTime={true}
 				value={selected}
 				onClick={onOpen}
+				disabled={isLoading || scheduleModalMode === SCHEDULE_MODAL_TYPE.VIEW}
 			>
 				{initialButtonText}
 			</CustomTimePickerComponents.CustomInputButton>
@@ -184,7 +192,7 @@ const TimePicker = ({
 					</button>
 				</div>
 			</CustomTimePickerComponents.CustomTimePicker>
-		</CustomTimePickerComponents.TImePickerWrapperDiv>
+		</CustomTimePickerComponents.TimePickerWrapperDiv>
 	);
 };
 
