@@ -96,12 +96,6 @@ const setByweekday = (weekNum, prev, checked) => {
 const calculateIsAllDay = (startDate, startTime, endDate, endTime) =>
 	startDate === endDate && startTime === "00:00" && endTime === "23:59";
 
-const getNextDateInputValue = (startDate) => {
-	const prevDate = new Date(startDate);
-	const nextDate = prevDate.setDate(prevDate.getDate() + 1);
-	return new Date(nextDate).toISOString().slice(0, 10);
-};
-
 const ScheduleModal = () => {
 	const dispatch = useDispatch();
 	// previous form value to compare
@@ -219,7 +213,7 @@ const ScheduleModal = () => {
 		setFormValues((prev) => ({
 			...prev,
 			isAllDay: checked,
-			endDate: checked ? getNextDateInputValue(prev.startDate) : prev.endDate,
+			endDate: checked ? prev.startDate : prev.endDate,
 			startTime: checked ? "00:00" : prev.startTime,
 			endTime: checked ? "23:59" : prev.endTime,
 		}));
