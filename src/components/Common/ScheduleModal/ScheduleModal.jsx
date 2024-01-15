@@ -6,7 +6,7 @@ import _ from "lodash";
 import moment from "moment";
 
 import FormModal from "@/components/Common/Modal/FormModal/FormModal";
-import { SCHEDULE_MODAL_TYPE, UI_TYPE } from "@/constants/uiConstans";
+import { SCHEDULE_MODAL_TYPE, UI_TYPE } from "@/constants/uiConstants";
 import {
 	createSchedule,
 	updateSchedule,
