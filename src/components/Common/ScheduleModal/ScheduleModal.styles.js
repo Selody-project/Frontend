@@ -5,9 +5,24 @@ export const ScheduleModalLayoutDiv = styled.div`
 	min-width: 590px;
 	display: flex;
 	flex-direction: column;
-	padding: 0 20px;
 	font-family: "Inter", sans-serif;
 	font-size: ${({ theme }) => theme.typography.size.s3};
+
+	& > h2 {
+		margin-bottom: 36px;
+		font-weight: ${({
+			theme: {
+				typography: { weight },
+			},
+		}) => weight.semibold};
+		font-size: ${({
+			theme: {
+				typography: { size },
+			},
+		}) => size.m1};
+		color: ${({ theme: { colors } }) => colors.text_01};
+	}
+
 	& input,
 	& textarea {
 		&:focus {
@@ -111,9 +126,6 @@ export const RepeatContainerDiv = styled.div`
 export const FooterDiv = styled.div`
 	display: flex;
 	justify-content: flex-end;
-	margin-top: ${({ isAllDayCheckboxDisplayed }) =>
-		isAllDayCheckboxDisplayed ? 29 : 9}px;
-	padding-bottom: 19px;
 `;
 
 export const SubmitButton = styled.button`

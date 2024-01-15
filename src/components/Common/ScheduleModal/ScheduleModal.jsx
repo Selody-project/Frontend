@@ -276,14 +276,17 @@ const ScheduleModal = () => {
 		}));
 	};
 
-	// valdate when change event occurs
-	const checkFormIsFilledOrChanged = () => {
+	const checkIsEmpty = () => {
 		const trimmedFormValues = {
 			...formValues,
 			title: formValues.title.trim(),
 			content: formValues.content.trim(),
 		};
-		if (_.isEqual(trimmedFormValues, prevFormValue.current)) {
+		return _.isEqual(trimmedFormValues, prevFormValue.current);
+	};
+	// valdate when change event occurs
+	const checkFormIsFilledOrChanged = () => {
+		if (checkIsEmpty()) {
 			return false;
 		}
 		return (
@@ -410,11 +413,9 @@ const ScheduleModal = () => {
 	}, [isEditMode, scheduleModalId]);
 
 	return (
-		<FormModal
-			title={isEditMode ? "일정 수정" : "일정 추가"}
-			isEmpty={!checkFormIsFilledOrChanged()}
-		>
+		<FormModal isEmpty={checkIsEmpty()}>
 			<ScheduleModalLayoutDiv>
+				<h2>{isEditMode ? "일정 수정" : "일정 추가"}</h2>
 				<TitleInput
 					id="title"
 					type="text"

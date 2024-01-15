@@ -12,7 +12,7 @@ export const ModalDiv = styled.div`
 	justify-content: center;
 	flex-direction: column;
 	background-color: ${({ theme: { colors } }) => colors.white};
-	padding: 20px;
+	padding: 34px 20px 32px;
 `;
 
 export const BackdropDiv = styled.div`
