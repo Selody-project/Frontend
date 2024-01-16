@@ -24,6 +24,7 @@ import ProfileDropdownBubbleIcon from "@/assets/icon/ic-profile-dropdown.svg";
 import RequestCheckIcon from "@/assets/icon/ic-request-check.svg";
 import RequestCloseIcon from "@/assets/icon/ic-request-close.svg";
 import RightArrowIcon from "@/assets/icon/ic-right-arrow.svg";
+import CheckIcon from "@/assets/icon/ic-round-checked-mark.svg";
 import ScheduleAddIcon from "@/assets/icon/ic-schedule-add.svg";
 import SearchIcon from "@/assets/icon/ic-search.svg";
 import SecretIcon from "@/assets/icon/ic-secret.svg";
@@ -63,4 +64,5 @@ export {
 	AccessInfoIcon,
 	InnerDropdownIcon,
 	HeartClickIcon,
+	CheckIcon,
 };

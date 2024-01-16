@@ -63,3 +63,40 @@ export const ModalFooter = styled.footer`
 		cursor: pointer;
 	}
 `;
+
+export const SelectWrapDiv = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	padding: 32px 0;
+`;
+
+export const SelectBoxDiv = styled.div`
+	background-color: ${({ isSelected, theme: { colors } }) =>
+		isSelected ? colors.disabled_text : colors.white};
+	display: flex;
+	align-items: center;
+	padding: 10px;
+	border: 1px solid ${({ theme }) => theme.colors.disabled_text};
+	cursor: pointer;
+
+	& > div {
+		width: 24px;
+		height: 24px;
+		border: 1px solid ${({ theme }) => theme.colors.disabled_text};
+		border-radius: 50%;
+		overflow: hidden;
+
+		& > svg {
+			width: 24px;
+			height: 24px;
+		}
+	}
+
+	& > span {
+		margin-left: 16px;
+		font-size: 15px;
+		color: ${({ isSelected, theme: { colors } }) =>
+			isSelected ? colors.white : colors.text_02};
+	}
+`;

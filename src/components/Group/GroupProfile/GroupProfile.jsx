@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import { useTheme } from "styled-components";
 
 import { AddIcon } from "@/constants/iconConstants";
+import { openModal } from "@/features/ui/ui-slice";
 
 import {
 	ContainerDiv,
@@ -13,11 +15,16 @@ import {
 	BottomDiv,
 	ProfileButton,
 } from "./GroupProfile.styles";
+import GroupDelegateModal from "../GroupLeader/GroupLeaderProfile/GroupDelegateModal";
 
 const GroupProfile = ({ groupInfo, isGroupMember, isGroupLeader }) => {
+	const dispatch = useDispatch();
+
+	const { openedModal } = useSelector((state) => state.ui);
+	const { groupDetailInfo, isLoading } = useSelector((state) => state.group);
+
 	const theme = useTheme();
 	const navigate = useNavigate();
-
 	const locate = useLocation();
 
 	const [management, setManagement] = useState(false);
@@ -62,6 +69,7 @@ const GroupProfile = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 							type="button"
 							bgColor={theme.colors.white}
 							textColor={theme.colors.primary}
+							onClick={() => dispatch(openModal({ type: "DELEGATE_GROUP" }))}
 						>
 							그룹장 위임
 						</ProfileButton>
@@ -101,6 +109,13 @@ const GroupProfile = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 					</ProfileButton>
 				)}
 			</BottomDiv>
+			{openedModal === "DELEGATE_GROUP" && (
+				<GroupDelegateModal
+					groupDetailInfo={groupDetailInfo}
+					isLoading={isLoading}
+					groupMember={groupInfo.information.memberInfo}
+				/>
+			)}
 		</ContainerDiv>
 	);
 };

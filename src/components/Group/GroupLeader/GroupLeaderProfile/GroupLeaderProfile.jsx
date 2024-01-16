@@ -88,7 +88,7 @@ const GroupLeaderProfile = () => {
 	};
 
 	useEffect(() => {
-		dispatch(getGroupInfo(85));
+		dispatch(getGroupInfo(groupDetailInfo?.groupId));
 	}, []);
 
 	return (
