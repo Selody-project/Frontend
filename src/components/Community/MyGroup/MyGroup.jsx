@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 
 import LeftArrowIcon from "@/assets/icon/ic-left-arrow.svg";
 import RightArrowIcon from "@/assets/icon/ic-right-arrow.svg";
-import SampleImg from "@/assets/img/feed/img-group-sample-01.jpeg";
 import { inqueryUserGroup } from "@/features/user/user-service";
 
 import {
@@ -84,7 +83,7 @@ const MyGroup = () => {
 							<a href={`/group/${info.groupId}`} key={info.groupId}>
 								<ItemDiv>
 									<CircleDiv>
-										<img src={SampleImg} alt="sampleimg" />
+										<img src={info.image} alt="groupImg" />
 									</CircleDiv>
 									<h4>{info.name}</h4>
 								</ItemDiv>

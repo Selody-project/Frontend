@@ -5,7 +5,6 @@ import CrownIcon from "@/assets/icon/ic-crown.svg";
 import CommentIcon from "@/assets/icon/ic-feed-comment.svg";
 import HeartIcon from "@/assets/icon/ic-feed-heart.svg";
 import OptionThreeDotIcon from "@/assets/icon/ic-feed-option.svg";
-import SampleImg from "@/assets/img/feed/img-group-sample-01.jpeg";
 import { getUserGroupPost } from "@/features/post/post-service";
 import useObserver from "@/hooks/useObserver";
 import { useTimeStamp } from "@/hooks/useTimeStamp";
@@ -67,7 +66,7 @@ const MyGroupFeed = () => {
 						)}
 					</OptionDiv>
 					<TopDiv>
-						<img src={SampleImg} alt="sampleimg" />
+						<img src={post.image} alt="postImg" />
 						<InfoDiv>
 							<h3>
 								{post.author}

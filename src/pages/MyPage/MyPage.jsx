@@ -79,7 +79,7 @@ const MyPage = () => {
 		<ContainerMain>
 			<ProfileSection>
 				<ProfileLeftDiv>
-					<img src={auth.profileImage} alt="sampleImg" />
+					<img src={auth.profileImage} alt="profileImg" />
 					<ProfileInfoDiv>
 						<h3>{auth.nickname}</h3>
 						<ProfileIntroductionDiv>
