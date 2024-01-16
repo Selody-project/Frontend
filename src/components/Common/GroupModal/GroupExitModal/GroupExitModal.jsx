@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 
 import BaseModal from "@/components/Common/Modal/BaseModal";
-import { openModal } from "@/features/ui/ui-slice";
+import { openDelegateGroupModal } from "@/features/ui/ui-slice";
 
 import {
 	ContainerDiv,
@@ -26,9 +26,7 @@ const GroupExitModal = () => {
 						<br />
 						그룹장을 위임하시겠습니까?
 					</p>
-					<Button
-						onClick={() => dispatch(openModal({ type: "DELEGATE_GROUP" }))}
-					>
+					<Button onClick={() => dispatch(openDelegateGroupModal())}>
 						그룹장 위임
 					</Button>
 				</ContentDiv>

@@ -9,7 +9,10 @@ import {
 	changeGroupPublicOption,
 	updateGroupProfile,
 } from "@/features/group/group-service";
-import { openModal } from "@/features/ui/ui-slice";
+import {
+	openDeleteGroupModal,
+	openExitGroupModal,
+} from "@/features/ui/ui-slice";
 
 import {
 	InfoDiv,
@@ -130,15 +133,11 @@ const GroupManagementProfile = ({ groupInfo }) => {
 			<DividerHr />
 			<BottomButtonDiv>
 				{memberLength > 1 && (
-					<ExitButton
-						onClick={() => dispatch(openModal({ type: "EXIT_GROUP" }))}
-					>
+					<ExitButton onClick={() => dispatch(openExitGroupModal())}>
 						그룹 나가기
 					</ExitButton>
 				)}
-				<DeleteButton
-					onClick={() => dispatch(openModal({ type: "DELETE_GROUP" }))}
-				>
+				<DeleteButton onClick={() => dispatch(openDeleteGroupModal())}>
 					그룹 삭제
 				</DeleteButton>
 			</BottomButtonDiv>

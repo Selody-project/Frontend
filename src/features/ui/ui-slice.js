@@ -74,6 +74,12 @@ const uiSlice = createSlice({
 		openWithdrawModal: (state) => {
 			state.openedModal = UI_TYPE.WITHDRAW;
 		},
+		openRequestCancelModal: (state) => {
+			state.openedModal = UI_TYPE.REQUEST_CANCEL;
+		},
+		openExitGroupModal: (state) => {
+			state.openedModal = UI_TYPE.EXIT_GROUP;
+		},
 		closeModal: () => {
 			return initialState;
 		},
@@ -98,6 +104,8 @@ export const {
 	openDelegateGroupModal,
 	openLeaveGroupModal,
 	openWithdrawModal,
+	openRequestCancelModal,
+	openExitGroupModal,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;

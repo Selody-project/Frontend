@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import { AddIcon } from "@/constants/iconConstants";
 import { getGroupInviteLink } from "@/features/group/group-service";
-import { openModal } from "@/features/ui/ui-slice";
+import { openDelegateGroupModal } from "@/features/ui/ui-slice";
 
 import {
 	ProfileButtonDiv,
@@ -45,7 +45,7 @@ const GroupProfileButton = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 				</ProfileButton>
 				{memberLength > 1 && (
 					<ProfileWhiteButton
-						onClick={() => dispatch(openModal({ type: "DELEGATE_GROUP" }))}
+						onClick={() => dispatch(openDelegateGroupModal())}
 					>
 						그룹장 위임
 					</ProfileWhiteButton>

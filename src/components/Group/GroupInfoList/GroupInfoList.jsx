@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import GroupRequestCancelModal from "@/components/Common/GroupModal/GroupRequestCancelModal/GroupRequestCancelModal";
 import { OptionThreeDotIcon } from "@/constants/iconConstants";
-import { openModal } from "@/features/ui/ui-slice";
+import { openRequestCancelModal } from "@/features/ui/ui-slice";
 
 import {
 	ContainerDiv,
@@ -37,7 +37,7 @@ const GroupInfoList = ({ groups, scrollRef, isRequest }) => {
 							/>
 							{optionMenuOpenedFeedIndex === info.groupId && (
 								<OptionMenuDiv
-									onClick={() => dispatch(openModal({ type: "REQUESTCANCEL" }))}
+									onClick={() => dispatch(openRequestCancelModal())}
 								>
 									요청취소
 								</OptionMenuDiv>
