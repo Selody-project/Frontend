@@ -32,6 +32,10 @@ export const TopDiv = styled.div`
 	& > h4 {
 		font-size: ${({ theme: { typography } }) => typography.size.s1};
 		text-decoration: underline;
+
+		& > button {
+			cursor: pointer;
+		}
 	}
 `;
 

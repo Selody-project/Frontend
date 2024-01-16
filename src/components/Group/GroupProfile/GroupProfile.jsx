@@ -66,7 +66,7 @@ const GroupProfile = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 						>
 							링크 생성하기
 						</ProfileButton>
-						<CreateGroupLink />
+						<CreateGroupLink groupId={groupInfo?.information?.group.groupId} />
 						<ProfileButton
 							type="button"
 							bgColor={theme.colors.white}
