@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import customFetch from "@/components/UI/BaseAxios";
+import customFetch from "@/components/Ui/BaseAxios";
 
 const commonThunk = async (params, successCode, thunkAPI) => {
 	try {
