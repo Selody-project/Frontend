@@ -8,6 +8,7 @@ import OptionThreeDotIcon from "@/assets/icon/ic-feed-option.svg";
 import ShareIcon from "@/assets/icon/ic-feed-share.svg";
 import SampleImg from "@/assets/img/feed/img-group-sample-01.jpeg";
 import { getUserGroupPost } from "@/features/post/post-service";
+import { useTimeStamp } from "@/hooks/useTimeStamp";
 
 import {
 	ContainerDiv,
@@ -67,7 +68,7 @@ const MyGroupFeed = () => {
 								{post.author}
 								{post.isMine && <CrownIcon />}
 							</h3>
-							<h4>{post.createdAt}</h4>
+							<h4>{useTimeStamp(post.createdAt)}</h4>
 						</InfoDiv>
 					</TopDiv>
 					<BottomDiv>
