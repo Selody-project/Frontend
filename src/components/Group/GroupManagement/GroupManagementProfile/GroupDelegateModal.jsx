@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import BaseModal from "@/components/Base/BaseModal/BaseModal";
+import BaseModal from "@/components/Common/Modal/BaseModal";
 import { CheckIcon } from "@/constants/iconConstants";
 import { delegateGroup } from "@/features/group/group-service";
 import { setRefetchUserGroup } from "@/features/group/group-slice";

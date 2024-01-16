@@ -1,6 +1,6 @@
 import moment from "moment";
 
-import customFetch from "@/components/UI/BaseAxios";
+import customFetch from "@/components/test/BaseAxios";
 import convertToUTC from "@/utils/convertToUTC";
 
 // 리스트(주마다 보기)로 진행했을 떄 보여줄 첫 일요일을 계산합니다.

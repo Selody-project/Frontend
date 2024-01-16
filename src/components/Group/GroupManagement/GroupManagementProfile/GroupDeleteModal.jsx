@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import BaseModal from "@/components/Base/BaseModal/BaseModal";
+import BaseModal from "@/components/Common/Modal/BaseModal";
 import { deleteGroup } from "@/features/group/group-service";
 import { openModal } from "@/features/ui/ui-slice";
 

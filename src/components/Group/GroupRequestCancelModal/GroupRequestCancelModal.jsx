@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 
-import BaseModal from "@/components/Base/BaseModal/BaseModal";
+import BaseModal from "@/components/Common/Modal/BaseModal";
 import { changeRequestGroupJoin } from "@/features/group/group-service";
 import { closeModal } from "@/features/ui/ui-slice";
 

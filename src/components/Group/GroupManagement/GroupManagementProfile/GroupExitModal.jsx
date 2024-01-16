@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 
-import BaseModal from "@/components/Base/BaseModal/BaseModal";
+import BaseModal from "@/components/Common/Modal/BaseModal";
 import { openModal } from "@/features/ui/ui-slice";
 
 import {
