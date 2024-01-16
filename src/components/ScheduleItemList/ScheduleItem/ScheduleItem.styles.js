@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import BaseCard from "@/components/test/BaseCard/BaseCard";
+import BaseCard from "@/components/UI/BaseCard/BaseCard";
 
 export const ScheduleItemLi = styled.li`
 	width: 100%;
