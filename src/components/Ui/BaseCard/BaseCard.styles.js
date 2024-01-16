@@ -1,8 +1,13 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
+export const BaseCardLayoutDiv = styled.div`
 	width: 100%;
-	border-radius: 10px;
-	border: 2px solid #6c55fe;
+	border-radius: ${({
+		theme: {
+			spacing: { borderRadius },
+		},
+	}) => borderRadius.default}px;
+	background-color: ${({ theme: { colors } }) => colors.white};
+	border: 1px solid ${({ theme: { colors } }) => colors.primary};
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;

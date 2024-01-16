@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import ScheduleModal from "@/components/Common/ScheduleModal/ScheduleModal.jsx";
-import PersonalTodoItem from "@/components/PersonalTodoList/PersonalTodoItem/PersonalTodoItem.jsx";
-import { setEdit } from "@/features/auth/auth-slice.js";
+import ScheduleItem from "@/components/ScheduleItemList/ScheduleItem/ScheduleItem.jsx";
+import { UI_TYPE } from "@/constants/uiConstants.js";
 import { createInviteLink } from "@/features/group/group-invite-service.js";
-import { getSchedule } from "@/features/schedule/schedule-service.js";
-import { openModal } from "@/features/ui/ui-slice.js";
+import { openScheduleCreateModal } from "@/features/ui/ui-slice.js";
 
 import {
 	TodoContainer,
@@ -24,23 +23,14 @@ import {
 const ShareTodoList = () => {
 	const dispatch = useDispatch();
 	const { openedModal } = useSelector((state) => state.ui);
-	const { month, year, totalSchedule } = useSelector((state) => state.schedule);
+	const { todaySchedules } = useSelector((state) => state.schedule);
 	const { group } = useSelector((state) => state.group);
 	const { inviteCode } = useSelector((state) => state.groupInvite);
 	const [selectedTab, setSelectedTab] = useState(true);
 
-	const handleModalOpen = (type) => {
-		dispatch(setEdit(false));
-		dispatch(openModal({ type }));
-	};
-
 	const createInviteCodeHandler = () => {
 		dispatch(createInviteLink(group.groupId));
 	};
-
-	useEffect(() => {
-		dispatch(getSchedule());
-	}, [month, year]);
 
 	return (
 		<Wrapper>
@@ -68,7 +58,11 @@ const ShareTodoList = () => {
 							<TodoTitle>
 								일정 후보{" "}
 								<AddEventButton
-									onClick={() => handleModalOpen("SHARE_SCHEDULE")}
+									onClick={() =>
+										dispatch(
+											openScheduleCreateModal({ type: UI_TYPE.SHARE_SCHEDULE }),
+										)
+									}
 								>
 									<img src="/todo_add.svg" alt="Add-icon" />
 									일정 후보 추가
@@ -84,7 +78,13 @@ const ShareTodoList = () => {
 							<TodoTitle>
 								오늘의 할 일
 								<AddEventButton
-									onClick={() => handleModalOpen("PERSONAL_SCHEDULE")}
+									onClick={() =>
+										dispatch(
+											openScheduleCreateModal({
+												type: UI_TYPE.PERSONAL_SCHEDULE,
+											}),
+										)
+									}
 								>
 									<img src="/todo_add.svg" alt="Add-icon" />
 									일정 추가
@@ -92,12 +92,9 @@ const ShareTodoList = () => {
 							</TodoTitle>
 							<TodoSubtitle>하루동안의 할 일을 관리합니다.</TodoSubtitle>
 							<TodoList>
-								{totalSchedule.map((s) => {
+								{todaySchedules.map((s) => {
 									return (
-										<PersonalTodoItem
-											key={Math.random().toString()}
-											schedule={s}
-										/>
+										<ScheduleItem key={Math.random().toString()} schedule={s} />
 									);
 								})}
 							</TodoList>
@@ -105,12 +102,12 @@ const ShareTodoList = () => {
 					)}
 				</TodoBody>
 			</TodoContainer>
-			{(openedModal === "PERSONAL_SCHEDULE" ||
-				openedModal === "SHARE_SCHEDULE") && (
+			{(openedModal === UI_TYPE.PERSONAL_SCHEDULE ||
+				openedModal === UI_TYPE.SHARE_SCHEDULE) && (
 				<ScheduleModal
 					type={openedModal}
 					initFormValues={
-						openedModal === "PERSONAL_SCHEDULE"
+						openedModal === UI_TYPE.PERSONAL_SCHEDULE
 							? {
 									title: "",
 									details: "",
@@ -120,8 +117,8 @@ const ShareTodoList = () => {
 									endTime: "",
 									untilDate: "",
 									untilTime: "",
-									repeat: "none",
-									notification: "none",
+									repeat: "NONE",
+									notification: "NO",
 							  }
 							: {
 									title: "",

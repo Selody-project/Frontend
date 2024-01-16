@@ -1,67 +1,259 @@
 import { toast } from "react-toastify";
 
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 
-import { createSchedule, getSchedule } from "./schedule-service.js";
+import { VIEW_TYPE } from "@/constants/calendarConstants.js";
+import { getCurrentWeek } from "@/utils/calendarUtils.js";
+
+import {
+	createSchedule,
+	getSchedulesSummary,
+	getSchedulesForTheWeek,
+	getTodaySchedules,
+	updateSchedule,
+	deleteSchedule,
+	getOverlappedSchedules,
+} from "./schedule-service.js";
+
+const initialOverlappedScheduleInfo = { title: "", schedules: [] };
 
 const initialState = {
-	totalSchedule: [],
-	schedule: [],
-	recSchedules: [],
-	month: 0,
-	year: 0,
+	calendarSchedules: [],
+	todaySchedules: [],
+	schedulesForTheWeek: [],
+	overlappedScheduleInfo: initialOverlappedScheduleInfo,
+	currentYear: new Date().getFullYear(),
+	currentMonth: new Date().getMonth() + 1,
+	currentWeek: getCurrentWeek(),
 	isLoading: false,
-	id: null,
+	currentCalendarView: VIEW_TYPE.DAY_GRID_MONTH,
 };
 
 const scheduleSlice = createSlice({
 	name: "schedule",
 	initialState,
 	reducers: {
-		saveSchedule: (state, { payload }) => {
-			state.schedule = [...state.schedule, payload];
+		setCurrentYear: (state, { payload }) => {
+			state.currentYear = Number(payload);
 		},
-		currentMonthFn: (state, { payload }) => {
-			state.month = payload;
+		setCurrentMonth: (state, { payload }) => {
+			state.currentMonth = Number(payload);
 		},
-		currentYearFn: (state, { payload }) => {
-			state.year = payload;
+		setCurrentWeek: (state, { payload }) => {
+			state.currentWeek = payload;
 		},
-		setId: (state, { payload }) => {
-			state.id = payload;
+		resetCurrentDate: (state) => {
+			state.currentYear = new Date().getFullYear();
+			state.currentMonth = new Date().getMonth() + 1;
+			state.currentWeek = getCurrentWeek();
+		},
+		setCurrentCalenderView: (state, { payload }) => {
+			if (
+				payload !== VIEW_TYPE.DAY_GRID_MONTH &&
+				payload !== VIEW_TYPE.DAY_GRID_WEEK
+			) {
+				throw new Error("잘못된 view type입니다.");
+			}
+
+			state.currentCalendarView = payload;
+		},
+		resetOverlappedSchedules: (state) => {
+			state.overlappedScheduleInfo = initialOverlappedScheduleInfo;
 		},
 	},
+
 	extraReducers: (builder) => {
 		builder
-			.addCase(createSchedule.pending, (state) => {
-				state.isLoading = true;
+			.addCase(createSchedule.pending, () => {
+				toast.loading("업로드 중");
 			})
-			.addCase(createSchedule.fulfilled, (state) => {
-				state.isLoading = false;
-				toast.success("일정 추가에 성공하셨습니다!");
+			.addCase(
+				createSchedule.fulfilled,
+				(
+					state,
+					{ payload: { scheduleSummary, todaySchedules, schedulesForTheWeek } },
+				) => {
+					toast.dismiss();
+					toast.success("일정이 추가되었습니다");
+					state.calendarSchedules.push(scheduleSummary);
+
+					if (todaySchedules.length > 0) {
+						state.todaySchedules = state.todaySchedules.concat(todaySchedules);
+						state.todaySchedules.sort(
+							(prev, curr) =>
+								new Date(prev.startDateTime) - new Date(curr.startDateTime),
+						);
+					}
+
+					if (schedulesForTheWeek.length > 0) {
+						state.schedulesForTheWeek =
+							state.schedulesForTheWeek.concat(schedulesForTheWeek);
+						state.schedulesForTheWeek.sort(
+							(prev, curr) =>
+								new Date(prev.startDateTime) - new Date(curr.startDateTime),
+						);
+					}
+				},
+			)
+			.addCase(createSchedule.rejected, () => {
+				toast.dismiss();
+				toast.error("일정 추가에 실패했습니다.");
 			})
-			.addCase(createSchedule.rejected, (state) => {
-				state.isLoading = false;
+			.addCase(getTodaySchedules.fulfilled, (state, { payload }) => {
+				const { schedules } = payload;
+				state.todaySchedules = schedules;
 			})
-			.addCase(getSchedule.pending, (state) => {
-				state.isLoading = true;
+			.addCase(getTodaySchedules.rejected, () => {
+				toast.error("오늘 일정을 불러오는 데 실패했습니다.");
 			})
-			.addCase(getSchedule.fulfilled, (state, { payload }) => {
-				state.isLoading = false;
-				state.schedule = payload.nonRecurrenceSchedule;
-				state.recSchedules = payload.recurrenceSchedule;
-				state.totalSchedule = [
-					...payload.nonRecurrenceSchedule,
-					...state.recSchedules,
-				];
+			.addCase(getSchedulesForTheWeek.fulfilled, (state, { payload }) => {
+				const { schedules } = payload;
+				state.schedulesForTheWeek = schedules;
 			})
-			.addCase(getSchedule.rejected, (state) => {
-				state.isLoading = false;
-			});
+			.addCase(getSchedulesForTheWeek.rejected, () => {
+				toast.error("예정된 일정을 불러오는 데 실패했습니다.");
+			})
+			.addCase(getSchedulesSummary.fulfilled, (state, { payload }) => {
+				state.calendarSchedules = payload.schedules;
+			})
+			.addCase(getSchedulesSummary.rejected, () => {
+				toast.error("달력 일정을 불러오는 데 실패했습니다.");
+			})
+			.addCase(updateSchedule.pending, () => {
+				toast.loading("수정 중");
+			})
+			.addCase(
+				updateSchedule.fulfilled,
+				(
+					state,
+					{
+						payload: { scheduleSummary, todaySchedules, schedulesForTheWeek },
+						meta: {
+							arg: { id },
+						},
+					},
+				) => {
+					toast.dismiss();
+					toast.success("일정이 수정되었습니다");
+					state.calendarSchedules = state.calendarSchedules.filter(
+						(schedule) => schedule.id !== id,
+					);
+					state.todaySchedules = state.todaySchedules.filter(
+						(schedule) => schedule.id !== id,
+					);
+					state.schedulesForTheWeek = state.schedulesForTheWeek.filter(
+						(schedule) => schedule.id !== id,
+					);
+					state.calendarSchedules.push(scheduleSummary);
+
+					if (todaySchedules.length > 0) {
+						state.todaySchedules = state.todaySchedules.concat(todaySchedules);
+						state.todaySchedules.sort(
+							(prev, curr) =>
+								new Date(prev.startDateTime) - new Date(curr.startDateTime),
+						);
+					}
+
+					if (schedulesForTheWeek.length > 0) {
+						state.schedulesForTheWeek =
+							state.schedulesForTheWeek.concat(schedulesForTheWeek);
+						state.schedulesForTheWeek.sort(
+							(prev, curr) =>
+								new Date(prev.startDateTime) - new Date(curr.startDateTime),
+						);
+					}
+					// 겹친 일정들 중 하나를 열고 수정 시 겹치느 일정들 목록을 초기화함
+					if (
+						state.overlappedScheduleInfo.schedules.some(
+							(schedule) => schedule.id === id,
+						)
+					) {
+						state.overlappedScheduleInfo = initialOverlappedScheduleInfo;
+					}
+				},
+			)
+			.addCase(updateSchedule.rejected, () => {
+				toast.dismiss();
+				toast.error("일정 수정에 실패했습니다.");
+			})
+			.addCase(deleteSchedule.pending, () => {
+				toast.loading("삭제 중");
+			})
+			.addCase(deleteSchedule.fulfilled, (state, { meta: { arg: id } }) => {
+				toast.dismiss();
+				toast.success("일정이 삭제되었습니다");
+				state.calendarSchedules = state.calendarSchedules.filter(
+					(prev) => prev.id !== id,
+				);
+				state.todaySchedules = state.todaySchedules.filter(
+					(prev) => prev.id !== id,
+				);
+				state.schedulesForTheWeek = state.schedulesForTheWeek.filter(
+					(prev) => prev.id !== id,
+				);
+			})
+			.addCase(deleteSchedule.rejected, () => {
+				toast.dismiss();
+				toast.error("일정 삭제에 실패했습니다.");
+			})
+			.addCase(getOverlappedSchedules.fulfilled, (state, { payload }) => {
+				state.overlappedScheduleInfo = payload;
+			})
+			.addCase(getOverlappedSchedules.rejected, (state) => {
+				state.overlappedScheduleInfo = initialOverlappedScheduleInfo;
+			})
+			.addMatcher(
+				isAnyOf(
+					createSchedule.pending,
+					getTodaySchedules.pending,
+					getSchedulesForTheWeek.pending,
+					getSchedulesSummary.pending,
+					updateSchedule.pending,
+					deleteSchedule.pending,
+					getOverlappedSchedules.pending,
+				),
+				(state) => {
+					state.isLoading = true;
+				},
+			)
+			.addMatcher(
+				isAnyOf(
+					createSchedule.fulfilled,
+					getTodaySchedules.fulfilled,
+					getSchedulesForTheWeek.fulfilled,
+					getSchedulesSummary.fulfilled,
+					updateSchedule.fulfilled,
+					deleteSchedule.fulfilled,
+					getOverlappedSchedules.fulfilled,
+				),
+				(state) => {
+					state.isLoading = false;
+				},
+			)
+			.addMatcher(
+				isAnyOf(
+					createSchedule.rejected,
+					getTodaySchedules.rejected,
+					getSchedulesForTheWeek.rejected,
+					getSchedulesSummary.rejected,
+					updateSchedule.rejected,
+					deleteSchedule.rejected,
+					getOverlappedSchedules.rejected,
+				),
+				(state) => {
+					state.isLoading = false;
+				},
+			);
 	},
 });
 
-export const { saveSchedule, currentMonthFn, currentYearFn, setId } =
-	scheduleSlice.actions;
+export const {
+	setCurrentYear,
+	setCurrentMonth,
+	setCurrentWeek,
+	resetCurrentDate,
+	setCurrentCalenderView,
+	resetOverlappedSchedules,
+} = scheduleSlice.actions;
 
 export default scheduleSlice.reducer;

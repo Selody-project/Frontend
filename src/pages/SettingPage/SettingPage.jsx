@@ -9,6 +9,7 @@ import {
 import PasswordTab from "@/components/Setting/PasswordTab/PasswordTab";
 import ProfileTab from "@/components/Setting/ProfileTab";
 import WithdrawalTab from "@/components/Setting/WithdrawalTab/WithdrawalTab";
+import { UI_TYPE } from "@/constants/uiConstants";
 
 import {
 	ContainerDiv,
@@ -63,13 +64,13 @@ const SettingPage = () => {
 				</TabsAside>
 				<MainSection>{selectedTabList[selectedTabIdx]}</MainSection>
 			</ContainerDiv>
-			{openedModal === "DELETE_GROUP" && (
+			{openedModal === UI_TYPE.DELETE_GROUP && (
 				<GroupDeleteModal groupInfo={groupInfo} isLoading={isLoading} />
 			)}
-			{openedModal === "DELEGATE_GROUP" && (
+			{openedModal === UI_TYPE.DELEGATE_GROUP && (
 				<GroupDelegateModal groupInfo={groupInfo} isGroupLoading={isLoading} />
 			)}
-			{openedModal === "LEAVE_GROUP" && (
+			{openedModal === UI_TYPE.LEAVE_GROUP && (
 				<GroupLeaveModal groupInfo={groupInfo} isGroupLoading={isLoading} />
 			)}
 		</>
