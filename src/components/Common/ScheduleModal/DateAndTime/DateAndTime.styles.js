@@ -12,4 +12,8 @@ export const DateDiv = styled.div`
 	display: flex;
 	gap: 15px;
 	width: 45%;
+
+	&:last-child {
+		justify-content: flex-end;
+	}
 `;

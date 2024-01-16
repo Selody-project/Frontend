@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ScheduleModalLayoutDiv = styled.div`
-	width: 100%;
+	width: 550px;
 	display: flex;
 	flex-direction: column;
 	font-family: "Inter", sans-serif;
