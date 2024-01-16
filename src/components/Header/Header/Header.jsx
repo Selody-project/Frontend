@@ -22,7 +22,7 @@ import {
 	NotificationDiv,
 	NotificationButton,
 } from "./Header.styles";
-import GroupCreateModal from "../GroupCreateModal/GroupCreateModal";
+import GroupCreateModal from "../../Common/GroupModal/GroupCreateModal/GroupCreateModal";
 import ProfileDropdown from "../ProfileDropdown/ProfileDropdown";
 
 const Header = () => {

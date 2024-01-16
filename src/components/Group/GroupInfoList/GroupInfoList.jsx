@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
+import GroupRequestCancelModal from "@/components/Common/GroupModal/GroupRequestCancelModal/GroupRequestCancelModal";
 import { OptionThreeDotIcon } from "@/constants/iconConstants";
 import { openModal } from "@/features/ui/ui-slice";
 
@@ -11,7 +12,6 @@ import {
 	OptionDiv,
 	OptionMenuDiv,
 } from "./GroupInfoList.styles";
-import GroupRequestCancelModal from "../GroupRequestCancelModal/GroupRequestCancelModal";
 
 const GroupInfoList = ({ groups, scrollRef, isRequest }) => {
 	const dispatch = useDispatch();

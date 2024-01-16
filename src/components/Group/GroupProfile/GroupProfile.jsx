@@ -1,6 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
+import GroupDelegateModal from "@/components/Common/GroupModal/GroupDelegateModal/GroupDelegateModal";
+
 import {
 	ContainerDiv,
 	TopDiv,
@@ -8,7 +10,6 @@ import {
 	MiddleInnerDiv,
 } from "./GroupProfile.styles";
 import GroupProfileButton from "./GroupProfileButton";
-import GroupDelegateModal from "../GroupManagement/GroupManagementProfile/GroupDelegateModal";
 
 const GroupProfile = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 	const { openedModal } = useSelector((state) => state.ui);

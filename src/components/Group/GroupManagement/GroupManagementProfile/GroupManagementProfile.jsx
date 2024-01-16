@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import DefaultProfile from "@/assets/img/img-selody-logo/3x.png";
+import GroupDeleteModal from "@/components/Common/GroupModal/GroupDeleteModal/GroupDeleteModal";
+import GroupExitModal from "@/components/Common/GroupModal/GroupExitModal/GroupExitModal";
 import ToggleButton from "@/components/Common/ToggleButton/ToggleButton";
 import {
 	changeGroupPublicOption,
@@ -9,8 +11,6 @@ import {
 } from "@/features/group/group-service";
 import { openModal } from "@/features/ui/ui-slice";
 
-import GroupDeleteModal from "./GroupDeleteModal";
-import GroupExitModal from "./GroupExitModal";
 import {
 	InfoDiv,
 	ProfileInput,
