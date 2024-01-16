@@ -28,7 +28,7 @@ const GroupLeaderPage = () => {
 	return (
 		<GroupMain>
 			<GroupProfile groupInfo={groupInfo} isGroupMember isGroupLeader />
-			<GroupLeader />
+			<GroupLeader groupId={param.id} />
 		</GroupMain>
 	);
 };

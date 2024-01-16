@@ -19,8 +19,10 @@ import IntroductionEditIcon from "@/assets/icon/ic-introduction-edit.svg";
 import LeftArrowIcon from "@/assets/icon/ic-left-arrow.svg";
 import NextIcon from "@/assets/icon/ic-next.svg";
 import NotificationDropdownBubbleIcon from "@/assets/icon/ic-notification-dropdown.svg";
+import OwnerIcon from "@/assets/icon/ic-owner.svg";
 import PreviousIcon from "@/assets/icon/ic-previous.svg";
 import ProfileDropdownBubbleIcon from "@/assets/icon/ic-profile-dropdown.svg";
+import RegularIcon from "@/assets/icon/ic-regular.svg";
 import RequestCheckIcon from "@/assets/icon/ic-request-check.svg";
 import RequestCloseIcon from "@/assets/icon/ic-request-close.svg";
 import RightArrowIcon from "@/assets/icon/ic-right-arrow.svg";
@@ -29,6 +31,7 @@ import ScheduleAddIcon from "@/assets/icon/ic-schedule-add.svg";
 import SearchIcon from "@/assets/icon/ic-search.svg";
 import SecretIcon from "@/assets/icon/ic-secret.svg";
 import SelodyLogoIcon from "@/assets/icon/ic-selody-logo.svg";
+import ViewerIcon from "@/assets/icon/ic-viewer.svg";
 
 export {
 	SearchIcon,
@@ -56,9 +59,9 @@ export {
 	DownArrowIcon,
 	DocumentIcon,
 	InfoIcon,
-	// RegularIcon,
-	// ViewerIcon,
-	// OwnerIcon,
+	RegularIcon,
+	ViewerIcon,
+	OwnerIcon,
 	AdminIcon,
 	AccessArrowIcon,
 	AccessInfoIcon,

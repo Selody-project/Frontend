@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import TestImg from "@/assets/img/bg_02.png";
+import { accessData } from "@/constants/accessConstants";
 import {
 	InfoIcon,
 	ViewerIcon,
@@ -9,6 +10,7 @@ import {
 	AdminIcon,
 	OwnerIcon,
 } from "@/constants/iconConstants";
+import { getGroupMemberList } from "@/features/group/group-service";
 
 import AccessInfo from "./AccessInfo";
 import {
@@ -20,13 +22,17 @@ import {
 } from "./GroupLeaderManagement.styles";
 import InnerDropdown from "./InnerDropdown";
 
-const GroupLeaderManagement = () => {
+const GroupLeaderManagement = ({ groupId }) => {
+	const dispatch = useDispatch();
+
+	const memberList = useSelector((state) => state.group.groupMemberList);
+
 	const [isAccessInfoOpen, setIsAccessInfoOpen] = useState(false);
-	const [isAccessChangeOpen, setIsAccessChangeOpen] = useState(false);
 	const [isInnerDropdownOpen, setIsInnerDropdownOpen] = useState(false);
 
+	const [isAccessChangeOpenIndex, setIsAccessChangeOpenIndex] = useState(null);
+
 	const accessInfoRef = useRef();
-	const accessChangeRef = useRef();
 	const innerDropdownRef = useRef();
 
 	const handleAccessInfo = (e) => {
@@ -34,14 +40,6 @@ const GroupLeaderManagement = () => {
 
 		if (isAccessInfoOpen && !accessInfoRef.current.contains(target)) {
 			setIsAccessInfoOpen(false);
-		}
-	};
-
-	const handleAccessChange = (e) => {
-		const { target } = e;
-
-		if (isAccessChangeOpen && !accessChangeRef.current.contains(target)) {
-			setIsAccessChangeOpen(false);
 		}
 	};
 
@@ -53,17 +51,22 @@ const GroupLeaderManagement = () => {
 		}
 	};
 
+	const handelAccessChange = (num) =>
+		setIsAccessChangeOpenIndex((prev) => (prev === num ? null : num));
+
 	useEffect(() => {
 		window.addEventListener("click", handleAccessInfo);
-		window.addEventListener("click", handleAccessChange);
 		window.addEventListener("click", handleDropdown);
 
 		return () => {
 			window.removeEventListener("click", handleAccessInfo);
-			window.removeEventListener("click", handleAccessChange);
 			window.removeEventListener("click", handleDropdown);
 		};
 	});
+
+	useEffect(() => {
+		dispatch(getGroupMemberList(groupId));
+	}, []);
 
 	return (
 		<>
@@ -86,66 +89,79 @@ const GroupLeaderManagement = () => {
 				</TitleLi>
 				<TitleLi red>내보내기</TitleLi>
 			</TitleUl>
-			<MemberUl>
-				<MemberLi>
-					<img src={TestImg} alt="testImg" />
-				</MemberLi>
-				<MemberLi>
-					<span>test</span>
-				</MemberLi>
-				<MemberLi
-					ref={innerDropdownRef}
-					onClick={() => {
-						setIsInnerDropdownOpen(!isInnerDropdownOpen);
-					}}
-					click
-				>
-					<span>1</span>
-					{isInnerDropdownOpen && <InnerDropdown />}
-				</MemberLi>
-				<MemberLi>
-					<span>4</span>
-				</MemberLi>
-				<MemberLi>
-					<span>2023.10.13</span>
-				</MemberLi>
-				<MemberLi
-					ref={accessChangeRef}
-					onClick={() => {
-						setIsAccessChangeOpen(!isAccessChangeOpen);
-					}}
-					click
-				>
-					<span>
-						<ViewerIcon />
-						viewer
-						<AccessArrowIcon />
-					</span>
-					{isAccessChangeOpen && (
-						<AccessLevelUl>
-							<li>
+			{memberList?.map((memberInfo) => (
+				<MemberUl key={memberInfo.member.userId}>
+					<MemberLi>
+						<img src={memberInfo.member.image} alt="profileImg" />
+					</MemberLi>
+					<MemberLi>
+						<span>{memberInfo.member.nickname}</span>
+					</MemberLi>
+					<MemberLi
+						ref={innerDropdownRef}
+						onClick={() => {
+							setIsInnerDropdownOpen(!isInnerDropdownOpen);
+						}}
+						click
+					>
+						<span>1</span>
+						{isInnerDropdownOpen && <InnerDropdown />}
+					</MemberLi>
+					<MemberLi>
+						<span>4</span>
+					</MemberLi>
+					<MemberLi>
+						<span>2023.10.13</span>
+					</MemberLi>
+					<MemberLi
+						onClick={() => {
+							handelAccessChange(memberInfo.member.userId);
+						}}
+						click
+					>
+						{/* eslint-disable-next-line no-nested-ternary */}
+						{memberInfo.accessLevel === "viewer" ? (
+							<span>
 								<ViewerIcon />
 								viewer
-							</li>
-							<li>
+								<AccessArrowIcon />
+							</span>
+						) : // eslint-disable-next-line no-nested-ternary
+						memberInfo.accessLevel === "regular" ? (
+							<span>
 								<RegularIcon />
 								regular
-							</li>
-							<li>
+								<AccessArrowIcon />
+							</span>
+						) : memberInfo.accessLevel === "admin" ? (
+							<span>
 								<AdminIcon />
 								admin
-							</li>
-							<li>
+								<AccessArrowIcon />
+							</span>
+						) : (
+							<span>
 								<OwnerIcon />
 								owner
-							</li>
-						</AccessLevelUl>
-					)}
-				</MemberLi>
-				<MemberLi red>
-					<span>내보내기</span>
-				</MemberLi>
-			</MemberUl>
+								<AccessArrowIcon />
+							</span>
+						)}
+						{isAccessChangeOpenIndex === memberInfo.member.userId && (
+							<AccessLevelUl>
+								{accessData.map((data) => (
+									<li key={data.id}>
+										{data.icon}
+										{data.id}
+									</li>
+								))}
+							</AccessLevelUl>
+						)}
+					</MemberLi>
+					<MemberLi red>
+						<span>내보내기</span>
+					</MemberLi>
+				</MemberUl>
+			))}
 		</>
 	);
 };

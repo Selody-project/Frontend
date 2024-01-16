@@ -55,7 +55,7 @@ export const MemberLi = styled.li`
 
 		& > svg {
 			width: 10px;
-			margin-right: 2px;
+			margin-right: 4px;
 		}
 	}
 `;
@@ -72,6 +72,7 @@ export const AccessLevelUl = styled.ul`
 
 	& > li {
 		color: #4b4b4b;
+		background-color: inherit;
 		font-size: 12px;
 		font-weight: ${({ theme: { typography } }) => typography.weight.medium};
 		display: flex;

@@ -9,7 +9,7 @@ import {
 import GroupLeaderManagement from "./GroupLeaderManagement/GroupLeaderManagement";
 import GroupLeaderProfile from "./GroupLeaderProfile/GroupLeaderProfile";
 
-const GroupLeader = () => {
+const GroupLeader = ({ groupId }) => {
 	const [menu, setMenu] = useState("그룹 프로필");
 
 	return (
@@ -36,7 +36,7 @@ const GroupLeader = () => {
 				{menu === "그룹 프로필" ? (
 					<GroupLeaderProfile />
 				) : (
-					<GroupLeaderManagement />
+					<GroupLeaderManagement groupId={groupId} />
 				)}
 			</InnerDiv>
 		</ContainerDiv>
