@@ -1,12 +1,8 @@
 import React from "react";
 
-import { InnerDropdownIcon } from "@/constants/iconConstants";
+import { CommentListIcon } from "@/constants/iconConstants";
 
-import {
-	ContainerDiv,
-	TitleDiv,
-	ContentDiv,
-} from "./AccessLevelOptions.styles";
+import { ContainerDiv, TitleDiv, ContentDiv } from "./CommentList.styles";
 
 const mockItems = [
 	{
@@ -41,10 +37,10 @@ const mockItems = [
 	},
 ];
 
-const AccessLevelOptions = () => {
+const CommentList = () => {
 	return (
 		<ContainerDiv>
-			<InnerDropdownIcon />
+			<CommentListIcon />
 			<ul>
 				{mockItems.map((data) => (
 					<li key={data.name}>
@@ -60,4 +56,4 @@ const AccessLevelOptions = () => {
 	);
 };
 
-export default AccessLevelOptions;
+export default CommentList;

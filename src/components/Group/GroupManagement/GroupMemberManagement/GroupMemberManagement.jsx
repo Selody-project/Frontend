@@ -15,9 +15,10 @@ import {
 	changeAccessLevel,
 	deleteGroupMember,
 } from "@/features/group/group-service";
+import useOutsideClick from "@/hooks/useOutsideClick";
 
 import AccessLevelInfo from "./AccessLevelInfo";
-import InnerDropdown from "./AccessLevelOptions";
+import CommentList from "./CommentList";
 import {
 	TitleUl,
 	TitleLi,
@@ -32,37 +33,21 @@ const GroupMemberManagement = ({ groupInfo }) => {
 	const { groupMemberList } = useSelector((state) => state.group);
 
 	const [isAccessInfoOpen, setIsAccessInfoOpen] = useState(false);
-	const [isAccessLevelOptionsOpen, setisAccessLevelOptionsOpen] =
-		useState(false);
+	const [isCommentListOpen, setIsCommentListOpen] = useState(false);
 
 	const [isAccessChangeOpenIndex, setIsAccessChangeOpenIndex] = useState(null);
 
-	const accessInfoRef = useRef();
-	const innerDropdownRef = useRef();
+	const accessInfoRef = useRef(null);
+	const commentListRef = useRef(null);
 
 	const groupId = groupInfo?.information.group.groupId;
 	const memberList = groupMemberList?.filter(
 		(item) => item.accessLevel !== "owner",
 	);
 
-	const handleAccessInfo = (e) => {
-		const { target } = e;
+	useOutsideClick(accessInfoRef, () => setIsAccessInfoOpen(false));
 
-		if (isAccessInfoOpen && !accessInfoRef.current.contains(target)) {
-			setIsAccessInfoOpen(false);
-		}
-	};
-
-	const handleDropdown = (e) => {
-		const { target } = e;
-
-		if (
-			isAccessLevelOptionsOpen &&
-			!innerDropdownRef.current.contains(target)
-		) {
-			setisAccessLevelOptionsOpen(false);
-		}
-	};
+	useOutsideClick(commentListRef, () => setIsCommentListOpen(false));
 
 	const handleAccessChange = (num) =>
 		setIsAccessChangeOpenIndex((prev) => (prev === num ? null : num));
@@ -74,16 +59,6 @@ const GroupMemberManagement = ({ groupInfo }) => {
 	const deleteMember = (userId) => {
 		dispatch(deleteGroupMember({ groupId, userId }));
 	};
-
-	useEffect(() => {
-		window.addEventListener("click", handleAccessInfo);
-		window.addEventListener("click", handleDropdown);
-
-		return () => {
-			window.removeEventListener("click", handleAccessInfo);
-			window.removeEventListener("click", handleDropdown);
-		};
-	});
 
 	useEffect(() => {
 		dispatch(getGroupMemberList(groupId));
@@ -122,14 +97,14 @@ const GroupMemberManagement = ({ groupInfo }) => {
 						<span>{memberInfo.member.nickname}</span>
 					</MemberLi>
 					<MemberLi
-						ref={innerDropdownRef}
+						ref={commentListRef}
 						onClick={() => {
-							setisAccessLevelOptionsOpen(!isAccessLevelOptionsOpen);
+							setIsCommentListOpen(!isCommentListOpen);
 						}}
 						click
 					>
 						<span>1</span>
-						{isAccessLevelOptionsOpen && <InnerDropdown />}
+						{isCommentListOpen && <CommentList />}
 					</MemberLi>
 					<MemberLi>
 						<span>4</span>
