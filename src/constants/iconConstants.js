@@ -9,6 +9,7 @@ import DeleteScheduleIcon from "@/assets/icon/ic-delete-schedule.svg";
 import DocumentIcon from "@/assets/icon/ic-document.svg";
 import DownArrowIcon from "@/assets/icon/ic-down-arrow.svg";
 import EditScheduleIcon from "@/assets/icon/ic-edit-schedule.svg";
+import EmptyFeedIcon from "@/assets/icon/ic-empty-feed.svg";
 import CommentIcon from "@/assets/icon/ic-feed-comment.svg";
 import EmptyHeartIcon from "@/assets/icon/ic-feed-heart-empty.svg";
 import FillHeartIcon from "@/assets/icon/ic-feed-heart-fill.svg";
@@ -70,4 +71,5 @@ export {
 	FillHeartIcon,
 	CheckIcon,
 	GroupImgAddIcon,
+	EmptyFeedIcon,
 };
