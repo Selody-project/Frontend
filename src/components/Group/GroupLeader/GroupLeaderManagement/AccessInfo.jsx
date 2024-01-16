@@ -1,19 +1,19 @@
 import React from "react";
 
 import {
-	AccessDropdownIcon,
+	AccessInfoIcon,
 	ViewerIcon,
 	RegularIcon,
 	AdminIcon,
 	OwnerIcon,
 } from "@/constants/iconConstants";
 
-import { ContainerDiv, TextDiv } from "./AccessLevelDropdown.styles";
+import { ContainerDiv, TextDiv } from "./AccessInfo.styles";
 
-const AccessLevelDropdown = () => {
+const AccessInfo = () => {
 	return (
 		<ContainerDiv>
-			<AccessDropdownIcon />
+			<AccessInfoIcon />
 			<ul>
 				<li>
 					<ViewerIcon />
@@ -50,4 +50,4 @@ const AccessLevelDropdown = () => {
 	);
 };
 
-export default AccessLevelDropdown;
+export default AccessInfo;

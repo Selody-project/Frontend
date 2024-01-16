@@ -1,3 +1,7 @@
+import AccessArrowIcon from "@/assets/icon/ic-access-arrow.svg";
+import InfoIcon from "@/assets/icon/ic-access-info-circle.svg";
+import AccessInfoIcon from "@/assets/icon/ic-access-info.svg";
+import AdminIcon from "@/assets/icon/ic-admin.svg";
 import CloseIcon from "@/assets/icon/ic-close.svg";
 import CrownIcon from "@/assets/icon/ic-crown.svg";
 import DeleteScheduleIcon from "@/assets/icon/ic-delete-schedule.svg";
@@ -9,6 +13,7 @@ import HeartIcon from "@/assets/icon/ic-feed-heart.svg";
 import OptionThreeDotIcon from "@/assets/icon/ic-feed-option.svg";
 import GoogleLogoIcon from "@/assets/icon/ic-google-logo.svg";
 import AddIcon from "@/assets/icon/ic-group-add.svg";
+import InnerDropdownIcon from "@/assets/icon/ic-inner-dropdown.svg";
 import IntroductionEditIcon from "@/assets/icon/ic-introduction-edit.svg";
 import LeftArrowIcon from "@/assets/icon/ic-left-arrow.svg";
 import NextIcon from "@/assets/icon/ic-next.svg";
@@ -48,4 +53,12 @@ export {
 	EditScheduleIcon,
 	DownArrowIcon,
 	DocumentIcon,
+	InfoIcon,
+	// RegularIcon,
+	// ViewerIcon,
+	// OwnerIcon,
+	AdminIcon,
+	AccessArrowIcon,
+	AccessInfoIcon,
+	InnerDropdownIcon,
 };

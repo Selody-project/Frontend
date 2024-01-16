@@ -4,7 +4,7 @@ export const ContainerDiv = styled.div`
 	position: absolute;
 	bottom: calc(100% + 12px);
 	left: -36px;
-	z-index: 99;
+	z-index: 100;
 
 	& > ul {
 		padding: 15px;

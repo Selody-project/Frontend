@@ -10,7 +10,7 @@ import {
 	OwnerIcon,
 } from "@/constants/iconConstants";
 
-import AccessLevelDropdown from "./AccessLevelDropdown";
+import AccessInfo from "./AccessInfo";
 import {
 	TitleUl,
 	TitleLi,
@@ -18,42 +18,55 @@ import {
 	MemberLi,
 	AccessLevelUl,
 } from "./GroupLeaderManagement.styles";
+import InnerDropdown from "./InnerDropdown";
 
 const GroupLeaderManagement = () => {
-	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-	const [isAccessOpen, setIsAccessOpen] = useState(false);
+	const [isAccessInfoOpen, setIsAccessInfoOpen] = useState(false);
+	const [isAccessChangeOpen, setIsAccessChangeOpen] = useState(false);
+	const [isInnerDropdownOpen, setIsInnerDropdownOpen] = useState(false);
 
-	const dropdownRef = useRef();
-	const accessRef = useRef();
+	const accessInfoRef = useRef();
+	const accessChangeRef = useRef();
+	const innerDropdownRef = useRef();
+
+	const handleAccessInfo = (e) => {
+		const { target } = e;
+
+		if (isAccessInfoOpen && !accessInfoRef.current.contains(target)) {
+			setIsAccessInfoOpen(false);
+		}
+	};
+
+	const handleAccessChange = (e) => {
+		const { target } = e;
+
+		if (isAccessChangeOpen && !accessChangeRef.current.contains(target)) {
+			setIsAccessChangeOpen(false);
+		}
+	};
 
 	const handleDropdown = (e) => {
 		const { target } = e;
 
-		if (isDropdownOpen && !dropdownRef.current.contains(target)) {
-			setIsDropdownOpen(false);
-		}
-	};
-
-	const handleAccess = (e) => {
-		const { target } = e;
-
-		if (isAccessOpen && !accessRef.current.contains(target)) {
-			setIsAccessOpen(false);
+		if (isInnerDropdownOpen && !innerDropdownRef.current.contains(target)) {
+			setIsInnerDropdownOpen(false);
 		}
 	};
 
 	useEffect(() => {
+		window.addEventListener("click", handleAccessInfo);
+		window.addEventListener("click", handleAccessChange);
 		window.addEventListener("click", handleDropdown);
-		window.addEventListener("click", handleAccess);
 
 		return () => {
+			window.removeEventListener("click", handleAccessInfo);
+			window.removeEventListener("click", handleAccessChange);
 			window.removeEventListener("click", handleDropdown);
-			window.removeEventListener("click", handleAccess);
 		};
 	});
 
 	return (
-		<div>
+		<>
 			<TitleUl>
 				<TitleLi>프로필</TitleLi>
 				<TitleLi>이름</TitleLi>
@@ -61,15 +74,15 @@ const GroupLeaderManagement = () => {
 				<TitleLi>공감 내역</TitleLi>
 				<TitleLi>가입 날짜</TitleLi>
 				<TitleLi
-					ref={dropdownRef}
+					ref={accessInfoRef}
 					onClick={() => {
-						setIsDropdownOpen(!isDropdownOpen);
+						setIsAccessInfoOpen(!isAccessInfoOpen);
 					}}
 					click
 				>
 					멤버 권한
 					<InfoIcon />
-					{isDropdownOpen && <AccessLevelDropdown />}
+					{isAccessInfoOpen && <AccessInfo />}
 				</TitleLi>
 				<TitleLi red>내보내기</TitleLi>
 			</TitleUl>
@@ -80,8 +93,15 @@ const GroupLeaderManagement = () => {
 				<MemberLi>
 					<span>test</span>
 				</MemberLi>
-				<MemberLi>
+				<MemberLi
+					ref={innerDropdownRef}
+					onClick={() => {
+						setIsInnerDropdownOpen(!isInnerDropdownOpen);
+					}}
+					click
+				>
 					<span>1</span>
+					{isInnerDropdownOpen && <InnerDropdown />}
 				</MemberLi>
 				<MemberLi>
 					<span>4</span>
@@ -90,9 +110,9 @@ const GroupLeaderManagement = () => {
 					<span>2023.10.13</span>
 				</MemberLi>
 				<MemberLi
-					ref={accessRef}
+					ref={accessChangeRef}
 					onClick={() => {
-						setIsAccessOpen(!isAccessOpen);
+						setIsAccessChangeOpen(!isAccessChangeOpen);
 					}}
 					click
 				>
@@ -101,7 +121,7 @@ const GroupLeaderManagement = () => {
 						viewer
 						<AccessArrowIcon />
 					</span>
-					{isAccessOpen && (
+					{isAccessChangeOpen && (
 						<AccessLevelUl>
 							<li>
 								<ViewerIcon />
@@ -126,7 +146,7 @@ const GroupLeaderManagement = () => {
 					<span>내보내기</span>
 				</MemberLi>
 			</MemberUl>
-		</div>
+		</>
 	);
 };
 
