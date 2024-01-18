@@ -2,6 +2,7 @@ import CloseIcon from "@/assets/icon/ic-close.svg";
 import CrownIcon from "@/assets/icon/ic-crown.svg";
 import DeleteScheduleIcon from "@/assets/icon/ic-delete-schedule.svg";
 import DocumentIcon from "@/assets/icon/ic-document.svg";
+import DottedCalendarIcon from "@/assets/icon/ic-dotted-calendar.svg";
 import DownArrowIcon from "@/assets/icon/ic-down-arrow.svg";
 import EditScheduleIcon from "@/assets/icon/ic-edit-schedule.svg";
 import CommentIcon from "@/assets/icon/ic-feed-comment.svg";
@@ -48,4 +49,5 @@ export {
 	EditScheduleIcon,
 	DownArrowIcon,
 	DocumentIcon,
+	DottedCalendarIcon,
 };
