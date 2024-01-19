@@ -65,7 +65,7 @@ const GroupCreateModal = () => {
 				<GroupCreateButton
 					type="submit"
 					disabled={!name.trim()}
-					onSubmit={handleCreateGroup}
+					onClick={handleCreateGroup}
 				>
 					생성하기
 				</GroupCreateButton>

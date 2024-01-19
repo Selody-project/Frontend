@@ -29,6 +29,7 @@ export const FeedTitleDiv = styled.div`
 	display: flex;
 	justify-content: space-between;
 	margin-bottom: 42px;
+	min-height: 44.5px;
 
 	& > ul {
 		display: flex;
