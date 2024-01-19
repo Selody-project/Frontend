@@ -112,9 +112,17 @@ export const ProfileButton = styled.button`
 	font-weight: ${({ theme: { typography } }) => typography.weight.medium};
 	font-size: 18px;
 	cursor: pointer;
+
+	&:hover {
+		background-color: ${({ theme: { colors } }) => colors.btn_04};
+	}
 `;
 
 export const ProfileWhiteButton = styled(ProfileButton)`
 	background-color: ${({ theme: { colors } }) => colors.white};
 	color: ${({ theme: { colors } }) => colors.primary};
+
+	&:hover {
+		background-color: ${({ theme: { colors } }) => colors.bg_02};
+	}
 `;

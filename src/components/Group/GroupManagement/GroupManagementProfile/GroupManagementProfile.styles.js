@@ -102,6 +102,10 @@ export const ExitButton = styled.button`
 	font-weight: ${({ theme: { typography } }) => typography.weight.semibold};
 	box-sizing: border-box;
 	cursor: pointer;
+
+	&:hover {
+		background-color: ${({ theme: { colors } }) => colors.bg_02};
+	}
 `;
 
 export const DeleteButton = styled(ExitButton)`
