@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { CloseIcon } from "@/constants/iconConstants";
-import { createGroupInviteLink } from "@/features/group/group-service";
+import {
+	createGroupInviteLink,
+	getGroupInfoWithInviteLink,
+} from "@/features/group/group-service";
 
 import {
 	ContainerDiv,
@@ -14,6 +17,8 @@ import {
 const GroupInviteLink = ({ groupId, groupName, onClose, inviteLink }) => {
 	const dispatch = useDispatch();
 
+	const { groupInfoWithInviteLink } = useSelector((state) => state.group);
+
 	const handleCopyClipBoard = async (text) => {
 		await navigator.clipboard.writeText(text);
 	};
@@ -22,7 +27,10 @@ const GroupInviteLink = ({ groupId, groupName, onClose, inviteLink }) => {
 		if (!inviteLink.inviteCode) {
 			dispatch(createGroupInviteLink(groupId));
 		}
+		dispatch(getGroupInfoWithInviteLink(inviteLink.inviteCode));
 	}, []);
+
+	// console.log(groupInfoWithInviteLink);
 
 	return (
 		<ContainerDiv>
@@ -31,10 +39,17 @@ const GroupInviteLink = ({ groupId, groupName, onClose, inviteLink }) => {
 				<CloseIcon onClick={() => onClose(false)} />
 			</TopDiv>
 			<MiddleDiv>
-				<TextDiv>{inviteLink && inviteLink.inviteCode}</TextDiv>
+				<TextDiv>
+					{inviteLink &&
+						`http://localhost:3000/group/${groupInfoWithInviteLink?.groupId}?invite=${inviteLink.inviteCode}`}
+				</TextDiv>
 				<button
 					type="button"
-					onClick={() => handleCopyClipBoard(inviteLink.inviteCode)}
+					onClick={() =>
+						handleCopyClipBoard(
+							`http://localhost:3000/group/${groupInfoWithInviteLink?.groupId}?invite=${inviteLink.inviteCode}`,
+						)
+					}
 				>
 					복사
 				</button>

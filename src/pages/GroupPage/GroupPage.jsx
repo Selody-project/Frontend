@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 
 import EmptyFeed from "@/components/Common/Feed/EmptyFeed/EmptyFeed";
+import GroupJoinModal from "@/components/Common/GroupModal/GroupJoinModal/GroupJoinModal";
 import GroupFeed from "@/components/Group/GroupFeed/GroupFeed";
 import SecretFeed from "@/components/Group/GroupFeed/SecretFeed";
 import UploadFeed from "@/components/Group/GroupFeed/UploadFeed";
@@ -27,9 +28,13 @@ const GroupPage = () => {
 	const { userGroupList } = useSelector((state) => state.user);
 	const { user } = useSelector((state) => state.auth);
 	const { allGroupPostsIsEnd, isEmpty } = useSelector((state) => state.post);
+	const { openedModal } = useSelector((state) => state.ui);
 
 	const param = useParams();
 	const navigate = useNavigate();
+
+	// eslint-disable-next-line no-unused-vars
+	const [searchParams, setSearchParams] = useSearchParams();
 
 	const groupId = param.id;
 
@@ -65,7 +70,6 @@ const GroupPage = () => {
 					isGroupMember={isGroupMember}
 				/>
 			)}
-
 			{!isPublicGroup && !isGroupMember ? (
 				<SecretFeed />
 			) : (
@@ -83,7 +87,6 @@ const GroupPage = () => {
 					)}
 				</FeedDiv>
 			)}
-
 			{groupRequestMemberList && groupInfo && (
 				<GroupMember
 					requestMemberList={groupRequestMemberList}
@@ -91,6 +94,10 @@ const GroupPage = () => {
 					isGroupMember={isGroupMember}
 					leaderId={leaderId}
 				/>
+			)}
+
+			{openedModal === "JOIN_GROUP" && (
+				<GroupJoinModal inviteLink={searchParams.get("invite")} />
 			)}
 		</GroupMain>
 	);
