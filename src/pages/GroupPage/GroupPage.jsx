@@ -15,6 +15,7 @@ import {
 	getGroupRequestMemberList,
 } from "@/features/group/group-service";
 import { resetAllGroupPosts } from "@/features/post/post-slice";
+import { openJoinGroupModal } from "@/features/ui/ui-slice";
 import { getUserGroups } from "@/features/user/user-service";
 
 import { GroupMain, FeedDiv } from "./GroupPage.styles";
@@ -47,6 +48,8 @@ const GroupPage = () => {
 		(group) => group.groupId === Number(groupId),
 	);
 
+	const inviteLink = searchParams.get("invite");
+
 	useEffect(() => {
 		try {
 			dispatch(getGroupInfo(groupId)).unwrap();
@@ -54,6 +57,10 @@ const GroupPage = () => {
 			dispatch(getUserGroups());
 		} catch (e) {
 			navigate("/community");
+		}
+
+		if (searchParams.get("invite")) {
+			dispatch(openJoinGroupModal());
 		}
 
 		return () => {
@@ -97,7 +104,7 @@ const GroupPage = () => {
 			)}
 
 			{openedModal === "JOIN_GROUP" && (
-				<GroupJoinModal inviteLink={searchParams.get("invite")} />
+				<GroupJoinModal inviteLink={inviteLink} />
 			)}
 		</GroupMain>
 	);

@@ -25,15 +25,13 @@ const GroupJoinModal = ({ inviteLink }) => {
 
 		try {
 			await dispatch(
-				dispatch(joinGroupInviteLink({ groupId, inviteLink }).unwrap()),
-			);
+				joinGroupInviteLink({ groupId, inviteCode: inviteLink }),
+			).unwrap();
 			dispatch(closeModal());
 			navigate("/community");
 		} catch (e) {
 			toast.error("그룹 가입에 실패했습니다.");
 		}
-
-		dispatch(joinGroupInviteLink({ groupId, inviteLink }));
 	};
 
 	useEffect(() => {
@@ -41,19 +39,22 @@ const GroupJoinModal = ({ inviteLink }) => {
 	}, []);
 
 	return (
-		<BaseModal isUpper>
+		// eslint-disable-next-line react/jsx-no-useless-fragment
+		<>
 			{groupInfoWithInviteLink && (
-				<ContainerDiv>
-					<img src={groupInfoWithInviteLink.image} alt="groupProfileImg" />
-					<h2>
-						{groupInfoWithInviteLink.name} ( {groupInfoWithInviteLink.member}명
-						)
-					</h2>
-					<h3>{groupInfoWithInviteLink.description}</h3>
-					<Button onClick={handleJoinGroup}>가입하기</Button>
-				</ContainerDiv>
+				<BaseModal isUpper>
+					<ContainerDiv>
+						<img src={groupInfoWithInviteLink.image} alt="groupProfileImg" />
+						<h2>
+							{groupInfoWithInviteLink.name} ( {groupInfoWithInviteLink.member}
+							명 )
+						</h2>
+						<h3>{groupInfoWithInviteLink.description}</h3>
+						<Button onClick={handleJoinGroup}>가입하기</Button>
+					</ContainerDiv>
+				</BaseModal>
 			)}
-		</BaseModal>
+		</>
 	);
 };
 
