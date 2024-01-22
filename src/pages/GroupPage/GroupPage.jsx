@@ -16,7 +16,6 @@ import {
 } from "@/features/group/group-service";
 import { resetAllGroupPosts } from "@/features/post/post-slice";
 import { openJoinGroupModal } from "@/features/ui/ui-slice";
-import { getUserGroups } from "@/features/user/user-service";
 
 import { GroupMain, FeedDiv } from "./GroupPage.styles";
 
@@ -26,8 +25,6 @@ const GroupPage = () => {
 	const { groupInfo, groupRequestMemberList } = useSelector(
 		(state) => state.group,
 	);
-	const { userGroupList } = useSelector((state) => state.user);
-	const { user } = useSelector((state) => state.auth);
 	const { allGroupPostsIsEnd, isEmpty } = useSelector((state) => state.post);
 	const { openedModal } = useSelector((state) => state.ui);
 
@@ -43,10 +40,8 @@ const GroupPage = () => {
 	const leaderId = groupInfo?.information.leaderInfo.userId;
 	const leaderName = groupInfo?.information.leaderInfo.nickname;
 
-	const isGroupLeader = user.userId === leaderId;
-	const isGroupMember = userGroupList.some(
-		(group) => group.groupId === Number(groupId),
-	);
+	const isGroupLeader = groupInfo?.accessLevel === "owner";
+	const isGroupMember = groupInfo?.accessLevel !== null;
 
 	const inviteLink = searchParams.get("invite");
 
@@ -54,7 +49,6 @@ const GroupPage = () => {
 		try {
 			dispatch(getGroupInfo(groupId)).unwrap();
 			dispatch(getGroupRequestMemberList(groupId));
-			dispatch(getUserGroups());
 		} catch (e) {
 			navigate("/community");
 		}
