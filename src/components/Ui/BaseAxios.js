@@ -16,7 +16,11 @@ customFetch.interceptors.response.use(
 	(response) => response,
 	async (error) => {
 		const originalRequest = error.config;
-		if (error.response.status === 401 && !originalRequest._retry) {
+		if (
+			originalRequest.url !== "/api/auth/token/refresh" &&
+			error.response.status === 401 &&
+			!originalRequest._retry
+		) {
 			try {
 				originalRequest._retry = true;
 				const response = await customFetch.get("/api/auth/token/refresh");
