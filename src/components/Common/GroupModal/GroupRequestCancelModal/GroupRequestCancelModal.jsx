@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import BaseModal from "@/components/Common/Modal/BaseModal";
+import { TAB_KEY, TAB_PARAM } from "@/constants/tabConstants";
 import { changeRequestGroupJoin } from "@/features/group/group-service";
 import { closeModal } from "@/features/ui/ui-slice";
 
@@ -23,7 +24,7 @@ const GroupRequestCancelModal = ({ groupId }) => {
 		try {
 			await dispatch(changeRequestGroupJoin(groupId)).unwrap();
 			dispatch(closeModal());
-			navigate("/community");
+			navigate(`/community?${TAB_KEY}=${TAB_PARAM.MY_GROUP_FEED}`);
 		} catch (e) {
 			toast.error("요청 취소에 실패했습니다.");
 		}

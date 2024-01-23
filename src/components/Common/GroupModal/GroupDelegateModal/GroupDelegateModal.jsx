@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 
 import BaseModal from "@/components/Common/Modal/BaseModal";
 import { CheckIcon } from "@/constants/iconConstants";
+import { TAB_KEY, TAB_PARAM } from "@/constants/tabConstants";
 import { delegateGroup } from "@/features/group/group-service";
 import { setRefetchUserGroup } from "@/features/group/group-slice";
 import { closeModal } from "@/features/ui/ui-slice";
@@ -45,7 +46,7 @@ const GroupDelegateModal = ({ groupInfo, groupMembers }) => {
 			await dispatch(delegateGroup({ groupId, selectedMemberId })).unwrap();
 			dispatch(closeModal());
 			dispatch(setRefetchUserGroup(true));
-			navigate("/community");
+			navigate(`/community?${TAB_KEY}=${TAB_PARAM.MY_GROUP_FEED}`);
 		} catch (e) {
 			toast.error("그룹장 위임에 실패했습니다.");
 		}

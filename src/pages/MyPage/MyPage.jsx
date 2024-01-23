@@ -1,10 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import GroupInfoList from "@/components/Group/GroupInfoList/GroupInfoList";
 import { IntroductionEditIcon } from "@/constants/iconConstants";
-import { TAB_CONSTANTS_TITLE } from "@/constants/tabConstants";
+import {
+	TAB_CONSTANTS_TITLE,
+	TAB_KEY,
+	TAB_PARAM,
+} from "@/constants/tabConstants";
 import { getGroupList } from "@/features/group/group-service";
 import {
 	getUserGroups,
@@ -36,11 +40,13 @@ const MyPage = () => {
 	);
 
 	const [groups, setGroups] = useState([]);
-	const [tabName, setTabName] = useState(TAB_CONSTANTS_TITLE.MY_GROUP);
 
 	const target = useRef(null);
 
 	const navigate = useNavigate();
+
+	// eslint-disable-next-line no-unused-vars
+	const [searchParams, setSearchParams] = useSearchParams();
 
 	const isObserving = useObserver(target, { threshold: 0.3 });
 
@@ -62,7 +68,7 @@ const MyPage = () => {
 	useEffect(() => {
 		if (userGroupList?.length === 0) {
 			setGroups(groupList);
-		} else if (tabName === TAB_CONSTANTS_TITLE.REQUEST_GROUP) {
+		} else if (searchParams.get(TAB_KEY) === TAB_PARAM.REQUEST_GROUP) {
 			setGroups(userRequestGroupList);
 		} else {
 			setGroups(userGroupList);
@@ -100,16 +106,18 @@ const MyPage = () => {
 			<TabUl role="tablist">
 				<li role="tab">
 					<TabButton
-						isActive={tabName === TAB_CONSTANTS_TITLE.MY_GROUP}
-						onClick={() => setTabName(TAB_CONSTANTS_TITLE.MY_GROUP)}
+						isActive={searchParams.get(TAB_KEY) === TAB_PARAM.MY_GROUP}
+						onClick={() => navigate(`/mypage?${TAB_KEY}=${TAB_PARAM.MY_GROUP}`)}
 					>
 						{TAB_CONSTANTS_TITLE.MY_GROUP}
 					</TabButton>
 				</li>
 				<li role="tab">
 					<TabButton
-						isActive={tabName === TAB_CONSTANTS_TITLE.REQUEST_GROUP}
-						onClick={() => setTabName(TAB_CONSTANTS_TITLE.REQUEST_GROUP)}
+						isActive={searchParams.get(TAB_KEY) === TAB_PARAM.REQUEST_GROUP}
+						onClick={() =>
+							navigate(`/mypage?${TAB_KEY}=${TAB_PARAM.REQUEST_GROUP}`)
+						}
 					>
 						{TAB_CONSTANTS_TITLE.REQUEST_GROUP}
 					</TabButton>
@@ -119,7 +127,7 @@ const MyPage = () => {
 			<GroupInfoList
 				groups={groups}
 				scrollRef={target}
-				isRequest={tabName === TAB_CONSTANTS_TITLE.REQUEST_GROUP}
+				isRequest={searchParams.get(TAB_KEY) === TAB_PARAM.REQUEST_GROUP}
 			/>
 		</ContainerMain>
 	);

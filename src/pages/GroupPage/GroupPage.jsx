@@ -10,6 +10,7 @@ import UploadFeed from "@/components/Group/GroupFeed/UploadFeed";
 import GroupMember from "@/components/Group/GroupMember/GroupMember";
 import GroupProfile from "@/components/Group/GroupProfile/GroupProfile";
 import GroupTitle from "@/components/Group/GroupTitle/GroupTitle";
+import { TAB_KEY, TAB_PARAM } from "@/constants/tabConstants";
 import {
 	getGroupInfo,
 	getGroupRequestMemberList,
@@ -50,7 +51,7 @@ const GroupPage = () => {
 			dispatch(getGroupInfo(groupId)).unwrap();
 			dispatch(getGroupRequestMemberList(groupId));
 		} catch (e) {
-			navigate("/community");
+			navigate(`/community?${TAB_KEY}=${TAB_PARAM.MY_GROUP_FEED}`);
 		}
 
 		if (searchParams.get("invite")) {

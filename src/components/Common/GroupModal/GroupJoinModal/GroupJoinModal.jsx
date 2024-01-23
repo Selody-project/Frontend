@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import BaseModal from "@/components/Common/Modal/BaseModal";
+import { TAB_KEY, TAB_PARAM } from "@/constants/tabConstants";
 import {
 	getGroupInfoWithInviteLink,
 	joinGroupInviteLink,
@@ -28,7 +29,7 @@ const GroupJoinModal = ({ inviteLink }) => {
 				joinGroupInviteLink({ groupId, inviteCode: inviteLink }),
 			).unwrap();
 			dispatch(closeModal());
-			navigate("/community");
+			navigate(`/community?${TAB_KEY}=${TAB_PARAM.MY_GROUP_FEED}`);
 		} catch (e) {
 			toast.error("그룹 가입에 실패했습니다.");
 		}

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import BaseModal from "@/components/Common/Modal/BaseModal";
+import { TAB_KEY, TAB_PARAM } from "@/constants/tabConstants";
 import { deleteGroup } from "@/features/group/group-service";
 import { closeModal } from "@/features/ui/ui-slice";
 
@@ -24,7 +25,7 @@ const GroupDeleteModal = ({ groupDetailInfo, isLoading }) => {
 		try {
 			await dispatch(deleteGroup(groupDetailInfo.groupId)).unwrap();
 			dispatch(closeModal());
-			navigate("/community");
+			navigate(`/community?${TAB_KEY}=${TAB_PARAM.MY_GROUP_FEED}`);
 		} catch (e) {
 			toast.error("그룹 삭제에 실패했습니다.");
 		}

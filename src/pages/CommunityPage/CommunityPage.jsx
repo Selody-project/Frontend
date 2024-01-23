@@ -1,12 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import GroupSearch from "@/components/Group/GroupSearch/GroupSearch";
 import MyGroup from "@/components/Group/MyGroup/MyGroup";
 import MyGroupFeed from "@/components/Group/MyGroupFeed/MyGroupFeed";
 import { SearchIcon } from "@/constants/iconConstants";
-import { TAB_CONSTANTS_TITLE } from "@/constants/tabConstants";
+import {
+	TAB_CONSTANTS_TITLE,
+	TAB_KEY,
+	TAB_PARAM,
+} from "@/constants/tabConstants";
 import { searchGroup } from "@/features/group/group-service";
 import { getMyGroupPosts } from "@/features/post/post-service";
 import useObserver from "@/hooks/useObserver";
@@ -32,7 +37,10 @@ const CommunityPage = () => {
 		(state) => state.post,
 	);
 
-	const [tabName, setTabName] = useState(TAB_CONSTANTS_TITLE.MY_GROUP_FEED);
+	const navigate = useNavigate();
+
+	// eslint-disable-next-line no-unused-vars
+	const [searchParams, setSearchParams] = useSearchParams();
 
 	const [searchKeyword, setSearchKeyword] = useState("");
 	const [onSearch, setOnSearch] = useState(false);
@@ -85,23 +93,27 @@ const CommunityPage = () => {
 					<TabUl role="tablist">
 						<li role="tab">
 							<TabButton
-								isActive={tabName === TAB_CONSTANTS_TITLE.MY_GROUP_FEED}
-								onClick={() => setTabName(TAB_CONSTANTS_TITLE.MY_GROUP_FEED)}
+								isActive={searchParams.get(TAB_KEY) === TAB_PARAM.MY_GROUP_FEED}
+								onClick={() =>
+									navigate(`/community?${TAB_KEY}=${TAB_PARAM.MY_GROUP_FEED}`)
+								}
 							>
 								{TAB_CONSTANTS_TITLE.MY_GROUP_FEED}
 							</TabButton>
 						</li>
 						<li role="tab">
 							<TabButton
-								isActive={tabName === TAB_CONSTANTS_TITLE.GROUP_SEARCH}
-								onClick={() => setTabName(TAB_CONSTANTS_TITLE.GROUP_SEARCH)}
+								isActive={searchParams.get(TAB_KEY) === TAB_PARAM.GROUP_SEARCH}
+								onClick={() =>
+									navigate(`/community?${TAB_KEY}=${TAB_PARAM.GROUP_SEARCH}`)
+								}
 							>
 								{TAB_CONSTANTS_TITLE.GROUP_SEARCH}
 							</TabButton>
 						</li>
 					</TabUl>
 
-					{tabName === TAB_CONSTANTS_TITLE.GROUP_SEARCH && (
+					{searchParams.get(TAB_KEY) === TAB_PARAM.GROUP_SEARCH && (
 						<SearchDiv>
 							<Input
 								placeholder="다른 그룹을 탐색해보세요."
@@ -115,7 +127,7 @@ const CommunityPage = () => {
 					)}
 				</FeedTitleDiv>
 
-				{tabName === TAB_CONSTANTS_TITLE.GROUP_SEARCH ? (
+				{searchParams.get(TAB_KEY) === TAB_PARAM.GROUP_SEARCH ? (
 					<GroupSearch onSearch={onSearch} searchGroupList={searchGroupList} />
 				) : (
 					<MyGroupFeed myGroupPosts={myGroupPosts} ref={postRef} />
