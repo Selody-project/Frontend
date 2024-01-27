@@ -20,17 +20,20 @@ export const HEADER_TAB_CONSTANTS = [
 	{
 		id: "feed",
 		title: "FEED IN SELODY",
+		defaultLink: "/community",
 		link: "/community?tab=feed",
 		link2: "/mypage?tab=group",
 		subHeader: [
 			{
 				id: "community",
 				title: "홈",
+				defaultLink: "/community",
 				link: "/community?tab=feed",
 			},
 			{
 				id: "mypage",
 				title: "마이페이지",
+				defaultLink: "/mypage",
 				link: "/mypage?tab=group",
 			},
 		],
