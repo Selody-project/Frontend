@@ -1,39 +1,30 @@
 export const HEADER_TAB_CONSTANTS = [
 	{
-		id: "schedule",
 		title: "일정",
 		link: "/personal",
 		link2: "/share",
 		subHeader: [
 			{
-				id: "personal",
 				title: "개인일정",
 				link: "/personal",
 			},
 			{
-				id: "share",
 				title: "공유일정",
 				link: "/share",
 			},
 		],
 	},
 	{
-		id: "feed",
 		title: "FEED IN SELODY",
-		defaultLink: "/community",
 		link: "/community?tab=feed",
 		link2: "/mypage?tab=group",
 		subHeader: [
 			{
-				id: "community",
 				title: "홈",
-				defaultLink: "/community",
 				link: "/community?tab=feed",
 			},
 			{
-				id: "mypage",
 				title: "마이페이지",
-				defaultLink: "/mypage",
 				link: "/mypage?tab=group",
 			},
 		],

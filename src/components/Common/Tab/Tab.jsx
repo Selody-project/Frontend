@@ -13,11 +13,11 @@ const Tab = ({ contents, isSubHeader }) => {
 	return (
 		<TabUl role="tablist" className={isSubHeader ? "header" : "subheader"}>
 			{contents.map((tabContents) => (
-				<li role="tab" key={tabContents.id}>
+				<li role="tab" key={tabContents.title}>
 					<TabButton
 						isActive={
-							path.includes(tabContents.defaultLink) ||
-							path.includes(tabContents.link)
+							path.split("?")[0] === tabContents.link.split("?")[0] ||
+							path.split("?")[0] === tabContents.link2?.split("?")[0]
 						}
 						onClick={() => navigate(tabContents.link)}
 						className={isSubHeader ? "header" : "subheader"}
