@@ -83,6 +83,9 @@ const uiSlice = createSlice({
 		openJoinGroupModal: (state) => {
 			state.openedModal = UI_TYPE.JOIN_GROUP;
 		},
+		openMemberModal: (state) => {
+			state.openedModal = UI_TYPE.MEMBER_MODAL;
+		},
 		closeModal: () => {
 			return initialState;
 		},
@@ -110,6 +113,7 @@ export const {
 	openRequestCancelModal,
 	openExitGroupModal,
 	openJoinGroupModal,
+	openMemberModal,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;

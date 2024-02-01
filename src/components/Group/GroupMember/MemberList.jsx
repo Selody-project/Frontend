@@ -9,6 +9,8 @@ import {
 } from "./GroupMember.Shared.styles";
 
 const MemberList = ({ groupInfo, leaderId }) => {
+	// console.log(groupInfo.information.memberInfo.length);
+
 	return (
 		<MemberInnerDiv>
 			<MemberH3>그룹원</MemberH3>

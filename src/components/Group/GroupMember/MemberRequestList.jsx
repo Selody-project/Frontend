@@ -1,21 +1,27 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { RequestCheckIcon, RequestCloseIcon } from "@/constants/iconConstants";
 import {
 	approveGroupJoin,
 	rejectGroupJoin,
 } from "@/features/group/group-service";
+import { openMemberModal } from "@/features/ui/ui-slice";
 
 import {
 	MemberInnerDiv,
+	MemberTitleDiv,
 	MemberH3,
+	MemberMoreSpan,
 	MemberUl,
 } from "./GroupMember.Shared.styles";
 import { ButtonDiv, ButtonInnerDiv } from "./GroupMember.styles";
+import MemberModal from "./MemberModal";
 
 const MemberRequestList = ({ requestMemberList, groupInfo }) => {
 	const dispatch = useDispatch();
+
+	const { openedModal } = useSelector((state) => state.ui);
 
 	const { groupId } = groupInfo.information.group;
 
@@ -30,9 +36,16 @@ const MemberRequestList = ({ requestMemberList, groupInfo }) => {
 	return (
 		<>
 			<MemberInnerDiv>
-				<MemberH3>그룹원 신청</MemberH3>
+				<MemberTitleDiv>
+					<MemberH3>그룹원 신청</MemberH3>
+					{requestMemberList.length > 3 && (
+						<MemberMoreSpan onClick={() => dispatch(openMemberModal())}>
+							더보기
+						</MemberMoreSpan>
+					)}
+				</MemberTitleDiv>
 				<MemberUl>
-					{requestMemberList.map((info) => (
+					{requestMemberList.slice(0, 3).map((info) => (
 						<li key={info.member.userId}>
 							<img src={info.member.image} alt="memberImg" />
 							<h4>{info.member.nickname}</h4>
@@ -61,6 +74,7 @@ const MemberRequestList = ({ requestMemberList, groupInfo }) => {
 						</li>
 					))}
 				</MemberUl>
+				{openedModal === "MEMBER_MODAL" && <MemberModal />}
 			</MemberInnerDiv>
 			<hr />
 		</>
