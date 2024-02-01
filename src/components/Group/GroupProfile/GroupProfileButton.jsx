@@ -11,7 +11,7 @@ import {
 	ProfileButton,
 	ProfileWhiteButton,
 } from "./GroupProfile.styles";
-import GroupInviteLink from "../GroupManagement/GroupInviteLink/GroupInviteLink";
+import GroupInviteLink from "../../Common/GroupInviteLink/GroupInviteLink";
 
 // eslint-disable-next-line consistent-return
 const GroupProfileButton = ({ groupInfo, isGroupMember, isGroupLeader }) => {

@@ -30,8 +30,6 @@ const GroupInviteLink = ({ groupId, groupName, onClose, inviteLink }) => {
 		dispatch(getGroupInfoWithInviteLink(inviteLink.inviteCode));
 	}, []);
 
-	// console.log(groupInfoWithInviteLink);
-
 	return (
 		<ContainerDiv>
 			<TopDiv>
