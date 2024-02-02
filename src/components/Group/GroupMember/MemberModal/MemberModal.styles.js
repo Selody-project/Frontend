@@ -57,3 +57,20 @@ export const ButtonDiv = styled.div`
 		cursor: pointer;
 	}
 `;
+
+export const InfoDiv = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 8px;
+
+	& > span > svg {
+		width: 10px;
+		height: 10px;
+	}
+
+	& > h4 {
+		color: ${({ theme: { colors } }) => colors.text_03};
+		font-size: 12px;
+		font-weight: ${({ theme: { typography } }) => typography.weight.medium};
+	}
+`;

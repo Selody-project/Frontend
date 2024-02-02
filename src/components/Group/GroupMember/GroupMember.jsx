@@ -1,5 +1,7 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { getGroupMemberList } from "@/features/group/group-service";
 
 import {
 	MemberInnerDiv,
@@ -16,7 +18,17 @@ const GroupMember = ({
 	requestMemberList,
 	groupInfo,
 }) => {
+	const dispatch = useDispatch();
+
+	const { groupMemberList } = useSelector((state) => state.group);
+
 	const { user } = useSelector((state) => state.auth);
+
+	const { groupId } = groupInfo.information.group;
+
+	useEffect(() => {
+		dispatch(getGroupMemberList(groupId));
+	}, []);
 
 	return (
 		<ContainerAside>
@@ -40,7 +52,11 @@ const GroupMember = ({
 								groupInfo={groupInfo}
 							/>
 						)}
-						<MemberList groupInfo={groupInfo} leaderId={leaderId} />
+						<MemberList
+							groupInfo={groupInfo}
+							leaderId={leaderId}
+							memberList={groupMemberList}
+						/>
 					</MemberDiv>
 				</>
 			)}

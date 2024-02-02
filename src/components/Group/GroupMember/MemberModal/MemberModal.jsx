@@ -1,12 +1,7 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 
 import BaseModal from "@/components/Common/Modal/BaseModal";
-import { RequestCheckIcon, RequestCloseIcon } from "@/constants/iconConstants";
-import {
-	approveGroupJoin,
-	rejectGroupJoin,
-} from "@/features/group/group-service";
+import { ACCESS_LEVEL_DATA } from "@/constants/accessConstants";
 
 import {
 	ContainerDiv,
@@ -15,27 +10,17 @@ import {
 	MemberUl,
 	MemberLi,
 	ProfileDiv,
-	ButtonDiv,
+	InfoDiv,
 } from "./MemberModal.styles";
 
-const MemberModal = ({ requestMemberList, groupId }) => {
-	const dispatch = useDispatch();
-
-	const approveRequest = (userId) => {
-		dispatch(approveGroupJoin({ groupId, userId }));
-	};
-
-	const rejectRequest = (userId) => {
-		dispatch(rejectGroupJoin({ groupId, userId }));
-	};
-
+const MemberModal = ({ memberList }) => {
 	return (
 		<BaseModal>
 			<ContainerDiv>
-				<TitleH2>그룹원 신청</TitleH2>
+				<TitleH2>그룹원</TitleH2>
 				<ContentDiv>
 					<MemberUl>
-						{requestMemberList.map((memberData) => (
+						{memberList.map((memberData) => (
 							<MemberLi key={memberData.member.nickname}>
 								<ProfileDiv>
 									<img
@@ -44,24 +29,15 @@ const MemberModal = ({ requestMemberList, groupId }) => {
 									/>
 									<h3>{memberData.member.nickname}</h3>
 								</ProfileDiv>
-								<ButtonDiv>
-									<button
-										type="button"
-										onClick={() => {
-											approveRequest(memberData.member.userId);
-										}}
-									>
-										<RequestCheckIcon />
-									</button>
-									<button
-										type="button"
-										onClick={() => {
-											rejectRequest(memberData.member.userId);
-										}}
-									>
-										<RequestCloseIcon />
-									</button>
-								</ButtonDiv>
+								<InfoDiv>
+									{ACCESS_LEVEL_DATA.map(
+										(data) =>
+											memberData.accessLevel === data.accessLevel && (
+												<span key={data.accessLevel}>{data.icon}</span>
+											),
+									)}
+									<h4>{memberData.accessLevel}</h4>
+								</InfoDiv>
 							</MemberLi>
 						))}
 					</MemberUl>

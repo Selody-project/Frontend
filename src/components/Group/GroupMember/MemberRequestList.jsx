@@ -6,7 +6,7 @@ import {
 	approveGroupJoin,
 	rejectGroupJoin,
 } from "@/features/group/group-service";
-import { openMemberModal } from "@/features/ui/ui-slice";
+import { openMemberRequestModal } from "@/features/ui/ui-slice";
 
 import {
 	MemberInnerDiv,
@@ -16,7 +16,7 @@ import {
 	MemberUl,
 } from "./GroupMember.Shared.styles";
 import { ButtonDiv, ButtonInnerDiv } from "./GroupMember.styles";
-import MemberModal from "./MemberModal/MemberModal";
+import MemberRequestModal from "./MemberModal/MemberRequestModal";
 
 const MemberRequestList = ({ requestMemberList, groupInfo }) => {
 	const dispatch = useDispatch();
@@ -39,7 +39,7 @@ const MemberRequestList = ({ requestMemberList, groupInfo }) => {
 				<MemberTitleDiv>
 					<MemberH3>그룹원 신청</MemberH3>
 					{requestMemberList.length > 3 && (
-						<MemberMoreSpan onClick={() => dispatch(openMemberModal())}>
+						<MemberMoreSpan onClick={() => dispatch(openMemberRequestModal())}>
 							더보기
 						</MemberMoreSpan>
 					)}
@@ -74,8 +74,8 @@ const MemberRequestList = ({ requestMemberList, groupInfo }) => {
 						</li>
 					))}
 				</MemberUl>
-				{openedModal === "MEMBER_MODAL" && (
-					<MemberModal
+				{openedModal === "MEMBER_REQUEST_MODAL" && (
+					<MemberRequestModal
 						requestMemberList={requestMemberList}
 						groupId={groupId}
 					/>
