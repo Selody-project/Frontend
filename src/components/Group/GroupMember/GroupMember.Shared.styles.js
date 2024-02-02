@@ -21,6 +21,7 @@ export const MemberMoreSpan = styled.span`
 	font-size: 10px;
 	font-weight: ${({ theme: { typography } }) => typography.weight.medium};
 	text-decoration-line: underline;
+	cursor: pointer;
 `;
 
 export const MemberUl = styled.ul`

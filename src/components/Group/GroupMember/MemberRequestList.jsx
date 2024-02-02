@@ -16,7 +16,7 @@ import {
 	MemberUl,
 } from "./GroupMember.Shared.styles";
 import { ButtonDiv, ButtonInnerDiv } from "./GroupMember.styles";
-import MemberModal from "./MemberModal";
+import MemberModal from "./MemberModal/MemberModal";
 
 const MemberRequestList = ({ requestMemberList, groupInfo }) => {
 	const dispatch = useDispatch();
@@ -74,7 +74,12 @@ const MemberRequestList = ({ requestMemberList, groupInfo }) => {
 						</li>
 					))}
 				</MemberUl>
-				{openedModal === "MEMBER_MODAL" && <MemberModal />}
+				{openedModal === "MEMBER_MODAL" && (
+					<MemberModal
+						requestMemberList={requestMemberList}
+						groupId={groupId}
+					/>
+				)}
 			</MemberInnerDiv>
 			<hr />
 		</>
