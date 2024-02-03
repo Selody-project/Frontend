@@ -2,6 +2,9 @@ import styled from "styled-components";
 
 export const ContainerDiv = styled.div`
 	font-family: Inter;
+	max-height: 468px;
+	overflow-y: auto;
+	margin-top: -14px;
 `;
 
 export const TitleH2 = styled.h2`
@@ -22,7 +25,7 @@ export const MemberUl = styled.ul`
 
 export const MemberLi = styled.li`
 	display: flex;
-	gap: 80px;
+	gap: 110px;
 	padding: 0 14px;
 `;
 
@@ -62,6 +65,7 @@ export const InfoDiv = styled.div`
 	display: flex;
 	align-items: center;
 	gap: 8px;
+	margin-right: 18px;
 
 	& > span > svg {
 		width: 10px;
