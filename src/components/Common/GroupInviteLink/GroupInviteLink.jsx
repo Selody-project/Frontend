@@ -27,6 +27,7 @@ const GroupInviteLink = ({ groupId, groupName, onClose, inviteLink }) => {
 		if (!inviteLink.inviteCode) {
 			dispatch(createGroupInviteLink(groupId));
 		}
+
 		dispatch(getGroupInfoWithInviteLink(inviteLink.inviteCode));
 	}, []);
 
@@ -39,13 +40,13 @@ const GroupInviteLink = ({ groupId, groupName, onClose, inviteLink }) => {
 			<MiddleDiv>
 				<TextDiv>
 					{inviteLink &&
-						`http://localhost:3000/group/${groupInfoWithInviteLink?.groupId}?invite=${inviteLink.inviteCode}`}
+						`${window.location.host}/group/${groupInfoWithInviteLink?.groupId}?invite=${inviteLink.inviteCode}`}
 				</TextDiv>
 				<button
 					type="button"
 					onClick={() =>
 						handleCopyClipBoard(
-							`http://localhost:3000/group/${groupInfoWithInviteLink?.groupId}?invite=${inviteLink.inviteCode}`,
+							`${window.location.host}/group/${groupInfoWithInviteLink?.groupId}?invite=${inviteLink.inviteCode}`,
 						)
 					}
 				>
