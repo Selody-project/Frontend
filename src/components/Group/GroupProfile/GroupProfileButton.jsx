@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { AddIcon } from "@/constants/iconConstants";
-import { getGroupInviteLink } from "@/features/group/group-service";
 import { openDelegateGroupModal } from "@/features/ui/ui-slice";
 
 import {
@@ -16,8 +15,6 @@ import GroupInviteLink from "../../Common/GroupInviteLink/GroupInviteLink";
 // eslint-disable-next-line consistent-return
 const GroupProfileButton = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 	const dispatch = useDispatch();
-
-	const { groupInviteLink } = useSelector((state) => state.group);
 
 	const locate = useLocation();
 	const navigate = useNavigate();
@@ -33,7 +30,6 @@ const GroupProfileButton = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 		if (locate.pathname.includes("leader")) {
 			setIsManaging(true);
 		}
-		dispatch(getGroupInviteLink(groupId));
 	}, []);
 
 	//	그룹 관리 페이지일때
@@ -52,7 +48,6 @@ const GroupProfileButton = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 				)}
 				{isGroupInviteLinkOpen && (
 					<GroupInviteLink
-						inviteLink={groupInviteLink}
 						groupName={name}
 						groupId={groupId}
 						onClose={() => setIsGroupInviteLinkOpen(false)}

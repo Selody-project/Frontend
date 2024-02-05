@@ -1,14 +1,11 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import BaseModal from "@/components/Common/Modal/BaseModal";
 import { TAB_KEY, TAB_PARAM } from "@/constants/tabConstants";
-import {
-	getGroupInfoWithInviteLink,
-	joinGroupInviteLink,
-} from "@/features/group/group-service";
+import { joinGroupInviteLink } from "@/features/group/group-service";
 import { closeModal } from "@/features/ui/ui-slice";
 
 import { ContainerDiv } from "./GroupJoinModal.styles";
@@ -17,7 +14,7 @@ import { Button } from "../GroupModal.Shared.styles";
 const GroupJoinModal = ({ inviteLink }) => {
 	const dispatch = useDispatch();
 
-	const { groupInfoWithInviteLink } = useSelector((state) => state.group);
+	const groupInfoWithInviteLink = "";
 
 	const navigate = useNavigate();
 
@@ -36,7 +33,7 @@ const GroupJoinModal = ({ inviteLink }) => {
 	};
 
 	useEffect(() => {
-		dispatch(getGroupInfoWithInviteLink(inviteLink));
+		// dispatch(getGroupInfoWithInviteLink(inviteLink));
 	}, []);
 
 	return (

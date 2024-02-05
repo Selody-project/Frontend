@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
 
 import { CloseIcon } from "@/constants/iconConstants";
 import {
 	createGroupInviteLink,
-	getGroupInfoWithInviteLink,
-} from "@/features/group/group-service";
+	getGroupInviteLink,
+} from "@/utils/groupInviteUtils";
 
 import {
 	ContainerDiv,
@@ -14,21 +13,24 @@ import {
 	TextDiv,
 } from "./GroupInviteLink.styles";
 
-const GroupInviteLink = ({ groupId, groupName, onClose, inviteLink }) => {
-	const dispatch = useDispatch();
+const GroupInviteLink = ({ groupId, groupName, onClose }) => {
+	const [inviteLink, setInviteLink] = useState("");
+	const [isLoading, setIsLoading] = useState(true);
 
-	const { groupInfoWithInviteLink } = useSelector((state) => state.group);
+	const nowTime = new Date();
 
-	const handleCopyClipBoard = async (text) => {
-		await navigator.clipboard.writeText(text);
+	const handleCopyClipBoard = async () => {
+		await navigator.clipboard.writeText(
+			`${window.location.host}/group/${groupId}?invite=${inviteLink.inviteCode}`,
+		);
 	};
 
 	useEffect(() => {
-		if (!inviteLink.inviteCode) {
-			dispatch(createGroupInviteLink(groupId));
-		}
+		getGroupInviteLink(setInviteLink, groupId, setIsLoading);
 
-		dispatch(getGroupInfoWithInviteLink(inviteLink.inviteCode));
+		if (inviteLink.inviteCode === null || nowTime < new Date(inviteLink.exp)) {
+			createGroupInviteLink(setInviteLink, groupId, setIsLoading);
+		}
 	}, []);
 
 	return (
@@ -37,22 +39,22 @@ const GroupInviteLink = ({ groupId, groupName, onClose, inviteLink }) => {
 				<h3>{groupName}</h3>
 				<CloseIcon onClick={() => onClose(false)} />
 			</TopDiv>
-			<MiddleDiv>
-				<TextDiv>
-					{inviteLink &&
-						`${window.location.host}/group/${groupInfoWithInviteLink?.groupId}?invite=${inviteLink.inviteCode}`}
-				</TextDiv>
-				<button
-					type="button"
-					onClick={() =>
-						handleCopyClipBoard(
-							`${window.location.host}/group/${groupInfoWithInviteLink?.groupId}?invite=${inviteLink.inviteCode}`,
-						)
-					}
-				>
-					복사
-				</button>
-			</MiddleDiv>
+			{inviteLink && (
+				<MiddleDiv>
+					<TextDiv>
+						{inviteLink &&
+							`${window.location.host}/group/${groupId}?invite=${inviteLink.inviteCode}`}
+					</TextDiv>
+					<button
+						type="button"
+						onClick={handleCopyClipBoard}
+						disabled={isLoading}
+					>
+						복사
+					</button>
+				</MiddleDiv>
+			)}
+
 			<h3>* 24시간이 지나거나 새로 생성 시 기존 코드는 만료됩니다.</h3>
 		</ContainerDiv>
 	);

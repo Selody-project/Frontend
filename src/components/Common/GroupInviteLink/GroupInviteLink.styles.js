@@ -54,6 +54,11 @@ export const MiddleDiv = styled.div`
 		align-items: center;
 		justify-content: center;
 		cursor: pointer;
+
+		&:disabled {
+			background-color: ${({ theme: { colors } }) => colors.btn_02};
+			cursor: not-allowed;
+		}
 	}
 `;
 

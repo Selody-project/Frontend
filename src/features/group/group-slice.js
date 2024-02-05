@@ -20,12 +20,9 @@ import {
 	changeRequestGroupJoin,
 	changeGroupPublicOption,
 	updateGroupProfile,
-	createGroupInviteLink,
 	getGroupMemberList,
 	changeAccessLevel,
 	withdrawalGroup,
-	getGroupInfoWithInviteLink,
-	getGroupInviteLink,
 	joinGroupInviteLink,
 } from "./group-service.js";
 
@@ -40,9 +37,6 @@ const initialState = {
 	groupInfo: null,
 	groupRequestMemberList: [],
 	isUserGroupRefetching: true,
-	groupInviteLink: null,
-	inviteLink: null,
-	groupInfoWithInviteLink: null,
 	groupMemberList: [],
 	isEnd: false,
 };
@@ -81,12 +75,9 @@ const groupSlice = createSlice({
 					changeRequestGroupJoin.pending,
 					changeGroupPublicOption.pending,
 					updateGroupProfile.pending,
-					createGroupInviteLink.pending,
 					getGroupMemberList.pending,
 					changeAccessLevel.pending,
 					withdrawalGroup.pending,
-					getGroupInfoWithInviteLink.pending,
-					getGroupInviteLink.pending,
 					joinGroupInviteLink.pending,
 				),
 				(state) => {
@@ -111,12 +102,9 @@ const groupSlice = createSlice({
 					changeRequestGroupJoin.rejected,
 					changeGroupPublicOption.rejected,
 					updateGroupProfile.rejected,
-					createGroupInviteLink.rejected,
 					getGroupMemberList.rejected,
 					changeAccessLevel.rejected,
 					withdrawalGroup.rejected,
-					getGroupInfoWithInviteLink.rejected,
-					getGroupInviteLink.rejected,
 					joinGroupInviteLink.rejected,
 				),
 				(state) => {
@@ -223,13 +211,6 @@ const groupSlice = createSlice({
 				toast.success("그룹장 위임이 완료되었습니다.");
 			})
 			.addMatcher(
-				isAllOf(createGroupInviteLink.fulfilled),
-				(state, { payload }) => {
-					state.isLoading = false;
-					state.inviteLink = payload;
-				},
-			)
-			.addMatcher(
 				isAllOf(getGroupMemberList.fulfilled),
 				(state, { payload }) => {
 					state.isLoading = false;
@@ -244,20 +225,6 @@ const groupSlice = createSlice({
 				state.isLoading = false;
 				toast.error("그룹 탈퇴에 성공하였습니다");
 			})
-			.addMatcher(
-				isAllOf(getGroupInfoWithInviteLink.fulfilled),
-				(state, { payload }) => {
-					state.isLoading = false;
-					state.groupInfoWithInviteLink = payload;
-				},
-			)
-			.addMatcher(
-				isAllOf(getGroupInviteLink.fulfilled),
-				(state, { payload }) => {
-					state.isLoading = false;
-					state.groupInviteLink = payload;
-				},
-			)
 			.addMatcher(isAllOf(joinGroupInviteLink.fulfilled), (state) => {
 				state.isLoading = false;
 				toast.success("그룹 가입에 성공하였습니다");
