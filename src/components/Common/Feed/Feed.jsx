@@ -37,7 +37,7 @@ const Feed = ({
 
 	const { user } = useSelector((state) => state.auth);
 
-	const [postIsLiked, setPostIsLiked] = useState(post.isLiked);
+	const [isPostLiked, setIsPostLiked] = useState(post.isLiked);
 	const [postLikesCount, setPostLikesCount] = useState(post.likesCount);
 
 	const likeClick = async () => {
@@ -46,7 +46,7 @@ const Feed = ({
 				likeGroupPost({ postGroupId: groupId, postId: post.postId }),
 			).unwrap();
 		} catch (error) {
-			setPostIsLiked(false);
+			setIsPostLiked(false);
 			setPostLikesCount((prev) => prev - 1);
 		}
 	};
@@ -57,25 +57,25 @@ const Feed = ({
 				cancelLikeGroupPost({ postGroupId: groupId, postId: post.postId }),
 			).unwrap();
 		} catch (error) {
-			setPostIsLiked(true);
+			setIsPostLiked(true);
 			setPostLikesCount((prev) => prev + 1);
 		}
 	};
 
 	const handleLikeClick = () => {
-		if (!postIsLiked) {
-			setPostIsLiked(true);
+		if (!isPostLiked) {
+			setIsPostLiked(true);
 			setPostLikesCount((prev) => prev + 1);
 			likeClick();
 		} else {
-			setPostIsLiked(false);
+			setIsPostLiked(false);
 			setPostLikesCount((prev) => prev - 1);
 			disLikeClick();
 		}
 	};
 
-	const deletePost = (postId) => {
-		dispatch(deleteGroupPost({ postGroupId: groupId, postId }));
+	const deletePost = () => {
+		dispatch(deleteGroupPost({ postGroupId: groupId, postId: post.postId }));
 	};
 
 	return (
@@ -90,12 +90,7 @@ const Feed = ({
 									<button type="button">수정</button>
 								</li>
 								<li>
-									<button
-										type="button"
-										onClick={() => {
-											deletePost(post.postId);
-										}}
-									>
+									<button type="button" onClick={deletePost}>
 										삭제
 									</button>
 								</li>
@@ -118,7 +113,7 @@ const Feed = ({
 				<p>{post.content}</p>
 				<IconDiv>
 					<IconItemButton onClick={handleLikeClick}>
-						{postIsLiked ? <FillHeartIcon /> : <EmptyHeartIcon />}
+						{isPostLiked ? <FillHeartIcon /> : <EmptyHeartIcon />}
 						<span>{postLikesCount}</span>
 					</IconItemButton>
 					<IconItemButton>
