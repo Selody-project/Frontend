@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import BaseModal from "@/components/Common/Modal/BaseModal";
 import { TAB_KEY, TAB_PARAM } from "@/constants/tabConstants";
-import { joinGroupInviteLink } from "@/features/group/group-service";
 import { closeModal } from "@/features/ui/ui-slice";
+import {
+	getGroupInfoWithInviteLink,
+	joinGroupInviteLink,
+} from "@/utils/groupInviteUtils";
 
 import { ContainerDiv } from "./GroupJoinModal.styles";
 import { Button } from "../GroupModal.Shared.styles";
@@ -14,40 +16,41 @@ import { Button } from "../GroupModal.Shared.styles";
 const GroupJoinModal = ({ inviteLink }) => {
 	const dispatch = useDispatch();
 
-	const groupInfoWithInviteLink = "";
+	const [, setIsLoading] = useState(true);
+	const [groupInfo, setGroupInfo] = useState("");
+
+	const [, setSearchParams] = useSearchParams();
 
 	const navigate = useNavigate();
 
 	const handleJoinGroup = async () => {
-		const { groupId } = groupInfoWithInviteLink;
+		const { groupId } = groupInfo;
 
-		try {
-			await dispatch(
-				joinGroupInviteLink({ groupId, inviteCode: inviteLink }),
-			).unwrap();
-			dispatch(closeModal());
-			navigate(`/community?${TAB_KEY}=${TAB_PARAM.MY_GROUP_FEED}`);
-		} catch (e) {
-			toast.error("그룹 가입에 실패했습니다.");
-		}
+		joinGroupInviteLink(groupId, inviteLink, setIsLoading);
+		dispatch(closeModal());
+		navigate(`/community?${TAB_KEY}=${TAB_PARAM.MY_GROUP_FEED}`);
 	};
 
 	useEffect(() => {
 		// dispatch(getGroupInfoWithInviteLink(inviteLink));
+		getGroupInfoWithInviteLink(setGroupInfo, inviteLink, setIsLoading);
+
+		return () => {
+			setSearchParams("");
+		};
 	}, []);
 
 	return (
 		// eslint-disable-next-line react/jsx-no-useless-fragment
 		<>
-			{groupInfoWithInviteLink && (
+			{groupInfo && (
 				<BaseModal isUpper>
 					<ContainerDiv>
-						<img src={groupInfoWithInviteLink.image} alt="groupProfileImg" />
+						<img src={groupInfo.image} alt="groupProfileImg" />
 						<h2>
-							{groupInfoWithInviteLink.name} ( {groupInfoWithInviteLink.member}
-							명 )
+							{groupInfo.name} ( {groupInfo.member}명 )
 						</h2>
-						<h3>{groupInfoWithInviteLink.description}</h3>
+						<h3>{groupInfo.description}</h3>
 						<Button onClick={handleJoinGroup}>가입하기</Button>
 					</ContainerDiv>
 				</BaseModal>

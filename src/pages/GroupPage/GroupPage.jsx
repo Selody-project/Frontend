@@ -32,8 +32,7 @@ const GroupPage = () => {
 	const param = useParams();
 	const navigate = useNavigate();
 
-	// eslint-disable-next-line no-unused-vars
-	const [searchParams, setSearchParams] = useSearchParams();
+	const [searchParams] = useSearchParams();
 
 	const groupId = param.id;
 
