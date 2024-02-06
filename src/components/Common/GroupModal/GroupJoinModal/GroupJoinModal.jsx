@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import BaseModal from "@/components/Common/Modal/BaseModal";
 import { TAB_KEY, TAB_PARAM } from "@/constants/tabConstants";
+import { joinGroupInviteLink } from "@/features/group/group-service";
 import { closeModal } from "@/features/ui/ui-slice";
-import {
-	getGroupInfoWithInviteLink,
-	joinGroupInviteLink,
-} from "@/utils/groupInviteUtils";
+import { getGroupInfoWithInviteLink } from "@/utils/groupInviteUtils";
 
 import { ContainerDiv } from "./GroupJoinModal.styles";
 import { Button } from "../GroupModal.Shared.styles";
@@ -16,7 +15,6 @@ import { Button } from "../GroupModal.Shared.styles";
 const GroupJoinModal = ({ inviteLink }) => {
 	const dispatch = useDispatch();
 
-	const [, setIsLoading] = useState(true);
 	const [groupInfo, setGroupInfo] = useState("");
 
 	const [, setSearchParams] = useSearchParams();
@@ -26,19 +24,30 @@ const GroupJoinModal = ({ inviteLink }) => {
 	const handleJoinGroup = async () => {
 		const { groupId } = groupInfo;
 
-		joinGroupInviteLink(groupId, inviteLink, setIsLoading);
-		dispatch(closeModal());
-		navigate(`/community?${TAB_KEY}=${TAB_PARAM.MY_GROUP_FEED}`);
+		try {
+			await dispatch(
+				joinGroupInviteLink({ groupId, inviteCode: inviteLink }),
+			).unwrap();
+			dispatch(closeModal());
+			navigate(`/community?${TAB_KEY}=${TAB_PARAM.MY_GROUP_FEED}`);
+		} catch (e) {
+			toast.error("그룹 가입에 실패했습니다.");
+		}
 	};
 
 	useEffect(() => {
-		// dispatch(getGroupInfoWithInviteLink(inviteLink));
-		getGroupInfoWithInviteLink(setGroupInfo, inviteLink, setIsLoading);
+		getGroupInfoWithInviteLink((data) => setGroupInfo(data), inviteLink);
 
 		return () => {
 			setSearchParams("");
 		};
 	}, []);
+
+	useEffect(() => {
+		if (groupInfo && groupInfo.error === "그룹을 찾을 수 없습니다.") {
+			dispatch(closeModal());
+		}
+	}, [groupInfo]);
 
 	return (
 		// eslint-disable-next-line react/jsx-no-useless-fragment

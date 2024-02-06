@@ -305,3 +305,18 @@ export const withdrawalGroup = createAsyncThunk(
 		return response;
 	},
 );
+
+export const joinGroupInviteLink = createAsyncThunk(
+	"group/joinGroupInviteLink",
+	async ({ groupId, inviteCode }, thunkAPI) => {
+		const data = await commonThunk(
+			{
+				method: "POST",
+				url: `/api/group/${groupId}/join/${inviteCode}`,
+				successCode: 200,
+			},
+			thunkAPI,
+		);
+		return data;
+	},
+);

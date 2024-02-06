@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { CloseIcon } from "@/constants/iconConstants";
-import {
-	createGroupInviteLink,
-	getGroupInviteLink,
-} from "@/utils/groupInviteUtils";
+import { getGroupInviteLink } from "@/utils/groupInviteUtils";
 
 import {
 	ContainerDiv,
@@ -17,8 +14,6 @@ const GroupInviteLink = ({ groupId, groupName, onClose }) => {
 	const [inviteLink, setInviteLink] = useState("");
 	const [isLoading, setIsLoading] = useState(true);
 
-	const nowTime = new Date();
-
 	const handleCopyClipBoard = async () => {
 		await navigator.clipboard.writeText(
 			`${window.location.host}/group/${groupId}?invite=${inviteLink.inviteCode}`,
@@ -26,11 +21,8 @@ const GroupInviteLink = ({ groupId, groupName, onClose }) => {
 	};
 
 	useEffect(() => {
-		getGroupInviteLink(setInviteLink, groupId, setIsLoading);
-
-		if (inviteLink.inviteCode === null || nowTime < new Date(inviteLink.exp)) {
-			createGroupInviteLink(setInviteLink, groupId, setIsLoading);
-		}
+		getGroupInviteLink((inviteCode) => setInviteLink(inviteCode), groupId);
+		setIsLoading(false);
 	}, []);
 
 	return (
