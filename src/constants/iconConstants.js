@@ -23,6 +23,7 @@ import ScheduleAddIcon from "@/assets/icon/ic-schedule-add.svg";
 import SearchIcon from "@/assets/icon/ic-search.svg";
 import SecretIcon from "@/assets/icon/ic-secret.svg";
 import SelodyLogoIcon from "@/assets/icon/ic-selody-logo.svg";
+import WhitePlusIcon from "@/assets/icon/ic-white-plus.svg";
 
 export {
 	SearchIcon,
@@ -50,4 +51,5 @@ export {
 	DownArrowIcon,
 	DocumentIcon,
 	DottedCalendarIcon,
+	WhitePlusIcon,
 };
