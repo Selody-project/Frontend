@@ -36,7 +36,7 @@ const MemberRequestModal = ({ requestMemberList, groupId }) => {
 				<ContentDiv>
 					<MemberUl>
 						{requestMemberList.map((memberData) => (
-							<MemberLi key={memberData.member.nickname}>
+							<MemberLi key={memberData.member.userId}>
 								<ProfileDiv>
 									<img
 										src={memberData.member.image}

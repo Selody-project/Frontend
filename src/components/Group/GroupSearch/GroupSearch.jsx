@@ -17,12 +17,8 @@ const GroupSearch = ({ onSearch, searchGroupList }) => {
 	const isObserving = useObserver(target, { threshold: 0.3 });
 
 	useEffect(() => {
-		const dispatchGetGroupList = async () => {
-			await dispatch(getGroupList(lastRecordId));
-		};
-
 		if (isObserving && !isEnd) {
-			dispatchGetGroupList();
+			dispatch(getGroupList(lastRecordId));
 		}
 	}, [isObserving, dispatch]);
 

@@ -31,7 +31,10 @@ const MemberList = ({ leaderId, memberList }) => {
 			<MemberUl>
 				{memberList.slice(0, 5).map((info) => (
 					<li key={info.member.userId}>
-						<img src={info.member.image} alt="memberImg" />
+						<img
+							src={info.member.image}
+							alt={`${info.member.nickname}님의 이미지`}
+						/>
 						<h4>{info.member.nickname}</h4>
 						{info.member.userId === leaderId && <CrownIcon />}
 					</li>

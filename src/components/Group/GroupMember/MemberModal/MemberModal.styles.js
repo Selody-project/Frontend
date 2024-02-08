@@ -5,6 +5,11 @@ export const ContainerDiv = styled.div`
 	max-height: 468px;
 	overflow-y: auto;
 	margin-top: -14px;
+	scrollbar-width: none;
+
+	::-webkit-scrollbar {
+		display: none;
+	}
 `;
 
 export const TitleH2 = styled.h2`

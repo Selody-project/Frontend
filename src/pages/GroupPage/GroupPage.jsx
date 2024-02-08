@@ -91,13 +91,8 @@ const GroupPage = () => {
 					)}
 				</FeedDiv>
 			)}
-			{groupRequestMemberList && groupInfo && (
-				<GroupMember
-					requestMemberList={groupRequestMemberList}
-					groupInfo={groupInfo}
-					isGroupMember={isGroupMember}
-					leaderId={leaderId}
-				/>
+			{groupRequestMemberList && groupInfo && isGroupMember && (
+				<GroupMember groupInfo={groupInfo} leaderId={leaderId} />
 			)}
 
 			{openedModal === "JOIN_GROUP" && (
