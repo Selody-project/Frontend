@@ -36,7 +36,7 @@ const GroupFeed = ({ groupId, isEnd, leaderName }) => {
 	return (
 		<FeedSection ref={postRef}>
 			{allGroupPosts &&
-				allGroupPosts?.map((post) => (
+				allGroupPosts.map((post) => (
 					<Feed
 						post={post}
 						key={post.postId}

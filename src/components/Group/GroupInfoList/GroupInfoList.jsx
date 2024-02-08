@@ -42,12 +42,12 @@ const GroupInfoList = ({ groups, scrollRef, isRequest }) => {
 									요청취소
 								</OptionMenuDiv>
 							)}
-							{openedModal === "REQUESTCANCEL" && (
+							{openedModal === "REQUEST_CANCEL" && (
 								<GroupRequestCancelModal groupId={info.groupId} />
 							)}
 						</OptionDiv>
 					)}
-					<Link to={`/group/${info.groupId}`}>
+					<Link to={!optionMenuOpenedFeedIndex && `/group/${info.groupId}`}>
 						<img src={info.image} alt="groupImg" />
 						<h3>{info.name}</h3>
 						<p>{info.description}</p>
