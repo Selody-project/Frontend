@@ -23,6 +23,7 @@ import { GroupMain, FeedDiv } from "./GroupPage.styles";
 const GroupPage = () => {
 	const dispatch = useDispatch();
 
+	const { user } = useSelector((state) => state.auth);
 	const { groupInfo, groupRequestMemberList } = useSelector(
 		(state) => state.group,
 	);
@@ -54,7 +55,9 @@ const GroupPage = () => {
 		}
 
 		if (searchParams.get("invite")) {
-			dispatch(openJoinGroupModal());
+			groupInfo?.information.memberInfo.some(
+				(data) => data.userId !== user.userId && dispatch(openJoinGroupModal()),
+			);
 		}
 
 		return () => {
