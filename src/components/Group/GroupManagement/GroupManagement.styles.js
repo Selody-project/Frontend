@@ -32,8 +32,8 @@ export const TitleUl = styled.ul`
 `;
 
 export const TitleButton = styled.button`
-	color: ${({ disabled, theme: { colors } }) =>
-		disabled ? colors.text_01 : colors.disabled_text};
+	color: ${({ isActive, theme: { colors } }) =>
+		isActive ? colors.text_01 : colors.disabled_text};
 	font-size: 18px;
 	font-weight: ${({ theme: { typography } }) => typography.weight.semibold};
 	cursor: pointer;

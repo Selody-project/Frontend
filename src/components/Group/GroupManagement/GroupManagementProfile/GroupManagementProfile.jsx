@@ -5,6 +5,7 @@ import DefaultProfile from "@/assets/img/img-selody-logo/3x.png";
 import GroupDeleteModal from "@/components/Common/GroupModal/GroupDeleteModal/GroupDeleteModal";
 import GroupExitModal from "@/components/Common/GroupModal/GroupExitModal/GroupExitModal";
 import ToggleButton from "@/components/Common/ToggleButton/ToggleButton";
+import { UI_TYPE } from "@/constants/uiConstants";
 import {
 	changeGroupPublicOption,
 	updateGroupProfile,
@@ -33,26 +34,26 @@ const GroupManagementProfile = ({ groupInfo }) => {
 	const isLoading = useSelector((state) => state.group.isLoading);
 	const { openedModal } = useSelector((state) => state.ui);
 
-	const groupDetailInfo = groupInfo.information.group;
-	const { groupId, isPublicGroup } = groupDetailInfo;
+	const { groupId, isPublicGroup } = groupInfo.information.group;
 	const memberLength = groupInfo.information.memberInfo.length;
 
-	const defaultProfileImg = groupDetailInfo.image ?? DefaultProfile;
+	const defaultProfileImg = groupInfo.information.group.image ?? DefaultProfile;
 
 	const [isPublic, setIsPublic] = useState(isPublicGroup);
 
-	const [profileObj, setProfileObj] = useState("");
+	const [ProfileImg, setProfileImg] = useState("");
 	const [profileImgValue, setProfileImgValue] = useState(defaultProfileImg);
-	const [nameValue, setNameValue] = useState(groupDetailInfo.name);
+	const [nameValue, setNameValue] = useState(groupInfo.information.group.name);
 	const [descriptionValue, setDescriptionValue] = useState(
-		groupDetailInfo.description,
+		groupInfo.information.group.description,
 	);
 
 	const isSaveEnabled =
-		(nameValue.trim() !== groupDetailInfo.name.trim() ||
-			descriptionValue.trim() !== groupDetailInfo.description.trim() ||
+		(nameValue.trim() !== groupInfo.information.group.name.trim() ||
+			descriptionValue.trim() !==
+				groupInfo.information.group.description.trim() ||
 			profileImgValue.trim() !== defaultProfileImg.trim() ||
-			isPublicGroup !== isPublic) &&
+			isPublicGroup !== Number(isPublic)) &&
 		nameValue.trim();
 
 	const handleClickSave = async () => {
@@ -66,7 +67,7 @@ const GroupManagementProfile = ({ groupInfo }) => {
 		formdata.append("data", JSON.stringify(data));
 
 		if (profileImgValue !== defaultProfileImg) {
-			formdata.append("image", profileObj);
+			formdata.append("image", ProfileImg);
 		}
 
 		dispatch(updateGroupProfile({ formdata, groupId }));
@@ -92,7 +93,7 @@ const GroupManagementProfile = ({ groupInfo }) => {
 		reader.readAsDataURL(file);
 		reader.onloadend = () => {
 			setProfileImgValue(reader.result);
-			setProfileObj(file);
+			setProfileImg(file);
 		};
 	};
 
@@ -141,10 +142,10 @@ const GroupManagementProfile = ({ groupInfo }) => {
 					그룹 삭제
 				</DeleteButton>
 			</BottomButtonDiv>
-			{openedModal === "EXIT_GROUP" && <GroupExitModal />}
-			{openedModal === "DELETE_GROUP" && (
+			{openedModal === UI_TYPE.EXIT_GROUP && <GroupExitModal />}
+			{openedModal === UI_TYPE.DELETE_GROUP && (
 				<GroupDeleteModal
-					groupDetailInfo={groupDetailInfo}
+					groupDetailInfo={groupInfo.information.group}
 					isLoading={isLoading}
 				/>
 			)}

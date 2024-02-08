@@ -8,11 +8,6 @@ import { ContainerDiv, TitleUl, TitleButton } from "./GroupManagement.styles";
 import GroupManagementProfile from "./GroupManagementProfile/GroupManagementProfile";
 import GroupMemberManagement from "./GroupMemberManagement/GroupMemberManagement";
 
-const GROUP_MANAGEMENT_TAB_TITLE = {
-	GROUP_PROFILE: "그룹 프로필",
-	GROUP_MEMBER_MANGEMENT: "그룹원 관리",
-};
-
 const GroupManagement = ({ groupInfo }) => {
 	const dispatch = useDispatch();
 
@@ -22,7 +17,7 @@ const GroupManagement = ({ groupInfo }) => {
 		(member) => member.accessLevel !== "owner",
 	);
 
-	const [menu, setMenu] = useState(GROUP_MANAGEMENT_TAB_TITLE.GROUP_PROFILE);
+	const [isGroupProfile, setIsGroupProfile] = useState(true);
 
 	const { groupId } = groupInfo.information.group;
 
@@ -35,34 +30,31 @@ const GroupManagement = ({ groupInfo }) => {
 			<TitleUl>
 				<li>
 					<TitleButton
-						onClick={() => setMenu(GROUP_MANAGEMENT_TAB_TITLE.GROUP_PROFILE)}
-						disabled={menu === GROUP_MANAGEMENT_TAB_TITLE.GROUP_PROFILE}
+						onClick={() => setIsGroupProfile(true)}
+						isActive={isGroupProfile}
 					>
-						{GROUP_MANAGEMENT_TAB_TITLE.GROUP_PROFILE}
+						그룹 프로필
 					</TitleButton>
 				</li>
 				<li>
 					<TitleButton
-						onClick={() =>
-							setMenu(GROUP_MANAGEMENT_TAB_TITLE.GROUP_MEMBER_MANGEMENT)
-						}
-						disabled={
-							menu === GROUP_MANAGEMENT_TAB_TITLE.GROUP_MEMBER_MANGEMENT
-						}
+						onClick={() => setIsGroupProfile(false)}
+						isActive={!isGroupProfile}
 					>
-						{GROUP_MANAGEMENT_TAB_TITLE.GROUP_MEMBER_MANGEMENT}
+						그룹원 관리
 					</TitleButton>
 				</li>
 			</TitleUl>
-			{menu === GROUP_MANAGEMENT_TAB_TITLE.GROUP_PROFILE ? (
+
+			{isGroupProfile ? (
 				<GroupManagementProfile groupInfo={groupInfo} />
 			) : (
 				// eslint-disable-next-line react/jsx-no-useless-fragment
 				<>
-					{memberList.length ? (
-						<GroupMemberManagement groupId={groupId} memberList={memberList} />
-					) : (
+					{memberList.length === 0 ? (
 						<EmptyGroupMember />
+					) : (
+						<GroupMemberManagement groupId={groupId} memberList={memberList} />
 					)}
 				</>
 			)}

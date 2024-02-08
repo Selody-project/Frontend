@@ -1,5 +1,7 @@
 import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { ACCESS_LEVEL_DATA } from "@/constants/accessConstants";
 import { InfoIcon, AccessArrowIcon } from "@/constants/iconConstants";
@@ -46,6 +48,8 @@ const GroupMemberManagement = ({ groupId, memberList }) => {
 
 	const [isAccessChangeOpenIndex, setIsAccessChangeOpenIndex] = useState(null);
 
+	const navigate = useNavigate();
+
 	const accessInfoRef = useRef(null);
 	const commentListRef = useRef(null);
 
@@ -55,9 +59,23 @@ const GroupMemberManagement = ({ groupId, memberList }) => {
 	const handleAccessChange = (num) =>
 		setIsAccessChangeOpenIndex((prev) => (prev === num ? null : num));
 
-	const handleChangeLevelClick = (userId, accessLevel, memberAccessLevel) => {
+	const handleChangeLevelClick = async (
+		userId,
+		accessLevel,
+		memberAccessLevel,
+	) => {
 		if (memberAccessLevel !== accessLevel) {
-			dispatch(changeAccessLevel({ groupId, userId, accessLevel }));
+			try {
+				await dispatch(
+					changeAccessLevel({ groupId, userId, accessLevel }),
+				).unwrap();
+
+				if (accessLevel === "owner") {
+					navigate(`/group/${groupId}`);
+				}
+			} catch (error) {
+				toast.error("그룹원 권한 변경에 실패했습니다.");
+			}
 		}
 	};
 
