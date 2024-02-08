@@ -23,9 +23,11 @@ const GroupDeleteModal = ({ groupDetailInfo, isLoading }) => {
 
 	const handleDeleteGroup = async () => {
 		try {
-			await dispatch(deleteGroup(groupDetailInfo.groupId)).unwrap();
-			dispatch(closeModal());
-			navigate(`/community?${TAB_KEY}=${TAB_PARAM.MY_GROUP_FEED}`);
+			if (groupDetailInfo.member < 2) {
+				await dispatch(deleteGroup(groupDetailInfo.groupId)).unwrap();
+				dispatch(closeModal());
+				navigate(`/community?${TAB_KEY}=${TAB_PARAM.MY_GROUP_FEED}`);
+			}
 		} catch (e) {
 			toast.error("그룹 삭제에 실패했습니다.");
 		}

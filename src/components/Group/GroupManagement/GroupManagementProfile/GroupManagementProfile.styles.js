@@ -112,4 +112,8 @@ export const DeleteButton = styled(ExitButton)`
 	background-color: ${({ theme: { colors } }) => colors.sunday};
 	color: ${({ theme: { colors } }) => colors.white};
 	border: none;
+
+	&:hover {
+		background-color: ${({ theme: { colors } }) => colors.sunday};
+	}
 `;

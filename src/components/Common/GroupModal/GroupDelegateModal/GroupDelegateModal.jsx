@@ -7,7 +7,6 @@ import BaseModal from "@/components/Common/Modal/BaseModal";
 import { CheckIcon } from "@/constants/iconConstants";
 import { TAB_KEY, TAB_PARAM } from "@/constants/tabConstants";
 import { delegateGroup } from "@/features/group/group-service";
-import { setRefetchUserGroup } from "@/features/group/group-slice";
 import { closeModal } from "@/features/ui/ui-slice";
 
 import {
@@ -15,15 +14,15 @@ import {
 	TitleH2,
 	ContentDiv,
 	Button,
-	SelectBoxDiv,
-	SelectWrapDiv,
+	SelectBoxLi,
+	SelectWrapUl,
 } from "../GroupModal.Shared.styles";
 
 const SelectBox = ({ name, isSelected, onClick }) => (
-	<SelectBoxDiv onClick={onClick} isSelected={isSelected}>
+	<SelectBoxLi onClick={onClick} isSelected={isSelected}>
 		<div>{isSelected && <CheckIcon />}</div>
 		<span>{name}</span>
-	</SelectBoxDiv>
+	</SelectBoxLi>
 );
 
 const GroupDelegateModal = ({ groupInfo, groupMembers }) => {
@@ -45,7 +44,6 @@ const GroupDelegateModal = ({ groupInfo, groupMembers }) => {
 		try {
 			await dispatch(delegateGroup({ groupId, selectedMemberId })).unwrap();
 			dispatch(closeModal());
-			dispatch(setRefetchUserGroup(true));
 			navigate(`/community?${TAB_KEY}=${TAB_PARAM.MY_GROUP_FEED}`);
 		} catch (e) {
 			toast.error("그룹장 위임에 실패했습니다.");
@@ -68,7 +66,7 @@ const GroupDelegateModal = ({ groupInfo, groupMembers }) => {
 						<br />
 						방장 권한이 해당 사용자에게 넘어갑니다.
 					</p>
-					<SelectWrapDiv>
+					<SelectWrapUl>
 						{memberList.map((info) => (
 							<SelectBox
 								key={info.userId}
@@ -77,7 +75,7 @@ const GroupDelegateModal = ({ groupInfo, groupMembers }) => {
 								isSelected={info.userId === selectedMemberId}
 							/>
 						))}
-					</SelectWrapDiv>
+					</SelectWrapUl>
 					<Button onClick={handleClickDelegate} disabled={!selectedMemberId}>
 						위임하기
 					</Button>

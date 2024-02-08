@@ -61,16 +61,18 @@ export const BottomDiv = styled.div`
 	color: ${({ theme }) => theme.colors.sunday};
 `;
 
-export const SelectWrapDiv = styled.div`
+export const SelectWrapUl = styled.ul`
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 	gap: 16px;
 	padding: 32px 0;
 `;
 
-export const SelectBoxDiv = styled.div`
+export const SelectBoxLi = styled.li`
 	background-color: ${({ isSelected, theme: { colors } }) =>
 		isSelected ? colors.disabled_text : colors.white};
+	width: 324px;
 	display: flex;
 	align-items: center;
 	padding: 10px;
