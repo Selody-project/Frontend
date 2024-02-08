@@ -7,6 +7,7 @@ const initialState = {
 	scheduleModalMode: SCHEDULE_MODAL_TYPE.CREATE,
 	scheduleModalId: null,
 	isLoading: true,
+	warningModalUserInfo: null,
 };
 
 const uiSlice = createSlice({
@@ -89,6 +90,10 @@ const uiSlice = createSlice({
 		openMemberRequestModal: (state) => {
 			state.openedModal = UI_TYPE.MEMBER_REQUEST_MODAL;
 		},
+		openDeleteMemberWarningModal: (state, { payload }) => {
+			state.warningModalUserInfo = payload;
+			state.openedModal = UI_TYPE.DELETE_MEMBER_WARNING_MODAL;
+		},
 		closeModal: () => {
 			return initialState;
 		},
@@ -118,6 +123,7 @@ export const {
 	openJoinGroupModal,
 	openMemberModal,
 	openMemberRequestModal,
+	openDeleteMemberWarningModal,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;
