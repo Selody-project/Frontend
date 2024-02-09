@@ -9,10 +9,10 @@ import { closeModal } from "@/features/ui/ui-slice.js";
 import {
 	TopDiv,
 	TitleH2,
-	GroupNameH3,
+	GroupNameLabel,
 	GroupNameTextarea,
-	GroupIntroduceH3,
-	GroupIntroduceTextarea,
+	GroupDescriptionLabel,
+	GroupDescriptionTextarea,
 	ButtonWrapDiv,
 	GroupCreateButton,
 } from "./GroupCreateModal.style.js";
@@ -49,14 +49,18 @@ const GroupCreateModal = () => {
 				<TitleH2>그룹 만들기</TitleH2>
 				<GroupImgAddIcon />
 			</TopDiv>
-			<GroupNameH3>그룹 이름</GroupNameH3>
+			<GroupNameLabel htmlFor="name">그룹 이름</GroupNameLabel>
 			<GroupNameTextarea
+				name="name"
 				onChange={(e) => setName(e.target.value)}
 				value={name}
 				maxLength={20}
 			/>
-			<GroupIntroduceH3>그룹 소개</GroupIntroduceH3>
-			<GroupIntroduceTextarea
+			<GroupDescriptionLabel htmlFor="description">
+				그룹 소개
+			</GroupDescriptionLabel>
+			<GroupDescriptionTextarea
+				name="description"
 				onChange={(e) => setDescription(e.target.value)}
 				value={description}
 				maxLength={100}

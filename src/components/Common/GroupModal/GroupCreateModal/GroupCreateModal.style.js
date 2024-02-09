@@ -18,7 +18,7 @@ export const TitleH2 = styled.h2`
 	font-weight: 600;
 `;
 
-export const GroupNameH3 = styled.h3`
+export const GroupNameLabel = styled.label`
 	color: ${({ theme: { colors } }) => colors.text_01};
 	font-size: 13px;
 	font-family: Inter;
@@ -41,11 +41,11 @@ export const GroupNameTextarea = styled.textarea`
 	resize: none;
 `;
 
-export const GroupIntroduceH3 = styled(GroupNameH3)`
+export const GroupDescriptionLabel = styled(GroupNameLabel)`
 	margin-top: 28px;
 `;
 
-export const GroupIntroduceTextarea = styled(GroupNameTextarea)`
+export const GroupDescriptionTextarea = styled(GroupNameTextarea)`
 	height: 88px;
 `;
 
