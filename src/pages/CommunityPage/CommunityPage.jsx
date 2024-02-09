@@ -77,11 +77,8 @@ const CommunityPage = () => {
 	};
 
 	useEffect(() => {
-		const dispatchGetMyGroupPosts = async () => {
-			await dispatch(getMyGroupPosts(myGroupPostslastRecordId));
-		};
 		if (isObserving && !isEnd) {
-			dispatchGetMyGroupPosts();
+			dispatch(getMyGroupPosts(myGroupPostslastRecordId));
 		}
 	}, [isObserving, dispatch]);
 

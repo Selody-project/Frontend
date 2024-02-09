@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 
@@ -15,8 +15,10 @@ import {
 	getGroupInfo,
 	getGroupRequestMemberList,
 } from "@/features/group/group-service";
+import { getGroupAllPosts } from "@/features/post/post-service";
 import { resetAllGroupPosts } from "@/features/post/post-slice";
 import { openJoinGroupModal } from "@/features/ui/ui-slice";
+import useObserver from "@/hooks/useObserver";
 
 import { GroupMain, FeedDiv } from "./GroupPage.styles";
 
@@ -27,8 +29,17 @@ const GroupPage = () => {
 	const { groupInfo, groupRequestMemberList } = useSelector(
 		(state) => state.group,
 	);
-	const { allGroupPostsIsEnd, isEmpty } = useSelector((state) => state.post);
+	const {
+		allGroupPosts,
+		allGroupPostslastRecordId,
+		allGroupPostsIsEnd,
+		isEmpty,
+	} = useSelector((state) => state.post);
 	const { openedModal } = useSelector((state) => state.ui);
+
+	const postRef = useRef(null);
+
+	const isObserving = useObserver(postRef, { threshold: 0.3 });
 
 	const param = useParams();
 	const navigate = useNavigate();
@@ -65,6 +76,14 @@ const GroupPage = () => {
 		};
 	}, []);
 
+	useEffect(() => {
+		if (!allGroupPostsIsEnd && isObserving) {
+			dispatch(
+				getGroupAllPosts({ groupId, lastRecordId: allGroupPostslastRecordId }),
+			);
+		}
+	}, [isObserving, dispatch]);
+
 	return (
 		<GroupMain>
 			{groupInfo && (
@@ -84,6 +103,8 @@ const GroupPage = () => {
 						<EmptyFeed />
 					) : (
 						<GroupFeed
+							allGroupPosts={allGroupPosts}
+							ref={postRef}
 							groupId={groupId}
 							isEnd={!allGroupPostsIsEnd}
 							leaderName={leaderName}

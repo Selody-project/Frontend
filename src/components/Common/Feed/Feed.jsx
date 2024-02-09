@@ -82,7 +82,7 @@ const Feed = ({
 		<FeedArticle key={post.postId}>
 			{user.nickname === post.author && (
 				<OptionDiv>
-					<OptionThreeDotIcon onClick={() => onThreeDotClick(post.postId)} />
+					<OptionThreeDotIcon onClick={onThreeDotClick} />
 					{optionOpenedFeedIndex === post.postId && (
 						<OptionMenuDiv>
 							<ul>
