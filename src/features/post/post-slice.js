@@ -98,10 +98,19 @@ const postSlice = createSlice({
 			.addMatcher(isAllOf(cancelLikeGroupPost.fulfilled), (state) => {
 				state.isLoading = false;
 			})
-			.addMatcher(isAllOf(deleteGroupPost.fulfilled), (state) => {
-				state.isLoading = false;
-				toast.success("글을 삭제하는데 성공하였습니다.");
-			});
+			.addMatcher(
+				isAllOf(deleteGroupPost.fulfilled),
+				(state, { meta: { arg: id } }) => {
+					state.isLoading = false;
+					toast.success("글을 삭제하는데 성공하였습니다.");
+					state.allGroupPosts = state.allGroupPosts.filter(
+						(prev) => prev.postId !== id.postId,
+					);
+					state.myGroupPosts = state.myGroupPosts.filter(
+						(prev) => prev.postId !== id.postId,
+					);
+				},
+			);
 	},
 });
 
