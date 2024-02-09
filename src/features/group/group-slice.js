@@ -127,10 +127,6 @@ const groupSlice = createSlice({
 					state.isEnd = false;
 				}
 			})
-			.addMatcher(isAllOf(createGroup.fulfilled), (state) => {
-				state.isLoading = false;
-				toast.success("그룹 생성에 성공하셨습니다!");
-			})
 			.addMatcher(isAllOf(getGroupList.fulfilled), (state, { payload }) => {
 				state.isLoading = false;
 				state.groupList = [...state.groupList, ...payload.groups];

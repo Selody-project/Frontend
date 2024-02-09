@@ -16,8 +16,9 @@ import {
 } from "./MyGroup.styles";
 
 const MyGroup = () => {
-	const userGroupList = useSelector((state) => state.user.userGroupList);
 	const dispatch = useDispatch();
+
+	const { userGroupList } = useSelector((state) => state.user);
 
 	const childRef = useRef(null);
 	const parentRef = useRef(null);
