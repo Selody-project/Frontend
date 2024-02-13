@@ -59,10 +59,21 @@ export const ProfileDiv = styled.div`
 
 export const ButtonDiv = styled.div`
 	display: flex;
+	align-items: center;
 	gap: 40px;
 
 	& > button {
+		width: 30px;
+		height: 30px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-radius: 50%;
 		cursor: pointer;
+
+		&:hover {
+			background-color: ${({ theme: { colors } }) => colors.bg_02};
+		}
 	}
 `;
 
