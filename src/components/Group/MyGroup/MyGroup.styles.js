@@ -4,6 +4,7 @@ export const GroupDiv = styled.div`
 	display: flex;
 	flex-direction: column;
 	font-family: Inter;
+	position: relative;
 
 	& > h3 {
 		font-size: 18px;
@@ -13,7 +14,6 @@ export const GroupDiv = styled.div`
 
 export const Div = styled.div`
 	overflow: hidden;
-	position: relative;
 `;
 
 export const InnerDiv = styled.div`

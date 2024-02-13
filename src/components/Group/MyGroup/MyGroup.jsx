@@ -29,14 +29,30 @@ const MyGroup = () => {
 	const [currentWidth, setCurrentWidth] = useState(0);
 	const [widthGap, setWidthGap] = useState(0);
 
-	const handleNextButton = () => {
-		setCurrentWidth((nextWidth) => nextWidth + 200);
-	};
+	useEffect(() => {
+		dispatch(getUserGroups());
+	}, []);
 
 	const handlePrevButton = () => {
-		if (currentWidth > 0) {
-			setCurrentWidth((prevWidth) => prevWidth - 200);
-		}
+		const { current: wrap } = parentRef;
+
+		wrap.scrollBy({
+			left: -300,
+			behavior: "smooth",
+		});
+
+		setCurrentWidth((prevWidth) => prevWidth - 300);
+	};
+
+	const handleNextButton = () => {
+		const { current: wrap } = parentRef;
+
+		wrap.scrollBy({
+			left: 300,
+			behavior: "smooth",
+		});
+
+		setCurrentWidth((nextWidth) => nextWidth + 300);
 	};
 
 	useEffect(() => {
@@ -44,10 +60,6 @@ const MyGroup = () => {
 		const width = parentRef?.current?.clientWidth;
 		setWidthGap(maxWidth - width);
 	});
-
-	useEffect(() => {
-		dispatch(getUserGroups());
-	}, []);
 
 	useEffect(() => {
 		if (widthGap && currentWidth > widthGap) {
@@ -66,20 +78,7 @@ const MyGroup = () => {
 		<GroupDiv>
 			<h3>내 그룹</h3>
 			<Div ref={parentRef}>
-				{!isPrevButtonDisplayed && (
-					<LeftButton onClick={handlePrevButton}>
-						<LeftArrowIcon />
-					</LeftButton>
-				)}
-				<InnerDiv
-					style={{
-						transform:
-							currentWidth > widthGap
-								? `translateX(-${widthGap}px)`
-								: `translateX(-${currentWidth}px)`,
-					}}
-					ref={childRef}
-				>
+				<InnerDiv ref={childRef}>
 					<ul>
 						{userGroupList.map((info) => (
 							<li key={info.groupId}>
@@ -95,12 +94,19 @@ const MyGroup = () => {
 						))}
 					</ul>
 				</InnerDiv>
-				{!isNextButtonDisplayed && (
-					<RightButton onClick={handleNextButton}>
-						<RightArrowIcon />
-					</RightButton>
-				)}
 			</Div>
+
+			{!isPrevButtonDisplayed && (
+				<LeftButton onClick={handlePrevButton}>
+					<LeftArrowIcon />
+				</LeftButton>
+			)}
+
+			{!isNextButtonDisplayed && (
+				<RightButton onClick={handleNextButton}>
+					<RightArrowIcon />
+				</RightButton>
+			)}
 		</GroupDiv>
 	);
 };
