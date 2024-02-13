@@ -5,6 +5,7 @@ import DocumentIcon from "@/assets/icon/ic-document.svg";
 import DottedCalendarIcon from "@/assets/icon/ic-dotted-calendar.svg";
 import DownArrowIcon from "@/assets/icon/ic-down-arrow.svg";
 import EditScheduleIcon from "@/assets/icon/ic-edit-schedule.svg";
+import ExtraMembersDropdownIcon from "@/assets/icon/ic-extraMembers-dropdown.svg";
 import CommentIcon from "@/assets/icon/ic-feed-comment.svg";
 import HeartIcon from "@/assets/icon/ic-feed-heart.svg";
 import OptionThreeDotIcon from "@/assets/icon/ic-feed-option.svg";
@@ -52,4 +53,5 @@ export {
 	DocumentIcon,
 	DottedCalendarIcon,
 	WhitePlusIcon,
+	ExtraMembersDropdownIcon,
 };
