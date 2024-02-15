@@ -11,6 +11,7 @@ import GroupMember from "@/components/Group/GroupMember/GroupMember";
 import GroupProfile from "@/components/Group/GroupProfile/GroupProfile";
 import GroupTitle from "@/components/Group/GroupTitle/GroupTitle";
 import { TAB_KEY, TAB_PARAM } from "@/constants/tabConstants";
+import { UI_TYPE } from "@/constants/uiConstants";
 import {
 	getGroupInfo,
 	getGroupRequestMemberList,
@@ -116,7 +117,7 @@ const GroupPage = () => {
 				<GroupMember groupInfo={groupInfo} leaderId={leaderId} />
 			)}
 
-			{openedModal === "JOIN_GROUP" && (
+			{openedModal === UI_TYPE.JOIN_GROUP && (
 				<GroupJoinModal inviteLink={inviteLink} />
 			)}
 		</GroupMain>

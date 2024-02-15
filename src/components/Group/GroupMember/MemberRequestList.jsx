@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { RequestCheckIcon, RequestCloseIcon } from "@/constants/iconConstants";
+import { UI_TYPE } from "@/constants/uiConstants";
 import {
 	approveGroupJoin,
 	rejectGroupJoin,
@@ -74,7 +75,7 @@ const MemberRequestList = ({ requestMemberList, groupInfo }) => {
 						</li>
 					))}
 				</MemberUl>
-				{openedModal === "MEMBER_REQUEST_MODAL" && (
+				{openedModal === UI_TYPE.MEMBER_REQUEST_MODAL && (
 					<MemberRequestModal
 						requestMemberList={requestMemberList}
 						groupId={groupId}

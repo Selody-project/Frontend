@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 import GroupDelegateModal from "@/components/Common/GroupModal/GroupDelegateModal/GroupDelegateModal";
+import { UI_TYPE } from "@/constants/uiConstants";
 
 import {
 	ContainerDiv,
@@ -37,7 +38,7 @@ const GroupProfile = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 				isGroupMember={isGroupMember}
 				isGroupLeader={isGroupLeader}
 			/>
-			{openedModal === "DELEGATE_GROUP" && (
+			{openedModal === UI_TYPE.DELEGATE_GROUP && (
 				<GroupDelegateModal
 					groupInfo={groupInfo}
 					isLoading={isLoading}
