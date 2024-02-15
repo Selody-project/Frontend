@@ -38,6 +38,13 @@ const GroupProfileButton = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 			<ProfileButtonDiv>
 				<ProfileButton onClick={() => setIsGroupInviteLinkOpen(true)}>
 					링크 생성하기
+					{isGroupInviteLinkOpen && (
+						<GroupInviteLink
+							groupName={name}
+							groupId={groupId}
+							onClose={() => setIsGroupInviteLinkOpen(false)}
+						/>
+					)}
 				</ProfileButton>
 				{memberLength > 1 && (
 					<ProfileWhiteButton
@@ -45,13 +52,6 @@ const GroupProfileButton = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 					>
 						그룹장 위임
 					</ProfileWhiteButton>
-				)}
-				{isGroupInviteLinkOpen && (
-					<GroupInviteLink
-						groupName={name}
-						groupId={groupId}
-						onClose={() => setIsGroupInviteLinkOpen(false)}
-					/>
 				)}
 			</ProfileButtonDiv>
 		);

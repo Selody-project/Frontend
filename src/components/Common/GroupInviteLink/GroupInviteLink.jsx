@@ -31,7 +31,7 @@ const GroupInviteLink = ({ groupId, groupName, onClose }) => {
 		<ContainerDiv>
 			<TopDiv>
 				<h3>{groupName}</h3>
-				<CloseIcon onClick={() => onClose(false)} />
+				<CloseIcon onClick={onClose} />
 			</TopDiv>
 			<MiddleDiv>
 				<TextDiv>
@@ -41,7 +41,7 @@ const GroupInviteLink = ({ groupId, groupName, onClose }) => {
 				<button
 					type="button"
 					onClick={handleCopyClipBoard}
-					disabled={isLoading || inviteLink === null}
+					disabled={isLoading || inviteLink === ""}
 				>
 					복사
 				</button>

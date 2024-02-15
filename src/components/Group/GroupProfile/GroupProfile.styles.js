@@ -111,6 +111,7 @@ export const ProfileButton = styled.button`
 	color: ${({ theme: { colors } }) => colors.white};
 	font-weight: ${({ theme: { typography } }) => typography.weight.medium};
 	font-size: 18px;
+	position: relative;
 	cursor: pointer;
 
 	&:hover {
