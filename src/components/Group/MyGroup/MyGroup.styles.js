@@ -12,8 +12,14 @@ export const GroupDiv = styled.div`
 	}
 `;
 
-export const Div = styled.div`
-	overflow: hidden;
+export const WrapperDiv = styled.div`
+	overflow-x: auto;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
 `;
 
 export const InnerDiv = styled.div`
@@ -36,7 +42,7 @@ export const LeftButton = styled.button`
 	justify-content: center;
 	align-items: center;
 	position: absolute;
-	top: 44%;
+	top: 50%;
 	z-index: 2;
 	cursor: pointer;
 `;

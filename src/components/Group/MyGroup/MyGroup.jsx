@@ -7,7 +7,7 @@ import { getUserGroups } from "@/features/user/user-service";
 
 import {
 	GroupDiv,
-	Div,
+	WrapperDiv,
 	InnerDiv,
 	LeftButton,
 	RightButton,
@@ -77,7 +77,7 @@ const MyGroup = () => {
 	return (
 		<GroupDiv>
 			<h3>내 그룹</h3>
-			<Div ref={parentRef}>
+			<WrapperDiv ref={parentRef}>
 				<InnerDiv ref={childRef}>
 					<ul>
 						{userGroupList.map((info) => (
@@ -94,7 +94,7 @@ const MyGroup = () => {
 						))}
 					</ul>
 				</InnerDiv>
-			</Div>
+			</WrapperDiv>
 
 			{!isPrevButtonDisplayed && (
 				<LeftButton onClick={handlePrevButton}>
