@@ -39,7 +39,6 @@ const CommunityPage = () => {
 
 	const navigate = useNavigate();
 
-	// eslint-disable-next-line no-unused-vars
 	const [searchParams, setSearchParams] = useSearchParams();
 
 	const [searchKeyword, setSearchKeyword] = useState("");
@@ -75,6 +74,12 @@ const CommunityPage = () => {
 			handleSearchClick();
 		}
 	};
+
+	useEffect(() => {
+		if (searchParams) {
+			setSearchParams("tab=feed");
+		}
+	}, []);
 
 	useEffect(() => {
 		if (isObserving && !isEnd) {

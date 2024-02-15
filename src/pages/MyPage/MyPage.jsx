@@ -45,7 +45,6 @@ const MyPage = () => {
 
 	const navigate = useNavigate();
 
-	// eslint-disable-next-line no-unused-vars
 	const [searchParams, setSearchParams] = useSearchParams();
 
 	const isObserving = useObserver(target, { threshold: 0.3 });
@@ -53,15 +52,15 @@ const MyPage = () => {
 	useEffect(() => {
 		dispatch(getUserGroups());
 		dispatch(getRequestUserGroups());
+
+		if (searchParams) {
+			setSearchParams("tab=group");
+		}
 	}, []);
 
 	useEffect(() => {
-		const dispatchGetGroupList = async () => {
-			await dispatch(getGroupList(lastRecordId));
-		};
-
 		if (isObserving && !isEnd) {
-			dispatchGetGroupList();
+			dispatch(getGroupList(lastRecordId));
 		}
 	}, [isObserving, dispatch]);
 
