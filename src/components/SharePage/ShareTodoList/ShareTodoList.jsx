@@ -23,7 +23,7 @@ const ShareTodoList = () => {
 	const dispatch = useDispatch();
 	const { openedModal } = useSelector((state) => state.ui);
 	const { todaySchedules } = useSelector((state) => state.schedule);
-	const { inviteCode } = useSelector((state) => state.groupInvite);
+
 	const [selectedTab, setSelectedTab] = useState(true);
 
 	const createInviteCodeHandler = () => {};
@@ -132,7 +132,7 @@ const ShareTodoList = () => {
 			<div className="invite">
 				<h2>초대코드 생성</h2>
 				<div className="container">
-					<div className="box">{inviteCode || ""}</div>
+					<div className="box" />
 					<button type="button" onClick={createInviteCodeHandler}>
 						생성
 					</button>
