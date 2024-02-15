@@ -41,7 +41,7 @@ const GroupInviteLink = ({ groupId, groupName, onClose }) => {
 				<button
 					type="button"
 					onClick={handleCopyClipBoard}
-					disabled={isLoading || inviteLink === null}
+					disabled={isLoading || inviteLink === ""}
 				>
 					복사
 				</button>
