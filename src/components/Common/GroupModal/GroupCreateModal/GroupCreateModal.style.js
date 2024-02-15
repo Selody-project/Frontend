@@ -52,7 +52,7 @@ export const GroupDescriptionTextarea = styled(GroupNameTextarea)`
 export const ButtonWrapDiv = styled.div`
 	display: flex;
 	justify-content: flex-end;
-	margin: 12px 0 14px;
+	margin: 12px 0 2px;
 `;
 
 export const GroupCreateButton = styled.button`
