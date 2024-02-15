@@ -48,7 +48,10 @@ const GroupInfoList = ({ groups, scrollRef, isRequest }) => {
 							)}
 						</OptionDiv>
 					)}
-					<Link to={!optionMenuOpenedFeedIndex && `/group/${info.groupId}`}>
+					<Link
+						to={`/group/${info.groupId}`}
+						onClick={(e) => optionMenuOpenedFeedIndex && e.preventDefault()}
+					>
 						<img src={info.image} alt="groupImg" />
 						<h3>{info.name}</h3>
 						<p>{info.description}</p>
