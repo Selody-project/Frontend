@@ -53,7 +53,11 @@ const MyPage = () => {
 		dispatch(getUserGroups());
 		dispatch(getRequestUserGroups());
 
-		if (searchParams) {
+		if (
+			!searchParams ||
+			(searchParams.get("tab") !== "group" &&
+				searchParams.get("tab") !== "request")
+		) {
 			setSearchParams("tab=group");
 		}
 	}, []);

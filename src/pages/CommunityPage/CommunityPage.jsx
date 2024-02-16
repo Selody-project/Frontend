@@ -76,7 +76,11 @@ const CommunityPage = () => {
 	};
 
 	useEffect(() => {
-		if (searchParams) {
+		if (
+			!searchParams ||
+			(searchParams.get("tab") !== "feed" &&
+				searchParams.get("tab") !== "search")
+		) {
 			setSearchParams("tab=feed");
 		}
 	}, []);
