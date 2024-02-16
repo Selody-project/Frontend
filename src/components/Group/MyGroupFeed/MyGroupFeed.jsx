@@ -15,7 +15,6 @@ const MyGroupFeed = forwardRef(({ myGroupPosts }, ref) => {
 					<Feed
 						post={post}
 						key={post.postId}
-						groupId={post.groupId}
 						optionOpenedFeedIndex={optionMenuOpenedFeedIndex}
 						onThreeDotClick={() =>
 							setOptionMenuOpenedFeedIndex((prev) =>

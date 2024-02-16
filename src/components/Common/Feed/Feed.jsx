@@ -26,13 +26,7 @@ import {
 	IconItemButton,
 } from "./Feed.styles";
 
-const Feed = ({
-	groupId,
-	post,
-	optionOpenedFeedIndex,
-	onThreeDotClick,
-	leaderName,
-}) => {
+const Feed = ({ post, optionOpenedFeedIndex, onThreeDotClick, leaderName }) => {
 	const dispatch = useDispatch();
 
 	const { user } = useSelector((state) => state.auth);
@@ -43,7 +37,7 @@ const Feed = ({
 	const likeClick = async () => {
 		try {
 			await dispatch(
-				likeGroupPost({ postGroupId: groupId, postId: post.postId }),
+				likeGroupPost({ postGroupId: post.groupId, postId: post.postId }),
 			).unwrap();
 		} catch (error) {
 			setIsPostLiked(false);
@@ -54,7 +48,7 @@ const Feed = ({
 	const disLikeClick = async () => {
 		try {
 			await dispatch(
-				cancelLikeGroupPost({ postGroupId: groupId, postId: post.postId }),
+				cancelLikeGroupPost({ postGroupId: post.groupId, postId: post.postId }),
 			).unwrap();
 		} catch (error) {
 			setIsPostLiked(true);
@@ -75,7 +69,9 @@ const Feed = ({
 	};
 
 	const deletePost = () => {
-		dispatch(deleteGroupPost({ postGroupId: groupId, postId: post.postId }));
+		dispatch(
+			deleteGroupPost({ postGroupId: post.groupId, postId: post.postId }),
+		);
 	};
 
 	return (

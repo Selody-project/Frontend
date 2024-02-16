@@ -13,9 +13,8 @@ const GroupFeed = forwardRef(({ allGroupPosts, groupId, leaderName }, ref) => {
 			{allGroupPosts &&
 				allGroupPosts.map((post) => (
 					<Feed
-						post={post}
+						post={{ ...post, groupId }}
 						key={post.postId}
-						groupId={groupId}
 						optionOpenedFeedIndex={optionMenuOpenedFeedIndex}
 						onThreeDotClick={() =>
 							setOptionMenuOpenedFeedIndex((prev) =>
