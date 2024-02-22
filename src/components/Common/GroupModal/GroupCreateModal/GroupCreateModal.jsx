@@ -32,7 +32,7 @@ const GroupCreateModal = () => {
 
 		const data = {
 			name,
-			description: description.trim(),
+			description: description.length === 0 ? null : description,
 		};
 
 		formData.append("data", JSON.stringify(data));

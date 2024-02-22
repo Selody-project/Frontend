@@ -50,8 +50,7 @@ const GroupManagementProfile = ({ groupInfo }) => {
 
 	const isSaveEnabled =
 		(nameValue.trim() !== groupInfo.information.group.name.trim() ||
-			descriptionValue.trim() !==
-				groupInfo.information.group.description.trim() ||
+			descriptionValue !== groupInfo.information.group.description ||
 			profileImgValue.trim() !== defaultProfileImg.trim() ||
 			isPublicGroup !== Number(isPublic)) &&
 		nameValue.trim();
@@ -62,7 +61,10 @@ const GroupManagementProfile = ({ groupInfo }) => {
 
 		const data = {
 			name: nameValue,
-			description: descriptionValue,
+			description:
+				descriptionValue !== null && descriptionValue.length === 0
+					? null
+					: descriptionValue,
 		};
 		formdata.append("data", JSON.stringify(data));
 
