@@ -69,11 +69,14 @@ const MyPage = () => {
 	}, [isObserving, dispatch]);
 
 	useEffect(() => {
-		if (userGroupList?.length === 0) {
+		if (
+			userGroupList?.length === 0 &&
+			searchParams.get(TAB_KEY) === TAB_PARAM.MY_GROUP
+		) {
 			setGroups(groupList);
 		} else if (searchParams.get(TAB_KEY) === TAB_PARAM.REQUEST_GROUP) {
 			setGroups(userRequestGroupList);
-		} else {
+		} else if (searchParams.get(TAB_KEY) === TAB_PARAM.MY_GROUP) {
 			setGroups(userGroupList);
 		}
 	});
