@@ -27,7 +27,6 @@ import {
 } from "./group-service.js";
 
 const initialState = {
-	group: null,
 	groupList: [],
 	lastRecordId: 0,
 	searchLastRecordId: 0,
@@ -99,9 +98,12 @@ const groupSlice = createSlice({
 				state.isLoading = false;
 				toast.success("그룹리더 변경에 성공하였습니다.");
 			})
-			.addCase(deleteGroupMember.fulfilled, (state) => {
+			.addCase(deleteGroupMember.fulfilled, (state, { meta: { arg: id } }) => {
 				state.isLoading = false;
 				toast.success("그룹원 내보내기 완료");
+				state.groupMemberList = state.groupMemberList.filter(
+					(prev) => prev.member.userId !== id.userId,
+				);
 			})
 			.addCase(approveGroupJoin.fulfilled, (state) => {
 				state.isLoading = false;
