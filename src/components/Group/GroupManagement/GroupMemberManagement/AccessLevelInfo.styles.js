@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const ContainerDiv = styled.div`
 	position: absolute;
 	bottom: calc(100% + 12px);
-	left: -36px;
+	left: -8px;
 	z-index: 100;
 
 	& > ul {
