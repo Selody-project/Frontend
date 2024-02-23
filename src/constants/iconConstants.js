@@ -5,6 +5,7 @@ import DocumentIcon from "@/assets/icon/ic-document.svg";
 import DottedCalendarIcon from "@/assets/icon/ic-dotted-calendar.svg";
 import DownArrowIcon from "@/assets/icon/ic-down-arrow.svg";
 import EditScheduleIcon from "@/assets/icon/ic-edit-schedule.svg";
+import ExtraMembersDropdownIcon from "@/assets/icon/ic-extraMembers-dropdown.svg";
 import CommentIcon from "@/assets/icon/ic-feed-comment.svg";
 import HeartIcon from "@/assets/icon/ic-feed-heart.svg";
 import OptionThreeDotIcon from "@/assets/icon/ic-feed-option.svg";
@@ -23,6 +24,7 @@ import ScheduleAddIcon from "@/assets/icon/ic-schedule-add.svg";
 import SearchIcon from "@/assets/icon/ic-search.svg";
 import SecretIcon from "@/assets/icon/ic-secret.svg";
 import SelodyLogoIcon from "@/assets/icon/ic-selody-logo.svg";
+import WhitePlusIcon from "@/assets/icon/ic-white-plus.svg";
 
 export {
 	SearchIcon,
@@ -50,4 +52,6 @@ export {
 	DownArrowIcon,
 	DocumentIcon,
 	DottedCalendarIcon,
+	WhitePlusIcon,
+	ExtraMembersDropdownIcon,
 };
