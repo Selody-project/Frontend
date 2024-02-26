@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import GroupSearch from "@/components/Group/GroupSearch/GroupSearch";
@@ -36,8 +36,6 @@ const CommunityPage = () => {
 	const { myGroupPosts, myGroupPostslastRecordId, isEnd } = useSelector(
 		(state) => state.post,
 	);
-
-	const navigate = useNavigate();
 
 	const [searchParams, setSearchParams] = useSearchParams();
 
@@ -78,10 +76,10 @@ const CommunityPage = () => {
 	useEffect(() => {
 		if (
 			!searchParams ||
-			(searchParams.get("tab") !== "feed" &&
-				searchParams.get("tab") !== "search")
+			(searchParams.get(TAB_KEY) !== TAB_PARAM.MY_GROUP_FEED &&
+				searchParams.get(TAB_KEY) !== TAB_PARAM.GROUP_SEARCH)
 		) {
-			setSearchParams("tab=feed");
+			setSearchParams(`${TAB_KEY}=${TAB_PARAM.MY_GROUP_FEED}`);
 		}
 	}, []);
 
@@ -101,7 +99,7 @@ const CommunityPage = () => {
 							<TabButton
 								isActive={searchParams.get(TAB_KEY) === TAB_PARAM.MY_GROUP_FEED}
 								onClick={() =>
-									navigate(`/community?${TAB_KEY}=${TAB_PARAM.MY_GROUP_FEED}`)
+									setSearchParams(`${TAB_KEY}=${TAB_PARAM.MY_GROUP_FEED}`)
 								}
 							>
 								{TAB_CONSTANTS_TITLE.MY_GROUP_FEED}
@@ -111,7 +109,7 @@ const CommunityPage = () => {
 							<TabButton
 								isActive={searchParams.get(TAB_KEY) === TAB_PARAM.GROUP_SEARCH}
 								onClick={() =>
-									navigate(`/community?${TAB_KEY}=${TAB_PARAM.GROUP_SEARCH}`)
+									setSearchParams(`${TAB_KEY}=${TAB_PARAM.GROUP_SEARCH}`)
 								}
 							>
 								{TAB_CONSTANTS_TITLE.GROUP_SEARCH}

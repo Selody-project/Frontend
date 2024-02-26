@@ -75,7 +75,9 @@ const GroupProfileButton = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 			<ProfileButtonDiv>
 				<ProfileButton
 					onClick={() =>
-						navigate(`/group/${groupInfo.information.group.groupId}/leader`)
+						navigate(
+							`/group/${groupInfo.information.group.groupId}?mode=leader`,
+						)
 					}
 				>
 					그룹 관리

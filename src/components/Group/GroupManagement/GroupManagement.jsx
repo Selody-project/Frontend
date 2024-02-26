@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { getGroupMemberList } from "@/features/group/group-service";
 
 import EmptyGroupMember from "./EmptyGroupMember/EmptyGroupMember";
-import { ContainerDiv, TitleUl, TitleButton } from "./GroupManagement.styles";
+import { ContainerDiv, Tabul, TabButton } from "./GroupManagement.styles";
 import GroupManagementProfile from "./GroupManagementProfile/GroupManagementProfile";
 import GroupMemberManagement from "./GroupMemberManagement/GroupMemberManagement";
 
@@ -12,46 +13,51 @@ const GroupManagement = ({ groupInfo }) => {
 	const dispatch = useDispatch();
 
 	const { groupMemberList } = useSelector((state) => state.group);
+	const { user } = useSelector((state) => state.auth);
 
+	const [isGroupProfile, setIsGroupProfile] = useState(true);
+
+	const navigate = useNavigate();
+
+	const { groupId } = groupInfo.information.group;
 	const memberList = groupMemberList?.filter(
 		(member) => member.accessLevel !== "owner",
 	);
 
-	const [isGroupProfile, setIsGroupProfile] = useState(true);
-
-	const { groupId } = groupInfo.information.group;
-
 	useEffect(() => {
 		dispatch(getGroupMemberList(groupId));
+
+		if (!(user.userId === groupInfo.information.leaderInfo.userId)) {
+			navigate(`/group/${groupId}`);
+		}
 	}, []);
 
 	return (
 		<ContainerDiv>
-			<TitleUl>
-				<li>
-					<TitleButton
+			<Tabul role="tablist">
+				<li role="tab">
+					<TabButton
 						onClick={() => setIsGroupProfile(true)}
 						isActive={isGroupProfile}
 					>
 						그룹 프로필
-					</TitleButton>
+					</TabButton>
 				</li>
-				<li>
-					<TitleButton
+				<li role="tab">
+					<TabButton
 						onClick={() => setIsGroupProfile(false)}
 						isActive={!isGroupProfile}
 					>
 						그룹원 관리
-					</TitleButton>
+					</TabButton>
 				</li>
-			</TitleUl>
-
+			</Tabul>
 			{isGroupProfile ? (
 				<GroupManagementProfile groupInfo={groupInfo} />
 			) : (
 				// eslint-disable-next-line react/jsx-no-useless-fragment
 				<>
-					{memberList.length === 0 ? (
+					{groupInfo.information.memberInfo.length < 2 ? (
 						<EmptyGroupMember />
 					) : (
 						<GroupMemberManagement groupId={groupId} memberList={memberList} />

@@ -31,7 +31,6 @@ import {
 const GroupManagementProfile = ({ groupInfo }) => {
 	const dispatch = useDispatch();
 
-	const isLoading = useSelector((state) => state.group.isLoading);
 	const { openedModal } = useSelector((state) => state.ui);
 
 	const { groupId, isPublicGroup } = groupInfo.information.group;
@@ -146,10 +145,7 @@ const GroupManagementProfile = ({ groupInfo }) => {
 			</BottomButtonDiv>
 			{openedModal === UI_TYPE.EXIT_GROUP && <GroupExitModal />}
 			{openedModal === UI_TYPE.DELETE_GROUP && (
-				<GroupDeleteModal
-					groupDetailInfo={groupInfo.information.group}
-					isLoading={isLoading}
-				/>
+				<GroupDeleteModal groupInfo={groupInfo} />
 			)}
 		</>
 	);

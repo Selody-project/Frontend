@@ -8,7 +8,7 @@ export const ContainerDiv = styled.div`
 	padding: 40px;
 `;
 
-export const TitleUl = styled.ul`
+export const Tabul = styled.ul`
 	display: flex;
 	gap: 24px;
 
@@ -31,7 +31,7 @@ export const TitleUl = styled.ul`
 	}
 `;
 
-export const TitleButton = styled.button`
+export const TabButton = styled.button`
 	color: ${({ isActive, theme: { colors } }) =>
 		isActive ? colors.text_01 : colors.disabled_text};
 	font-size: 18px;
