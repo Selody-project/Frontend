@@ -150,11 +150,12 @@ const GroupMemberManagement = ({ groupId, memberList }) => {
 									memberInfo.accessLevel === data.accessLevel && (
 										<span key={data.accessLevel}>
 											{data.icon}
-											{data.accessLevel}
+											{memberInfo.accessLevel}
 											<AccessArrowIcon />
 										</span>
 									),
 							)}
+
 							{isAccessChangeOpenIndex === memberInfo.member.userId && (
 								<AccessLevelUl>
 									{ACCESS_LEVEL_DATA.map((data) => (

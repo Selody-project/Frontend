@@ -18,8 +18,15 @@ const GroupFeed = ({ groupId, leaderName }) => {
 	const [optionMenuOpenedFeedIndex, setOptionMenuOpenedFeedIndex] =
 		useState(null);
 
+	const [isLoading, setIsLoading] = useState(true);
+
+	const groupPostFetching = async () => {
+		await dispatch(getGroupAllPosts(groupId));
+		setIsLoading(false);
+	};
+
 	useEffect(() => {
-		dispatch(getGroupAllPosts(groupId));
+		groupPostFetching();
 	}, []);
 
 	const handleOnView = () => {
@@ -27,6 +34,10 @@ const GroupFeed = ({ groupId, leaderName }) => {
 			dispatch(getGroupAllPosts(groupId));
 		}
 	};
+
+	if (isLoading) {
+		return <div>로딩중</div>;
+	}
 
 	if (allGroupPosts.length === 0) {
 		return <EmptyFeed />;

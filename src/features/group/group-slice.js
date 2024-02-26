@@ -164,10 +164,23 @@ const groupSlice = createSlice({
 				state.isMemberListLoading = false;
 				state.groupMemberList = payload;
 			})
-			.addCase(changeAccessLevel.fulfilled, (state) => {
-				state.isLoading = false;
-				toast.success("그룹원 권한이 변경되었습니다.");
-			})
+			.addCase(
+				changeAccessLevel.fulfilled,
+				(
+					state,
+					{
+						meta: {
+							arg: { userId, accessLevel },
+						},
+					},
+				) => {
+					state.isLoading = false;
+					toast.success("그룹원 권한이 변경되었습니다.");
+					state.groupMemberList[
+						state.groupMemberList.findIndex((el) => el.member.userId === userId)
+					].accessLevel = accessLevel;
+				},
+			)
 			.addCase(withdrawalGroup.fulfilled, (state) => {
 				state.isLoading = false;
 				toast.error("그룹 탈퇴에 성공하였습니다");
