@@ -18,8 +18,8 @@ const initialState = {
 	allGroupPostslastRecordId: 0,
 	allGroupPostsIsEnd: false,
 	myGroupPostslastRecordId: 0,
+	myGroupPostsIsEnd: false,
 	isLoading: true,
-	isEnd: false,
 };
 
 const postSlice = createSlice({
@@ -53,15 +53,11 @@ const postSlice = createSlice({
 			.addCase(getMyGroupPosts.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
 				state.myGroupPosts = [...state.myGroupPosts, ...payload.feed];
-				state.isEnd = payload.isEnd;
+				state.myGroupPostsIsEnd = payload.isEnd;
 
 				if (payload.feed.length > 0) {
 					state.myGroupPostslastRecordId =
 						payload.feed[payload.feed.length - 1].postId;
-				}
-
-				if (payload.isEnd) {
-					state.isEnd = false;
 				}
 			})
 			.addCase(likeGroupPost.fulfilled, (state) => {

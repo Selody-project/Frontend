@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -13,8 +13,6 @@ import {
 	TAB_PARAM,
 } from "@/constants/tabConstants";
 import { searchGroup } from "@/features/group/group-service";
-import { getMyGroupPosts } from "@/features/post/post-service";
-import useObserver from "@/hooks/useObserver";
 
 import {
 	ContainerDiv,
@@ -33,18 +31,11 @@ const CommunityPage = () => {
 	const { searchGroupList, searchLastRecordId } = useSelector(
 		(state) => state.group,
 	);
-	const { myGroupPosts, myGroupPostslastRecordId, isEnd } = useSelector(
-		(state) => state.post,
-	);
 
 	const [searchParams, setSearchParams] = useSearchParams();
 
 	const [searchKeyword, setSearchKeyword] = useState("");
 	const [onSearch, setOnSearch] = useState(false);
-
-	const postRef = useRef(null);
-
-	const isObserving = useObserver(postRef, { threshold: 0.3 });
 
 	const handleSearchInput = (e) => {
 		setSearchKeyword(e.target.value.trim());
@@ -82,12 +73,6 @@ const CommunityPage = () => {
 			setSearchParams(`${TAB_KEY}=${TAB_PARAM.MY_GROUP_FEED}`);
 		}
 	}, []);
-
-	useEffect(() => {
-		if (isObserving && !isEnd) {
-			dispatch(getMyGroupPosts(myGroupPostslastRecordId));
-		}
-	}, [isObserving, dispatch]);
 
 	return (
 		<ContainerDiv>
@@ -134,7 +119,7 @@ const CommunityPage = () => {
 				{searchParams.get(TAB_KEY) === TAB_PARAM.GROUP_SEARCH ? (
 					<GroupSearch onSearch={onSearch} searchGroupList={searchGroupList} />
 				) : (
-					<MyGroupFeed myGroupPosts={myGroupPosts} ref={postRef} />
+					<MyGroupFeed />
 				)}
 			</FeedDiv>
 		</ContainerDiv>
