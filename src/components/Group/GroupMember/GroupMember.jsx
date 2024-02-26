@@ -1,7 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getGroupMemberList } from "@/features/group/group-service";
+import {
+	getGroupRequestMemberList,
+	getGroupMemberList,
+} from "@/features/group/group-service";
 
 import {
 	MemberInnerDiv,
@@ -15,45 +18,52 @@ import MemberRequestList from "./MemberRequestList";
 const GroupMember = ({ leaderId, groupId }) => {
 	const dispatch = useDispatch();
 
-	const { groupRequestMemberList, isMemberListLoading } = useSelector(
+	const { user } = useSelector((state) => state.auth);
+
+	const { groupMemberList, groupRequestMemberList } = useSelector(
 		(state) => state.group,
 	);
 
-	const { user } = useSelector((state) => state.auth);
+	const [isLoading, setIsLoading] = useState(true);
+
+	const groupMemberListFetching = async () => {
+		await dispatch(getGroupRequestMemberList(groupId));
+		await dispatch(getGroupMemberList(groupId));
+		setIsLoading(false);
+	};
 
 	useEffect(() => {
-		dispatch(getGroupMemberList(groupId));
+		groupMemberListFetching();
 	}, []);
 
 	return (
 		<ContainerAside>
-			<>
-				<MemberDiv>
-					<MemberInnerDiv>
-						<MemberH3>내 프로필</MemberH3>
-						<MemberUl>
-							<li>
-								<img src={user.profileImage} alt="profileImg" />
-								<h4>{user.nickname}</h4>
-							</li>
-						</MemberUl>
-					</MemberInnerDiv>
-				</MemberDiv>
+			<MemberDiv>
+				<MemberInnerDiv>
+					<MemberH3>내 프로필</MemberH3>
+					<MemberUl>
+						<li>
+							<img src={user.profileImage} alt="profileImg" />
+							<h4>{user.nickname}</h4>
+						</li>
+					</MemberUl>
+				</MemberInnerDiv>
+			</MemberDiv>
 
-				{isMemberListLoading ? (
-					<div>로딩 중</div>
-				) : (
-					<MemberDiv>
-						{groupRequestMemberList.length > 0 && (
-							<MemberRequestList
-								requestMemberList={groupRequestMemberList}
-								groupId={groupId}
-							/>
-						)}
-						<MemberList leaderId={leaderId} />
-					</MemberDiv>
-				)}
-			</>
+			{isLoading ? (
+				<div>로딩중...</div>
+			) : (
+				<MemberDiv>
+					{groupRequestMemberList.length > 0 && (
+						<MemberRequestList
+							groupId={groupId}
+							groupRequestMemberList={groupRequestMemberList}
+						/>
+					)}
+
+					<MemberList leaderId={leaderId} groupMemberList={groupMemberList} />
+				</MemberDiv>
+			)}
 		</ContainerAside>
 	);
 };

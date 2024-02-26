@@ -11,10 +11,7 @@ import GroupProfile from "@/components/Group/GroupProfile/GroupProfile";
 import GroupTitle from "@/components/Group/GroupTitle/GroupTitle";
 import { TAB_KEY, TAB_PARAM } from "@/constants/tabConstants";
 import { UI_TYPE } from "@/constants/uiConstants";
-import {
-	getGroupInfo,
-	getGroupRequestMemberList,
-} from "@/features/group/group-service";
+import { getGroupInfo } from "@/features/group/group-service";
 import { resetGroupStateForGroupPage } from "@/features/group/group-slice";
 import { resetPostStateForGroupPage } from "@/features/post/post-slice";
 import { openJoinGroupModal } from "@/features/ui/ui-slice";
@@ -50,7 +47,6 @@ const GroupPage = () => {
 	useEffect(() => {
 		try {
 			dispatch(getGroupInfo(groupId)).unwrap();
-			dispatch(getGroupRequestMemberList(groupId)).unwrap();
 		} catch (e) {
 			navigate(`/community?${TAB_KEY}=${TAB_PARAM.MY_GROUP_FEED}`);
 		}
@@ -93,9 +89,7 @@ const GroupPage = () => {
 				</FeedDiv>
 			)}
 
-			{groupInfo && isGroupMember && (
-				<GroupMember groupId={groupId} leaderId={leaderId} />
-			)}
+			{isGroupMember && <GroupMember groupId={groupId} leaderId={leaderId} />}
 
 			{openedModal === UI_TYPE.JOIN_GROUP && (
 				<GroupJoinModal inviteLink={inviteLink} />

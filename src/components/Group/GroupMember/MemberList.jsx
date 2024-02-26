@@ -14,11 +14,10 @@ import {
 } from "./GroupMember.Shared.styles";
 import MemberModal from "./MemberModal/MemberModal";
 
-const MemberList = ({ leaderId }) => {
+const MemberList = ({ leaderId, groupMemberList }) => {
 	const dispatch = useDispatch();
 
 	const { openedModal } = useSelector((state) => state.ui);
-	const { groupMemberList } = useSelector((state) => state.group);
 
 	return (
 		<MemberInnerDiv>
@@ -42,6 +41,7 @@ const MemberList = ({ leaderId }) => {
 					</li>
 				))}
 			</MemberUl>
+
 			{openedModal === UI_TYPE.MEMBER_MODAL && (
 				<MemberModal memberList={groupMemberList} />
 			)}
