@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 
@@ -22,15 +22,14 @@ const GroupPage = () => {
 	const dispatch = useDispatch();
 
 	const { user } = useSelector((state) => state.auth);
-	const { groupInfo, isLoading: isGroupLoading } = useSelector(
-		(state) => state.group,
-	);
+	const { groupInfo } = useSelector((state) => state.group);
 
 	const { openedModal } = useSelector((state) => state.ui);
 
+	const [isLoading, setIsLoading] = useState(true);
+
 	const param = useParams();
 	const navigate = useNavigate();
-
 	const [searchParams] = useSearchParams();
 
 	const groupId = Number(param.id);
@@ -38,7 +37,6 @@ const GroupPage = () => {
 	const isPublicGroup = groupInfo?.information.group.isPublicGroup;
 	const leaderId = groupInfo?.information.leaderInfo.userId;
 	const leaderName = groupInfo?.information.leaderInfo.nickname;
-
 	const isGroupLeader = groupInfo?.accessLevel === "owner";
 	const isGroupMember = groupInfo?.accessLevel !== null;
 
@@ -47,6 +45,7 @@ const GroupPage = () => {
 	useEffect(() => {
 		try {
 			dispatch(getGroupInfo(groupId)).unwrap();
+			setIsLoading(false);
 		} catch (e) {
 			navigate(`/community?${TAB_KEY}=${TAB_PARAM.MY_GROUP_FEED}`);
 		}
@@ -64,19 +63,17 @@ const GroupPage = () => {
 	}, []);
 
 	// groupInfo가 없을 때 undefined 값을 가지는 경우에 GroupFeed 깜박임에 영향을 주면서 두 번 렌더링됨
-	if (isGroupLoading || !groupInfo) {
+	if (isLoading || !groupInfo) {
 		return <div>그룹 정보 불러오는 중...</div>;
 	}
 
 	return (
 		<GroupMain>
-			{groupInfo && (
-				<GroupProfile
-					groupInfo={groupInfo}
-					isGroupLeader={isGroupLeader}
-					isGroupMember={isGroupMember}
-				/>
-			)}
+			<GroupProfile
+				groupInfo={groupInfo}
+				isGroupLeader={isGroupLeader}
+				isGroupMember={isGroupMember}
+			/>
 
 			{/* falsy한 값인지 진짜 0인지 구분해줬어야 함 */}
 			{!isPublicGroup && !isGroupMember ? (

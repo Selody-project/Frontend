@@ -1,8 +1,4 @@
 import React from "react";
-import { useSelector } from "react-redux";
-
-import GroupDelegateModal from "@/components/Common/GroupModal/GroupDelegateModal/GroupDelegateModal";
-import { UI_TYPE } from "@/constants/uiConstants";
 
 import {
 	ContainerDiv,
@@ -13,9 +9,6 @@ import {
 import GroupProfileButton from "./GroupProfileButton";
 
 const GroupProfile = ({ groupInfo, isGroupMember, isGroupLeader }) => {
-	const { openedModal } = useSelector((state) => state.ui);
-	const { isLoading } = useSelector((state) => state.group);
-
 	return (
 		<ContainerDiv>
 			<TopDiv>
@@ -38,13 +31,6 @@ const GroupProfile = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 				isGroupMember={isGroupMember}
 				isGroupLeader={isGroupLeader}
 			/>
-			{openedModal === UI_TYPE.DELEGATE_GROUP && (
-				<GroupDelegateModal
-					groupInfo={groupInfo}
-					isLoading={isLoading}
-					groupMembers={groupInfo.information.memberInfo}
-				/>
-			)}
 		</ContainerDiv>
 	);
 };
