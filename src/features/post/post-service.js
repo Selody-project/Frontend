@@ -19,8 +19,8 @@ export const getGroupAllPosts = createAsyncThunk(
 	},
 );
 
-export const getGroupPosts = createAsyncThunk(
-	"post/getGroupPosts",
+export const getGroupPostInfo = createAsyncThunk(
+	"post/getGroupPostInfo",
 	async ({ groupId, postId }, thunkAPI) => {
 		const data = await commonThunk(
 			{

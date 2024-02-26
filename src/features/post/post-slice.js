@@ -4,7 +4,7 @@ import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 
 import {
 	getGroupAllPosts,
-	getGroupPosts,
+	getGroupPostInfo,
 	getMyGroupPosts,
 	likeGroupPost,
 	cancelLikeGroupPost,
@@ -12,7 +12,7 @@ import {
 } from "./post-service";
 
 const initialState = {
-	currentGroupPost: null,
+	postInfo: null,
 	allGroupPosts: [],
 	myGroupPosts: [],
 	allGroupPostslastRecordId: 0,
@@ -20,7 +20,6 @@ const initialState = {
 	myGroupPostslastRecordId: 0,
 	isLoading: true,
 	isEnd: false,
-	isEmpty: false,
 };
 
 const postSlice = createSlice({
@@ -28,7 +27,7 @@ const postSlice = createSlice({
 	initialState,
 	reducers: {
 		resetPostStateForGroupPage: (state) => {
-			state.currentGroupPost = null;
+			state.postInfo = null;
 			state.allGroupPosts = [];
 			state.allGroupPostslastRecordId = 0;
 			state.allGroupPostsIsEnd = false;
@@ -47,9 +46,9 @@ const postSlice = createSlice({
 						payload.feed[payload.feed.length - 1].postId;
 				}
 			})
-			.addCase(getGroupPosts.fulfilled, (state, { payload }) => {
+			.addCase(getGroupPostInfo.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
-				state.currentGroupPost = payload;
+				state.postInfo = payload;
 			})
 			.addCase(getMyGroupPosts.fulfilled, (state, { payload }) => {
 				state.isLoading = false;
@@ -84,7 +83,7 @@ const postSlice = createSlice({
 			.addMatcher(
 				isAnyOf(
 					getGroupAllPosts.pending,
-					getGroupPosts.pending,
+					getGroupPostInfo.pending,
 					getMyGroupPosts.pending,
 					likeGroupPost.pending,
 					cancelLikeGroupPost.pending,
@@ -97,7 +96,7 @@ const postSlice = createSlice({
 			.addMatcher(
 				isAnyOf(
 					getGroupAllPosts.rejected,
-					getGroupPosts.rejected,
+					getGroupPostInfo.rejected,
 					getMyGroupPosts.rejected,
 					likeGroupPost.rejected,
 					cancelLikeGroupPost.rejected,

@@ -11,7 +11,7 @@ import { FeedSection } from "./GroupFeed.styles";
 const GroupFeed = ({ groupId, leaderName }) => {
 	const dispatch = useDispatch();
 
-	const { allGroupPosts, allGroupPostsIsEnd, isLoading } = useSelector(
+	const { allGroupPosts, allGroupPostsIsEnd } = useSelector(
 		(state) => state.post,
 	);
 
@@ -27,10 +27,6 @@ const GroupFeed = ({ groupId, leaderName }) => {
 			dispatch(getGroupAllPosts(groupId));
 		}
 	};
-
-	if (isLoading) {
-		return <div>피드 정보 불러오는 중...</div>;
-	}
 
 	if (allGroupPosts.length === 0) {
 		return <EmptyFeed />;
