@@ -12,16 +12,14 @@ import { ContainerAside, MemberDiv } from "./GroupMember.styles";
 import MemberList from "./MemberList";
 import MemberRequestList from "./MemberRequestList";
 
-const GroupMember = ({ leaderId, groupInfo }) => {
+const GroupMember = ({ leaderId, groupId }) => {
 	const dispatch = useDispatch();
 
-	const { groupMemberList, groupRequestMemberList } = useSelector(
+	const { groupRequestMemberList, isMemberListLoading } = useSelector(
 		(state) => state.group,
 	);
 
 	const { user } = useSelector((state) => state.auth);
-
-	const { groupId } = groupInfo.information.group;
 
 	useEffect(() => {
 		dispatch(getGroupMemberList(groupId));
@@ -41,19 +39,20 @@ const GroupMember = ({ leaderId, groupInfo }) => {
 						</MemberUl>
 					</MemberInnerDiv>
 				</MemberDiv>
-				<MemberDiv>
-					{groupRequestMemberList.length === 0 || (
-						<MemberRequestList
-							requestMemberList={groupRequestMemberList}
-							groupInfo={groupInfo}
-						/>
-					)}
-					<MemberList
-						groupInfo={groupInfo}
-						leaderId={leaderId}
-						memberList={groupMemberList}
-					/>
-				</MemberDiv>
+
+				{isMemberListLoading ? (
+					<div>로딩 중</div>
+				) : (
+					<MemberDiv>
+						{groupRequestMemberList.length > 0 && (
+							<MemberRequestList
+								requestMemberList={groupRequestMemberList}
+								groupId={groupId}
+							/>
+						)}
+						<MemberList leaderId={leaderId} />
+					</MemberDiv>
+				)}
 			</>
 		</ContainerAside>
 	);

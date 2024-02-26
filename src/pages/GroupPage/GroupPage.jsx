@@ -1,8 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 
-import EmptyFeed from "@/components/Common/Feed/EmptyFeed/EmptyFeed";
 import GroupJoinModal from "@/components/Common/GroupModal/GroupJoinModal/GroupJoinModal";
 import GroupFeed from "@/components/Group/GroupFeed/GroupFeed";
 import SecretFeed from "@/components/Group/GroupFeed/SecretFeed";
@@ -16,10 +15,9 @@ import {
 	getGroupInfo,
 	getGroupRequestMemberList,
 } from "@/features/group/group-service";
-import { getGroupAllPosts } from "@/features/post/post-service";
-import { resetAllGroupPosts } from "@/features/post/post-slice";
+import { resetGroupStateForGroupPage } from "@/features/group/group-slice";
+import { resetPostStateForGroupPage } from "@/features/post/post-slice";
 import { openJoinGroupModal } from "@/features/ui/ui-slice";
-import useObserver from "@/hooks/useObserver";
 
 import { GroupMain, FeedDiv } from "./GroupPage.styles";
 
@@ -27,27 +25,18 @@ const GroupPage = () => {
 	const dispatch = useDispatch();
 
 	const { user } = useSelector((state) => state.auth);
-	const { groupInfo, groupRequestMemberList } = useSelector(
+	const { groupInfo, isLoading: isGroupLoading } = useSelector(
 		(state) => state.group,
 	);
-	const {
-		allGroupPosts,
-		allGroupPostslastRecordId,
-		allGroupPostsIsEnd,
-		isEmpty,
-	} = useSelector((state) => state.post);
+
 	const { openedModal } = useSelector((state) => state.ui);
-
-	const postRef = useRef(null);
-
-	const isObserving = useObserver(postRef, { threshold: 0.3 });
 
 	const param = useParams();
 	const navigate = useNavigate();
 
 	const [searchParams] = useSearchParams();
 
-	const groupId = param.id;
+	const groupId = Number(param.id);
 
 	const isPublicGroup = groupInfo?.information.group.isPublicGroup;
 	const leaderId = groupInfo?.information.leaderInfo.userId;
@@ -61,7 +50,7 @@ const GroupPage = () => {
 	useEffect(() => {
 		try {
 			dispatch(getGroupInfo(groupId)).unwrap();
-			dispatch(getGroupRequestMemberList(groupId));
+			dispatch(getGroupRequestMemberList(groupId)).unwrap();
 		} catch (e) {
 			navigate(`/community?${TAB_KEY}=${TAB_PARAM.MY_GROUP_FEED}`);
 		}
@@ -73,17 +62,15 @@ const GroupPage = () => {
 		}
 
 		return () => {
-			dispatch(resetAllGroupPosts());
+			dispatch(resetPostStateForGroupPage());
+			dispatch(resetGroupStateForGroupPage());
 		};
 	}, []);
 
-	useEffect(() => {
-		if (!allGroupPostsIsEnd && isObserving) {
-			dispatch(
-				getGroupAllPosts({ groupId, lastRecordId: allGroupPostslastRecordId }),
-			);
-		}
-	}, [isObserving, dispatch]);
+	// groupInfo가 없을 때 undefined 값을 가지는 경우에 GroupFeed 깜박임에 영향을 주면서 두 번 렌더링됨
+	if (isGroupLoading || !groupInfo) {
+		return <div>그룹 정보 불러오는 중...</div>;
+	}
 
 	return (
 		<GroupMain>
@@ -94,27 +81,20 @@ const GroupPage = () => {
 					isGroupMember={isGroupMember}
 				/>
 			)}
+
+			{/* falsy한 값인지 진짜 0인지 구분해줬어야 함 */}
 			{!isPublicGroup && !isGroupMember ? (
 				<SecretFeed />
 			) : (
 				<FeedDiv>
 					{isGroupMember && <UploadFeed />}
 					<GroupTitle />
-					{isEmpty ? (
-						<EmptyFeed />
-					) : (
-						<GroupFeed
-							allGroupPosts={allGroupPosts}
-							ref={postRef}
-							groupId={groupId}
-							isEnd={!allGroupPostsIsEnd}
-							leaderName={leaderName}
-						/>
-					)}
+					<GroupFeed groupId={groupId} leaderName={leaderName} />
 				</FeedDiv>
 			)}
-			{groupRequestMemberList && groupInfo && isGroupMember && (
-				<GroupMember groupInfo={groupInfo} leaderId={leaderId} />
+
+			{groupInfo && isGroupMember && (
+				<GroupMember groupId={groupId} leaderId={leaderId} />
 			)}
 
 			{openedModal === UI_TYPE.JOIN_GROUP && (

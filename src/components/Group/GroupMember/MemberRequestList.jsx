@@ -19,12 +19,10 @@ import {
 import { ButtonDiv, ButtonInnerDiv } from "./GroupMember.styles";
 import MemberRequestModal from "./MemberModal/MemberRequestModal";
 
-const MemberRequestList = ({ requestMemberList, groupInfo }) => {
+const MemberRequestList = ({ requestMemberList, groupId }) => {
 	const dispatch = useDispatch();
 
 	const { openedModal } = useSelector((state) => state.ui);
-
-	const { groupId } = groupInfo.information.group;
 
 	const approveRequest = (userId) => {
 		dispatch(approveGroupJoin({ groupId, userId }));

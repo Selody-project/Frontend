@@ -14,23 +14,24 @@ import {
 } from "./GroupMember.Shared.styles";
 import MemberModal from "./MemberModal/MemberModal";
 
-const MemberList = ({ leaderId, memberList }) => {
+const MemberList = ({ leaderId }) => {
 	const dispatch = useDispatch();
 
 	const { openedModal } = useSelector((state) => state.ui);
+	const { groupMemberList } = useSelector((state) => state.group);
 
 	return (
 		<MemberInnerDiv>
 			<MemberTitleDiv>
 				<MemberH3>그룹원</MemberH3>
-				{memberList.length > 5 && (
+				{groupMemberList.length > 5 && (
 					<MemberMoreSpan onClick={() => dispatch(openMemberModal())}>
 						더보기
 					</MemberMoreSpan>
 				)}
 			</MemberTitleDiv>
 			<MemberUl>
-				{memberList.slice(0, 5).map((info) => (
+				{groupMemberList.slice(0, 5).map((info) => (
 					<li key={info.member.userId}>
 						<img
 							src={info.member.image}
@@ -42,7 +43,7 @@ const MemberList = ({ leaderId, memberList }) => {
 				))}
 			</MemberUl>
 			{openedModal === UI_TYPE.MEMBER_MODAL && (
-				<MemberModal memberList={memberList} />
+				<MemberModal memberList={groupMemberList} />
 			)}
 		</MemberInnerDiv>
 	);

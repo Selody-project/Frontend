@@ -32,12 +32,12 @@ const initialState = {
 	searchLastRecordId: 0,
 	searchGroupList: [],
 	isLoading: false,
-	isMemberListLoading: false,
+	isUserGroupRefetching: true,
+	isEnd: false,
+	isMemberListLoading: true,
 	groupInfo: null,
 	groupRequestMemberList: [],
-	isUserGroupRefetching: true,
 	groupMemberList: [],
-	isEnd: false,
 };
 
 const groupSlice = createSlice({
@@ -47,13 +47,25 @@ const groupSlice = createSlice({
 		setRefetchUserGroup: (state, { payload }) => {
 			state.isUserGroupRefetching = payload;
 		},
+		resetGroupStateForGroupPage: (state) => {
+			state.isMemberListLoading = true;
+			state.groupInfo = null;
+			state.groupRequestMemberList = [];
+			state.groupMemberList = [];
+		},
 	},
 	extraReducers: (bulider) => {
 		bulider
+			.addCase(getGroupMemberList.pending, (state) => {
+				state.isMemberListLoading = true;
+			})
 			.addCase(getGroupRequestMemberList.pending, (state) => {
 				state.isMemberListLoading = true;
 			})
 			.addCase(getGroupRequestMemberList.rejected, (state) => {
+				state.isMemberListLoading = false;
+			})
+			.addCase(getGroupMemberList.rejected, (state) => {
 				state.isMemberListLoading = false;
 			})
 			.addCase(deleteGroup.fulfilled, (state) => {
@@ -149,7 +161,7 @@ const groupSlice = createSlice({
 				toast.success("그룹장 위임이 완료되었습니다.");
 			})
 			.addCase(getGroupMemberList.fulfilled, (state, { payload }) => {
-				state.isLoading = false;
+				state.isMemberListLoading = false;
 				state.groupMemberList = payload;
 			})
 			.addCase(changeAccessLevel.fulfilled, (state) => {
@@ -182,7 +194,6 @@ const groupSlice = createSlice({
 					changeRequestGroupJoin.pending,
 					changeGroupPublicOption.pending,
 					updateGroupProfile.pending,
-					getGroupMemberList.pending,
 					changeAccessLevel.pending,
 					withdrawalGroup.pending,
 					joinGroupInviteLink.pending,
@@ -209,7 +220,6 @@ const groupSlice = createSlice({
 					changeRequestGroupJoin.rejected,
 					changeGroupPublicOption.rejected,
 					updateGroupProfile.rejected,
-					getGroupMemberList.rejected,
 					changeAccessLevel.rejected,
 					withdrawalGroup.rejected,
 					joinGroupInviteLink.rejected,
@@ -221,7 +231,11 @@ const groupSlice = createSlice({
 	},
 });
 
-export const { selectGroup, selectGroupInfo, setRefetchUserGroup } =
-	groupSlice.actions;
+export const {
+	selectGroup,
+	selectGroupInfo,
+	setRefetchUserGroup,
+	resetGroupStateForGroupPage,
+} = groupSlice.actions;
 
 export default groupSlice.reducer;

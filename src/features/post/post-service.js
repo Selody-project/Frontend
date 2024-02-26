@@ -4,11 +4,13 @@ import commonThunk from "../commonThunk";
 
 export const getGroupAllPosts = createAsyncThunk(
 	"post/getGroupAllPosts",
-	async ({ groupId, lastRecordId }, thunkAPI) => {
+	async (groupId, thunkAPI) => {
+		const { allGroupPostslastRecordId } = thunkAPI.getState().post;
+
 		const data = await commonThunk(
 			{
 				method: "GET",
-				url: `/api/group/${groupId}/post?last_record_id=${lastRecordId}`,
+				url: `/api/group/${groupId}/post?last_record_id=${allGroupPostslastRecordId}`,
 				successCode: 200,
 			},
 			thunkAPI,
