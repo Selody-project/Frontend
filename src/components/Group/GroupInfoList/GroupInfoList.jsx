@@ -90,8 +90,10 @@ const GroupInfoList = ({
 
 	useEffect(() => {
 		return () => {
-			clearOnSearch();
-			clearSearchKeyword();
+			if (onSearch) {
+				clearOnSearch();
+				clearSearchKeyword();
+			}
 		};
 	}, []);
 
