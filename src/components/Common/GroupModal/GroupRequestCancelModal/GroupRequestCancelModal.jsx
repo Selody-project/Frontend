@@ -15,7 +15,7 @@ import {
 	Button,
 } from "../GroupModal.Shared.styles";
 
-const GroupRequestCancelModal = ({ groupId }) => {
+const GroupRequestCancelModal = ({ groupId, groupName }) => {
 	const dispatch = useDispatch();
 
 	const navigate = useNavigate();
@@ -24,7 +24,7 @@ const GroupRequestCancelModal = ({ groupId }) => {
 		try {
 			await dispatch(changeRequestGroupJoin(groupId)).unwrap();
 			dispatch(closeModal());
-			navigate(`/community?${TAB_KEY}=${TAB_PARAM.MY_GROUP_FEED}`);
+			navigate(`/mypage?${TAB_KEY}=${TAB_PARAM.REQUEST_GROUP}`);
 		} catch (e) {
 			toast.error("요청 취소에 실패했습니다.");
 		}
@@ -37,7 +37,7 @@ const GroupRequestCancelModal = ({ groupId }) => {
 					<strong>요청을 취소하시겠습니까?</strong>
 				</TitleH2>
 				<ContentDiv>
-					<p>요청이 취소되면 그룹A에 들어갈 수 없습니다.</p>
+					<p>요청이 취소되면 {groupName}에 들어갈 수 없습니다.</p>
 					<Button onClick={handleCancelGroupJoin}>요청 취소</Button>
 				</ContentDiv>
 			</ContainerDiv>

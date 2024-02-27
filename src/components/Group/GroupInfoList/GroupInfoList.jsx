@@ -1,65 +1,84 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
-import GroupRequestCancelModal from "@/components/Common/GroupModal/GroupRequestCancelModal/GroupRequestCancelModal";
-import { OptionThreeDotIcon } from "@/constants/iconConstants";
-import { UI_TYPE } from "@/constants/uiConstants";
-import { openRequestCancelModal } from "@/features/ui/ui-slice";
-
+import ScrollBottom from "@/components/Common/ScrollBottom";
+import GroupInfo from "@/components/Group/GroupInfoList/GroupInfo";
+import { TAB_KEY, TAB_PARAM } from "@/constants/tabConstants";
+import { getGroupList } from "@/features/group/group-service";
 import {
-	ContainerDiv,
-	GroupDiv,
-	OptionDiv,
-	OptionMenuDiv,
-} from "./GroupInfoList.styles";
+	getUserGroups,
+	getRequestUserGroups,
+} from "@/features/user/user-service";
 
-const GroupInfoList = ({ groups, scrollRef, isRequest }) => {
+import { ContainerDiv } from "./GroupInfoList.styles";
+
+const GroupInfoList = ({ isMyPage }) => {
 	const dispatch = useDispatch();
-	const { openedModal } = useSelector((state) => state.ui);
 
-	const [optionMenuOpenedFeedIndex, setOptionMenuOpenedFeedIndex] =
-		useState(null);
+	const { groupList, lastRecordId, isEnd } = useSelector(
+		(state) => state.group,
+	);
+	const { userGroupList, userRequestGroupList } = useSelector(
+		(state) => state.user,
+	);
 
-	const handleOption = (num) => {
-		setOptionMenuOpenedFeedIndex((prev) => (prev === num ? null : num));
+	const [isLoading, setIsLoading] = useState(true);
+
+	const [searchParams] = useSearchParams();
+
+	const allGroupFetching = async () => {
+		await dispatch(getGroupList(lastRecordId));
+		setIsLoading(false);
 	};
+
+	const userGroupFetching = async () => {
+		await dispatch(getUserGroups());
+		setIsLoading(false);
+	};
+
+	const userRequestGroupFetching = async () => {
+		await dispatch(getRequestUserGroups());
+		setIsLoading(false);
+	};
+
+	useEffect(() => {
+		if (searchParams.get(TAB_KEY) === TAB_PARAM.GROUP_SEARCH) {
+			allGroupFetching();
+		}
+
+		if (isMyPage) {
+			userGroupFetching();
+			userRequestGroupFetching();
+		}
+	}, []);
+
+	const handleOnView = () => {
+		if (!isEnd) {
+			dispatch(getGroupList(lastRecordId));
+		}
+	};
+
+	if (isLoading) {
+		return <div>로딩중</div>;
+	}
 
 	return (
 		<ContainerDiv>
-			{groups.map((info) => (
-				<GroupDiv key={info.groupId}>
-					{isRequest && (
-						<OptionDiv>
-							<OptionThreeDotIcon
-								onClick={() => {
-									handleOption(info.groupId);
-								}}
-							/>
-							{optionMenuOpenedFeedIndex === info.groupId && (
-								<OptionMenuDiv
-									onClick={() => dispatch(openRequestCancelModal())}
-								>
-									요청취소
-								</OptionMenuDiv>
-							)}
-							{openedModal === UI_TYPE.REQUEST_CANCEL && (
-								<GroupRequestCancelModal groupId={info.groupId} />
-							)}
-						</OptionDiv>
-					)}
-					<Link
-						to={`/group/${info.groupId}`}
-						onClick={(e) => optionMenuOpenedFeedIndex && e.preventDefault()}
-					>
-						<img src={info.image} alt="groupImg" />
-						<h3>{info.name}</h3>
-						<p>{info.description}</p>
-						<h4>{info.member}명의 그룹원</h4>
-					</Link>
-				</GroupDiv>
-			))}
-			<div ref={scrollRef} />
+			{searchParams.get(TAB_KEY) === TAB_PARAM.GROUP_SEARCH &&
+				groupList.map((info) => <GroupInfo info={info} key={info.groupId} />)}
+
+			{searchParams.get(TAB_KEY) === TAB_PARAM.MY_GROUP &&
+				userGroupList.map((info) => (
+					<GroupInfo info={info} key={info.groupId} />
+				))}
+
+			{searchParams.get(TAB_KEY) === TAB_PARAM.REQUEST_GROUP &&
+				userRequestGroupList.map((info) => (
+					<GroupInfo info={info} key={info.groupId} isRequest />
+				))}
+
+			{!isMyPage && <ScrollBottom onView={handleOnView} />}
 		</ContainerDiv>
 	);
 };
