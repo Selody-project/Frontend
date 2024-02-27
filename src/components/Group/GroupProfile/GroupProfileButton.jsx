@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import GroupDelegateModal from "@/components/Common/GroupModal/GroupDelegateModal/GroupDelegateModal";
 import { AddIcon } from "@/constants/iconConstants";
@@ -14,27 +14,24 @@ import {
 } from "./GroupProfile.styles";
 import GroupInviteLink from "../../Common/GroupInviteLink/GroupInviteLink";
 
-// eslint-disable-next-line consistent-return
-const GroupProfileButton = ({ groupInfo, isGroupMember, isGroupLeader }) => {
+const GroupProfileButton = ({
+	groupInfo,
+	isGroupMember,
+	isGroupLeader,
+	isManaging,
+	// eslint-disable-next-line consistent-return
+}) => {
 	const dispatch = useDispatch();
 
 	const { openedModal } = useSelector((state) => state.ui);
 
-	const locate = useLocation();
 	const navigate = useNavigate();
 
-	const [isManaging, setIsManaging] = useState(false);
 	const [isGroupInviteLinkOpen, setIsGroupInviteLinkOpen] = useState(false);
 
 	const memberLength = groupInfo.information.memberInfo.length;
 
 	const { groupId, name } = groupInfo.information.group;
-
-	useEffect(() => {
-		if (locate.pathname.includes("leader")) {
-			setIsManaging(true);
-		}
-	}, []);
 
 	//	그룹 관리 페이지일때
 	if (isManaging) {

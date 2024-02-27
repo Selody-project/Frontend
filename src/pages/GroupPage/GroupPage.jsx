@@ -85,6 +85,7 @@ const GroupPage = () => {
 				groupInfo={groupInfo}
 				isGroupLeader={isGroupLeader}
 				isGroupMember={isGroupMember}
+				isManaging={isManaging}
 			/>
 
 			{isManaging ? (

@@ -65,8 +65,16 @@ export const SelectWrapUl = styled.ul`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	height: 290px;
+	overflow: auto;
 	gap: 16px;
 	padding: 32px 0;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
 `;
 
 export const SelectBoxLi = styled.li`

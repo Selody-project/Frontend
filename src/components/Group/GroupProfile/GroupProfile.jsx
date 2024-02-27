@@ -8,7 +8,12 @@ import {
 } from "./GroupProfile.styles";
 import GroupProfileButton from "./GroupProfileButton";
 
-const GroupProfile = ({ groupInfo, isGroupMember, isGroupLeader }) => {
+const GroupProfile = ({
+	groupInfo,
+	isGroupMember,
+	isGroupLeader,
+	isManaging,
+}) => {
 	return (
 		<ContainerDiv>
 			<TopDiv>
@@ -30,6 +35,7 @@ const GroupProfile = ({ groupInfo, isGroupMember, isGroupLeader }) => {
 				groupInfo={groupInfo}
 				isGroupMember={isGroupMember}
 				isGroupLeader={isGroupLeader}
+				isManaging={isManaging}
 			/>
 		</ContainerDiv>
 	);
