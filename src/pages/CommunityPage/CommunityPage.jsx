@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import GroupSearch from "@/components/Group/GroupSearch/GroupSearch";
+import GroupInfoList from "@/components/Group/GroupInfoList/GroupInfoList";
 import MyGroup from "@/components/Group/MyGroup/MyGroup";
 import MyGroupFeed from "@/components/Group/MyGroupFeed/MyGroupFeed";
 import { SearchIcon } from "@/constants/iconConstants";
@@ -12,7 +11,6 @@ import {
 	TAB_KEY,
 	TAB_PARAM,
 } from "@/constants/tabConstants";
-import { searchGroup } from "@/features/group/group-service";
 
 import {
 	ContainerDiv,
@@ -26,12 +24,6 @@ import {
 } from "./CommunityPage.styles";
 
 const CommunityPage = () => {
-	const dispatch = useDispatch();
-
-	const { searchGroupList, searchLastRecordId } = useSelector(
-		(state) => state.group,
-	);
-
 	const [searchParams, setSearchParams] = useSearchParams();
 
 	const [searchKeyword, setSearchKeyword] = useState("");
@@ -46,15 +38,7 @@ const CommunityPage = () => {
 			setOnSearch(false);
 			toast.error("2글자 이상부터 검색 가능합니다.");
 		} else {
-			dispatch(
-				searchGroup({
-					keyword: searchKeyword,
-					recordId: searchLastRecordId,
-				}),
-			);
-
 			setOnSearch(true);
-			setSearchKeyword("");
 		}
 	};
 
@@ -117,7 +101,12 @@ const CommunityPage = () => {
 				</FeedTitleDiv>
 
 				{searchParams.get(TAB_KEY) === TAB_PARAM.GROUP_SEARCH ? (
-					<GroupSearch onSearch={onSearch} searchGroupList={searchGroupList} />
+					<GroupInfoList
+						onSearch={onSearch}
+						clearOnSearch={() => setOnSearch(false)}
+						clearSearchKeyword={() => setSearchKeyword("")}
+						searchKeyword={searchKeyword}
+					/>
 				) : (
 					<MyGroupFeed />
 				)}

@@ -5,7 +5,7 @@ import { useSearchParams } from "react-router-dom";
 import ScrollBottom from "@/components/Common/ScrollBottom";
 import GroupInfo from "@/components/Group/GroupInfoList/GroupInfo";
 import { TAB_KEY, TAB_PARAM } from "@/constants/tabConstants";
-import { getGroupList } from "@/features/group/group-service";
+import { getGroupList, searchGroup } from "@/features/group/group-service";
 import {
 	getUserGroups,
 	getRequestUserGroups,
@@ -13,12 +13,23 @@ import {
 
 import { ContainerDiv } from "./GroupInfoList.styles";
 
-const GroupInfoList = ({ isMyPage }) => {
+const GroupInfoList = ({
+	onSearch,
+	clearOnSearch,
+	clearSearchKeyword,
+	searchKeyword,
+	isMyPage,
+}) => {
 	const dispatch = useDispatch();
 
-	const { groupList, lastRecordId, isEnd } = useSelector(
-		(state) => state.group,
-	);
+	const {
+		groupList,
+		lastRecordId,
+		isEnd,
+		searchGroupList,
+		searchLastRecordId,
+		isSearchEnd,
+	} = useSelector((state) => state.group);
 	const { userGroupList, userRequestGroupList } = useSelector(
 		(state) => state.user,
 	);
@@ -32,32 +43,57 @@ const GroupInfoList = ({ isMyPage }) => {
 		setIsLoading(false);
 	};
 
-	const userGroupFetching = async () => {
-		await dispatch(getUserGroups());
+	const searchGroupFetching = async () => {
+		await dispatch(
+			searchGroup({
+				keyword: searchKeyword,
+				recordId: searchLastRecordId,
+			}),
+		);
 		setIsLoading(false);
 	};
 
-	const userRequestGroupFetching = async () => {
+	const userGroupFetching = async () => {
+		await dispatch(getUserGroups());
 		await dispatch(getRequestUserGroups());
 		setIsLoading(false);
 	};
 
 	useEffect(() => {
 		if (searchParams.get(TAB_KEY) === TAB_PARAM.GROUP_SEARCH) {
-			allGroupFetching();
+			if (onSearch) {
+				searchGroupFetching();
+			} else {
+				allGroupFetching();
+			}
 		}
 
 		if (isMyPage) {
 			userGroupFetching();
-			userRequestGroupFetching();
 		}
 	}, []);
 
 	const handleOnView = () => {
-		if (!isEnd) {
+		if (onSearch) {
+			if (!isSearchEnd) {
+				dispatch(
+					searchGroup({
+						keyword: searchKeyword,
+						recordId: searchLastRecordId,
+					}),
+				);
+			}
+		} else if (!isEnd) {
 			dispatch(getGroupList(lastRecordId));
 		}
 	};
+
+	useEffect(() => {
+		return () => {
+			clearOnSearch();
+			clearSearchKeyword();
+		};
+	}, []);
 
 	if (isLoading) {
 		return <div>로딩중</div>;
@@ -65,8 +101,11 @@ const GroupInfoList = ({ isMyPage }) => {
 
 	return (
 		<ContainerDiv>
-			{searchParams.get(TAB_KEY) === TAB_PARAM.GROUP_SEARCH &&
-				groupList.map((info) => <GroupInfo info={info} key={info.groupId} />)}
+			{searchParams.get(TAB_KEY) === TAB_PARAM.GROUP_SEARCH && onSearch
+				? searchGroupList.map((info) => (
+						<GroupInfo info={info} key={info.groupId} />
+				  ))
+				: groupList.map((info) => <GroupInfo info={info} key={info.groupId} />)}
 
 			{searchParams.get(TAB_KEY) === TAB_PARAM.MY_GROUP &&
 				userGroupList.map((info) => (

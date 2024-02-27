@@ -27,14 +27,15 @@ import {
 
 const initialState = {
 	groupList: [],
-	lastRecordId: 0,
-	searchLastRecordId: 0,
-	searchGroupList: [],
-	isUserGroupRefetching: true,
 	isEnd: false,
+	lastRecordId: 0,
+	searchGroupList: [],
+	searchLastRecordId: 0,
+	isSearchEnd: false,
 	groupInfo: null,
 	groupRequestMemberList: [],
 	groupMemberList: [],
+	isUserGroupRefetching: true,
 };
 
 const groupSlice = createSlice({
@@ -56,18 +57,12 @@ const groupSlice = createSlice({
 				toast.success("그룹을 삭제하는데 성공하였습니다.");
 			})
 			.addCase(searchGroup.fulfilled, (state, { payload }) => {
-				state.isEnd = payload.isEnd;
+				state.searchGroupList = [...state.searchGroupList, ...payload.groups];
+				state.isSearchEnd = payload.isEnd;
 
-				if (payload.groups.length > 0 && !payload.isEnd) {
+				if (payload.groups.length > 0) {
 					state.searchLastRecordId =
 						payload.groups[payload.groups.length - 1].groupId;
-					state.searchGroupList = [...state.searchGroupList, ...payload.groups];
-				} else {
-					state.searchGroupList = payload.groups;
-				}
-
-				if (payload.isEnd) {
-					state.isEnd = false;
 				}
 			})
 			.addCase(getGroupList.fulfilled, (state, { payload }) => {
@@ -77,10 +72,6 @@ const groupSlice = createSlice({
 				if (payload.groups.length > 0) {
 					state.lastRecordId =
 						payload.groups[payload.groups.length - 1].groupId;
-				}
-
-				if (payload.isEnd) {
-					state.isEnd = false;
 				}
 			})
 			.addCase(leaveGroup.fulfilled, () => {
@@ -110,7 +101,7 @@ const groupSlice = createSlice({
 			.addCase(changeRequestGroupJoin.fulfilled, () => {
 				toast.success("그룹 신청 취소 완료");
 			})
-			.addCase(changeGroupPublicOption.fulfilled, (state, { payload }) => {
+			.addCase(changeGroupPublicOption.fulfilled, ({ payload }) => {
 				toast.error(payload.error);
 			})
 			.addCase(
