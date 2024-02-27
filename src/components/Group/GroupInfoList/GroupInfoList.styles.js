@@ -64,7 +64,7 @@ export const OptionDiv = styled.div`
 	cursor: pointer;
 `;
 
-export const OptionMenuDiv = styled.div`
+export const OptionMenuButton = styled.button`
 	width: 60px;
 	height: 30px;
 	z-index: 2;

@@ -6,7 +6,7 @@ import { OptionThreeDotIcon } from "@/constants/iconConstants";
 import { UI_TYPE } from "@/constants/uiConstants";
 import { openRequestCancelModal } from "@/features/ui/ui-slice";
 
-import { OptionDiv, OptionMenuDiv } from "./GroupInfoList.styles";
+import { OptionDiv, OptionMenuButton } from "./GroupInfoList.styles";
 
 const GroupOption = ({
 	groupId,
@@ -24,9 +24,9 @@ const GroupOption = ({
 			<OptionThreeDotIcon onClick={onThreeDotClick} />
 
 			{optionMenuOpenedFeedIndex === groupId && (
-				<OptionMenuDiv onClick={() => dispatch(openRequestCancelModal())}>
+				<OptionMenuButton onClick={() => dispatch(openRequestCancelModal())}>
 					요청취소
-				</OptionMenuDiv>
+				</OptionMenuButton>
 			)}
 
 			{openedModal === UI_TYPE.REQUEST_CANCEL && (
