@@ -15,9 +15,6 @@ const GroupFeed = ({ groupId, leaderName }) => {
 		(state) => state.post,
 	);
 
-	const [optionMenuOpenedFeedIndex, setOptionMenuOpenedFeedIndex] =
-		useState(null);
-
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
@@ -47,16 +44,10 @@ const GroupFeed = ({ groupId, leaderName }) => {
 		<FeedSection>
 			{allGroupPosts.map((post) => (
 				<Feed
-					post={post}
 					key={post.postId}
-					groupId={groupId}
-					optionOpenedFeedIndex={optionMenuOpenedFeedIndex}
-					onThreeDotClick={() =>
-						setOptionMenuOpenedFeedIndex((prev) =>
-							prev === post.postId ? null : post.postId,
-						)
-					}
+					post={post}
 					leaderName={leaderName}
+					groupId={groupId}
 				/>
 			))}
 			<ScrollBottom onView={handleOnView} />

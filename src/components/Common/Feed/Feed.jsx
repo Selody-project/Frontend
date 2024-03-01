@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import FeedOption from "@/components/Common/Feed/FeedOption";
 import {
 	CrownIcon,
 	CommentIcon,
 	EmptyHeartIcon,
-	OptionThreeDotIcon,
 	FillHeartIcon,
 } from "@/constants/iconConstants";
 import {
-	deleteGroupPost,
 	cancelLikeGroupPost,
 	likeGroupPost,
 } from "@/features/post/post-service";
@@ -17,8 +16,6 @@ import { useTimeStamp } from "@/hooks/useTimeStamp";
 
 import {
 	FeedArticle,
-	OptionDiv,
-	OptionMenuDiv,
 	TopDiv,
 	InfoDiv,
 	BottomDiv,
@@ -26,7 +23,7 @@ import {
 	IconItemButton,
 } from "./Feed.styles";
 
-const Feed = ({ post, optionOpenedFeedIndex, onThreeDotClick, leaderName }) => {
+const Feed = ({ post, groupId, leaderName }) => {
 	const dispatch = useDispatch();
 
 	const { user } = useSelector((state) => state.auth);
@@ -37,7 +34,7 @@ const Feed = ({ post, optionOpenedFeedIndex, onThreeDotClick, leaderName }) => {
 	const likeClick = async () => {
 		try {
 			await dispatch(
-				likeGroupPost({ postGroupId: post.groupId, postId: post.postId }),
+				likeGroupPost({ postGroupId: groupId, postId: post.postId }),
 			).unwrap();
 		} catch (error) {
 			setIsPostLiked(false);
@@ -48,7 +45,7 @@ const Feed = ({ post, optionOpenedFeedIndex, onThreeDotClick, leaderName }) => {
 	const disLikeClick = async () => {
 		try {
 			await dispatch(
-				cancelLikeGroupPost({ postGroupId: post.groupId, postId: post.postId }),
+				cancelLikeGroupPost({ postGroupId: groupId, postId: post.postId }),
 			).unwrap();
 		} catch (error) {
 			setIsPostLiked(true);
@@ -68,32 +65,10 @@ const Feed = ({ post, optionOpenedFeedIndex, onThreeDotClick, leaderName }) => {
 		}
 	};
 
-	const deletePost = () => {
-		dispatch(
-			deleteGroupPost({ postGroupId: post.groupId, postId: post.postId }),
-		);
-	};
-
 	return (
 		<FeedArticle key={post.postId}>
 			{user.nickname === post.author && (
-				<OptionDiv>
-					<OptionThreeDotIcon onClick={onThreeDotClick} />
-					{optionOpenedFeedIndex === post.postId && (
-						<OptionMenuDiv>
-							<ul>
-								<li>
-									<button type="button">수정</button>
-								</li>
-								<li>
-									<button type="button" onClick={deletePost}>
-										삭제
-									</button>
-								</li>
-							</ul>
-						</OptionMenuDiv>
-					)}
-				</OptionDiv>
+				<FeedOption postId={post.postId} groupId={groupId} />
 			)}
 			<TopDiv>
 				<img src={post.authorImage} alt={`${post.author}님의 프로필 이미지`} />

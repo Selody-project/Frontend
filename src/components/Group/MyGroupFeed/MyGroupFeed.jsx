@@ -14,15 +14,13 @@ const MyGroupFeed = () => {
 		useSelector((state) => state.post);
 
 	const [isLoading, setIsLoading] = useState(true);
-	const [optionMenuOpenedFeedIndex, setOptionMenuOpenedFeedIndex] =
-		useState(null);
-
-	const myGroupPostFetching = async () => {
-		await dispatch(getMyGroupPosts(myGroupPostslastRecordId));
-		setIsLoading(false);
-	};
 
 	useEffect(() => {
+		const myGroupPostFetching = async () => {
+			await dispatch(getMyGroupPosts(myGroupPostslastRecordId));
+			setIsLoading(false);
+		};
+
 		myGroupPostFetching();
 	}, []);
 
@@ -39,16 +37,7 @@ const MyGroupFeed = () => {
 	return (
 		<FeedSection>
 			{myGroupPosts.map((post) => (
-				<Feed
-					post={post}
-					key={post.postId}
-					optionOpenedFeedIndex={optionMenuOpenedFeedIndex}
-					onThreeDotClick={() =>
-						setOptionMenuOpenedFeedIndex((prev) =>
-							prev === post.postId ? null : post.postId,
-						)
-					}
-				/>
+				<Feed post={post} key={post.postId} groupId={post.groupId} />
 			))}
 			<ScrollBottom onView={handleOnView} />
 		</FeedSection>
