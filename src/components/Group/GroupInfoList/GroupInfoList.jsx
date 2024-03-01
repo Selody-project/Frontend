@@ -19,6 +19,7 @@ const GroupInfoList = ({
 	searchKeyword,
 	isMyPage,
 	searchParams,
+	// eslint-disable-next-line consistent-return
 }) => {
 	const dispatch = useDispatch();
 
@@ -99,30 +100,46 @@ const GroupInfoList = ({
 		return <div>로딩중</div>;
 	}
 
-	return (
-		<ContainerDiv>
-			{searchParams.get(TAB_KEY) === TAB_PARAM.GROUP_SEARCH &&
-				(onSearch
-					? searchGroupList.map((info) => (
-							<GroupInfo info={info} key={info.groupId} />
-					  ))
-					: groupList.map((info) => (
-							<GroupInfo info={info} key={info.groupId} />
-					  )))}
-
-			{searchParams.get(TAB_KEY) === TAB_PARAM.MY_GROUP &&
-				userGroupList.map((info) => (
+	if (searchParams.get(TAB_KEY) === TAB_PARAM.GROUP_SEARCH) {
+		if (onSearch) {
+			return (
+				<ContainerDiv>
+					{searchGroupList.map((info) => (
+						<GroupInfo info={info} key={info.groupId} />
+					))}
+					<ScrollBottom onView={handleOnView} />
+				</ContainerDiv>
+			);
+		}
+		return (
+			<ContainerDiv>
+				{groupList.map((info) => (
 					<GroupInfo info={info} key={info.groupId} />
 				))}
+				<ScrollBottom onView={handleOnView} />
+			</ContainerDiv>
+		);
+	}
 
-			{searchParams.get(TAB_KEY) === TAB_PARAM.REQUEST_GROUP &&
-				userRequestGroupList.map((info) => (
-					<GroupInfo info={info} key={info.groupId} isRequest />
+	if (searchParams.get(TAB_KEY) === TAB_PARAM.MY_GROUP) {
+		return (
+			<ContainerDiv>
+				{userGroupList.map((info) => (
+					<GroupInfo info={info} key={info.groupId} />
 				))}
+			</ContainerDiv>
+		);
+	}
 
-			{!isMyPage && <ScrollBottom onView={handleOnView} />}
-		</ContainerDiv>
-	);
+	if (searchParams.get(TAB_KEY) === TAB_PARAM.REQUEST_GROUP) {
+		return (
+			<ContainerDiv>
+				{userRequestGroupList.map((info) => (
+					<GroupInfo info={info} key={info.groupId} />
+				))}
+			</ContainerDiv>
+		);
+	}
 };
 
 export default GroupInfoList;

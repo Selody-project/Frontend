@@ -23,21 +23,11 @@ import {
 } from "./GroupMemberManagement.styles";
 
 const groupMemberManagementTitleData = [
-	{
-		title: "프로필",
-	},
-	{
-		title: "이름",
-	},
-	{
-		title: "댓글 내역",
-	},
-	{
-		title: "공감 내역",
-	},
-	{
-		title: "가입 날짜",
-	},
+	"프로필",
+	"이름",
+	"댓글 내역",
+	"공감 내역",
+	"가입 날짜",
 ];
 
 const GroupMemberManagement = ({ groupId, memberList }) => {
@@ -97,7 +87,7 @@ const GroupMemberManagement = ({ groupId, memberList }) => {
 		<>
 			<TitleUl>
 				{groupMemberManagementTitleData.map((data) => (
-					<TitleLi key={data.title}>{data.title}</TitleLi>
+					<TitleLi key={data}>{data}</TitleLi>
 				))}
 				<TitleLi
 					ref={accessInfoRef}
