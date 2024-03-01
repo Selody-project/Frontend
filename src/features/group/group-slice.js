@@ -86,12 +86,39 @@ const groupSlice = createSlice({
 					(prev) => prev.member.userId !== id.userId,
 				);
 			})
-			.addCase(approveGroupJoin.fulfilled, () => {
-				toast.success("그룹 가입 신청 수락 완료");
-			})
-			.addCase(rejectGroupJoin.fulfilled, () => {
-				toast.success("그룹 가입 신청 거절 완료");
-			})
+			.addCase(
+				approveGroupJoin.fulfilled,
+				(
+					state,
+					{
+						meta: {
+							arg: { userId },
+						},
+					},
+				) => {
+					state.groupRequestMemberList = state.groupRequestMemberList.filter(
+						(prev) => prev.member.userId !== userId,
+					);
+
+					toast.success("그룹 가입 신청 수락 완료");
+				},
+			)
+			.addCase(
+				rejectGroupJoin.fulfilled,
+				(
+					state,
+					{
+						meta: {
+							arg: { userId },
+						},
+					},
+				) => {
+					state.groupRequestMemberList = state.groupRequestMemberList.filter(
+						(prev) => prev.member.userId !== userId,
+					);
+					toast.success("그룹 가입 신청 거절 완료");
+				},
+			)
 			.addCase(getGroupRequestMemberList.fulfilled, (state, { payload }) => {
 				state.groupRequestMemberList = payload;
 			})
