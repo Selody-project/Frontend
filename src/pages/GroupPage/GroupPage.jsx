@@ -36,12 +36,6 @@ const GroupPage = () => {
 
 	const groupId = Number(param.id);
 
-	const isPublicGroup = groupInfo?.information.group.isPublicGroup;
-	const leaderId = groupInfo?.information.leaderInfo.userId;
-	const leaderName = groupInfo?.information.leaderInfo.nickname;
-	const isGroupLeader = groupInfo?.accessLevel === "owner";
-	const isGroupMember = groupInfo?.accessLevel !== null;
-
 	const inviteLink = searchParams.get("invite");
 
 	useEffect(() => {
@@ -78,6 +72,12 @@ const GroupPage = () => {
 	if (isLoading || !groupInfo) {
 		return <div>그룹 정보 불러오는 중...</div>;
 	}
+
+	const { isPublicGroup } = groupInfo.information.group;
+	const leaderId = groupInfo.information.leaderInfo.userId;
+	const leaderName = groupInfo.information.leaderInfo.nickname;
+	const isGroupLeader = groupInfo.accessLevel === "owner";
+	const isGroupMember = groupInfo.accessLevel !== null;
 
 	return (
 		<GroupMain>

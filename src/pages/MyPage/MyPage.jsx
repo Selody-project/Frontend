@@ -88,7 +88,7 @@ const MyPage = () => {
 				</li>
 			</TabUl>
 
-			<GroupInfoList isMyPage />
+			<GroupInfoList isMyPage searchParams={searchParams} />
 		</ContainerMain>
 	);
 };

@@ -106,6 +106,7 @@ const CommunityPage = () => {
 						clearOnSearch={() => setOnSearch(false)}
 						clearSearchKeyword={() => setSearchKeyword("")}
 						searchKeyword={searchKeyword}
+						searchParams={searchParams}
 					/>
 				) : (
 					<MyGroupFeed />

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
 
 import ScrollBottom from "@/components/Common/ScrollBottom";
 import GroupInfo from "@/components/Group/GroupInfoList/GroupInfo";
@@ -19,6 +18,7 @@ const GroupInfoList = ({
 	clearSearchKeyword,
 	searchKeyword,
 	isMyPage,
+	searchParams,
 }) => {
 	const dispatch = useDispatch();
 
@@ -35,8 +35,6 @@ const GroupInfoList = ({
 	);
 
 	const [isLoading, setIsLoading] = useState(true);
-
-	const [searchParams] = useSearchParams();
 
 	const allGroupFetching = async () => {
 		await dispatch(getGroupList(lastRecordId));
@@ -103,11 +101,14 @@ const GroupInfoList = ({
 
 	return (
 		<ContainerDiv>
-			{searchParams.get(TAB_KEY) === TAB_PARAM.GROUP_SEARCH && onSearch
-				? searchGroupList.map((info) => (
-						<GroupInfo info={info} key={info.groupId} />
-				  ))
-				: groupList.map((info) => <GroupInfo info={info} key={info.groupId} />)}
+			{searchParams.get(TAB_KEY) === TAB_PARAM.GROUP_SEARCH &&
+				(onSearch
+					? searchGroupList.map((info) => (
+							<GroupInfo info={info} key={info.groupId} />
+					  ))
+					: groupList.map((info) => (
+							<GroupInfo info={info} key={info.groupId} />
+					  )))}
 
 			{searchParams.get(TAB_KEY) === TAB_PARAM.MY_GROUP &&
 				userGroupList.map((info) => (
