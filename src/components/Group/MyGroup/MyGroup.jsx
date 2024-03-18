@@ -2,11 +2,19 @@ import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { LeftArrowIcon, RightArrowIcon } from "@/constants/iconConstants";
+import GroupCreateModal from "@/components/Common/GroupModal/GroupCreateModal/GroupCreateModal";
+import {
+	LeftArrowIcon,
+	RightArrowIcon,
+	EmptyMyGroupIcon,
+} from "@/constants/iconConstants";
+import { UI_TYPE } from "@/constants/uiConstants";
+import { openCreateGroupModal } from "@/features/ui/ui-slice";
 import { getUserGroups } from "@/features/user/user-service";
 
 import {
 	GroupDiv,
+	EmptyGroupDiv,
 	WrapperDiv,
 	InnerDiv,
 	LeftButton,
@@ -19,6 +27,7 @@ const MyGroup = () => {
 	const dispatch = useDispatch();
 
 	const { userGroupList } = useSelector((state) => state.user);
+	const { openedModal } = useSelector((state) => state.ui);
 
 	const childRef = useRef(null);
 	const parentRef = useRef(null);
@@ -56,13 +65,24 @@ const MyGroup = () => {
 	};
 
 	useEffect(() => {
-		const maxWidth = childRef?.current?.clientWidth;
-		const width = parentRef?.current?.clientWidth;
+		if (!childRef.current || parentRef.current) {
+			setIsNextButtonDisplayed(false);
+			setIsPrevButtonDisplayed(false);
+
+			return;
+		}
+
+		const maxWidth = childRef.current.clientWidth;
+		const width = parentRef.current.clientWidth;
 		setWidthGap(maxWidth - width);
 	});
 
 	useEffect(() => {
-		if (widthGap && currentWidth > widthGap) {
+		if (!widthGap) {
+			return;
+		}
+
+		if (currentWidth > widthGap) {
 			setIsNextButtonDisplayed(true);
 		} else {
 			setIsNextButtonDisplayed(false);
@@ -77,36 +97,45 @@ const MyGroup = () => {
 	return (
 		<GroupDiv>
 			<h3>내 그룹</h3>
-			<WrapperDiv ref={parentRef}>
-				<InnerDiv ref={childRef}>
-					<ul>
-						{userGroupList.map((info) => (
-							<li key={info.groupId}>
-								<Link to={`/group/${info.groupId}`}>
-									<ItemDiv>
-										<CircleDiv>
-											<img src={info.image} alt="groupImg" />
-										</CircleDiv>
-										<h4>{info.name}</h4>
-									</ItemDiv>
-								</Link>
-							</li>
-						))}
-					</ul>
-				</InnerDiv>
-			</WrapperDiv>
+			{userGroupList.length === 0 ? (
+				<EmptyGroupDiv>
+					<EmptyMyGroupIcon onClick={() => dispatch(openCreateGroupModal())} />
+					<h4>그룹 추가하기</h4>
+				</EmptyGroupDiv>
+			) : (
+				<WrapperDiv ref={parentRef}>
+					<InnerDiv ref={childRef}>
+						<ul>
+							{userGroupList.map((info) => (
+								<li key={info.groupId}>
+									<Link to={`/group/${info.groupId}`}>
+										<ItemDiv>
+											<CircleDiv>
+												<img src={info.image} alt="groupImg" />
+											</CircleDiv>
+											<h4>{info.name}</h4>
+										</ItemDiv>
+									</Link>
+								</li>
+							))}
+						</ul>
+					</InnerDiv>
+				</WrapperDiv>
+			)}
 
-			{!isPrevButtonDisplayed && (
+			{isPrevButtonDisplayed && (
 				<LeftButton onClick={handlePrevButton}>
 					<LeftArrowIcon />
 				</LeftButton>
 			)}
 
-			{!isNextButtonDisplayed && (
+			{isNextButtonDisplayed && (
 				<RightButton onClick={handleNextButton}>
 					<RightArrowIcon />
 				</RightButton>
 			)}
+
+			{openedModal === UI_TYPE.CREATE_GROUP && <GroupCreateModal />}
 		</GroupDiv>
 	);
 };

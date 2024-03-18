@@ -12,6 +12,19 @@ export const GroupDiv = styled.div`
 	}
 `;
 
+export const EmptyGroupDiv = styled.div`
+	margin-top: 30px;
+
+	& > svg {
+		cursor: pointer;
+	}
+
+	& > h4 {
+		font-size: 12px;
+		margin-top: 6px;
+	}
+`;
+
 export const WrapperDiv = styled.div`
 	overflow-x: auto;
 	-ms-overflow-style: none;
