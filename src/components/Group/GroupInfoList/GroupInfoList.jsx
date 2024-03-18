@@ -10,6 +10,7 @@ import {
 	getRequestUserGroups,
 } from "@/features/user/user-service";
 
+import EmptySearchGroup from "./EmptySearchGroup";
 import { ContainerDiv } from "./GroupInfoList.styles";
 
 const GroupInfoList = ({
@@ -102,6 +103,9 @@ const GroupInfoList = ({
 
 	if (searchParams.get(TAB_KEY) === TAB_PARAM.GROUP_SEARCH) {
 		if (onSearch) {
+			if (searchGroupList.length === 0) {
+				return <EmptySearchGroup />;
+			}
 			return (
 				<ContainerDiv>
 					{searchGroupList.map((info) => (
@@ -111,6 +115,7 @@ const GroupInfoList = ({
 				</ContainerDiv>
 			);
 		}
+
 		return (
 			<ContainerDiv>
 				{groupList.map((info) => (
