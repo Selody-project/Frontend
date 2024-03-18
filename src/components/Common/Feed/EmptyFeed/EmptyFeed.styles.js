@@ -8,7 +8,7 @@ export const LayoutDiv = styled.div`
 	border-radius: 10px;
 	border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
 	font-family: Inter;
-	height: 100%;
+	height: ${({ isCommunity }) => (isCommunity ? "486px" : "100%")};
 
 	& > h3 {
 		color: ${({ theme: { colors } }) => colors.text_01};

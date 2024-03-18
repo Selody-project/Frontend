@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import EmptyFeed from "@/components/Common/Feed/EmptyFeed/EmptyFeed";
 import Feed from "@/components/Common/Feed/Feed";
 import ScrollBottom from "@/components/Common/ScrollBottom";
 import { getMyGroupPosts } from "@/features/post/post-service";
@@ -32,6 +33,10 @@ const MyGroupFeed = () => {
 
 	if (isLoading) {
 		return <div>로딩중</div>;
+	}
+
+	if (myGroupPosts.length === 0) {
+		return <EmptyFeed isCommunity />;
 	}
 
 	return (

@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const ContainerDiv = styled.div`
 	display: flex;
 	flex-direction: column;
-	margin: 90px 82px 0;
+	margin: 90px 82px 40px;
 	font-family: Inter;
 `;
 
