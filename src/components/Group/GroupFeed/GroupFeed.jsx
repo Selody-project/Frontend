@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import EmptyFeed from "@/components/Common/Feed/EmptyFeed/EmptyFeed";
+import EmptyLayout from "@/components/Common/EmptyLayout/EmptyLayout";
 import Feed from "@/components/Common/Feed/Feed";
 import ScrollBottom from "@/components/Common/ScrollBottom";
+import { EMPTY_TYPE } from "@/constants/emptyConstants";
 import { getGroupAllPosts } from "@/features/post/post-service";
 
 import { FeedSection } from "./GroupFeed.styles";
@@ -37,7 +38,7 @@ const GroupFeed = ({ groupId, leaderName }) => {
 	}
 
 	if (allGroupPosts.length === 0) {
-		return <EmptyFeed />;
+		return <EmptyLayout emptyType={EMPTY_TYPE.GROUP_FEED} />;
 	}
 
 	return (

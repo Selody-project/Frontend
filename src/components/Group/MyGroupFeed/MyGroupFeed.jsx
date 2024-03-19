@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import EmptyFeed from "@/components/Common/Feed/EmptyFeed/EmptyFeed";
+import EmptyLayout from "@/components/Common/EmptyLayout/EmptyLayout";
 import Feed from "@/components/Common/Feed/Feed";
 import ScrollBottom from "@/components/Common/ScrollBottom";
+import { EMPTY_TYPE } from "@/constants/emptyConstants";
 import { getMyGroupPosts } from "@/features/post/post-service";
 
 import { FeedSection } from "./MyGroupFeed.styles";
@@ -36,7 +37,7 @@ const MyGroupFeed = () => {
 	}
 
 	if (myGroupPosts.length === 0) {
-		return <EmptyFeed isCommunity />;
+		return <EmptyLayout emptyType={EMPTY_TYPE.MY_GROUP_FEED} />;
 	}
 
 	return (

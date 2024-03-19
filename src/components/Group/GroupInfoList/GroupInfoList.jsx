@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import EmptyLayout from "@/components/Common/EmptyLayout/EmptyLayout";
 import ScrollBottom from "@/components/Common/ScrollBottom";
 import GroupInfo from "@/components/Group/GroupInfoList/GroupInfo";
+import { EMPTY_TYPE } from "@/constants/emptyConstants";
 import { TAB_KEY, TAB_PARAM } from "@/constants/tabConstants";
 import { getGroupList, searchGroup } from "@/features/group/group-service";
 import {
@@ -10,8 +12,6 @@ import {
 	getRequestUserGroups,
 } from "@/features/user/user-service";
 
-import EmptySearchGroup from "./EmptySearchGroup";
-import EmptyUserGroup from "./EmptyUserGroup";
 import { ContainerDiv } from "./GroupInfoList.styles";
 
 const GroupInfoList = ({
@@ -105,7 +105,7 @@ const GroupInfoList = ({
 	if (searchParams.get(TAB_KEY) === TAB_PARAM.GROUP_SEARCH) {
 		if (onSearch) {
 			if (searchGroupList.length === 0) {
-				return <EmptySearchGroup />;
+				return <EmptyLayout emptyType={EMPTY_TYPE.SEARCH_RESULT} />;
 			}
 			return (
 				<ContainerDiv>
@@ -129,7 +129,7 @@ const GroupInfoList = ({
 
 	if (searchParams.get(TAB_KEY) === TAB_PARAM.MY_GROUP) {
 		if (userGroupList.length === 0) {
-			return <EmptyUserGroup />;
+			return <EmptyLayout emptyType={EMPTY_TYPE.MY_GROUP} />;
 		}
 		return (
 			<ContainerDiv>
@@ -142,7 +142,7 @@ const GroupInfoList = ({
 
 	if (searchParams.get(TAB_KEY) === TAB_PARAM.REQUEST_GROUP) {
 		if (userRequestGroupList.length === 0) {
-			return <EmptyUserGroup isRequest />;
+			return <EmptyLayout emptyType={EMPTY_TYPE.REQUEST_GROUP} />;
 		}
 		return (
 			<ContainerDiv>
