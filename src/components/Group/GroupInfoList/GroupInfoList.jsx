@@ -11,6 +11,7 @@ import {
 } from "@/features/user/user-service";
 
 import EmptySearchGroup from "./EmptySearchGroup";
+import EmptyUserGroup from "./EmptyUserGroup";
 import { ContainerDiv } from "./GroupInfoList.styles";
 
 const GroupInfoList = ({
@@ -127,6 +128,9 @@ const GroupInfoList = ({
 	}
 
 	if (searchParams.get(TAB_KEY) === TAB_PARAM.MY_GROUP) {
+		if (userGroupList.length === 0) {
+			return <EmptyUserGroup />;
+		}
 		return (
 			<ContainerDiv>
 				{userGroupList.map((info) => (
@@ -137,6 +141,9 @@ const GroupInfoList = ({
 	}
 
 	if (searchParams.get(TAB_KEY) === TAB_PARAM.REQUEST_GROUP) {
+		if (userRequestGroupList.length === 0) {
+			return <EmptyUserGroup isRequest />;
+		}
 		return (
 			<ContainerDiv>
 				{userRequestGroupList.map((info) => (

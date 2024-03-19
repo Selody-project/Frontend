@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const ContainerMain = styled.main`
 	font-family: Inter;
-	margin: 110px 26px 0;
+	margin: 110px 26px 80px;
 `;
 
 export const ProfileSection = styled.section`

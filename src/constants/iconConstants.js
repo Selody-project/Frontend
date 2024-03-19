@@ -10,6 +10,7 @@ import DocumentIcon from "@/assets/icon/ic-document.svg";
 import DownArrowIcon from "@/assets/icon/ic-down-arrow.svg";
 import EditScheduleIcon from "@/assets/icon/ic-edit-schedule.svg";
 import EmptyFeedIcon from "@/assets/icon/ic-empty-feed.svg";
+import EmptyGroupListIcon from "@/assets/icon/ic-empty-group-list.svg";
 import EmptyGroupMemberIcon from "@/assets/icon/ic-empty-group-member.svg";
 import EmptyMyGroupIcon from "@/assets/icon/ic-empty-my-group.svg";
 import CommentIcon from "@/assets/icon/ic-feed-comment.svg";
@@ -78,4 +79,5 @@ export {
 	EmptyGroupMemberIcon,
 	EmptyMyGroupIcon,
 	EmptySearchResultIcon,
+	EmptyGroupListIcon,
 };
