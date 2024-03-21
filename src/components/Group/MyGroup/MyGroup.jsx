@@ -2,13 +2,11 @@ import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
-import GroupCreateModal from "@/components/Common/GroupModal/GroupCreateModal/GroupCreateModal";
 import {
 	LeftArrowIcon,
 	RightArrowIcon,
 	EmptyMyGroupIcon,
 } from "@/constants/iconConstants";
-import { UI_TYPE } from "@/constants/uiConstants";
 import { openCreateGroupModal } from "@/features/ui/ui-slice";
 import { getUserGroups } from "@/features/user/user-service";
 
@@ -27,7 +25,6 @@ const MyGroup = () => {
 	const dispatch = useDispatch();
 
 	const { userGroupList } = useSelector((state) => state.user);
-	const { openedModal } = useSelector((state) => state.ui);
 
 	const childRef = useRef(null);
 	const parentRef = useRef(null);
@@ -134,8 +131,6 @@ const MyGroup = () => {
 					<RightArrowIcon />
 				</RightButton>
 			)}
-
-			{openedModal === UI_TYPE.CREATE_GROUP && <GroupCreateModal />}
 		</GroupDiv>
 	);
 };
