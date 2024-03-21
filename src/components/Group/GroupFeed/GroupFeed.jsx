@@ -19,12 +19,10 @@ const GroupFeed = ({ groupId, leaderName }) => {
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		const groupPostFetching = async () => {
+		(async () => {
 			await dispatch(getGroupAllPosts(groupId));
 			setIsLoading(false);
-		};
-
-		groupPostFetching();
+		})();
 	}, []);
 
 	const handleOnView = () => {

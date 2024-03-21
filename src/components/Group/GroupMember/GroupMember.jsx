@@ -27,13 +27,11 @@ const GroupMember = ({ leaderId, groupId }) => {
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		const groupMemberListFetching = async () => {
+		(async () => {
 			await dispatch(getGroupRequestMemberList(groupId));
 			await dispatch(getGroupMemberList(groupId));
 			setIsLoading(false);
-		};
-
-		groupMemberListFetching();
+		})();
 	}, []);
 
 	return (
