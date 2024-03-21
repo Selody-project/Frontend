@@ -21,7 +21,6 @@ const GroupInfoList = ({
 	searchKeyword,
 	isMyPage,
 	searchParams,
-	// eslint-disable-next-line consistent-return
 }) => {
 	const dispatch = useDispatch();
 
@@ -152,6 +151,8 @@ const GroupInfoList = ({
 			</ContainerDiv>
 		);
 	}
+
+	return <div>그룹이 없습니다.</div>;
 };
 
 export default GroupInfoList;
