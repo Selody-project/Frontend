@@ -1,25 +1,19 @@
-import React, { useState, useRef } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 
 import { OptionThreeDotIcon } from "@/constants/iconConstants";
 import { deleteGroupPost } from "@/features/post/post-service";
-import useOutsideClick from "@/hooks/useOutsideClick";
 
 import { OptionDiv, OptionMenuDiv } from "./Feed.styles";
 
-const FeedOption = ({ postId, groupId }) => {
+const FeedOption = ({
+	postId,
+	groupId,
+	optionMenuRef,
+	isOptionOpen,
+	handleOptionClick,
+}) => {
 	const dispatch = useDispatch();
-
-	const [optionMenuOpenedFeedIndex, setOptionMenuOpenedFeedIndex] =
-		useState(null);
-
-	const handleOptionMenuClick = () => {
-		setOptionMenuOpenedFeedIndex((prev) => (prev === postId ? null : postId));
-	};
-
-	const optionMenuRef = useRef();
-
-	useOutsideClick(optionMenuRef, () => setOptionMenuOpenedFeedIndex(null));
 
 	const deletePost = () => {
 		dispatch(deleteGroupPost({ postGroupId: groupId, postId }));
@@ -27,9 +21,9 @@ const FeedOption = ({ postId, groupId }) => {
 
 	return (
 		<OptionDiv ref={optionMenuRef}>
-			<OptionThreeDotIcon onClick={handleOptionMenuClick} />
+			<OptionThreeDotIcon onClick={handleOptionClick} />
 
-			{optionMenuOpenedFeedIndex === postId && (
+			{isOptionOpen && (
 				<OptionMenuDiv>
 					<ul>
 						<li>

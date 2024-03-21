@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import FeedOption from "@/components/Common/Feed/FeedOption";
@@ -12,6 +12,7 @@ import {
 	cancelLikeGroupPost,
 	likeGroupPost,
 } from "@/features/post/post-service";
+import useOutsideClick from "@/hooks/useOutsideClick";
 import { useTimeStamp } from "@/hooks/useTimeStamp";
 
 import {
@@ -30,6 +31,11 @@ const Feed = ({ post, groupId, leaderName }) => {
 
 	const [isPostLiked, setIsPostLiked] = useState(post.isLiked);
 	const [postLikesCount, setPostLikesCount] = useState(post.likesCount);
+	const [isOptionOpen, setIsOptionOpen] = useState(false);
+
+	const optionMenuRef = useRef();
+
+	useOutsideClick(optionMenuRef, () => setIsOptionOpen(false));
 
 	const likeClick = async () => {
 		try {
@@ -68,7 +74,13 @@ const Feed = ({ post, groupId, leaderName }) => {
 	return (
 		<FeedArticle key={post.postId}>
 			{user.nickname === post.author && (
-				<FeedOption postId={post.postId} groupId={groupId} />
+				<FeedOption
+					postId={post.postId}
+					groupId={groupId}
+					optionMenuRef={optionMenuRef}
+					isOptionOpen={isOptionOpen}
+					handleOptionClick={() => setIsOptionOpen((prev) => !prev)}
+				/>
 			)}
 			<TopDiv>
 				<img src={post.authorImage} alt={`${post.author}님의 프로필 이미지`} />
