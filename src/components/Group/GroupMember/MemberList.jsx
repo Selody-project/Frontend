@@ -1,50 +1,58 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
-import { CrownIcon } from "@/constants/iconConstants";
-import { UI_TYPE } from "@/constants/uiConstants";
-import { openMemberModal } from "@/features/ui/ui-slice";
+import { OptionThreeDotIcon } from "@/constants/iconConstants";
+import { deleteGroupMember } from "@/features/group/group-service";
 
 import {
 	MemberInnerDiv,
-	MemberTitleDiv,
 	MemberH3,
-	MemberMoreSpan,
 	MemberUl,
 } from "./GroupMember.Shared.styles";
-import MemberModal from "./MemberModal/MemberModal";
+import { OptionMenuDiv } from "./GroupMember.styles";
 
-const MemberList = ({ leaderId, groupMemberList }) => {
+const MemberList = ({ groupId }) => {
+	const [optionMenuOpenedMemberIndex, setOptionMenuOpenedMemberIndex] =
+		useState(null);
+
 	const dispatch = useDispatch();
 
-	const { openedModal } = useSelector((state) => state.ui);
+	const groupInfo = useSelector((state) => state.group.groupInfo);
+
+	const handleOption = (num) =>
+		setOptionMenuOpenedMemberIndex((prev) => (prev === num ? null : num));
+
+	const deleteMember = (userId) => {
+		dispatch(deleteGroupMember({ groupId, userId }));
+	};
 
 	return (
 		<MemberInnerDiv>
-			<MemberTitleDiv>
-				<MemberH3>그룹원</MemberH3>
-				{groupMemberList.length > 5 && (
-					<MemberMoreSpan onClick={() => dispatch(openMemberModal())}>
-						더보기
-					</MemberMoreSpan>
-				)}
-			</MemberTitleDiv>
+			<MemberH3>그룹원</MemberH3>
 			<MemberUl>
-				{groupMemberList.slice(0, 5).map((info) => (
-					<li key={info.member.userId}>
-						<img
-							src={info.member.image}
-							alt={`${info.member.nickname}님의 이미지`}
-						/>
-						<h4>{info.member.nickname}</h4>
-						{info.member.userId === leaderId && <CrownIcon />}
+				{groupInfo?.information.memberInfo.map((info) => (
+					<li key={info.userId}>
+						<img src={info.image} alt="memberImg" />
+						<h4>{info.nickname}</h4>
+						<button type="button">
+							<OptionThreeDotIcon
+								onClick={() => {
+									handleOption(info.userId);
+								}}
+							/>
+							{optionMenuOpenedMemberIndex === info.userId && (
+								<OptionMenuDiv
+									onClick={() => {
+										deleteMember(info.userId);
+									}}
+								>
+									내보내기
+								</OptionMenuDiv>
+							)}
+						</button>
 					</li>
 				))}
 			</MemberUl>
-
-			{openedModal === UI_TYPE.MEMBER_MODAL && (
-				<MemberModal memberList={groupMemberList} />
-			)}
 		</MemberInnerDiv>
 	);
 };

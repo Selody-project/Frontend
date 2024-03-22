@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ScheduleModal from "@/components/Common/ScheduleModal/ScheduleModal.jsx";
 import ScheduleItem from "@/components/ScheduleItemList/ScheduleItem/ScheduleItem.jsx";
 import { UI_TYPE } from "@/constants/uiConstants.js";
+import { createInviteLink } from "@/features/group/group-invite-service.js";
 import { openScheduleCreateModal } from "@/features/ui/ui-slice.js";
 
 import {
@@ -23,10 +24,13 @@ const ShareTodoList = () => {
 	const dispatch = useDispatch();
 	const { openedModal } = useSelector((state) => state.ui);
 	const { todaySchedules } = useSelector((state) => state.schedule);
-
+	const { group } = useSelector((state) => state.group);
+	const { inviteCode } = useSelector((state) => state.groupInvite);
 	const [selectedTab, setSelectedTab] = useState(true);
 
-	const createInviteCodeHandler = () => {};
+	const createInviteCodeHandler = () => {
+		dispatch(createInviteLink(group.groupId));
+	};
 
 	return (
 		<Wrapper>
@@ -132,7 +136,7 @@ const ShareTodoList = () => {
 			<div className="invite">
 				<h2>초대코드 생성</h2>
 				<div className="container">
-					<div className="box" />
+					<div className="box">{inviteCode || ""}</div>
 					<button type="button" onClick={createInviteCodeHandler}>
 						생성
 					</button>

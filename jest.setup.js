@@ -7,7 +7,6 @@ import "@testing-library/jest-dom/extend-expect";
 import { render as rtlRender } from "@testing-library/react";
 import { ThemeProvider } from "styled-components";
 
-import { mockIntersectionObserver } from "./__test__/__mocks__/mockIntersectionObserver.js";
 import { server } from "./__test__/__mocks__/server.js";
 import { setupStore } from "./src/store/index.js";
 import lightTheme from "./src/styles/theme.js";
@@ -15,8 +14,6 @@ import lightTheme from "./src/styles/theme.js";
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
-
-global.IntersectionObserver = mockIntersectionObserver;
 
 export const render = (
 	ui,

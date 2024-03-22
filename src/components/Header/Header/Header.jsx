@@ -8,7 +8,6 @@ import SelodyLogo from "@/components/Common/SelodyLogo";
 import Tab from "@/components/Common/Tab/Tab";
 import NotificationDropdown from "@/components/Notification/NotificationDropdown/NotificationDropdown";
 import { HEADER_TAB_CONSTANTS } from "@/constants/tabConstants";
-import { UI_TYPE } from "@/constants/uiConstants";
 import { openCreateGroupModal } from "@/features/ui/ui-slice";
 
 import {
@@ -23,7 +22,7 @@ import {
 	NotificationDiv,
 	NotificationButton,
 } from "./Header.styles";
-import GroupCreateModal from "../../Common/GroupModal/GroupCreateModal/GroupCreateModal";
+import GroupCreateModal from "../GroupCreateModal/GroupCreateModal";
 import ProfileDropdown from "../ProfileDropdown/ProfileDropdown";
 
 const Header = () => {
@@ -111,7 +110,7 @@ const Header = () => {
 						{isProfileDropdownOpen && <ProfileDropdown />}
 					</ProfileDiv>
 				</RightDiv>
-				{openedModal === UI_TYPE.CREATE_GROUP && <GroupCreateModal />}
+				{openedModal === "CREATE_GROUP" && <GroupCreateModal />}
 			</WrapDiv>
 		</ContainerHeader>
 	);

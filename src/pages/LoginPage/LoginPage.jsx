@@ -6,7 +6,7 @@ import LoginForm from "@/components/Login/LoginForm/LoginForm";
 import Google from "@/components/sign/Google";
 import Naver from "@/components/sign/Naver";
 import { naverLogin } from "@/features/auth/auth-service.js";
-import useNaver from "@/hooks/useNaver";
+import useNaver from "@/hooks/useNaver.jsx";
 
 import {
 	ContainerDiv,

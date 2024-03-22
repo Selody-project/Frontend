@@ -1,32 +1,42 @@
-// import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-// import {
-// 	Box,
-// 	Button,
-// 	TextField,
-// 	Autocomplete,
-// 	Menu,
-// 	List,
-// 	ListItem,
-// 	ListItemText,
-// 	InputAdornment,
-// } from "@mui/material";
+import {
+	Box,
+	Button,
+	TextField,
+	Autocomplete,
+	Menu,
+	List,
+	ListItem,
+	ListItemText,
+	InputAdornment,
+} from "@mui/material";
 
-// import { selectGroup } from "@/features/group/group-slice.js";
+import { selectGroup } from "@/features/group/group-slice.js";
 
-const InviteUser = () => {
-	// const groupList = useSelector((state) => state.group);
-	// const dispatch = useDispatch();
+const InviteUser = ({
+	selectedGroup,
+	setSelectedGroup,
+	handleInviteButtonClick,
+	anchorEl,
+	handleCloseMenu,
+	inviteInput,
+	setInviteInput,
+	handleSendInvite,
+	invitationLink,
+	setInvitationLink,
+}) => {
+	const groupList = useSelector((state) => state.group);
+	const dispatch = useDispatch();
 
-	// const selectGroupHandler = (e, value) => {
-	// 	setSelectedGroup(value);
-	// 	dispatch(selectGroup(value));
-	// };
+	const selectGroupHandler = (e, value) => {
+		setSelectedGroup(value);
+		dispatch(selectGroup(value));
+	};
 
 	return (
 		<div>
-			test
-			{/* <Box
+			<Box
 				display="flex"
 				alignItems="center"
 				justifyContent="space-between"
@@ -122,7 +132,7 @@ const InviteUser = () => {
 						/>
 					</ListItem>
 				</List>
-			</Menu> */}
+			</Menu>
 		</div>
 	);
 };

@@ -6,6 +6,7 @@ export const SecretSection = styled.section`
 	width: 100%;
 	justify-content: center;
 	align-items: center;
+	margin-right: 76px;
 	border: 1px solid ${({ theme: { colors } }) => colors.btn_02};
 	border-radius: 10px;
 	font-family: Inter;
