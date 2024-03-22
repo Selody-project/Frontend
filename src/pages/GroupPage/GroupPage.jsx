@@ -12,7 +12,10 @@ import GroupProfile from "@/components/Group/GroupProfile/GroupProfile";
 import GroupTitle from "@/components/Group/GroupTitle/GroupTitle";
 import { TAB_KEY, TAB_PARAM } from "@/constants/tabConstants";
 import { UI_TYPE } from "@/constants/uiConstants";
-import { getGroupInfo } from "@/features/group/group-service";
+import {
+	getGroupInfo,
+	getGroupMemberList,
+} from "@/features/group/group-service";
 import { resetGroupStateForGroupPage } from "@/features/group/group-slice";
 import { resetPostStateForGroupPage } from "@/features/post/post-slice";
 import { openJoinGroupModal } from "@/features/ui/ui-slice";
@@ -23,7 +26,7 @@ const GroupPage = () => {
 	const dispatch = useDispatch();
 
 	const { user } = useSelector((state) => state.auth);
-	const { groupInfo } = useSelector((state) => state.group);
+	const { groupInfo, groupMemberList } = useSelector((state) => state.group);
 
 	const { openedModal } = useSelector((state) => state.ui);
 
@@ -39,6 +42,8 @@ const GroupPage = () => {
 	const inviteLink = searchParams.get("invite");
 
 	useEffect(() => {
+		dispatch(getGroupMemberList(groupId));
+
 		try {
 			dispatch(getGroupInfo(groupId)).unwrap();
 			setIsLoading(false);
@@ -59,8 +64,6 @@ const GroupPage = () => {
 			);
 		}
 
-		// 초대 링크 유효 안할 시 로직 필요
-
 		if (searchParams.get("mode")) {
 			setIsManaging(true);
 		} else {
@@ -68,7 +71,6 @@ const GroupPage = () => {
 		}
 	}, [searchParams]);
 
-	// groupInfo가 없을 때 undefined 값을 가지는 경우에 GroupFeed 깜박임에 영향을 주면서 두 번 렌더링됨
 	if (isLoading || !groupInfo) {
 		return <div>그룹 정보 불러오는 중...</div>;
 	}
@@ -86,13 +88,16 @@ const GroupPage = () => {
 				isGroupLeader={isGroupLeader}
 				isGroupMember={isGroupMember}
 				isManaging={isManaging}
+				groupMemberList={groupMemberList}
 			/>
 
 			{isManaging ? (
-				<GroupManagement groupInfo={groupInfo} />
+				<GroupManagement
+					groupInfo={groupInfo}
+					groupMemberList={groupMemberList}
+				/>
 			) : (
 				<>
-					{/* falsy한 값인지 진짜 0인지 구분해줬어야 함 */}
 					{!isPublicGroup && !isGroupMember ? (
 						<SecretFeed />
 					) : (

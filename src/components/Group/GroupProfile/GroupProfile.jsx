@@ -13,6 +13,7 @@ const GroupProfile = ({
 	isGroupMember,
 	isGroupLeader,
 	isManaging,
+	groupMemberList,
 }) => {
 	return (
 		<ContainerDiv>
@@ -23,7 +24,7 @@ const GroupProfile = ({
 			</TopDiv>
 			<MiddleDiv>
 				<MiddleInnerDiv>
-					<h3>{groupInfo.information.group.member.toLocaleString()}</h3>
+					<h3>{groupMemberList.length}</h3>
 					<h4>그룹원</h4>
 				</MiddleInnerDiv>
 				<MiddleInnerDiv>

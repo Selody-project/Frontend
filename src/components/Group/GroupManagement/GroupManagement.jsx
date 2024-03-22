@@ -1,18 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
-import { getGroupMemberList } from "@/features/group/group-service";
 
 import EmptyGroupMember from "./EmptyGroupMember/EmptyGroupMember";
 import { ContainerDiv, Tabul, TabButton } from "./GroupManagement.styles";
 import GroupManagementProfile from "./GroupManagementProfile/GroupManagementProfile";
 import GroupMemberManagement from "./GroupMemberManagement/GroupMemberManagement";
 
-const GroupManagement = ({ groupInfo }) => {
-	const dispatch = useDispatch();
-
-	const { groupMemberList } = useSelector((state) => state.group);
+const GroupManagement = ({ groupInfo, groupMemberList }) => {
 	const { user } = useSelector((state) => state.auth);
 
 	const [isGroupProfile, setIsGroupProfile] = useState(true);
@@ -20,13 +15,11 @@ const GroupManagement = ({ groupInfo }) => {
 	const navigate = useNavigate();
 
 	const { groupId } = groupInfo.information.group;
-	const memberList = groupMemberList?.filter(
+	const memberList = groupMemberList.filter(
 		(member) => member.accessLevel !== "owner",
 	);
 
 	useEffect(() => {
-		dispatch(getGroupMemberList(groupId));
-
 		if (!(user.userId === groupInfo.information.leaderInfo.userId)) {
 			navigate(`/group/${groupId}`);
 		}
@@ -52,12 +45,13 @@ const GroupManagement = ({ groupInfo }) => {
 					</TabButton>
 				</li>
 			</Tabul>
+
 			{isGroupProfile ? (
 				<GroupManagementProfile groupInfo={groupInfo} />
 			) : (
 				// eslint-disable-next-line react/jsx-no-useless-fragment
 				<>
-					{groupInfo.information.memberInfo.length < 2 ? (
+					{groupMemberList.length < 2 ? (
 						<EmptyGroupMember />
 					) : (
 						<GroupMemberManagement groupId={groupId} memberList={memberList} />
