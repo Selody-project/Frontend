@@ -7,6 +7,7 @@ const initialState = {
 	scheduleModalMode: SCHEDULE_MODAL_TYPE.CREATE,
 	scheduleModalId: null,
 	isLoading: true,
+	warningModalUserInfo: null,
 };
 
 const uiSlice = createSlice({
@@ -74,6 +75,25 @@ const uiSlice = createSlice({
 		openWithdrawModal: (state) => {
 			state.openedModal = UI_TYPE.WITHDRAW;
 		},
+		openRequestCancelModal: (state) => {
+			state.openedModal = UI_TYPE.REQUEST_CANCEL;
+		},
+		openExitGroupModal: (state) => {
+			state.openedModal = UI_TYPE.EXIT_GROUP;
+		},
+		openJoinGroupModal: (state) => {
+			state.openedModal = UI_TYPE.JOIN_GROUP;
+		},
+		openMemberModal: (state) => {
+			state.openedModal = UI_TYPE.MEMBER_MODAL;
+		},
+		openMemberRequestModal: (state) => {
+			state.openedModal = UI_TYPE.MEMBER_REQUEST_MODAL;
+		},
+		openDeleteMemberWarningModal: (state, { payload }) => {
+			state.warningModalUserInfo = payload;
+			state.openedModal = UI_TYPE.DELETE_MEMBER_WARNING_MODAL;
+		},
 		closeModal: () => {
 			return initialState;
 		},
@@ -98,6 +118,12 @@ export const {
 	openDelegateGroupModal,
 	openLeaveGroupModal,
 	openWithdrawModal,
+	openRequestCancelModal,
+	openExitGroupModal,
+	openJoinGroupModal,
+	openMemberModal,
+	openMemberRequestModal,
+	openDeleteMemberWarningModal,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;

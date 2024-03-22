@@ -5,10 +5,10 @@ export const ContainerAside = styled.aside`
 	flex-direction: column;
 	gap: 20px;
 	font-family: Inter;
+	min-width: 208px;
 `;
 
 export const MemberDiv = styled.div`
-	width: 208px;
 	padding: 14px 0;
 	border-radius: 4px;
 	border: 1px solid ${({ theme: { colors } }) => colors.btn_02};

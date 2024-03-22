@@ -1,6 +1,6 @@
 import React from "react";
 
-import { OuterDiv } from "./ToggleButton.style";
+import { OuterDiv } from "./ToggleButton.styles";
 
 const ToggleButton = ({ isActive }) => {
 	return (

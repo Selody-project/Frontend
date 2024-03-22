@@ -8,7 +8,9 @@ const useOutsideClick = (ref, trigger) => {
 			}
 			trigger();
 		};
+
 		document.addEventListener("click", handleClick);
+
 		return () => {
 			document.removeEventListener("click", handleClick);
 		};

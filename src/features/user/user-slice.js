@@ -1,10 +1,16 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
-import { inqueryUserGroup } from "./user-service";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
+
+import { getUserGroups, getRequestUserGroups } from "./user-service";
+import { createGroup } from "../group/group-service";
 
 const initialState = {
 	userGroupList: [],
-	isUserGroupFetching: false,
+	userRequestGroupList: [],
+	isUserGroupFetching: true,
+	isRequestUserGroupFetching: true,
+	isLoading: false,
 };
 
 const userSlice = createSlice({
@@ -13,19 +19,32 @@ const userSlice = createSlice({
 	reducers: {},
 	extraReducers: (builder) => {
 		builder
-			.addCase(inqueryUserGroup.pending, (state) => {
-				state.isUserGroupFetching = true;
-			})
-			.addCase(inqueryUserGroup.fulfilled, (state, { payload }) => {
+			.addCase(getUserGroups.fulfilled, (state, { payload }) => {
 				state.isUserGroupFetching = false;
 				state.userGroupList = payload;
 			})
-			.addCase(inqueryUserGroup.rejected, (state) => {
-				state.isUserGroupFetching = false;
-			});
+			.addCase(getRequestUserGroups.fulfilled, (state, { payload }) => {
+				state.isRequestUserGroupFetching = false;
+				state.userRequestGroupList = payload;
+			})
+			.addCase(createGroup.fulfilled, (state, { payload }) => {
+				state.isLoading = false;
+				state.userGroupList.push(payload);
+				toast.success("그룹 생성에 성공하셨습니다!");
+			})
+			.addMatcher(
+				isAnyOf(getUserGroups.pending, getRequestUserGroups.pending),
+				(state) => {
+					state.isUserGroupFetching = true;
+				},
+			)
+			.addMatcher(
+				isAnyOf(getUserGroups.rejected, getRequestUserGroups.rejected),
+				(state) => {
+					state.isRequestUserGroupFetching = false;
+				},
+			);
 	},
 });
-
-export const { inqueryGroup } = userSlice.actions;
 
 export default userSlice.reducer;

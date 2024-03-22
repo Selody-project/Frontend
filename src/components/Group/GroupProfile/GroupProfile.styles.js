@@ -91,22 +91,39 @@ export const MiddleInnerDiv = styled.div`
 	}
 `;
 
-export const BottomDiv = styled.div`
+export const ProfileButtonDiv = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	gap: 12px;
 	padding: 26px 0;
+	position: relative;
+`;
 
-	& > button {
-		border: 1px solid ${({ theme: { colors } }) => colors.primary};
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background-color: transparent;
-		width: 282px;
-		height: 48px;
-		color: ${({ theme: { colors } }) => colors.primary};
-		font-size: 18px;
+export const ProfileButton = styled.button`
+	border: 1px solid ${({ theme: { colors } }) => colors.primary};
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: ${({ theme: { colors } }) => colors.primary};
+	width: 282px;
+	height: 48px;
+	color: ${({ theme: { colors } }) => colors.white};
+	font-weight: ${({ theme: { typography } }) => typography.weight.medium};
+	font-size: 18px;
+	position: relative;
+	cursor: pointer;
+
+	&:hover {
+		background-color: ${({ theme: { colors } }) => colors.btn_04};
+	}
+`;
+
+export const ProfileWhiteButton = styled(ProfileButton)`
+	background-color: ${({ theme: { colors } }) => colors.white};
+	color: ${({ theme: { colors } }) => colors.primary};
+
+	&:hover {
+		background-color: ${({ theme: { colors } }) => colors.bg_02};
 	}
 `;

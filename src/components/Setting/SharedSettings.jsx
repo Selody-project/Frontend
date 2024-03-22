@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 import CloseIcon from "@mui/icons-material/Close";
@@ -14,10 +14,15 @@ import {
 	Button,
 } from "@mui/material";
 
-import {
-	getInvitation,
-	groupJoin,
-} from "@/features/group/group-invite-service.js";
+// import {
+// 	getInvitation,
+// 	groupJoin,
+// } from "@/features/group/group-invite-service.js";
+// import {
+// 	getGroupList,
+// 	deleteGroup,
+// 	leaveGroup,
+// } from "@/features/group/group-service";
 
 import {
 	UserInfoContainer,
@@ -31,7 +36,7 @@ import {
 } from "./SettingPageDetail.styles";
 
 const SharedSettings = () => {
-	const dispatch = useDispatch();
+	// const dispatch = useDispatch();
 	const groupList = useSelector((state) => state.group);
 	const { user } = useSelector((state) => state.auth);
 	const [currentGroup, setCurrentGroup] = useState(null);
@@ -281,7 +286,7 @@ const SharedSettings = () => {
 				/>
 				<button
 					type="button"
-					onClick={() => dispatch(getInvitation(inviteCode))}
+					// onClick={() => dispatch(getInvitation(inviteCode))}
 				>
 					검색
 				</button>
@@ -289,9 +294,9 @@ const SharedSettings = () => {
 			{searchGroup && (
 				<div>
 					<h2>{searchGroup?.name || ""}</h2>
-					<button type="button" onClick={() => dispatch(groupJoin(inviteCode))}>
+					{/* <button type="button" onClick={() => dispatch(groupJoin(inviteCode))}>
 						그룹 들어가기
-					</button>
+					</button> */}
 				</div>
 			)}
 		</UserInfoContainer>

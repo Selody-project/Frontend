@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import {
-	GroupDelegateModal,
-	GroupDeleteModal,
-	GroupLeaveModal,
-} from "@/components/Setting/GroupModals/GroupModals";
+import GroupDelegateModal from "@/components/Common/GroupModal/GroupDelegateModal/GroupDelegateModal";
+import GroupDeleteModal from "@/components/Common/GroupModal/GroupDeleteModal/GroupDeleteModal";
+import GroupExitModal from "@/components/Common/GroupModal/GroupExitModal/GroupExitModal";
 import PasswordTab from "@/components/Setting/PasswordTab/PasswordTab";
 import ProfileTab from "@/components/Setting/ProfileTab";
 import WithdrawalTab from "@/components/Setting/WithdrawalTab/WithdrawalTab";
-import { UI_TYPE } from "@/constants/uiConstants";
+// import { UI_TYPE } from "@/constants/uiConstants";
 
 import {
 	ContainerDiv,
@@ -64,15 +62,20 @@ const SettingPage = () => {
 				</TabsAside>
 				<MainSection>{selectedTabList[selectedTabIdx]}</MainSection>
 			</ContainerDiv>
-			{openedModal === UI_TYPE.DELETE_GROUP && (
-				<GroupDeleteModal groupInfo={groupInfo} isLoading={isLoading} />
+			{openedModal === "DELETE_GROUP" && (
+				<GroupDeleteModal
+					groupDetailInfo={groupInfo.information.group}
+					isLoading={isLoading}
+				/>
 			)}
-			{openedModal === UI_TYPE.DELEGATE_GROUP && (
-				<GroupDelegateModal groupInfo={groupInfo} isGroupLoading={isLoading} />
+			{openedModal === "DELEGATE_GROUP" && (
+				<GroupDelegateModal
+					groupInfo={groupInfo}
+					isLoading={isLoading}
+					groupMembers={groupInfo.information.memberInfo}
+				/>
 			)}
-			{openedModal === UI_TYPE.LEAVE_GROUP && (
-				<GroupLeaveModal groupInfo={groupInfo} isGroupLoading={isLoading} />
-			)}
+			{openedModal === "EXIT_GROUP" && <GroupExitModal />}
 		</>
 	);
 };

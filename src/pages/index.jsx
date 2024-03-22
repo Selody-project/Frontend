@@ -4,6 +4,7 @@ import GroupPage from "./GroupPage/GroupPage";
 import GroupSchedulePage from "./GroupSchedulePage";
 import LandingPage from "./LandingPage/LandingPage";
 import LoginPage from "./LoginPage/LoginPage";
+import MyPage from "./MyPage/MyPage";
 import PersonalSchedulePage from "./PersonalSchedulePage/PersonalSchedulePage";
 import Root from "./Root";
 import SettingPage from "./SettingPage/SettingPage";
@@ -20,4 +21,5 @@ export {
 	SettingPage,
 	CommunityPage,
 	GroupPage,
+	MyPage,
 };

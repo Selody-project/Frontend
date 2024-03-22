@@ -15,6 +15,7 @@ const lightTheme = {
 		btn_04: "#4C2FFF",
 		btn_05: "#3515FA",
 		white: "#FFFFFF",
+		black: "#000000",
 		saturday: "#85A0FF",
 		sunday: "#FF9797",
 		error: "#C20000",

@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 
 import { CloseIcon } from "@/constants/iconConstants.js";
 import { closeModal } from "@/features/ui/ui-slice";
-import useScrollLock from "@/hooks/useScrollLock.jsx";
+import useScrollLock from "@/hooks/useScrollLock.js";
 
 import FormCancelWarningModal from "./FormCancelWarningModal/FormCancelWarningModal";
 import { BackdropDiv, IconButton, ModalDiv } from "../BaseModal.styles";
