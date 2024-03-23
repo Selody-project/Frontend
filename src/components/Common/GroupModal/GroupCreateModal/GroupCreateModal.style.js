@@ -6,7 +6,20 @@ export const TopDiv = styled.div`
 	align-items: center;
 	margin: 14px 0 10px;
 
-	& > svg {
+	& > label {
+		margin-top: 20px;
+		cursor: pointer;
+	}
+
+	& > input {
+		display: none !important;
+	}
+
+	& > img {
+		width: 95px;
+		height: 95px;
+		border-radius: 50%;
+		object-fit: cover;
 		margin-top: 20px;
 	}
 `;
